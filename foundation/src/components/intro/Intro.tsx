@@ -8,7 +8,8 @@ function Intro({breadcrumbs,title,comment}: {
     <div className="bg-black relative max-md:pt-20">
       <div className='max-md:hidden block relative'>
         <video autoPlay loop className="w-full">
-          <source src="/videos/Giraffe_teen.webm" />
+          <source src="/videos/Giraffe_teen.webm" type="video/webm"/>
+          <source src="/videos/Giraffe_teen.mp4" type="video/mp4"/>
         </video>
         <div className='absolute xl:top-32 top-20 w-3/5 flex flex-col justify-between  pl-10 md:pl-12 lg:pl-24 xl:pl-32 pr-8'>
             <p className='text-white md:text-sm lg:text-lg xl:text-2xl md:pb-6 lg:pb-12 2xl:pb-22'>{breadcrumbs}</p>
@@ -34,8 +35,9 @@ function Intro({breadcrumbs,title,comment}: {
                 height='1000'
                 alt=''
             /> */}
-            <video src="/videos/Giraffe_teen.webm" autoPlay loop className="w-full">
-              
+            <video  autoPlay loop className="w-full">
+              <source src="/videos/Giraffe_teen.webm" type="video/webm"/>
+              <source src="/videos/Giraffe_teen.mp4" type="video/mp4"/>
             </video>
         </div>
       </div>

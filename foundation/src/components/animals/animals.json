@@ -5,6 +5,8 @@
     "image": "/images/hippo.png",
     "card_front": "/videos/Hippo_Card_front.webm",
     "card_back": "/videos/Hippo_Card_Back.webm",
+    "card_front_mp4": "/videos/Hippo_Card_front.mp4",
+    "card_back_mp4": "/videos/Hippo_Card_Back.mp4",
     "description": {
       "head": "The pygmy hippo is a rare, nocturnal herbivore found in West African rainforests. Weighing around 400-600 lbs and standing 2.5 ft tall, they're half the height and a quarter the weight of their cousin, the common hippo.<br /><br />With webbed toes and sleek bodies, they're agile swimmers and can close their nostrils to stay submerged. They secrete a shiny, slippery substance called 'blood sweat' to keep their skin moist and protect against sunburn, earning the nickname 'water horse.'",
       "subtitle": "The elusive pygmy hippo is so rare and secretive that it wasn't scientifically described until 1844.",
@@ -37,6 +39,8 @@
     "image": "/images/rhino.png",
     "card_front": "/videos/RHINO_Card_front.webm",
     "card_back": "/videos/RHINO_Card_back.webm",
+    "card_front_mp4": "/videos/RHINO_Card_front.mp4",
+    "card_back_mp4": "/videos/RHINO_Card_back.mp4",
     "description": {
       "head": "The Javan rhino (Rhinoceros sondaicus) is one of the world's rarest and most critically endangered mammals. With less than 70 individuals remaining, they inhabit Ujung Kulon National Park in Java, Indonesia.<br /><br />They're smaller than African rhinos, with a shoulder height of 4.6-5.8 ft. Distinctive for their single horn and armor-like skin, Javan rhinos are solitary, preferring dense forests near water sources. Poaching and habitat loss are their biggest threats.",
       "subtitle": "Javan rhinos are true survivors, outlasting the dinosaurs despite being Earth's rarest rhino species!",
@@ -69,6 +73,8 @@
     "image": "/images/tiger.png",
     "card_front": "/videos/TIGER_Card_front.webm",
     "card_back": "/videos/TIGER_Card_Back.webm",
+    "card_front_mp4": "/videos/TIGER_Card_front.mp4",
+    "card_back_mp4": "/videos/TIGER_Card_Back.mp4",
     "description": {
       "head": "The Siberian tiger, a subspecies of tiger, is the largest cat in the world from Far East Asia. It once ranged as far as eastern Mongolia, far East Russian, and Northeast China.<br /><br />Siberian tigers are distinguishable by their striped fur and no two tigers have the same stripe pattern. The mane, in addition to their thick fur, helps keep them warm and can be significant influences in both mating displays and in disputes.",
       "subtitle": "Siberian tigers are solitary animals, marking their scent on trees to keep other tigers away.",
@@ -101,6 +107,8 @@
     "image": "/images/leopard.png",
     "card_front": "/videos/Leopard_Card_Front.webm",
     "card_back": "/videos/Leopard_Card_Back.webm",
+    "card_front_mp4": "/videos/Leopard_Card_Front.mp4",
+    "card_back_mp4": "/videos/Leopard_Card_Back.mp4",
     "description": {
       "head": "The Amur leopard is one of 10 subspecies of leopard, and one of the world’s rarest cats, with an estimated population of under 70 individuals left in the wild. They all live in a small area that hugs Russia’s far eastern border with China.<br /><br />Many think of leopards stalking savannas of Africa but in the Russian Far East, a rare subspecies has adapted to life in the temperate forests that make up the northern-most part of the species’ range.",
       "subtitle": "The Amur leopard can run at speeds of up to 37 miles per hour.",
@@ -133,6 +141,8 @@
     "image": "/images/red_wolf.png",
     "card_front": "/videos/Redwolf_Card_front.webm",
     "card_back": "/videos/Redwolf_Card_Back.webm",
+    "card_front_mp4": "/videos/Redwolf_Card_front.mp4",
+    "card_back_mp4": "/videos/Redwolf_Card_Back.mp4",
     "description": {
       "head": "The Red Wolf is the world’s most endangered member of the Canine family.Native to the United States, Red Wolves (Canis rufus) have a tawny, reddish coat, and they are intermediate in size between grey wolves and coyotes.<br /><br />Which is logical, as these two species interbred in the past to produce the red wolves’ ancestors. Nevertheless, recent research shows that red wolves are a unique species.",
       "subtitle": "There are only an estimated 35 or fewer wild red wolves.",
@@ -165,6 +175,8 @@
     "image": "/images/giraffe.png",
     "card_front": "/videos/GIRAFFE_Card_Front.webm",
     "card_back": "/videos/GIRAFFE_Card_Back.webm",
+    "card_front_mp4": "/videos/GIRAFFE_Card_Front.mp4",
+    "card_back_mp4": "/videos/GIRAFFE_Card_Back.mp4",
     "description": {
       "head": "They are considered to be the tallest land animal on the Earth, measuring up to a remarkable 6 meters, or 20 feet tall! They can also weigh approximately 2,800 pounds.<br /><br />The Nubian Giraffe is endangered with less than 2,645 individuals remaining in Ethiopia, Kenya, Uganda, South Sudan and Sudan. are one stage away from becoming extinct in the wild. Other Giraffe species typically have two horns, but the Nubian Giraffe can have up to five!",
       "subtitle": "Their exceptional sight enables communication with other giraffes through long-distance signals.",
@@ -197,6 +209,8 @@
     "image": "/images/elephant.png",
     "card_front": "/videos/elephant_card_front.webm",
     "card_back": "/videos/elephant_card_back.webm",
+    "card_front_mp4": "/videos/Elephant_Card_Front.mp4",
+    "card_back_mp4": "/videos/Elephant_Card_Back.mp4",
     "description": {
       "head": "The Sumatran elephant is one of three subspecies of the Asian elephant and is native to the island of Sumatra. Classified as critically endangered by the IUCN, their population has declined by more than 80% over three generations. This decline is mainly due to habitat loss, fragmentation, and human-elephant conflict.<br /><br />Smaller than other elephants, Sumatran elephants have lighter skin and a unique dual-domed head shape.",
       "subtitle": "They stand 7-9 feet tall at the shoulder and weigh 4,400-11,000 lbs.",
