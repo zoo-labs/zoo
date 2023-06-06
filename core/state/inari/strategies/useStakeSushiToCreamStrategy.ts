@@ -11,6 +11,7 @@ import useBaseStrategy from './useBaseStrategy'
 import { useDerivedInariState } from '../hooks'
 import { useLingui } from '@lingui/react'
 import { useTokenBalances } from '../../wallet/hooks'
+import { BigNumber } from 'ethers'
 
 export const GENERAL = (i18n: I18n): StrategyGeneralInfo => ({
   name: i18n._(t`SUSHI → Cream`),
@@ -46,7 +47,7 @@ const useStakeSushiToCreamStrategy = (): StrategyHook => {
   const zenkoContract = useZenkoContract()
   const inariContract = useInariContract()
   const balances = useTokenBalances(account, [SUSHI[ChainId.MAINNET], CRXSUSHI])
-  const cTokenAmountRef = useRef<CurrencyAmount<Token>>(null)
+  const cTokenAmountRef = useRef<CurrencyAmount<Token>>()
   const approveAmount = useMemo(() => (zapIn ? inputValue : cTokenAmountRef.current), [inputValue, zapIn])
 
   // Override approveCallback for this strategy as we need to approve CRXSUSHI on zapOut
@@ -73,13 +74,18 @@ const useStakeSushiToCreamStrategy = (): StrategyHook => {
   const preExecute = useCallback(
     async (val: CurrencyAmount<Token>) => {
       if (zapIn) return execute(val)
-      return execute(await toCTokenAmount(val))
+      const amount = await toCTokenAmount(val)
+
+      if (amount)
+        return execute(amount)
+      else
+        return execute(CurrencyAmount.fromRawAmount(XSUSHI, '0'))
     },
     [execute, toCTokenAmount, zapIn]
   )
 
   useEffect(() => {
-    toCTokenAmount(inputValue).then((val) => (cTokenAmountRef.current = val))
+    toCTokenAmount(inputValue).then((val) => ((cTokenAmountRef as any).current = val))
   }, [inputValue, toCTokenAmount])
 
   useEffect(() => {
@@ -89,7 +95,7 @@ const useStakeSushiToCreamStrategy = (): StrategyHook => {
       if (!balances[CRXSUSHI.address]) return tryParseAmount('0', XSUSHI)
       const bal = await zenkoContract.fromCtoken(
         CRXSUSHI.address,
-        balances[CRXSUSHI.address].toFixed().toBigNumber(CRXSUSHI.decimals).toString()
+        BigNumber.from(balances[CRXSUSHI.address])
       )
       setBalances({
         inputTokenBalance: balances[SUSHI[ChainId.MAINNET].address],
@@ -103,9 +109,10 @@ const useStakeSushiToCreamStrategy = (): StrategyHook => {
   return useMemo(
     () => ({
       ...baseStrategy,
-      approveCallback: [...approveCallback, approveAmount],
+      approveCallback: [...approveCallback, (approveAmount || CurrencyAmount.fromRawAmount(XSUSHI, '0'))],
       setBalances,
       execute: preExecute,
+      overrides: {},
     }),
     [approveAmount, approveCallback, baseStrategy, preExecute, setBalances]
   )

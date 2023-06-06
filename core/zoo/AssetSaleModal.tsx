@@ -12,7 +12,7 @@ import LazyBidList from './LazyBidList'
 import { Bid, GraphLazyBid } from './types'
 import LazyBidModal from './LazyBidModal'
 import { useActiveWeb3React } from '../hooks'
-import Web3Connect from '../components/Web3Connect'
+//import Web3Connect from '../components/Web3Connect'
 
 const defaultShow = {
   setAsk: false,
