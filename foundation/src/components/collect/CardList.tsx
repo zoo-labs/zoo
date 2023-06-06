@@ -4,26 +4,32 @@ function CardList() {
     const cardlist = [
         {
             card: "/videos/TIGER_Card_front.webm",
+            card_mp4: "/videos/TIGER_Card_front.mp4",
             url: "/animals/siberian_tiger"
         },
         {
             card: "/videos/Redwolf_Card_front.webm",
+            card_mp4: "/videos/Redwolf_Card_front.mp4",
             url: "/animals/red_wolf"
         },
         {
             card: "/videos/GIRAFFE_Card_Front.webm",
+            card_mp4: "/videos/GIRAFFE_Card_Front.mp4",
             url: "/animals/nubian_giraffe"
         },
         {
             card: "/videos/elephant_card_front.webm",
+            card_mp4: "/videos/Elephant_Card_Front.mp4",
             url: "/animals/sumatran_elephant"
         },
         {
             card: "/videos/RHINO_Card_front.webm",
+            card_mp4: "/videos/RHINO_Card_front.mp4",
             url: "/animals/javen_rhino"
         },
         {
             card: "/videos/Hippo_Card_front.webm",
+            card_mp4: "/videos/Hippo_Card_front.mp4",
             url: "/animals/pygmy_hippo"
         },
       ];
@@ -40,8 +46,10 @@ function CardList() {
                 alt=''
             /> */}
             <Link href={data.url} legacyBehavior>
-            <video autoPlay loop className="border rounded-xl p-1" src={data.card}>
-                {/* <source src={front} /> */}
+            <video autoPlay loop className="border rounded-xl p-1" >
+            <source src={data.card}  type="video/webm"/>
+                <source src={data.card_mp4}  type="video/mp4"/>
+                
             </video>
             </Link>
         </div>

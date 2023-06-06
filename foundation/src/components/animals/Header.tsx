@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReactCardFlip from "react-card-flip";
-function Header({title,content,front,back}: {
+function Header({title,content,front,back,front_m,back_m}: {
   content: string;
   title: string;
   front: string;
   back: string;
+  front_m: string;
+  back_m: string;
 }) {
   const [flip, setFlip] = useState(false);
   return (
@@ -29,11 +31,14 @@ function Header({title,content,front,back}: {
                   height='1000'
                   alt=''
               /> */}
-              <video autoPlay loop className="border rounded-xl p-1" src={front}>
-                {/* <source src={front} /> */}
+              <video autoPlay loop className="border rounded-xl p-1" >
+                <source src={front}  type="video/webm"/>
+                <source src={front_m}  type="video/mp4"/>
+                
               </video>
-              <video autoPlay loop className="border rounded-xl p-1" src={back}>
-                {/* <source src={back} /> */}
+              <video autoPlay loop className="border rounded-xl p-1" >
+              <source src={back}  type="video/webm"/>
+                <source src={back_m}  type="video/mp4"/>
               </video>
             </ReactCardFlip>
             <div className='absolute bottom-4 md:right-20 lg:right-28 xl:right-32 2xl:pr-36 max-md:right-8 cursor-pointer max-md:right-4 w-[45px] h-[45px] flex justify-center bg-white rounded-full' onClick={() => setFlip(!flip)}>
