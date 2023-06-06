@@ -2,7 +2,7 @@ module.exports = {
   catalogs: [
     {
       path: "<rootDir>/locale/{locale}",
-      include: ["<rootDir>/src"],
+      include: ["<rootDir>"],
       exclude: ["**/node_modules/**"],
     },
   ],
