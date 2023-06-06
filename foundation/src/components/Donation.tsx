@@ -39,7 +39,7 @@ function Donation() {
                   <div className='flex flex-col w-full'>
                       <div className='flex items-center text-white md:text-md lg:text-lg xl:text-xl pb-2'>
                           <span>$</span>
-                          <input className='pl-3 border-no bg-transparent outline-none w-full md:text-sm lg:text-lg' placeholder='Enter donation'/>
+                          <input className='pl-3 border-no bg-transparent outline-none w-full md:text-sm lg:text-lg' placeholder='Enter Donation'/>
                           <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
                           </svg>
