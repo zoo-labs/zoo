@@ -8,7 +8,11 @@ import { useCallback } from 'react'
 import { useDerivedInariState } from '../hooks'
 import { useTransactionAdder } from '../../transactions/hooks'
 
-const TRAIT_CONFIG = {
+interface TraitConfig {
+  overrides: string[];
+}
+
+const TRAIT_CONFIG: TraitConfig = {
   overrides: ['execute', 'approveCallback', 'bentoApproveCallback'],
 }
 
@@ -24,7 +28,8 @@ export interface BaseStrategyWithBentoBoxTraitHook
 // Strategies that end up in BentoBox don't need to to approve inari to spend tokens when unzapping
 // hence the approveCallback is null when unzapping
 const useBentoBoxTrait = (props: BaseStrategyHook): BaseStrategyWithBentoBoxTraitHook => {
-  const trait = useTrait(props, TRAIT_CONFIG)
+  const trait = useTrait(props, TRAIT_CONFIG);
+  //const trait = useTrait<BaseStrategyHook, BaseStrategyWithBentoBoxTraitHook>(props, TRAIT_CONFIG as BaseTraitConfig<BaseStrategyHook>);
   const { account } = useActiveWeb3React()
   const { zapIn } = useDerivedInariState()
   const inariContract = useInariContract()

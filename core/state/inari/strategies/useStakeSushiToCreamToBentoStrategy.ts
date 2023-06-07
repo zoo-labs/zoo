@@ -69,40 +69,26 @@ const useStakeSushiToCreamToBentoStrategy = (): StrategyHook => {
     })
   }, [balances, setBalances, crxSushiBentoBalance?.value])
 
-  const calculateOutputFromInput = useCallback(
-    async (zapIn: boolean, inputValue: string, inputToken: Token, outputToken: Token) => {
-      if (!sushiPerXSushi || !inputValue || !zenkoContract) return null
+  const calculateOutputFromInput = useCallback(async (zapIn: boolean, inputValue: string, inputToken: Token, outputToken: Token): Promise<string> => {
+    if (!sushiPerXSushi || !inputValue || !zenkoContract) return '0';
 
-      if (zapIn) {
-        const value = BigNumber.from(inputValue).mul(BigNumber.from(10).pow(18)).div(BigNumber.from(sushiPerXSushi.toString()))
-        const cValue = await zenkoContract.toCtoken(CRXSUSHI.address, value)
-        return cValue.toFixed(outputToken.decimals)
-      } else {
-        const parsedInputValue = utils.parseUnits(inputValue, inputToken.decimals);
-        const cValue = await zenkoContract.fromCtoken(CRXSUSHI.address, parsedInputValue)
-        const value = BigNumber.from(cValue).mul(BigNumber.from(sushiPerXSushi.toString())).div(BigNumber.from(10).pow(18))
-        return value.toFixed(outputToken.decimals)
-      }
-    },
-    [sushiPerXSushi, zenkoContract]
-  )
-
-  //const calculateOutputFromInput = useCallback(
-  //  async (zapIn: boolean, inputValue: string, inputToken: Token, outputToken: Token) => {
-  //    if (!sushiPerXSushi || !inputValue || !zenkoContract) return null
-
-  //    if (zapIn) {
-  //      const value = BigNumber.from(inputValue).mul(e10(18)).div(BigNumber.from(sushiPerXSushi.toString()))
-  //      const cValue = await zenkoContract.toCtoken(CRXSUSHI.address, value)
-  //      return cValue.toFixed(outputToken.decimals)
-  //    } else {
-  //      const cValue = await zenkoContract.fromCtoken(CRXSUSHI.address, inputValue.toBigNumber(inputToken.decimals))
-  //      const value = BigNumber.from(cValue).mulDiv(sushiPerXSushi.toString().toBigNumber(18), e10(18))
-  //      return value.toFixed(outputToken.decimals)
-  //    }
-  //  },
-  //  [sushiPerXSushi, zenkoContract]
-  //)
+    if (zapIn) {
+      const value = BigNumber.from(inputValue)
+        .mul(BigNumber.from(10).pow(18))
+        .div(BigNumber.from(sushiPerXSushi.toString()));
+      const cValue = await zenkoContract.toCtoken(CRXSUSHI.address, value);
+      const parsedCValue = utils.parseUnits(cValue.toString(), outputToken.decimals);
+      return parsedCValue.toString();
+    } else {
+      const parsedInputValue = utils.parseUnits(inputValue, inputToken.decimals);
+      const cValue = await zenkoContract.fromCtoken(CRXSUSHI.address, parsedInputValue);
+      const value = BigNumber.from(cValue)
+        .mul(BigNumber.from(sushiPerXSushi.toString()))
+        .div(BigNumber.from(10).pow(18));
+      const parsedValue = utils.parseUnits(value.toString(), outputToken.decimals);
+      return parsedValue.toString();
+    }
+  }, [sushiPerXSushi, zenkoContract]);
 
   return useMemo(
     () => ({

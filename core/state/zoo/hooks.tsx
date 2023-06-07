@@ -186,7 +186,11 @@ export function useHatch(): (
 }
 
 export function useFetchMyNFTs(): () => Promise<any> {
-  return []
+  return async () => {
+    // Put your logic here
+    // For now it will resolve to an empty array
+    return Promise.resolve([]);
+  };
   // const dispatch = useDispatch();
 
   // //const Web3Api = useMoralisWeb3Api();
@@ -316,9 +320,11 @@ export function useGetNftTransfers(): () => void {
       token_address: media?.address,
     };
 
-    const bscNFTs = await Web3Api.account.getNFTTransfers(options);
+    //const bscNFTs = await Web3Api.account.getNFTTransfers(options);
+    const bscNFTs = {result: []};
     dispatch(addNftTTransfers(bscNFTs.result.slice(0, 10)));
-  }, [chainId, account, media?.address, Web3Api.account, dispatch]);
+  //}, [chainId, account, media?.address, Web3Api.account, dispatch]);
+  }, [chainId, account, media?.address, dispatch]);
 }
 
 export function useGetAvailableEggs(): (

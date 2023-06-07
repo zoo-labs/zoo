@@ -1,4 +1,4 @@
-import { JSBI, LAMBDA_URL, LimitOrder, OrderStatus, Percent, Token } from '@zoolabs/sdk'
+import { JSBI, LAMBDA_URL, LimitOrder, OrderStatus, Percent, Token } from '@zoolabs/zdk'
 import { useActiveWeb3React, useLimitOrderContract } from '.'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import useSWR, { SWRResponse } from 'swr'
