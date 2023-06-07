@@ -2,8 +2,8 @@
 
 import { createReducer } from '@reduxjs/toolkit'
 import { addCartItem, getCartItems, getProducts, removeCartItem, clearCartItems, updateCartItem } from './actions'
-import { CartItem } from 'types/cart'
-import { Product } from 'types/product';
+import { CartItem } from '../../types/cart'
+import { Product } from '../../types/product';
 
 
 export interface StoreState {

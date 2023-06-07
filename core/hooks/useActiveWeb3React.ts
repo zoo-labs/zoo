@@ -1,9 +1,11 @@
+
+import { ChainId } from '@zoolabs/zdk'
 /**
  * Dummy for backwards compat
  */
 export function useActiveWeb3React(): {
   account: string
-  chainId: number
+  chainId: ChainId
   library: any
   connector: any
 } {

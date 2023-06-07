@@ -8,15 +8,14 @@ import { arrayify } from '@ethersproject/bytes'
 import { createTokenFilterFunction } from '../functions/filtering'
 import { isAddress } from '../functions/validate'
 import { parseBytes32String } from '@ethersproject/strings'
-//import { useActiveWeb3React } from './useActiveWeb3React'
+import { useActiveWeb3React } from './useActiveWeb3React'
 import { useCombinedActiveList } from '../state/lists/hooks'
 import { useMemo } from 'react'
 import { useUserAddedTokens } from '../state/user/hooks'
 
 // reduce token map into standard address <-> Token mapping, optionally include user added tokens
 function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean): { [address: string]: Token } {
-  //const { chainId } = useActiveWeb3React()
-  const chainId = '1'
+  const { chainId } = useActiveWeb3React()
   const userAddedTokens = useUserAddedTokens()
 
   return useMemo(() => {
@@ -69,8 +68,7 @@ export function useSearchInactiveTokenLists(search: string | undefined, minResul
 
   const lists = useAllLists()
   const inactiveUrls = useInactiveListUrls()
-  //const { chainId } = useActiveWeb3React()
-  const chainId = '1';
+  const { chainId } = useActiveWeb3React()
   const activeTokens = useAllTokens()
   return useMemo(() => {
     if (!search || search.trim().length === 0) return []
@@ -82,7 +80,7 @@ export function useSearchInactiveTokenLists(search: string | undefined, minResul
       if (!list) continue
       for (const tokenInfo of list.tokens) {
         if (tokenInfo.chainId === chainId && tokenFilter(tokenInfo)) {
-          const wrapped = new WrappedTokenInfo(tokenInfo, list)
+          const wrapped: WrappedTokenInfo = new WrappedTokenInfo(tokenInfo, list)
           if (!(wrapped.address in activeTokens) && !addressSet[wrapped.address]) {
             addressSet[wrapped.address] = true
             result.push(wrapped)
@@ -132,8 +130,7 @@ function parseStringOrBytes32(str: string | undefined, bytes32: string | undefin
 // null if loading
 // otherwise returns the token
 export function useToken(tokenAddress?: string): Token | undefined | null {
-  //const { chainId } = useActiveWeb3React()
-  const chainId = '1'
+  const { chainId } = useActiveWeb3React()
   const tokens = useAllTokens()
 
   const address = isAddress(tokenAddress)
@@ -157,15 +154,15 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
     if (token) return token
     if (!chainId || !address) return undefined
     if (decimals.loading || symbol.loading || tokenName.loading) return null
-    //if (decimals.result) {
-    //  return new Token(
-    //    chainId,
-    //    address,
-    //    decimals.result[0],
-    //    parseStringOrBytes32(symbol.result?.[0], symbolBytes32.result?.[0], 'UNKNOWN'),
-    //    parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token')
-    //  )
-    //}
+    if (decimals.result) {
+      return new Token(
+        chainId,
+        address,
+        decimals.result[0],
+        parseStringOrBytes32(symbol.result?.[0], symbolBytes32.result?.[0], 'UNKNOWN'),
+        parseStringOrBytes32(tokenName.result?.[0], tokenNameBytes32.result?.[0], 'Unknown Token')
+      )
+    }
     return undefined
   }, [
     address,
@@ -183,18 +180,16 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
 }
 
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
-  //const { chainId } = useActiveWeb3React()
-  const chainId = '1'
+  const { chainId } = useActiveWeb3React()
 
   const isETH = currencyId?.toUpperCase() === 'ETH'
 
-  // const isDual = [ChainId.CELO].includes(chainId)
-  const isDual = false
+  const isDual = [ChainId.CELO].includes(chainId)
 
   const useNative = isETH && !isDual
 
   if (isETH && isDual) {
-    currencyId = WNATIVE_ADDRESS[chainId ? chainId : '1']
+    currencyId = WNATIVE_ADDRESS[chainId]
   }
 
   const token = useToken(useNative ? undefined : currencyId)
@@ -202,7 +197,9 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
   // const extendedEther = useMemo(() => (chainId ? ExtendedEther.onChain(chainId) : undefined), [chainId])
   // const weth = chainId ? WETH9_EXTENDED[chainId] : undefined
 
-  const native = useMemo(() => (chainId ? (NATIVE as any)[chainId] : undefined), [chainId]);
+  const native = useMemo(() => {
+    return chainId && NATIVE.hasOwnProperty(chainId) ? (NATIVE as any)[chainId] : undefined
+  }, [chainId])
 
   const wnative = chainId ? WNATIVE[chainId] : undefined
 

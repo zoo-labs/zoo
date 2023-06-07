@@ -1,4 +1,4 @@
-import { createReducer } from '@reduxjs/toolkit'
+import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 import {
   Field,
   replaceLimitOrderState,
@@ -61,23 +61,21 @@ const initialState: LimitOrderState = {
 
 export default createReducer<LimitOrderState>(initialState, (builder) =>
   builder
-    .addCase(
-      replaceLimitOrderState,
-      (
-        state,
-        {
-          payload: {
-            typedValue,
-            recipient,
-            independentField,
-            inputCurrencyId,
-            outputCurrencyId,
-            fromBentoBalance,
-            limitPrice,
-            orderExpiration,
-          },
-        }
-      ) => ({
+  .addCase(
+    replaceLimitOrderState as any,
+    (
+      state,
+      { payload: {
+        typedValue,
+        recipient,
+        independentField,
+        inputCurrencyId,
+        outputCurrencyId,
+        fromBentoBalance,
+        limitPrice,
+        orderExpiration
+      } }
+    ) => ({
         [Field.INPUT]: {
           currencyId: inputCurrencyId,
         },
@@ -94,13 +92,18 @@ export default createReducer<LimitOrderState>(initialState, (builder) =>
       })
     )
     .addCase(setLimitPrice, (state, { payload: limitPrice }) => {
-      state.limitPrice = limitPrice
+      if (limitPrice !== null) {
+        state.limitPrice = limitPrice
+      }
+      //state.limitPrice = limitPrice
     })
     .addCase(setLimitOrderApprovalPending, (state, { payload: limitOrderApprovalPending }) => {
       state.limitOrderApprovalPending = limitOrderApprovalPending
     })
     .addCase(setOrderExpiration, (state, { payload: orderExpiration }) => {
-      state.orderExpiration = orderExpiration
+      if (orderExpiration !== null) {
+        state.orderExpiration = orderExpiration
+      }
     })
     .addCase(setFromBentoBalance, (state, { payload: fromBentoBalance }) => {
       state.fromBentoBalance = fromBentoBalance
