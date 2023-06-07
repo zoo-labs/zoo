@@ -5,7 +5,7 @@ function Collecting() {
     <div className="bg-black lg:py-52 md:py-32 max-md:py-0">
         <div className='w-full text-center items-center flex flex-col justify-between'>
             <Link href='/collect'  className='text-white md:text-4xl xl:text-6xl max-md:text-3xl max-md:my-5 pb-8'>Start Collecting</Link>
-            <Link href='/collect'  className='text-center w-3/5'>
+            <Link href='/collect'  className='text-center w-3/5 max-md:w-[90%]'>
             <Image
                 className='w-full'
                 src='/images/collecting.png'
@@ -14,7 +14,7 @@ function Collecting() {
                 alt=''
             />
             </Link>
-            <div className='flex max-md:flex-col pt-8 items-center justify-center md:space-x-8'>
+            <div className='flex max-md:flex-col pt-8 items-center justify-center md:space-x-8 max-md:space-y-4'>
                 <Link href="/collect"  className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10' legacyBehavior>
                   <a>
                     <span className='pr-[15px]'>View Endangered Cards</span>
