@@ -24,11 +24,7 @@ function TradingCard() {
             <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-16 max-md:hidden'>Select any trading card to start learning.</h1>
             <p className='text-white md:text-lg lg:text-xl max-md:text-xl xl:text-2xl max-md:pb-10 md:pb-10'>Discover our vibrant, fact-packed Zoo trading cards – a virtual treasure trove of animal knowledge and endangered species insights!</p>
 
-<<<<<<< HEAD
             <Link href='/animals/amur_leopard'  className='flex items-center md:pt-10 cursor-pointer text-white md:text-sm lg:text-md max-md:text-md xl:text-lg max-md:pb-10'>
-=======
-            <Link href='/animals/amur_leopard'  className='flex items-center md:pt-10 cursor-pointer text-white md:text-sm lg:text-lg xl:text-lg max-md:pb-10'>
->>>>>>> 71cf83fb (changed text size)
               <>
                 <span className='pr-[15px]'>View Amur Leopard</span>
                 <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
