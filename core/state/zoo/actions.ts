@@ -9,7 +9,7 @@
 import { createAction } from "@reduxjs/toolkit";
 // import { Egg } from 'types'
 
-import { Auction, AvailableEgg, Egg } from "types";
+import { Auction, AvailableEgg, Egg } from "../../types";
 import { MyNFT } from "./types";
 
 export interface SerializedToken {

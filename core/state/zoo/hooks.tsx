@@ -1,7 +1,7 @@
-import { useActiveWeb3React, useFaucet, useZooToken } from "hooks";
+import { useActiveWeb3React, useFaucet, useZooToken } from "../../hooks";
 import { useCallback } from "react";
-import { useAppDispatch } from "state/hooks";
-import { Auction, AuctionHistory, AvailableEgg, Egg } from "types";
+import { useAppDispatch } from "../../state/hooks";
+import { Auction, AuctionHistory, AvailableEgg, Egg } from "../../types";
 
 //import { useMoralisWeb3Api } from "react-moralis";
 import {
@@ -10,7 +10,7 @@ import {
   useDrop,
   useBnbToken,
   useAuction,
-} from "hooks/useContract";
+} from "../../hooks/useContract";
 import { useDispatch } from "react-redux";
 import {
   getZooBalance,
@@ -26,19 +26,19 @@ import {
   addNftTTransfers,
   addEgg,
 } from "./actions";
-import { useAddPopup } from "state/application/hooks";
+import { useAddPopup } from "../../state/application/hooks";
 import { MaxUint256 } from "@ethersproject/constants";
-import { formatError } from "functions";
-import { useTransactionAdder } from "state/transactions/hooks";
+import { formatError } from "../../functions";
+import { useTransactionAdder } from "../../state/transactions/hooks";
 import { addresses } from "../../constants";
-import { ChainId } from "constants/chainIds";
+import { ChainId } from "../../constants/chainIds";
 import { addDays, differenceInSeconds } from "date-fns";
-import { SUPPORTED_NETWORKS } from "config/networks";
+import { SUPPORTED_NETWORKS } from "../../config/networks";
 import { MyNFT } from "./types";
 import axios from "axios";
 import { ethers } from "ethers";
-import { getMetaData } from "state/drop/hooks";
-import { convertIpfsUrl } from "entities";
+import { getMetaData } from "../../state/drop/hooks";
+import { convertIpfsUrl } from "../../entities";
 
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useZoobalance(): () => void {
@@ -51,6 +51,7 @@ export function useZoobalance(): () => void {
     try {
       if (!account) return;
       if (!chainId) return;
+      if (!zooToken) return;
       const decimals = await zooToken.decimals();
       const rawBalance = await zooToken.balanceOf(account);
       const divisor = parseFloat(Math.pow(10, decimals).toString());
@@ -81,7 +82,7 @@ export function useBuyZoo(): () => void {
           getZooBalance();
           return 2;
         })
-        .catch((e) => {
+        .catch((e: any) => {
           console.error("ISSUE USING FAUCET \n", e);
         });
     } catch (e) {
@@ -90,7 +91,7 @@ export function useBuyZoo(): () => void {
   }, [account, chainId, faucet, getZooBalance]);
 }
 
-export function useGetEggs(): (eggs) => void {
+export function useGetEggs(): (eggs: any) => void {
   const dispatch = useAppDispatch();
   return useCallback(
     (eggs: Egg[]) => {
@@ -133,15 +134,15 @@ export function useHatch(): (
             ?.approve(zooKeeper.address, MaxUint256, {
               gasLimit: 4000000,
             })
-            .then((tx) => {
+            .then((tx: any) => {
               tx.wait();
             })
-            .catch((err) => {
+            .catch((err: any) => {
               console.error("ISSUE APPROVING MEDIA \n", err);
               dispatch(loading(false));
               addPopup({
                 txn: {
-                  hash: null,
+                  hash: '',
                   summary: formatError(err),
                   success: false,
                 },
@@ -163,7 +164,7 @@ export function useHatch(): (
         dispatch(loading(false));
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: `Successfully hatched egg ${eggId}`,
             success: true,
           },
@@ -174,7 +175,7 @@ export function useHatch(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(error),
             success: false,
           },
@@ -317,7 +318,7 @@ export function useGetNftTransfers(): () => void {
     const options: { chain?: any; address: string; token_address: string } = {
       chain: SUPPORTED_NETWORKS[chainId].chainId,
       address: account,
-      token_address: media?.address,
+      token_address: media ? media.address : ''
     };
 
     //const bscNFTs = await Web3Api.account.getNFTTransfers(options);
@@ -410,7 +411,7 @@ export function useBuyEgg(): (
             ?.approve(zooKeeper.address, MaxUint256, {
               gasLimit: 4000000,
             })
-            .then((tx) => {
+            .then((tx: any) => {
               tx.wait();
             });
         }
@@ -422,7 +423,7 @@ export function useBuyEgg(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: `Successfully bought ${quantity} egg${
               quantity !== 1 ? "s" : ""
             }`,
@@ -437,7 +438,7 @@ export function useBuyEgg(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(e),
             success: false,
           },
@@ -481,7 +482,7 @@ export function useBuyEggWithBnB(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: `Successfully bought ${quantity} eggs`,
             success: true,
           },
@@ -494,7 +495,7 @@ export function useBuyEggWithBnB(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(e),
             success: false,
           },
@@ -525,7 +526,7 @@ export function useTransferZoo(): (
         getBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: `Successfully transferred ${amount} $zoo to ${recipient}`,
             success: true,
           },
@@ -534,7 +535,7 @@ export function useTransferZoo(): (
         console.error("ISSUE TRANSFERRING ZOO \n", e);
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(e),
             success: false,
           },
@@ -559,7 +560,7 @@ export function useGetAllAuctions(): (
       try {
         setLoading && setLoading(true);
         const auctions = await auctionContract?.getAllAuctions();
-        await auctions?.map(async (auction, index: number) => {
+        await auctions?.map(async (auction: any, index: number) => {
           if (Number(auction.reservePrice) === 0) return false;
           const tokenUri = await media?.tokenURI(Number(auction.tokenID));
           const tokenMetadataURI = await media?.tokenURI(
@@ -591,7 +592,7 @@ export function useGetAllAuctions(): (
             auctionHistory,
           } = auction;
           const auctionHistoryMap = await auctionHistory.map(
-            async (history) => {
+            async (history: any) => {
               const hash = await library.getBlock(history.blockNumber);
               return {
                 value: Number(history.amount),
@@ -686,7 +687,7 @@ export function useRemoveAuction(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: `Successfully cancelled auction ${id}`,
             success: true,
           },
@@ -699,7 +700,7 @@ export function useRemoveAuction(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(e),
             success: false,
           },
@@ -718,12 +719,14 @@ export function useApproveTokenWithMedia(): (
   const media = useMedia();
   const dispatch = useAppDispatch();
   const addTransaction = useTransactionAdder();
+
   return useCallback(
     async (tokenId?: number, spender?: string) => {
       const chainAddresses =
         (addresses[chainId] as any) || (addresses[ChainId.BSC] as any);
-      if (!chainId) return;
-      if (!media) return;
+
+      // Guard clause to ensure all necessary variables are defined
+      if (!chainId || !media || !chainAddresses.media || !spender) return;
 
       try {
         const trx = await media?.setApprovalForAll(spender, true, {
@@ -732,6 +735,7 @@ export function useApproveTokenWithMedia(): (
 
         await trx.wait();
 
+        // At this point, we've checked that all variables are defined, so TypeScript shouldn't complain
         addTransaction(trx, {
           summary: "Approve " + tokenId,
           approval: { tokenAddress: chainAddresses.media, spender: spender },
@@ -790,7 +794,7 @@ export function useCreateAuction(): (
 
         const tx = await auction?.createAuction(
           tokenID,
-          tokenContract.address,
+          tokenContract?.address,
           duration_,
           reservePrice,
           account,
@@ -802,7 +806,7 @@ export function useCreateAuction(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: `Successfully listed item ${tokenID}`,
             success: true,
           },
@@ -815,7 +819,7 @@ export function useCreateAuction(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(error),
             success: false,
           },
@@ -909,7 +913,7 @@ export function useCreateBid(): (
         success && success();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: `Successfully bid ${amount} on ${id}`,
             success: true,
           },
@@ -920,7 +924,7 @@ export function useCreateBid(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(error),
             success: false,
           },
@@ -967,17 +971,17 @@ export function useFeed(): (animalID: number) => void {
             ?.approve(zooKeeper.address, MaxUint256, {
               gasLimit: 4000000,
             })
-            .then((tx) => {
+            .then((tx: any) => {
               tx.wait();
             });
         }
-        const mediaApproval = await zoo?.allowance(account, media.address);
+        const mediaApproval = await zoo?.allowance(account, media?.address);
         if (Number(mediaApproval) <= 0) {
           await media
             ?.setApprovalForAll(zooKeeper.address, true, {
               gasLimit: 4000000,
             })
-            .then((tx) => {
+            .then((tx: any) => {
               tx.wait();
             });
         }
@@ -991,7 +995,7 @@ export function useFeed(): (animalID: number) => void {
             dispatch(loading(false));
             addPopup({
               txn: {
-                hash: null,
+                hash: '',
                 summary: `Successfully fed animal`,
                 success: true,
               },
@@ -1001,7 +1005,7 @@ export function useFeed(): (animalID: number) => void {
             dispatch(loading(false));
             addPopup({
               txn: {
-                hash: null,
+                hash: '',
                 summary: formatError(e),
                 success: false,
               },
@@ -1013,7 +1017,7 @@ export function useFeed(): (animalID: number) => void {
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(e),
             success: false,
           },
@@ -1041,22 +1045,48 @@ export function useFeedCount(): (
   const getZooBalance = useZoobalance();
 
   return useCallback(
-    async (animalId) => {
-      if (!zooKeeper) return;
+    async (animalId: number): Promise<{ count: number; lastTimeFed: number; }> => {
       try {
-        const tx = await zooKeeper?.feededTimes(animalId);
+        if (!zooKeeper) {
+          console.error("ZooKeeper is undefined");
+          return { count: 0, lastTimeFed: 0 };
+        }
+
+        const tx = await zooKeeper.feededTimes(animalId);
         getZooBalance();
+
         return {
           count: Number(tx.count),
-          lastTimeFed: tx.lastTimeFed,
+          lastTimeFed: Number(tx.lastTimeFed),
         };
       } catch (e) {
         console.error("ISSUE GET FEED COUNT \n", e);
         getZooBalance();
+
+        // return default object in case of an error
+        return { count: 0, lastTimeFed: 0 };
       }
     },
     [getZooBalance, zooKeeper]
   );
+
+  //return useCallback(
+  //  async (animalId) => {
+  //    if (!zooKeeper) return;
+  //    try {
+  //      const tx = await zooKeeper?.feededTimes(animalId);
+  //      getZooBalance();
+  //      return {
+  //        count: Number(tx.count),
+  //        lastTimeFed: tx.lastTimeFed,
+  //      };
+  //    } catch (e) {
+  //      console.error("ISSUE GET FEED COUNT \n", e);
+  //      getZooBalance();
+  //    }
+  //  },
+  //  [getZooBalance, zooKeeper]
+  //);
 }
 
 export function useEditAuction(): (
@@ -1081,7 +1111,7 @@ export function useEditAuction(): (
         success?.();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: `Successfully edited auction`,
             success: true,
           },
@@ -1090,7 +1120,7 @@ export function useEditAuction(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(error),
             success: false,
           },
@@ -1108,7 +1138,7 @@ export function useGetTokenOwner(): (
 
   return useCallback(
     async (id) => {
-      const owner: string = await media.tokenCreators(id);
+      const owner: string = await media?.tokenCreators(id);
       return owner;
     },
     [media]
@@ -1148,7 +1178,7 @@ export function useBreed(): (
             getZooBalance();
             addPopup({
               txn: {
-                hash: null,
+                hash: '',
                 summary: `Successfully bred ${tokenA} and ${tokenB}`,
                 success: true,
               },
@@ -1160,7 +1190,7 @@ export function useBreed(): (
             getZooBalance();
             addPopup({
               txn: {
-                hash: null,
+                hash: '',
                 summary: formatError(e),
                 success: false,
               },
@@ -1172,7 +1202,7 @@ export function useBreed(): (
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(e),
             success: false,
           },
@@ -1202,7 +1232,7 @@ export function useFreeNFT(): (tokenId: number, success?: () => void) => void {
             success && success();
             addPopup({
               txn: {
-                hash: null,
+                hash: '',
                 summary: `SUCCESSFULLY FREED THE ITEM ${id}`,
                 success: true,
               },
@@ -1217,7 +1247,7 @@ export function useFreeNFT(): (tokenId: number, success?: () => void) => void {
         getZooBalance();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(error),
             success: false,
           },
@@ -1248,23 +1278,23 @@ export function useRefreshMetadata(): (
         // });
         // const tx = await zooKeeper?.updateTokenUris(tokenId, dropId);
         // await tx.wait();
-        await media?.setApprovalForAll(zooKeeper.address, true, {
+        await media?.setApprovalForAll(zooKeeper?.address, true, {
           gasLimit: 4000000,
         });
-        const updateMetadata = await media.updateTokenMetadataURI(
+        const updateMetadata = await media?.updateTokenMetadataURI(
           tokenId,
           metadataURI,
           { gasLimit: 400000 }
         );
         await updateMetadata.wait();
-        const updateTokenUri = await media.updateTokenURI(tokenId, tokenUri, {
+        const updateTokenUri = await media?.updateTokenURI(tokenId, tokenUri, {
           gasLimit: 400000,
         });
         await updateTokenUri.wait();
         fetchMyNfts();
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: `Successfully refreshed metadata`,
             success: true,
           },
@@ -1274,7 +1304,7 @@ export function useRefreshMetadata(): (
         console.error("ERROR_GETTING_REFRESH_METADATA", error);
         addPopup({
           txn: {
-            hash: null,
+            hash: '',
             summary: formatError(error),
             success: true,
           },

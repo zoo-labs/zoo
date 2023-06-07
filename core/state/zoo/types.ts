@@ -1,4 +1,4 @@
-import { Animal, Egg } from "types";
+import { Animal, Egg } from "../../types";
 
 export interface AnimalState {
   eggs: number;
@@ -48,9 +48,9 @@ export interface MyNFT {
   };
   rarity: string;
   token_uri: string;
-  attributes;
-  image;
-  animation_url;
-  glb_animation_url;
-  usdz_animation_url;
+  attributes: any;
+  image: any;
+  animation_url: string;
+  glb_animation_url: string;
+  usdz_animation_url: string;
 }
