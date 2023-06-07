@@ -46,8 +46,8 @@ function Footer() {
         </div>
         <div className='flex flex-col space-y-8'>
             <Link href="/terms" className='text-sm lg:text-lg text-white'>Terms of Use</Link>
-            <Link href="https://zoolabs.io" className='text-sm lg:text-md text-white'>Labs</Link>
-            <Link href={`mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}`} onClick={sendEmail} className='text-sm lg:text-md text-white'>{'hello@zoo.ngo'}</Link>
+            <Link href="https://zoolabs.io" className='text-lg lg:text-md text-white'>Zoo Labs</Link>
+            <p className='text-sm lg:text-lg text-white'>hello@zoo.ngo</p>
         </div>
       </div>
     </div>

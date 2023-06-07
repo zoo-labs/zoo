@@ -19,7 +19,7 @@ function Header() {
                     <Switch onChange={handleChange} checked={checked} />
                     <p className='text-xs text-center text-white'>Switch to Monthly</p>
                 </div>
-                <input className=' w-1/3 rounded-md outline-none text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $ Amount' />
+                <input className=' w-1/3 rounded-md outline-none text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $' />
                 <button className='w-1/3 rounded-md px-4 py-2 text-white bg-blue'>Donate Now</button>
             </div>
         </div>

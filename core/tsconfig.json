@@ -19,7 +19,7 @@
     "jsx": "preserve",
     "downlevelIteration": true,
     "incremental": true,
-    "baseUrl": "src"
+    "baseUrl": "."
   },
   "include": [
     "next-env.d.ts",
