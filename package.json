@@ -4,11 +4,13 @@
   "author": "Zoo Labs Foundation <hi@zoolabs.io> (https://zoolabs.io)",
   "license": "MIT",
   "keywords": [
+    "ai",
     "ethereum",
     "nft",
     "zoo",
     "zoolabs",
-    "marketplace"
+    "marketplace",
+    "metaverse"
   ],
   "private": true,
   "scripts": {

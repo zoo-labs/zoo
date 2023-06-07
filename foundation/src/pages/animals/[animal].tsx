@@ -13,10 +13,11 @@ import FutureUpgrades from '@/components/FutureUpgrades';
 import CoreHeader from '@/components/animals/CoreHeader';
 import Carousel from '@/components/animals/Carousel';
 import animals from "@/components/animals/animals.json";
+
 import NotFoundPage from "../404";
-export default function HomePage() {
+
+export default function AnimalPage() {
   const router = useRouter();
-  console.log(router);
   const [animalRoute, setAnimalRoute] = useState(router.query.animal);
   const [animal, setAnimal] = useState(animals.find((animal) => animal.route === router.query.animal));
   const [animal_index, setAnimalIndex] = useState(animals.findIndex(p => p.route == router.query.animal));
@@ -40,7 +41,6 @@ export default function HomePage() {
         <Content title={animal.description.subtitle} content={animal.description.desc} />
         <Carousel />
         <Aiding />
-
         <Newsletter />
         <Footer />
         </> }

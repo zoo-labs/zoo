@@ -25,7 +25,7 @@ function Detail() {
         <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[280px] flex flex-col  max-md:pl-15 max-md:pr-15   lg:pr-8'>
             <p className='text-white md:text-sm lg:text-md xl:text-xl'>ENDANGERED SPECIES WE SUPPORT</p>
             <h1 className='text-white md:text-3xl xl:text-6xl max-md:text-2xl mt-5 mb-12'>The Red Wolf</h1>
-            <p className='text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>Visual guides also allow you to define the information hierarchy of the design</p>
+            <p className='text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>Be an indispensable part of in our mission for animal preservation.</p>
             <div className='flex items-center justify-between mt-10'>
                 <Link href='/getinvolved#volunteer' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10' >
                   <>
