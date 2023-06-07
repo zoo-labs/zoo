@@ -2,6 +2,12 @@ import Link from 'next/link';
 import {FaTelegram, FaTwitter, FaInstagram, FaDiscord, FaYoutube} from "react-icons/fa";
 import {BsMedium} from "react-icons/bs"
 function Footer() {
+  const recipientEmail = "hello@zoo.ngo";
+  const subject = "Sending Love to ZOO NGO team";
+  const sendEmail = () => {
+    const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}`;
+    window.location.href = mailtoLink;
+  };
   return (
     <div>
     <div className="bg-black pb-32 max-md:hidden">
@@ -12,22 +18,22 @@ function Footer() {
             <p className='text-sm lg:text-md text-white'>All rights reserved.© 2023 Zoo Labs Foundation Inc.</p>
             <div className='flex items-center space-x-2 text-white'>
                 <Link href="https://twitter.com/zoo_labs" legacyBehavior><FaTwitter /></Link>
-                <Link href="#telegram" legacyBehavior><FaTelegram /></Link>
+                <Link href="https://t.me/zooofficial" legacyBehavior><FaTelegram /></Link>
                 <Link href="https://instagram.com/zoolabs.io" legacyBehavior><FaInstagram /></Link>
-                <Link href="#discord" legacyBehavior><FaDiscord /></Link>
-                <Link href="#medium" legacyBehavior><BsMedium /></Link>
-                <Link href="#youtube" legacyBehavior><FaYoutube /></Link>
+                <Link href="https://discord.gg/AqrYhChx5b" legacyBehavior><FaDiscord /></Link>
+                <Link href="https://zoolabsofficial.medium.com" legacyBehavior><BsMedium /></Link>
+                <Link href="https://youtu.be/6yYuYtMWgOU" legacyBehavior><FaYoutube /></Link>
             </div>
         </div>
         <div className='flex flex-col space-y-8'>
             <Link href="/about" className='text-sm lg:text-lg text-white'>About</Link>
             <Link href="/getinvolved" className='text-sm lg:text-lg text-white'>Get Involved</Link>
             <Link href="/donation" className='text-sm lg:text-lg text-white'>Donate</Link>
-            <Link href="#volunteer" className='text-sm lg:text-lg text-white'>Volunteer</Link>
-            <Link href="#initiatives" className='text-sm lg:text-lg text-white'>Initiatives</Link>
+            <Link href="/getinvolved#volunteer" className='text-sm lg:text-lg text-white'>Volunteer</Link>
+            <Link href="/getinvolved#volunteer" className='text-sm lg:text-lg text-white'>Initiatives</Link>
         </div>
         <div className='flex flex-col space-y-8'>
-            <Link href="/collect" className='text-sm lg:text-lg text-white'>Digital Collectibles</Link>
+            <Link href="https://app.zoolabs.io/" className='text-sm lg:text-lg text-white'>Digital Collectibles</Link>
             <Link href="/animals/red_wolf"  className='text-sm lg:text-lg text-white'>Red Wolf</Link>
             <Link href="/animals/nubian_giraffe" className='text-sm lg:text-lg text-white'>Nubian Giraffe</Link>
             <Link href="/animals/amur_leopard" className='text-sm lg:text-lg text-white'>Amur Leopard</Link>
@@ -41,7 +47,7 @@ function Footer() {
         <div className='flex flex-col space-y-8'>
             <Link href="/terms" className='text-sm lg:text-lg text-white'>Terms of Use</Link>
             <Link href="https://zoolabs.io" className='text-sm lg:text-md text-white'>Labs</Link>
-            <p className='text-sm lg:text-md text-white'>hello@zoo.ngo</p>
+            <Link href={`mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}`} onClick={sendEmail} className='text-sm lg:text-md text-white'>{'hello@zoo.ngo'}</Link>
         </div>
       </div>
     </div>
@@ -58,12 +64,12 @@ function Footer() {
             <Link href="/donation" className='text-lg text-white'>Donate</Link>
         </div>
         <div className='flex items-center space-x-2 text-white pt-10'>
-                <Link href="https://twitter.com/zoo_labs" legacyBehavior><FaTwitter /></Link>
-                <Link href="#telegram" legacyBehavior><FaTelegram /></Link>
-                <Link href="https://instagram.com/zoolabs.io" legacyBehavior><FaInstagram /></Link>
-                <Link href="#discord" legacyBehavior><FaDiscord /></Link>
-                <Link href="#medium" legacyBehavior><BsMedium /></Link>
-                <Link href="#youtube" legacyBehavior><FaYoutube /></Link>
+          <Link href="https://twitter.com/zoo_labs" legacyBehavior><FaTwitter /></Link>
+          <Link href="https://t.me/zooofficial" legacyBehavior><FaTelegram /></Link>
+          <Link href="https://instagram.com/zoolabs.io" legacyBehavior><FaInstagram /></Link>
+          <Link href="https://discord.gg/AqrYhChx5b" legacyBehavior><FaDiscord /></Link>
+          <Link href="https://zoolabsofficial.medium.com" legacyBehavior><BsMedium /></Link>
+          <Link href="https://youtu.be/6yYuYtMWgOU" legacyBehavior><FaYoutube /></Link>
         </div>
         <hr className='w-full bg-white my-4'/>
         <div className='flex items-center space-x-16'>

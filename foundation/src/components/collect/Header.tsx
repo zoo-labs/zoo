@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import dynamic from "next/dynamic";
+import Slider from 'react-slick';
 import React,{useState} from "react";
 const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
   ssr: false,
@@ -9,43 +10,59 @@ const animals = [
   {
     usdz: "/models/Wolf/WOLF_ADULT.usdz",
     glb: "/models/Wolf/WOLF_ADULT.glb",
+    url: "/animals/red_wolf",
     index: 0
   },
   {
     usdz: "/models/Giraffe/GIRAFFE_ADULT.usdz",
     glb: "/models/Giraffe/GIRAFFE_ADULT.glb",
+    url: "/animals/nubian_giraffe",
     index: 1
   },
   {
     usdz: "/models/Leopard/LEOPARD_ADULT.usdz",
     glb: "/models/Leopard/LEOPARD_ADULT.glb",
+    url: "/animals/amur_leopard",
     index: 2
   },
   {
     usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
     glb: "/models/Elephant/ELEPHANT_ADULT.glb",
+    url: "/animals/sumatran_elephant",
     index: 3
   },
   {
     usdz: "/models/Tiger/TIGER_ADULT.usdz",
     glb: "/models/Tiger/TIGER_ADULT.glb",
+    url: "/animals/siberian_tiger",
     index: 4
   },
   {
     usdz: "/models/Hippo/HIPPO_ADULT.usdz",
     glb: "/models/Hippo/HIPPO_ADULT.glb",
+    url: "/animals/pygmy_hippo",
     index: 5
   },
   {
     usdz: "/models/Rhino/RHINO_ADULT.usdz",
     glb: "/models/Rhino/RHINO_ADULT.glb",
+    url: "/animals/javen_rhino",
     index: 6
   }
 ];
 
 function Header() {
   const [animal ,setAnimal] = useState(animals[3]);
-
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    draggable: true,
+    autoplay: false,
+    arrows: true
+  };
   return (<>
     <div className="bg-black max-md:pt-20 max-md:hidden block">
       <div className='flex max-md:flex-col items-center justify-between pt-20 max-md:pt-8'>
@@ -80,7 +97,18 @@ function Header() {
       <div className='w-full px-8'>
           <h1 className='text-white text-5xl my-5'>Animals we support.</h1>
       </div>
-      <div className='flex justify-between pt-4 pl-4'>
+      <Slider {...settings} className='w-full py-10'>
+
+          {animals.map((data, index) => (
+          <Link href={data.url} className='max-sm:p-2 p-4'>
+               <ModelViewer className='aspect-square border rounded-full border-white'
+              usdz={data.usdz}
+              glb={data.glb}
+            ></ModelViewer>
+          </Link>
+        ))}
+      </Slider>
+      {/* <div className='flex justify-between pt-4 pl-4'>
         <div className='w-1/3'>
             <ModelViewer className='float-right max-md:h-[190px] aspect-square'
               usdz={animal.usdz}
@@ -96,7 +124,7 @@ function Header() {
           <Link href="/animals/sumatran_elephant"  onMouseOver={()=>setAnimal(animals[3])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 3 ? 'active' : ''} text-lg md:text-sm font-medium`} >{'Sumatran Elephant'}</Link>
           <Link href="/animals/javen_rhino"  onMouseOver={()=>setAnimal(animals[6])} className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ animal.index == 6 ? 'active' : ''} text-lg md:text-sm font-medium`} >{'Javan Rhino'}</Link>
         </div>
-      </div>
+      </div> */}
     </div>
     </>
   );

@@ -46,7 +46,7 @@ function CardList() {
                 alt=''
             /> */}
             <Link href={data.url} legacyBehavior>
-            <video autoPlay loop muted playsInline className="border rounded-xl p-1" >
+            <video autoPlay loop muted playsInline className="w-full aspect-[473/833] border rounded-xl p-1" >
             <source src={data.card}  type="video/webm"/>
                 <source src={data.card_mp4}  type="video/mp4"/>
                 
