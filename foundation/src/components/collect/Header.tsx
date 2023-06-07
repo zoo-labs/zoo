@@ -113,7 +113,7 @@ function Header() {
               usdz={data.usdz}
               glb={data.glb}
             ></ModelViewer>
-            <p className='text-[6px] text-white'>{data.name}</p>
+            <p className='text-[10px] text-white'>{data.name}</p>
             </>
           </Link>
         ))}
