@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-function InvolvedContent({title,content1,content2,image,direction,type}: {
+function InvolvedContent({id,title,content1,content2,image,direction,type}: {
     content1: string;
+    id: string;
     title: string;
     content2?: string;
     image: string;
@@ -9,7 +10,7 @@ function InvolvedContent({title,content1,content2,image,direction,type}: {
     type: string;
   }) {
   return (
-    <div className="bg-black lg:pt-52 md:pt-32 max-md:pt-32">
+    <div className="bg-black lg:pt-52 md:pt-32 max-md:pt-32" id={id}>
       <div className={`flex max-md:flex-col items-center justify-between md:pt-20 ${direction == '2' ? 'flex-row-reverse' : ''}`}>
         <div className='md:w-1/2 w-full'>
             <Image

@@ -293,6 +293,15 @@ svg {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 }
+.slick-list {
+  margin: 0 30px !important;
+}
+.slick-prev {
+  left: 10px !important;
+}
+.slick-next {
+  right: 10px !important;
+}
 .btn-flex {
   transform: rotateY(180deg);
 }
