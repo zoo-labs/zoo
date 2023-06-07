@@ -436,7 +436,7 @@ function CoreHeader({index}: {
         className="w-full lg:flex lg:flex-row xl:gap-16 2xl:gap-32 lg:gap-8 md:space-y-16 lg:space-y-0"
       >
         <div className="w-full relative flex items-center justify-center lg:basis-2/5 border border-white rounded-xl p-1">
-            <div className="right-0 bg-[#333] p-4 md:border rounded-xl border-white absolute top-0  max-md:top-2 max-md:right-2 z-50">
+            <div className="right-0 bg-[#333] p-4 md:border rounded-xl border-white absolute top-0  max-md:top-2 max-md:right-2 z-10">
                 <p className='text-md text-white'>{animal?.status}</p>
               {/* {animal?.status && (
                 <CustomTooltip title={animal?.status}>
