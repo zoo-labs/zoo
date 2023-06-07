@@ -11,10 +11,11 @@ import Avatars from '@/components/animal/Item';
 import Content from '@/components/animals/Content';
 import Carousel from '@/components/animals/Carousel';
 import animals from "@/components/animals/animals.json";
+
 import NotFoundPage from "../404";
-export default function HomePage() {
+
+export default function AnimalPage() {
   const router = useRouter();
-  console.log(router);
   const [animalRoute, setAnimalRoute] = useState(router.query.animal);
   const [animal, setAnimal] = useState(animals.find((animal) => animal.route === router.query.animal));
   React.useEffect(() => {
@@ -34,7 +35,6 @@ export default function HomePage() {
         <Content title={animal.description.subtitle} content={animal.description.desc} />
         <Carousel />
         <Aiding />
-
         <Newsletter />
         <Footer />
         </> }
