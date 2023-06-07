@@ -8,9 +8,11 @@ import { useCallback } from 'react'
 import { useDerivedInariState } from '../hooks'
 import { useTransactionAdder } from '../../transactions/hooks'
 
-interface TraitConfig {
-  overrides: string[];
-}
+import { utils } from 'ethers'
+
+type TraitConfig = {
+  overrides?: string[];
+};
 
 const TRAIT_CONFIG: TraitConfig = {
   overrides: ['execute', 'approveCallback', 'bentoApproveCallback'],
@@ -32,13 +34,18 @@ const useBentoBoxTrait = (props: BaseStrategyHook): BaseStrategyWithBentoBoxTrai
   //const trait = useTrait<BaseStrategyHook, BaseStrategyWithBentoBoxTraitHook>(props, TRAIT_CONFIG as BaseTraitConfig<BaseStrategyHook>);
   const { account } = useActiveWeb3React()
   const { zapIn } = useDerivedInariState()
-  const inariContract = useInariContract()
   const addTransaction = useTransactionAdder()
-  const bentoApproveCallback = useBentoMasterApproveCallback(inariContract.address, {
-    otherBentoBoxContract: inariContract,
-    contractName: 'Inari',
-    functionFragment: 'setBentoApproval',
-  })
+  const inariContract = useInariContract()
+
+  let bentoApproveCallback: any = null;
+
+  if (inariContract) {
+    bentoApproveCallback = useBentoMasterApproveCallback(inariContract.address, {
+      otherBentoBoxContract: inariContract,
+      contractName: 'Inari',
+      functionFragment: 'setBentoApproval',
+    })
+  }
 
   // Batch execute with permit if one is provided or else execute normally
   const batchExecute = useCallback(
@@ -50,11 +57,14 @@ const useBentoBoxTrait = (props: BaseStrategyHook): BaseStrategyWithBentoBoxTrai
       try {
         // If we have a permit, batch tx with permit
         if (bentoApproveCallback.permit) {
+          const exactValue = val.toExact(); // Get the exact value as a string
+          const valueWithDecimals = utils.parseUnits(exactValue, val.currency.decimals); // Convert to BigNumber
+
           const batch = [
             bentoApproveCallback.permit.data,
             inariContract?.interface?.encodeFunctionData(method, [
               account,
-              val.toExact().toBigNumber(val.currency.decimals),
+              valueWithDecimals,
             ]),
           ]
 
