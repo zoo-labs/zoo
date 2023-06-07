@@ -21,7 +21,7 @@ const TRAIT_CONFIG: TraitConfig = {
 export interface BaseStrategyWithBentoBoxTraitHook
   extends Omit<BaseStrategyHook, 'approveCallback' | 'bentoApproveCallback'>,
   BaseTrait {
-  approveCallback: [ApprovalState, () => Promise<void>] | null
+  approveCallback: [ApprovalState, () => Promise<void>, CurrencyAmount<Token>] | null
   bentoApproveCallback?: BentoMasterApproveCallback
   overrides: string[]
 }
@@ -37,15 +37,14 @@ const useBentoBoxTrait = (props: BaseStrategyHook): BaseStrategyWithBentoBoxTrai
   const addTransaction = useTransactionAdder()
   const inariContract = useInariContract()
 
-  let bentoApproveCallback: any = null;
-
-  if (inariContract) {
-    bentoApproveCallback = useBentoMasterApproveCallback(inariContract.address, {
+  const bentoApproveCallback = useBentoMasterApproveCallback(
+    inariContract?.address || "",
+    {
       otherBentoBoxContract: inariContract,
       contractName: 'Inari',
       functionFragment: 'setBentoApproval',
-    })
-  }
+    }
+  )
 
   // Batch execute with permit if one is provided or else execute normally
   const batchExecute = useCallback(
@@ -89,6 +88,7 @@ const useBentoBoxTrait = (props: BaseStrategyHook): BaseStrategyWithBentoBoxTrai
   // When we unzap from bentoBox we only need an EIP-712 permit,
   // so we don't have to check if we have approved inari to spend the token
   return {
+    ...props,
     ...trait,
     execute: batchExecute,
     approveCallback: !zapIn ? null : props.approveCallback,
