@@ -35,7 +35,7 @@ function FutureUpgrades() {
         <div className='w-3/5 max-md:w-full flex flex-col   px-8 xl:pl-24 2xl:pl-32 lg:pl-16 md:pl-8 2xl:pr-48'>
             <h1 className='text-white md:text-4xl lg:text-5xl xl:text-6xl max-md:text-3xl max-md:my-5 md:pb-4 lg:pb-8 xl:pb-10'>Want More?</h1>
             <p className='text-white md:text-sm lg:text-lg xl:text-2xl max-md:pb-4 md:pb-4 lg:pb-12 '>Join our DAO to suggest upgrades and make votes for developments you want incorporated in Zoo!</p>
-            <Link href='#' className='flex items-center justify-center text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10 border border-white rounded-full px-4 w-[200px] py-2'>
+            <Link href='#' className='flex items-center justify-center text-white md:text-sm lg:text-md xl:text-lg max-md:mt-4 border border-white rounded-full px-4 w-[200px] py-2'>
                 <>
                 <span className='pr-[15px]'>Join Zoo DAO</span>
                 <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +46,7 @@ function FutureUpgrades() {
             </Link>
         </div>
       </div>
-      <div className='flex items-baseline pt-24 2xl:gap-8'>
+      <div className='grid lg:grid-cols-4 md:grid-cols-2 items-baseline pt-24 lg:gap-4 md:gap-8 2xl:gap-8 max-md:px-8 max-md:grid-cols-1 max-md:gap-8'>
       {comments.map((data, index) => (
         <Accordion className='flex-1' open={true} header={data.title} content={data.comment}/>
       ))}

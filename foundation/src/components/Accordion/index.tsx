@@ -19,7 +19,7 @@ function Accordion({
         className={`text-white border border-white rounded-xl ${className}`}
       >
         <div className={`flex px-4 py-3 justify-between items-center ${isOpen ? 'border-b border-white rounded-xl' : ''}`}>
-            <p className="text-2xl" dangerouslySetInnerHTML={{ __html: header }}></p>
+            <p className="2xl:text-2xl xl:text-xl" dangerouslySetInnerHTML={{ __html: header }}></p>
             <Image
                 className={`cursor-pointer ${isOpen ? '': 'rotate-180'}`}
                 src="/icons/caret.svg"
@@ -30,7 +30,7 @@ function Accordion({
             />
         </div>
         <div className={`${isOpen ? 'block' : 'hidden'}`}>
-            <p className="px-4 py-6 text-sm min-h-[232px]" dangerouslySetInnerHTML={{ __html: content }}></p>
+            <p className="px-4 py-6 text-sm xl:min-h-[290px] lg:min-h-[350px] md:min-h-[270px]" dangerouslySetInnerHTML={{ __html: content }}></p>
         </div>
       </div>
   );
