@@ -8,7 +8,8 @@ function Campaign() {
 
             <p className='text-white md:text-lg lg:text-xl xl:text-3xl max-md:text-lg pb-10 pt-8'>A self-tailored campaign to raise funds for<br /> these animals by leveraging your network. </p>
             <Link
-                href="/about"
+                href="/campaign_guide"
+                rel="noopener noreferrer" target="_blank"
                 className="text-black w-[180px] hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full border-white border-2 text-xl font-medium md:block"
             >
               {'Learn More'}
