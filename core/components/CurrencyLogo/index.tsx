@@ -1,4 +1,4 @@
-import { ChainId, Currency, WNATIVE } from "@zoolabs/zdk";
+import { ChainId, Currency, Token, WNATIVE } from "@zoolabs/zdk";
 import React, { FunctionComponent, useMemo } from "react";
 
 import Logo from "../Logo";
@@ -104,7 +104,7 @@ const LOGO: { readonly [chainId in ChainId]?: string } = {
 };
 
 interface CurrencyLogoProps {
-  currency?: Currency;
+  currency?: Currency|Token;
   size?: string | number;
   style?: React.CSSProperties;
   className?: string;

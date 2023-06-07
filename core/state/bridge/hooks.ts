@@ -19,8 +19,25 @@ import {
 } from "./action";
 import { notify } from "components/alertMessage";
 import { useRouter } from "next/router";
-import Web3 from "web3";
+//import Web3 from "web3";
 import { AppState } from "state";
+
+import { utils } from "ethers"
+
+const oneInch = {
+  hasAllowance: ({ chain, fromTokenAddress, fromAddress, amount }) => {
+    // Mock logic here
+    return Promise.resolve(true); // Mocking as if there is always enough allowance
+  },
+  approve: ({ chain, tokenAddress, fromAddress }) => {
+    // Mock logic here
+    return Promise.resolve(true); // Mocking as if the approval always succeeds
+  },
+  swap: ({ chain, fromTokenAddress, toTokenAddress, amount, fromAddress, slippage }) => {
+    // Mock logic here
+    return Promise.resolve({ status: 'success' }); // Mocking as if the swap always succeeds
+  },
+};
 
 export function useAllTokens(): { [chainId in ChainId]?: Token[] } {
   return useSelector((state: AppState) => state.bridge.tokens);
@@ -75,7 +92,8 @@ export function useGetAvailableTokens(): (chain?: number) => void {
     } catch (error) {
       console.log("error in useGetAvailableTokens", error);
     }
-  }, [Moralis.Plugins.oneInch, dispatch]);
+  //}, [Moralis.Plugins.oneInch, dispatch]);
+  }, [dispatch]);
   // const supported_networks = SUPPORTED_NETWORKS;
   // const native = NATIVE;
   // console.log("chainId ==>", native, supported_networks);
@@ -142,7 +160,6 @@ export function useUpdateActiveChains(): (chain: ChainId, side: 'from' | 'to') =
 }
 
 export function useFetchUserBalances(): () => void {
-
   const { chainId, account } = useActiveWeb3React();
   const dispatch = useDispatch();
   //const Web3Api = useMoralisWeb3Api();
@@ -182,8 +199,10 @@ export function useFetchUserBalances(): () => void {
           chain: SUPPORTED_NETWORKS[chain as string].chainId,
           address: account,
         };
-        const nativeBalance = await Web3Api.account.getNativeBalance(options);
-        const balanc = await Web3Api.account.getTokenBalances(options);
+        //const nativeBalance = await Web3Api.account.getNativeBalance(options);
+        //const balanc = await Web3Api.account.getTokenBalances(options);
+        const nativeBalance = {balance: 0}
+        const balanc = []
 
         const newbalances = [
           ...balanc,
@@ -257,7 +276,7 @@ export function useFetchUserBalances(): () => void {
 // }
 const customChainFunc = async (lBTCContract, account) => {
 
-  const value = await Web3.utils.fromWei(
+  const value = await utils.formatUnits(
     (await lBTCContract?.balanceOf(account)).toString(),
     "ether"
   );
@@ -336,20 +355,20 @@ export function useSwap(): () => void {
   return useCallback(async () => {
     // let amount = Number(fromAmount * 10 ** currentTrade.from.decimals);
     dispatch(loading(true));
-    const amount = Moralis.Units.Token(
+    const amount = utils.parseUnits(
       currentAmount["from"],
       currentTrade.from.decimals
     ).toString();
 
     if (currentTrade.from.symbol !== "ETH") {
-      const allowance = await Moralis.Plugins.oneInch.hasAllowance({
+      const allowance = await oneInch.hasAllowance({
         chain: "eth", // The blockchain you want to use (eth/bsc/polygon)
         fromTokenAddress: currentTrade.from.address, // The token you want to swap
         fromAddress: account, // Your wallet address
         amount: amount,
       });
       if (!allowance) {
-        await Moralis.Plugins.oneInch.approve({
+        await oneInch.approve({
           chain: "eth", // The blockchain you want to use (eth/bsc/polygon)
           tokenAddress: currentTrade.from.address, // The token you want to swap
           fromAddress: account, // Your wallet address
@@ -357,7 +376,7 @@ export function useSwap(): () => void {
       }
     }
     try {
-      let receipt = await Moralis.Plugins.oneInch.swap({
+      let receipt = await oneInch.swap({
         chain: "eth", // The blockchain you want to use (eth/bsc/polygon)
         fromTokenAddress: currentTrade.from.address, // The token you want to swap
         toTokenAddress: currentTrade.to.address, // The token you want to receive
@@ -367,7 +386,6 @@ export function useSwap(): () => void {
       });
       //   alert("Swap Complete");
       notify("Swap Complete", "success");
-
       dispatch(loading(false));
     } catch (error) {
       console.error("error in try swappp", error);
@@ -410,9 +428,9 @@ export function useGetTokenFiatValue(): (address) => Promise<number> {
           chain: SUPPORTED_NETWORKS[chainId].chainId,
           address,
         };
-        const price = await Web3Api.token.getTokenPrice(options);
-
-        return price.usdPrice;
+        //const price = await Web3Api.token.getTokenPrice(options);
+        //return price.usdPrice;
+        return 0
       } catch (error) {
         // console.log("valll here error in useGetTokenFiatValue", error);
       }
@@ -428,7 +446,7 @@ export const useTokenBalance = (token) => {
     (balance) => balance.symbol === token.symbol
   );
   return balances.length > 0 && tokenBalance
-    ? Moralis.Units.FromWei(tokenBalance.balance)
+    ? utils.formatUnits(tokenBalance.balance, "gwei")
     : "0";
 };
 
