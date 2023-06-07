@@ -70,10 +70,12 @@ const useHasPermitTokenTrait = (props: BaseStrategyHook): BaseStrategyWithHasPer
   // When we unzap and the token allows for a batched permitToken we don't have to approve inari to spend outputToken.
   // We can use the function permitToken
   return {
+    ...props,
     ...trait,
     approveCallback: [
       props.approveCallback[0],
       gatherPermitSignature ? gatherPermitSignature : props.approveCallback[1],
+      inputValue,
     ],
     execute: batchExecute,
   }

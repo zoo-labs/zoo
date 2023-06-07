@@ -151,10 +151,10 @@ export function useTransactionPopups({ onPendingTx, onTransactionReceipt }: UseT
   const addPopup = useAddPopup()
   const addTransaction = useTransactionAdder()
 
-  const addErrorPopup = (error) => {
+  const addErrorPopup = (error: any) => {
     return addPopup({
       txn: {
-        hash: null,
+        hash: '',
         summary: formatError(error),
         success: false,
       },
@@ -164,7 +164,7 @@ export function useTransactionPopups({ onPendingTx, onTransactionReceipt }: UseT
   const addWarningPopup = (summary: string) => {
     return addPopup({
       txn: {
-        hash: null,
+        hash: '',
         summary,
         success: false,
       },

@@ -1,3 +1,5 @@
+import { useEffect, useMemo } from 'react'
+
 // Define an interface for the Trait Configuration
 interface TraitConfig {
   overrides?: string[];

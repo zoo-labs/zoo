@@ -1,9 +1,10 @@
-import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
+import { Action, configureStore, Store, ThunkAction } from '@reduxjs/toolkit'
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import reducer from './reducer'
 
-let store
+export type RootState = ReturnType<typeof reducer>;
+let store: Store<RootState> | undefined;
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', "store"]
 
@@ -16,7 +17,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer)
 
-function makeStore(preloadedState = undefined) {
+function makeStore(preloadedState: Partial<RootState> | undefined = undefined) {
   return configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
@@ -33,7 +34,7 @@ function makeStore(preloadedState = undefined) {
   })
 }
 
-export const getOrCreateStore = (preloadedState = undefined) => {
+export const getOrCreateStore = (preloadedState: Partial<RootState> | undefined = undefined) => {
   let _store = store ?? makeStore(preloadedState)
 
   // After navigating to a page with an initial Redux state, merge that state
