@@ -11,42 +11,49 @@ const animals = [
     usdz: "/models/Wolf/WOLF_ADULT.usdz",
     glb: "/models/Wolf/WOLF_ADULT.glb",
     url: "/animals/red_wolf",
+    name: "Red Wolf",
     index: 0
   },
   {
     usdz: "/models/Giraffe/GIRAFFE_ADULT.usdz",
     glb: "/models/Giraffe/GIRAFFE_ADULT.glb",
     url: "/animals/nubian_giraffe",
+    name: "Nubian Giraffe",
     index: 1
   },
   {
     usdz: "/models/Leopard/LEOPARD_ADULT.usdz",
     glb: "/models/Leopard/LEOPARD_ADULT.glb",
     url: "/animals/amur_leopard",
+    name: "Amur Leopard",
     index: 2
   },
   {
     usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
     glb: "/models/Elephant/ELEPHANT_ADULT.glb",
     url: "/animals/sumatran_elephant",
+    name: "Sumatran Elephant",
     index: 3
   },
   {
     usdz: "/models/Tiger/TIGER_ADULT.usdz",
     glb: "/models/Tiger/TIGER_ADULT.glb",
     url: "/animals/siberian_tiger",
+    name: "Siberian Tiger",
     index: 4
   },
   {
     usdz: "/models/Hippo/HIPPO_ADULT.usdz",
     glb: "/models/Hippo/HIPPO_ADULT.glb",
     url: "/animals/pygmy_hippo",
+    name: "Pygmy Hippo",
     index: 5
   },
   {
     usdz: "/models/Rhino/RHINO_ADULT.usdz",
     glb: "/models/Rhino/RHINO_ADULT.glb",
     url: "/animals/javen_rhino",
+    name: "Javan Rhino",
     index: 6
   }
 ];
@@ -100,11 +107,14 @@ function Header() {
       <Slider {...settings} className='w-full py-10'>
 
           {animals.map((data, index) => (
-          <Link href={data.url} className='max-sm:p-2 p-4'>
-               <ModelViewer className='aspect-square border rounded-full border-white'
+          <Link href={data.url} className='flex flex-col items-center text-center space-y-4 max-sm:p-2 p-4'>
+            <>
+               <ModelViewer className='aspect-square border rounded-full border-white bg-black'
               usdz={data.usdz}
               glb={data.glb}
             ></ModelViewer>
+            <p className='text-[6px] text-white'>{data.name}</p>
+            </>
           </Link>
         ))}
       </Slider>
