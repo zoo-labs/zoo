@@ -127,6 +127,10 @@ model-viewer {
     -webkit-tap-highlight-color: rgba(255,255,255,0);
   
 }
+.read-or-hide{
+  color: rgb(192,192,192);
+  cursor: pointer;
+}
 * {
   scroll-behavior: smooth;
 }
