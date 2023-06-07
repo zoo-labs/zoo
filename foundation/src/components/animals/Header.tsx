@@ -53,16 +53,16 @@ function Header({title,content,front,back,front_m,back_m}: {
 
             <div className='flex items-center md:pt-10 space-x-8'>
                 <Link
-                    href="/donate"
+                    href="#"
                     className="text-black hover:bg-gray-700 bg-white hover:text-white px-12 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
-                    Donate
+                    Buy $25
                 </Link>
                 <Link
                     href="#save"
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
-                    + Save
+                    + Cart
                 </Link>
             </div>
         </div>
