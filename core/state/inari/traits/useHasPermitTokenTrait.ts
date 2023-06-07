@@ -8,6 +8,8 @@ import { useDerivedInariState } from '../hooks'
 import { useERC20Permit } from '../../../hooks/useERC20Permit'
 import { useTransactionAdder } from '../../transactions/hooks'
 
+import { utils } from 'ethers'
+
 const TRAIT_CONFIG = {
   overrides: ['approveCallback', 'execute'],
 }
@@ -32,14 +34,18 @@ const useHasPermitTokenTrait = (props: BaseStrategyHook): BaseStrategyWithHasPer
     async (val: CurrencyAmount<Token>) => {
       const method = zapIn ? props.general.zapMethod : props.general.unzapMethod
 
+      if (!inariContract) return
+
       try {
         // If we have a permit, batch tx with permit
         if (signatureData) {
+          const exactValue = val.toExact(); // Get the exact value as a string
+          const valueWithDecimals = utils.parseUnits(exactValue, val.currency.decimals); // Convert to BigNumber
           const batch = [
             signatureData,
             inariContract?.interface?.encodeFunctionData(method, [
               account,
-              val.toExact().toBigNumber(val.currency.decimals),
+              valueWithDecimals,
             ]),
           ]
 

@@ -9,6 +9,7 @@ import useSushiPerXSushi from '../../../hooks/useXSushiPerSushi'
 import { BentoPermit } from '../../../hooks/useBentoMasterApproveCallback'
 
 import { BigNumber } from "@ethersproject/bignumber"
+import { utils } from 'ethers'
 
 export interface useBaseStrategyInterface {
   id: string
@@ -83,49 +84,22 @@ const useBaseStrategy = ({ id, general, tokenDefinitions }: useBaseStrategyInter
     [account, addTransaction, general.outputSymbol, general.unzapMethod, general.zapMethod, inariContract, zapIn]
   )
 
-  // Default function for calculating the output based on the input
-  // This one is converting Sushi to xSushi and vice-versa.
-  // Function can be overridden or enhanced if you need custom input to output calculations
-  //const calculateOutputFromInput = useCallback(
-  //  (zapIn: boolean, inputValue: string, inputToken: Token, outputToken: Token) => {
-  //    if (!sushiPerXSushi || !inputValue) return null
-
-  //  const inputValueBigNumber = BigNumber.from(inputValue);
-  //  const sushiPerXSushiBigNumber = BigNumber.from(sushiPerXSushi);
-
-  //  return zapIn
-  //    ? inputValueBigNumber
-  //        .mul(BigNumber.from(10).pow(18))
-  //        .div(sushiPerXSushiBigNumber.mul(BigNumber.from(10).pow(18)))
-  //    : inputValueBigNumber
-  //        .mul(sushiPerXSushiBigNumber.mul(BigNumber.from(10).pow(18)))
-  //        .div(BigNumber.from(10).pow(18));
-
-  //    //return (
-  //    //  zapIn
-  //    //    ? inputValue.toBigNumber(18).mulDiv(e10(18), sushiPerXSushi.toString().toBigNumber(18))
-  //    //    : inputValue.toBigNumber(18).mulDiv(sushiPerXSushi.toString().toBigNumber(18), e10(18))
-  //    //)?.toFixed(18)
-  //  },
-  //  [sushiPerXSushi]
-  //)
-
   const calculateOutputFromInput = useCallback(
-    async (zapIn: boolean, inputValue: string, inputToken: Token, outputToken: Token): Promise<string> => {
-      if (!sushiPerXSushi || !inputValue) return '';
+    async (zapIn: boolean, inputValue: string, inputToken: Token, outputToken: Token) => {
+      if (!sushiPerXSushi || !inputValue) return Promise.resolve("0"); // Return "0" instead of null.
 
-      const inputValueBigNumber = BigNumber.from(inputValue);
-      const sushiPerXSushiBigNumber = BigNumber.from(sushiPerXSushi);
+      const inputValueBigNumber = utils.parseUnits(inputValue, 18);
+      const sushiPerXSushiBigNumber = utils.parseUnits(sushiPerXSushi, 18);
 
       const outputValueBigNumber = zapIn
         ? inputValueBigNumber
             .mul(BigNumber.from(10).pow(18))
-            .div(sushiPerXSushiBigNumber.mul(BigNumber.from(10).pow(18)))
+            .div(sushiPerXSushiBigNumber)
         : inputValueBigNumber
-            .mul(sushiPerXSushiBigNumber.mul(BigNumber.from(10).pow(18)))
+            .mul(sushiPerXSushiBigNumber)
             .div(BigNumber.from(10).pow(18));
 
-      return outputValueBigNumber.toString();
+      return utils.formatUnits(outputValueBigNumber, 18);
     },
     [sushiPerXSushi]
   )
