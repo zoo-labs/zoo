@@ -43,8 +43,8 @@ import {
 import { createReducer } from "@reduxjs/toolkit";
 import { updateVersion } from "../global/actions";
 import { MyNFT, ZooState } from "./types";
-import { isEmptyObj } from "functions";
-import { Auction, AvailableEgg } from "types";
+import { isEmptyObj } from "../../functions";
+import { Auction, AvailableEgg } from "../../types";
 
 const currentTimestamp = () => new Date().getTime();
 
