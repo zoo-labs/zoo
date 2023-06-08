@@ -104,7 +104,7 @@ function Header() {
       <div className='w-full px-8'>
           <h1 className='text-white text-5xl my-5'>Animals we support.</h1>
       </div>
-      <Slider {...settings} className='w-full py-10'>
+      <Slider {...settings} className='w-full py-10 collect-slider'>
 
           {animals.map((data, index) => (
           <Link href={data.url} className='flex flex-col items-center text-center space-y-4 max-sm:p-2 p-4'>
