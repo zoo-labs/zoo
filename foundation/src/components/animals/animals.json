@@ -107,7 +107,7 @@
         "usdz": "/models/Tiger/TIGER_TEEN.usdz",
         "glb": "/models/Tiger/TIGER_TEEN.glb",
         "camera_orbit": "",
-        "camera_target": "0m 0.05m 0m"
+        "camera_target": "0m 0.5m 0m"
       },
       {
         "title": "Adult Tiger",
@@ -139,7 +139,7 @@
         "usdz": "/models/Leopard/LEOPARD_BABY.usdz",
         "glb": "/models/Leopard/LEOPARD_BABY.glb",
         "camera_orbit": "",
-        "camera_target": ""
+        "camera_target": "0m 0.02m 0m"
       },
       {
         "title": "Teen Leopard",
@@ -179,7 +179,7 @@
         "usdz": "/models/Wolf/WOLF_BABY.usdz",
         "glb": "/models/Wolf/WOLF_BABY.glb",
         "camera_orbit": "",
-        "camera_target": ""
+        "camera_target": "0m 0.05m 0m"
       },
       {
         "title": "Teen Wolf",
@@ -219,7 +219,7 @@
         "usdz": "/models/Giraffe/GIRAFFE_BABY.usdz",
         "glb": "/models/Giraffe/GIRAFFE_BABY.glb",
         "camera_orbit": "",
-        "camera_target": ""
+        "camera_target": "0m 0.3m 0m"
       },
       {
         "title": "Teen Giraffe",
