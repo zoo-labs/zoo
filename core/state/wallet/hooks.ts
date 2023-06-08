@@ -42,7 +42,7 @@ export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
       addresses.reduce<{ [address: string]: CurrencyAmount<Currency> }>((memo, address, i) => {
         const value = results?.[i]?.result?.[0]
         if (value && chainId)
-          memo[address] = CurrencyAmount.fromRawAmount(NATIVE[chainId], JSBI.BigInt(value.toString()))
+          memo[address] = CurrencyAmount.fromRawAmount((NATIVE as any)[chainId], JSBI.BigInt(value.toString()))
         return memo
       }, {}),
     [addresses, chainId, results]

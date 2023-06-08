@@ -1,4 +1,4 @@
-import { Toast } from "components/Toast";
+import { Toast } from "../components/Toast";
 import BigNumber from "bignumber.js";
 
 export interface Drop {
@@ -147,8 +147,8 @@ export interface CardEgg extends Egg {
 
 export type EggCardType = {
   egg: CardEgg;
-  hatchEgg: (egg) => void;
-  hatchEggReady: (egg) => void;
+  hatchEgg: (egg: any) => void;
+  hatchEggReady: (egg: any) => void;
   hatching?: boolean;
   viewItem: () => void;
   // eggGroup: {BASIC: number, HYBRID: number}
