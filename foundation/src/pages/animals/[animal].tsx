@@ -34,8 +34,8 @@ export default function AnimalPage() {
         { animal == undefined ? <NotFoundPage /> : <>
         <Seo />
         <Navbar />
-        <CoreHeader index={animal_index}/>
-        <FutureUpgrades />
+        {/* <CoreHeader index={animal_index}/>
+        <FutureUpgrades /> */}
         <Header title={animal.name} content={animal.description.head} front={animal.card_front} back={animal.card_back} front_m={animal.card_front_mp4} back_m={animal.card_back_mp4}/>
         <Avatars list={animal.avatars} />
         <Content title={animal.description.subtitle} content={animal.description.desc} />
