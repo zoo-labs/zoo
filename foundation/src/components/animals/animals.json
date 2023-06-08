@@ -17,19 +17,25 @@
         "title": "Baby Hippo",
         "href": "#babyhippo",
         "usdz": "/models/Hippo/HIPPO_BABY.usdz",
-        "glb": "/models/Hippo/HIPPO_BABY.glb"
+        "glb": "/models/Hippo/HIPPO_BABY.glb",
+        "camera_orbit": "0deg 75deg 0%",
+        "camera_target": "0m 0m 0m"
       },
       {
         "title": "Teen Hippo",
         "href": "#teenhippo",
         "usdz": "/models/Hippo/HIPPO_TEEN.usdz",
-        "glb": "/models/Hippo/HIPPO_TEEN.glb"
+        "glb": "/models/Hippo/HIPPO_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Adult Hippo",
         "href": "#",
         "usdz": "/models/Hippo/HIPPO_ADULT.usdz",
-        "glb": "/models/Hippo/HIPPO_ADULT.glb"
+        "glb": "/models/Hippo/HIPPO_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       }
     ]
   },
@@ -51,19 +57,25 @@
         "title": "Baby Rhino",
         "href": "#",
         "usdz": "/models/Rhino/RHINO_BABY.usdz",
-        "glb": "/models/Rhino/RHINO_BABY.glb"
+        "glb": "/models/Rhino/RHINO_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Teen Rhino",
         "href": "#",
         "usdz": "/models/Rhino/RHINO_TEEN.usdz",
-        "glb": "/models/Rhino/RHINO_TEEN.glb"
+        "glb": "/models/Rhino/RHINO_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Adult Rhino",
         "href": "#",
         "usdz": "/models/Rhino/RHINO_ADULT.usdz",
-        "glb": "/models/Rhino/RHINO_ADULT.glb"
+        "glb": "/models/Rhino/RHINO_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       }
     ]
   },
@@ -85,19 +97,25 @@
         "title": "Baby Tiger",
         "href": "#",
         "usdz": "/models/Tiger/TIGER_BABY.usdz",
-        "glb": "/models/Tiger/TIGER_BABY.glb"
+        "glb": "/models/Tiger/TIGER_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Teen Tiger",
         "href": "#",
         "usdz": "/models/Tiger/TIGER_TEEN.usdz",
-        "glb": "/models/Tiger/TIGER_TEEN.glb"
+        "glb": "/models/Tiger/TIGER_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Adult Tiger",
         "href": "#",
         "usdz": "/models/Tiger/TIGER_ADULT.usdz",
-        "glb": "/models/Tiger/TIGER_ADULT.glb"
+        "glb": "/models/Tiger/TIGER_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       }
     ]
   },
@@ -119,19 +137,25 @@
         "title": "Baby Leopard",
         "href": "#",
         "usdz": "/models/Leopard/LEOPARD_BABY.usdz",
-        "glb": "/models/Leopard/LEOPARD_BABY.glb"
+        "glb": "/models/Leopard/LEOPARD_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Teen Leopard",
         "href": "#",
         "usdz": "/models/Leopard/LEOPARD_TEEN.usdz",
-        "glb": "/models/Leopard/LEOPARD_TEEN.glb"
+        "glb": "/models/Leopard/LEOPARD_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Adult Leopard",
         "href": "#",
         "usdz": "/models/Leopard/LEOPARD_ADULT.usdz",
-        "glb": "/models/Leopard/LEOPARD_ADULT.glb"
+        "glb": "/models/Leopard/LEOPARD_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       }
     ]
   },
@@ -153,19 +177,25 @@
         "title": "Baby Wolf",
         "href": "#",
         "usdz": "/models/Wolf/WOLF_BABY.usdz",
-        "glb": "/models/Wolf/WOLF_BABY.glb"
+        "glb": "/models/Wolf/WOLF_BABY.glb",
+        "camera_orbit": "0deg 75deg 0m",
+        "camera_target": "0m 0m 0m"
       },
       {
         "title": "Teen Wolf",
         "href": "#",
         "usdz": "/models/Wolf/WOLF_TEEN.usdz",
-        "glb": "/models/Wolf/WOLF_TEEN.glb"
+        "glb": "/models/Wolf/WOLF_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": "0m 0.04m 0m"
       },
       {
         "title": "Adult Wolf",
         "href": "#",
         "usdz": "/models/Wolf/WOLF_ADULT.usdz",
-        "glb": "/models/Wolf/WOLF_ADULT.glb"
+        "glb": "/models/Wolf/WOLF_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       }
     ]
   },
@@ -187,19 +217,25 @@
         "title": "Baby Giraffe",
         "href": "#",
         "usdz": "/models/Giraffe/GIRAFFE_BABY.usdz",
-        "glb": "/models/Giraffe/GIRAFFE_BABY.glb"
+        "glb": "/models/Giraffe/GIRAFFE_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Teen Giraffe",
         "href": "#",
         "usdz": "/models/Giraffe/GIRAFFE_TEEN.usdz",
-        "glb": "/models/Giraffe/GIRAFFE_TEEN.glb"
+        "glb": "/models/Giraffe/GIRAFFE_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Adult Giraffe",
         "href": "#",
         "usdz": "/models/Giraffe/GIRAFFE_ADULT.usdz",
-        "glb": "/models/Giraffe/GIRAFFE_ADULT.glb"
+        "glb": "/models/Giraffe/GIRAFFE_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       }
     ]
   },
@@ -221,19 +257,25 @@
         "title": "Baby Elephant",
         "href": "#",
         "usdz": "/models/Elephant/ELEPHANT_BABY.usdz",
-        "glb": "/models/Elephant/ELEPHANT_BABY.glb"
+        "glb": "/models/Elephant/ELEPHANT_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Teen Elephant",
         "href": "#",
         "usdz": "/models/Elephant/ELEPHANT_TEEN.usdz",
-        "glb": "/models/Elephant/ELEPHANT_TEEN.glb"
+        "glb": "/models/Elephant/ELEPHANT_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Adult Elephant",
         "href": "#",
         "usdz": "/models/Elephant/ELEPHANT_ADULT.usdz",
-        "glb": "/models/Elephant/ELEPHANT_ADULT.glb"
+        "glb": "/models/Elephant/ELEPHANT_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
       }
     ]
   }
