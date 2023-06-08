@@ -6,6 +6,8 @@ const ModelViewer = ({
   glb = "/models/Tiger/TIGER_BABY.glb",
   usdz = "/models/Tiger/TIGER_BABY.usdz",
   zoom = "auto",
+  camera_orbit = "",
+  camera_target = "",
   usdzFile = false,
   multiple = false,
   onClick = () => {},
@@ -30,6 +32,8 @@ const ModelViewer = ({
         src=${glb}
         loading="auto"
         reveal="auto"
+        camera-orbit='${camera_orbit}'
+        camera-target='${camera_target}'
         alt=""
         shadow-intensity="1"
         camera-controls
