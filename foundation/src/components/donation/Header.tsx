@@ -15,12 +15,12 @@ function Header() {
             <p className='lg:text-lg md:text-md text-white pb-8'>"It is our driving purpose to deepen the connection humans have with animals by creating sustainable animal sanctuaries for endangered species. Share the Zoo Sanctuary with local visitors, educators, host fundraisers/events, and get the Zoo Community as involved as possible to saving endandered animals all over the world. You could save a life todav w/ a monthlv donation or a one.-time contribution.
 "</p>
             <div className='lg:flex hidden items-center justify-between'>
-                <div className='flex flex-col items-center space-y-2'>
-                    <Switch onChange={handleChange} checked={checked} />
-                    <p className='text-xs text-center text-white'>Switch to Monthly</p>
+                <div className='flex flex-col items-center space-y-1 lg:space-y-2'>
+                    <Switch onChange={handleChange} height={24} width={48}  uncheckedIcon={false} checkedIcon={false} checked={checked} />
+                    <p className='text-xs leading-[0.5rem] text-center text-white'>Switch to Monthly</p>
                 </div>
-                <input className=' w-1/3 rounded-md outline-none text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $' />
-                <button className='w-1/3 rounded-md px-4 py-2 text-white bg-blue'>Donate Now</button>
+                <input className=' w-1/3 rounded-md outline-none text-center px-4 border border-white py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $' />
+                <button className='w-1/3 rounded-md px-4 py-2 text-white border border-white md:text-sm lg:text-md xl:text-lg'>Donate Now</button>
             </div>
         </div>
         <div className='md:w-1/2 xl:pr-32 pr-4 max-md:w-full'>
@@ -33,13 +33,13 @@ function Header() {
             />
         </div>
       </div>
-      <div className='md:flex md:pl-16 max-md:flex max-md:space-x-4 max-md:px-4 lg:hidden w-2/3 max-md:w-full items-center justify-between md:pb-32'>
-          <div className='flex w-1/3 flex-col items-center space-y-2'>
-              <Switch onChange={handleChange} checked={checked} />
-              <p className='text-xs text-center text-white'>Switch to Monthly</p>
+      <div className='md:flex md:pl-16 max-md:flex space-x-4 max-md:px-4 lg:hidden w-2/3 max-md:w-full items-center justify-between md:pb-32'>
+          <div className='flex w-1/3 flex-col items-center space-y-1'>
+              <Switch onChange={handleChange} height={20} width={40}  uncheckedIcon={false} checkedIcon={false} checked={checked} />
+              <p className='text-[0.5rem] leading-[0.5rem] text-center text-white'>Switch to Monthly</p>
           </div>
-          <input className=' w-1/3 rounded-md max-md:rounded-full outline-none max-md:text-xs  text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $ Amount' />
-          <button className='w-1/3 rounded-md max-md:rounded-full px-4 py-2 max-md:px-2 max-md:text-xs text-white bg-blue'>Donate Now</button>
+          <input className=' w-1/3 rounded-md max-md:rounded-full outline-none max-md:text-xs  border border-white text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $ Amount' />
+          <button className='w-1/3 rounded-md max-md:rounded-full px-4 py-2 max-md:px-2 max-md:text-xs md:text-sm border border-white text-white'>Donate Now</button>
       </div>
     </div>
   );
