@@ -302,7 +302,7 @@ svg {
 }
 }
 .slick-list {
-  margin: 0 30px !important;
+  /* margin: 0 30px !important; */
 }
 .slick-prev {
   left: 10px !important;
