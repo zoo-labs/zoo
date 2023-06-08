@@ -4,7 +4,7 @@ const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
   ssr: false,
 });
 function Item({list}: {
-  list?: { title: string; href: string; usdz: string; glb: string;}[];
+  list?: { title: string; href: string; usdz: string; glb: string; camera_orbit: string; camera_target: string;}[];
 }) {
     const animals = list != undefined ? list : [
         {
@@ -12,36 +12,48 @@ function Item({list}: {
           href: "/animals/nubian_giraffe",
           usdz: "/models/Giraffe/GIRAFFE_ADULT.usdz",
           glb: "/models/Giraffe/GIRAFFE_ADULT.glb",
+          camera_orbit: "",
+          camera_target: ""
         },
         {
           title: "Amur Leopard",
           href: "/animals/amur_leopard",
           usdz: "/models/Leopard/LEOPARD_ADULT.usdz",
           glb: "/models/Leopard/LEOPARD_ADULT.glb",
+          camera_orbit: "",
+          camera_target: ""
         },
         {
           title: "Sumatran Elephant",
           href: "/animals/sumatran_elephant",
           usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
           glb: "/models/Elephant/ELEPHANT_ADULT.glb",
+          camera_orbit: "",
+          camera_target: ""
         },
         {
           title: "Siberian Tiger",
           href: "/animals/sibertian_tiger",
           usdz: "/models/Tiger/TIGER_ADULT.usdz",
-          glb: "/models/Tiger/TIGER_ADULT.glb"
+          glb: "/models/Tiger/TIGER_ADULT.glb",
+          camera_orbit: "",
+          camera_target: ""
         },
         {
           title: "Pygmy Hippo",
           href: "/animals/pygmy_hippo",
           usdz: "/models/Hippo/HIPPO_ADULT.usdz",
           glb: "/models/Hippo/HIPPO_ADULT.glb",
+          camera_orbit: "",
+          camera_target: ""
         },
         {
           title: "Javan Rhino",
           href: "/animals/javan_rhino",
           usdz: "/models/Rhino/RHINO_ADULT.usdz",
           glb: "/models/Rhino/RHINO_ADULT.glb",
+          camera_orbit: "",
+          camera_target: ""
         }
       ];
   return (
@@ -59,6 +71,8 @@ function Item({list}: {
             <ModelViewer className='aspect-square'
               usdz={data.usdz}
               glb={data.glb}
+              camera_orbit={data.camera_orbit}
+              camera_target={data.camera_target}
             ></ModelViewer>
             <Link
               href={data.href}
