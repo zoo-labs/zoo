@@ -26,31 +26,34 @@ export abstract class AbstractOracle implements Oracle {
   tokens: Token[]
   valid = false
 
-  constructor(pair: any, chainId, tokens?: Token[]) {
+  constructor(pair: any, chainId: ChainId, tokens?: Token[]) {
     this.address = pair.oracle
     this.data = pair.oracleData
     this.pair = pair
     this.chainId = chainId
-    this.tokens = tokens
+    if (tokens)
+      this.tokens = tokens
+    else
+      this.tokens = []
   }
 }
 
 export class SushiSwapTWAP0Oracle extends AbstractOracle {
-  constructor(pair, chainId: ChainId, tokens?: Token[]) {
+  constructor(pair: any, chainId: ChainId, tokens?: Token[]) {
     super(pair, chainId, tokens)
     this.name = 'SushiSwap'
   }
 }
 
 export class SushiSwapTWAP1Oracle extends AbstractOracle {
-  constructor(pair, chainId: ChainId, tokens?: Token[]) {
+  constructor(pair: any, chainId: ChainId, tokens?: Token[]) {
     super(pair, chainId, tokens)
     this.name = 'SushiSwap'
   }
 }
 
 export class ChainlinkOracle extends AbstractOracle {
-  constructor(pair, chainId: ChainId, tokens?: Token[]) {
+  constructor(pair: any, chainId: ChainId, tokens?: Token[]) {
     super(pair, chainId, tokens)
     this.name = 'Chainlink'
     this.valid = this.validate()
@@ -121,8 +124,9 @@ function lowerEqual(value1: string, value2: string) {
   return value1.toLowerCase() === value2.toLowerCase()
 }
 
-export function getOracle(pair, chainId: ChainId, tokens): Oracle {
+export function getOracle(pair: any, chainId: ChainId, tokens?: Token[]): Oracle|null {
   if (lowerEqual(pair.oracle, CHAINLINK_ORACLE_ADDRESS[chainId])) {
     return new ChainlinkOracle(pair, chainId, tokens)
   }
+  return null
 }

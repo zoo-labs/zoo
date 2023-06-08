@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { Proposal } from "types";
-import Web3 from "web3";
+import { Proposal } from "../../types";
+import { utils } from 'ethers';
+
 import {
   loading,
   addProposals,
@@ -19,29 +20,40 @@ interface VotingState {
 const initialState: VotingState = {
   loading: false,
   proposals: [],
-  votingPower: null,
-  voterAllowance: null,
+  votingPower: '',
+  voterAllowance: 0,
 };
 
 export default createReducer(initialState, (builder) =>
   builder
     .addCase(loading, (state, action) => {
+      console.log("voting.loading", action);
+      if (!action || !action.payload) return
       state.loading = action.payload;
     })
     .addCase(addProposals, (state, action) => {
+      console.log("addProposals", action);
+      if (!action || !action.payload) return
       state.loading = action.payload;
     })
     .addCase(getAllProposals, (state, action) => {
+      console.log("getAllProposals", action);
+      if (!action || !action.payload) return
       state.proposals = action.payload;
     })
     .addCase(voteProposal, (state, action) => {
+      console.log("voterProposal", action);
+      if (!action || !action.payload) return
       state.loading = action.payload;
     })
     .addCase(getVotingPower, (state, action) => {
-      state.votingPower = Web3.utils.fromWei(action.payload, "ether");
+      console.log("getVotingPower", action);
+      if (!action || !action.payload) return
+      state.votingPower = action.payload;
     })
     .addCase(getVoterAllowance, (state, action) => {
-      console.log("state.voterAllowance", action.payload);
+      console.log("getVoterAllowance", action);
+      if (!action || !action.payload) return
       state.voterAllowance = action.payload;
     })
 );

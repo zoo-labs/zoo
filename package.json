@@ -17,6 +17,7 @@
     "build": "yarn build:all",
     "build:all": "yarn build:zdk && yarn build:app",
     "build:app": "yarn workspace @zoolabs/app build",
+    "build:foundation": "yarn workspace @zoolabs/foundation build",
     "build:lab": "yarn workspace @zoolabs/lab build",
     "build:packages": "parcel build --no-cache sdk ui && yarn build:fix-type-defs",
     "build:fix-type-defs": "node ./scripts/fix-type-defs-imports",

@@ -11,7 +11,6 @@ export default Deploy('Drop', {}, async ({ hre, ethers, deploy, deployments, dep
 
   const drop = await ethers.getContractAt('Drop', tx.address)
   const keeper = await ethers.getContract('ZooKeeper')
-  console.log('reeach here')
   // Configure game executes a very long series of transactions which set the
   // initial state for our Gen 0 drop. Do not expect this to work during
   // Testnet or Mainnet deployment -- use the standalone `yarn deploy:drop` to
