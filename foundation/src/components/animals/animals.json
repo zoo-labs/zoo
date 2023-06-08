@@ -18,8 +18,8 @@
         "href": "#babyhippo",
         "usdz": "/models/Hippo/HIPPO_BABY.usdz",
         "glb": "/models/Hippo/HIPPO_BABY.glb",
-        "camera_orbit": "0deg 75deg 0%",
-        "camera_target": "0m 0m 0m"
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Teen Hippo",
@@ -107,7 +107,7 @@
         "usdz": "/models/Tiger/TIGER_TEEN.usdz",
         "glb": "/models/Tiger/TIGER_TEEN.glb",
         "camera_orbit": "",
-        "camera_target": ""
+        "camera_target": "0m 0.05m 0m"
       },
       {
         "title": "Adult Tiger",
@@ -178,8 +178,8 @@
         "href": "#",
         "usdz": "/models/Wolf/WOLF_BABY.usdz",
         "glb": "/models/Wolf/WOLF_BABY.glb",
-        "camera_orbit": "0deg 75deg 0m",
-        "camera_target": "0m 0m 0m"
+        "camera_orbit": "",
+        "camera_target": ""
       },
       {
         "title": "Teen Wolf",
