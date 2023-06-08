@@ -35,7 +35,13 @@ const productsData = [
         slug: "pygmy-hippo",
         scientificName: "Cheropsis liberiensis",
         description: `The Pygmy Hippopotamus looks like a miniature version of its larger relative, the Hippopotamus (also known as the river or common hippopotamus), but it differs greatly in both behavior and physical characteristics. The Pygmy Hippo has adaptations for spending time in the water but is far less aquatic than the hippo. Its nose and ears close underwater just like its larger cousin’s do, but its head is rounder and narrower, its neck is proportionally longer, and its eyes are not on the top of its head. The Pygmy Hippopotamus is much more rare in the wild, too, found only in the interior forests in parts of West Africa, mainly confined to Liberia, with small numbers in the neighboring countries of Sierra Leone, Guinea, and the Ivory Coast. Pygmy Hippos are mainly nocturnal, resting well hidden in swamps, wallows, or rivers during the heat of the day until dark, when they leave the water to feed on land for a few hours in the cool of the night.`,
-        status: "Critically Endangered",
+        status: "Endangered",
+        Maturity: "Adult",
+        Generations: "1-7 Possible",
+        Rewards: "Baby: 0.05 $ZOO Teen: 0.1 $ZOO Adult: 0.2 $ZOO",
+        Price: "0.05 ETH",
+        Price_Mint: "Hatch: Free, Teen: 0.05 ETH, Adult: 0.1 ETH, Breed: 0.15 ETH",
+        Boosts: "1.1-1.4x",
         population: "2,000 to 3,000",
         size: "1 meters (3 ft)",
         habitat: "Forests and Swamps",
@@ -86,7 +92,13 @@ const productsData = [
         scientificName: "Rhinoceros Sondaicus",
         description: `Once the most widespread of Asian rhinoceroses, the Javan Rhinoceros previously ranged from the islands of Java and Sumatra, throughout Southeast Asia, and into India and China. The species is critically endangered, with only one known population in the wild, and no individuals in captivity. It is possibly the rarest large mammal on Earth,  with a population of approximately 74 at the western tip of Java in Indonesia. These 2+ ton herbivores can live from 30-45 years and are solitary animals, except for mating pairs and mothers with young. Despite their already extremely small population, they have held on after being declared virtually extinct in 2011. The decline of the Javan rhinoceros is attributed to poaching, primarily for their horns, which are highly valued in traditional Chinese medicine, fetching as much as US$30,000 per kg on the black market. Poaching ultimately wiped out the species in Vietnam.
         `,
-        status: "Critically Endangered",
+        status: "Endangered",
+        Maturity: "Adult",
+        Generations: "1-7 Possible",
+        Rewards: "Baby: 0.05 $ZOO Teen: 0.1 $ZOO Adult: 0.2 $ZOO",
+        Price: "0.05 ETH",
+        Price_Mint: "Hatch: Free, Teen: 0.05 ETH, Adult: 0.1 ETH, Breed: 0.15 ETH",
+        Boosts: "1.1-1.4x",
         population: "Less than 100",
         size: "3 meters (10 ft)",
         habitat: "Tropical forests",
@@ -136,7 +148,13 @@ const productsData = [
         scientificName: "Panthera tigris sumatrae",
         description: `The Siberian tiger, a subspecies of tiger, is the largest cat in the world from the Russian Far East, Northeast China, and possibly North Korea. It once ranged throughout the Korean Peninsula, north China, and eastern Mongolia. It averages about 11 feet in total length, with a tail that accounts for approximately 3 feet of it. Adult male Siberian tigers can weigh up to 700 pounds, while females are significantly smaller, weighing up to 400 pounds. Siberian tigers are distinguishable by their striped fur. Similar to people’s unique fingerprints, no two tigers have the same stripe pattern. Siberian tigers differ from other tigers because they have fewer, paler stripes, and they also have manes. The mane, in addition to their thick fur, helps keep them warm and can be significant influences in both mating displays and in disputes. Siberian tigers are solitary animals, marking their scent on trees to keep other tigers away. They stalk their prey, which include elk, boar, bears, and deer, until they are close enough to pounce. Their diet in the wild also hunt smaller animals like rabbits, pikas, and fish. Because tigers are not always successful on their hunts, they need to hunt often and may establish and roam a territory several miles wide. They can eat up to 60 pounds of meat in one sitting!
     </p>`,
-        status: "Critically Endangered",
+    status: "Endangered",
+    Maturity: "Adult",
+    Generations: "1-7 Possible",
+    Rewards: "Baby: 0.05 $ZOO Teen: 0.1 $ZOO Adult: 0.2 $ZOO",
+    Price: "0.05 ETH",
+    Price_Mint: "Hatch: Free, Teen: 0.05 ETH, Adult: 0.1 ETH, Breed: 0.15 ETH",
+    Boosts: "1.1-1.4x",
         population: "400",
         size: "3 meters (12 ft)",
         habitat: "Lowland to mountain forests",
@@ -186,9 +204,15 @@ const productsData = [
         slug: "amur-leopard",
         scientificName: "Panthera pardus orientalis",
         description: `The Amur leopard is one of 10 subspecies of leopard, and one of the world’s rarest cats, with an estimated population of under 70 individuals left in the wild. They all live in a small area that hugs Russia’s far eastern border with China. Many think of leopards stalking savannas of Africa but in the Russian Far East, a rare subspecies has adapted to life in the temperate forests that make up the northern-most part of the species’ range. Similar to other leopards, the Amur leopard can run at speeds of up to 37 miles per hour. This incredible animal has been reported to leap more than 19 feet horizontally and up to 10 feet vertically. The Amur leopard is solitary. Nimble-footed and strong, it carries and hides unfinished kills so that they are not taken by other predators. It has been reported that some males stay with females after mating, and may even help with rearing the young. Several males sometimes follow and fight over a female. They live for 10-15 years, and in captivity up to 20 years. The Amur leopard is also known as the Far East leopard, the Manchurian leopard or the Korean leopard.`,
-        status: "Critically Endangered",
+        status: "Rare",
         population: "Approximately 84",
         size: "Up to 3.1 meters (7 feet)",
+        Maturity: "Adult",
+        Generations: "1-7 Possible",
+        Rewards: "Baby: 0.25 $ZOO Teen: 0.5 $ZOO Adult: 1 $ZOO",
+        Price: "0.5 ETH",
+        Price_Mint: "Hatch: Free, Teen: 0.5 ETH, Adult: 1 ETH, Breed: 1.5 ETH",
+        Boosts: "1.1-1.4x",
         habitat: "Temperate, Broadleaf Forest/Mountains",
         weight: "Up to 47 kgs (105 lbs)",
         images: [
@@ -239,6 +263,12 @@ const productsData = [
         status: "Critically Endangered",
         population: "Less than 10",
         weight: "36 kgs (80 lbs)",
+        Maturity: "Adult",
+        Generations: "1-7 Possible",
+        Rewards: "Baby: 1 $ZOO Teen: 2 $ZOO Adult: 3 $ZOO",
+        Price: "1 ETH",
+        Price_Mint: "Hatch: Free, Teen: 1 ETH, Adult: 2 ETH, Breed: 3 ETH",
+        Boosts: "1.1-1.4x",
         size: "1.2 meters (4 ft)",
         habitat: "Forest, wetlands & bushlands",
         images: [
@@ -285,7 +315,13 @@ const productsData = [
         slug: "nubian-giraffe",
         scientificName: "Canis simensis",
         description: `The tallest of all giraffes is the Nubian species. This means they are considered to be the tallest land animal on the Earth, measuring up to a remarkable 6 meters, or 20 feet tall! They can also weigh approximately 2,800 pounds, with the males outweighing the females by several hundred pounds. The Nubian Giraffe is endangered with less than 2,645 individuals remaining, are now just one stage from becoming extinct in the wild. A distinguishing feature of the Nubian Giraffe is the number of horns on top of it’s head. Other Giraffe species typically have two horns, but the Nubian Giraffe can have up to five! They have two in the same place as other giraffes, one in the center, and two behind those. Habitat loss through expanding agriculture, human-wildlife conflict, civil unrest, and poaching for their meat, pelts, and tails, are among the reasons for their staggering 40% population decline in the last three decades.`,
-        status: "Critically Endangered",
+        status: "Rare",
+        Maturity: "Adult",
+        Generations: "1-7 Possible",
+        Rewards: "Baby: 0.25 $ZOO Teen: 0.5 $ZOO Adult: 1 $ZOO",
+        Price: "0.5 ETH",
+        Price_Mint: "Hatch: Free, Teen: 0.5 ETH, Adult: 1 ETH, Breed: 1.5 ETH",
+        Boosts: "1.1-1.4x",
         population: "2,645",
         size: "1.5 meters (9 ft)",
         habitat: "Savannahs and Woodlands",
@@ -332,7 +368,13 @@ const productsData = [
       slug: "sumatran-elephant",
       description: `Sumatran elephants feed on a variety of plants and deposit seeds wherever they go, contributing to a healthy forest ecosystem. As herbivores, these noble animals spend their days munching on 150kg of plants and seeds as they move through the forests. They also share their lush forest habitat with several other endangered species, such as the Sumatran Rhinoceros, Sumatran Tiger, Sumatran Orangutan, and countless other species; all of which benefit from an elephant population that thrives in a healthy habitat. With what many consider to be a “stranger” appearance to their more commonly depicted African cousins, the Sumatran Elephant is almost completely bald with small, rounded ears in place of the defining oversized ears many have come to expect. Female Sumatran Elephants rarely have tusks, but the females that do develop tusks keep them hidden away from sight until they open their mouths! In 2012, the Sumatran elephant was changed from “Endangered” to “Critically Endangered” because half of its population has been lost in one generation—a decline that is largely due to habitat loss and as a result human-elephant conflict.
      `,
-      status: "Critically Endangered",
+     status: "Endangered",
+     Maturity: "Adult",
+     Generations: "1-7 Possible",
+     Rewards: "Baby: 0.05 $ZOO Teen: 0.1 $ZOO Adult: 0.2 $ZOO",
+     Price: "0.05 ETH",
+     Price_Mint: "Hatch: Free, Teen: 0.05 ETH, Adult: 0.1 ETH, Breed: 0.15 ETH",
+     Boosts: "1.1-1.4x",
       scientificName: "Elephas Maximus Sumatranus",
       habitat: "Broadleaf, moist tropical forest",
       population: "2,400 - 2,800",
@@ -427,7 +469,7 @@ const productsData = [
 function CoreHeader({index}: {
   index: number;
 }) {
-    const [activeTab, setActiveTab] = useState("decription");
+    const [activeTab, setActiveTab] = useState("description");
     const animal = productsData[index];
   return (
     <div className="bg-black md:px-16 lg:px-16 xl:px-24 2xl:px-32 max-md:pt-20 pt-32 max-md:px-8">
@@ -503,25 +545,22 @@ function CoreHeader({index}: {
               <div className="bg-[#333] p-3.5 rounded-xl">
                 <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">Maturity</p>
                 <p className="text-lg font-bold text-white">
-                  {[0, 2].includes(animal?.kind)
-                    ? "Baby"
-                    : animal?.attributes && animal?.attributes[1]?.value}{" "}
-                  --
+                  {animal.Maturity}
                 </p>
               </div>
               <div className="bg-[#333] p-3.5 rounded-xl">
                 <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">Generations</p>
-                <p className="text-lg font-bold text-white">7 X</p>
+                <p className="text-lg font-bold text-white">{animal.Generations}</p>
               </div>
               <div className="bg-[#333] p-3.5 rounded-xl">
                 <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">Status</p>
                 <p className="text-lg font-bold text-white">
-                  {animal?.reservePrice}--
+                  {animal.status}
                 </p>
               </div>
               <div className="bg-[#333] p-3.5 rounded-xl">
                 <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">Rewards</p>
-                <p className="text-lg font-bold text-white">22%</p>
+                <p className="text-lg font-bold text-white">{animal.Rewards}</p>
               </div>
               <div className="bg-[#333] p-3.5 rounded-xl">
                 <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">
@@ -529,7 +568,7 @@ function CoreHeader({index}: {
                   <span className="text-white font-bold">(OEP)</span>
                 </p>
                 <p className="text-lg font-bold text-white">
-                  {animal?.kind === 0 ? "YES" : "NO"}
+                  {animal.Price}
                 </p>
               </div>
               <div className="bg-[#333] p-3.5 rounded-xl">
@@ -537,7 +576,7 @@ function CoreHeader({index}: {
                   Price to Mint
                 </p>
                 <p className="text-lg font-bold text-white">
-                  {[0, 2].includes(animal?.kind) ? "MP4" : "3D, USDZ, GLB"}
+                  {animal.Price_Mint}
                 </p>
               </div>
               <div className="bg-[#333] p-3.5 rounded-xl">
@@ -545,10 +584,7 @@ function CoreHeader({index}: {
                   Scientific Name
                 </p>
                 <p className="text-lg font-bold text-white">
-                  {[0, 2].includes(animal?.kind)
-                    ? "Baby"
-                    : animal?.attributes && animal?.attributes[1]?.value}
-                  --
+                  {animal.scientificName}
                 </p>
               </div>
               <div className="bg-[#333] p-3.5 rounded-xl">
@@ -556,7 +592,7 @@ function CoreHeader({index}: {
                   Boosts Allowed
                 </p>
                 <p className="text-lg font-bold text-white">
-                  {animal?.attributes && animal?.attributes[0]?.value} --
+                  {animal.Boosts}
                 </p>
               </div>
             </div>
