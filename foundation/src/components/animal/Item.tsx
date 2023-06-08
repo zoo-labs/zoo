@@ -5,7 +5,7 @@ const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
 });
 function Item({list, linkFlag=true}: {
   list?: { title: string; href: string; usdz: string; glb: string; camera_orbit: string; camera_target: string;}[];
-  linkFlag: boolean;
+  linkFlag?: boolean;
 }) {
     const animals = list != undefined ? list : [
         {
@@ -14,7 +14,7 @@ function Item({list, linkFlag=true}: {
           usdz: "/models/Giraffe/GIRAFFE_ADULT.usdz",
           glb: "/models/Giraffe/GIRAFFE_ADULT.glb",
           camera_orbit: "",
-          camera_target: ""
+          camera_target: "0m 28m 0m"
         },
         {
           title: "Amur Leopard",
@@ -54,7 +54,7 @@ function Item({list, linkFlag=true}: {
           usdz: "/models/Rhino/RHINO_ADULT.usdz",
           glb: "/models/Rhino/RHINO_ADULT.glb",
           camera_orbit: "",
-          camera_target: ""
+          camera_target: "0m 1m 0m"
         }
       ];
   return (
