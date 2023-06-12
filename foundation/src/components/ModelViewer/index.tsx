@@ -8,6 +8,9 @@ const ModelViewer = ({
   zoom = "auto",
   camera_orbit = "",
   camera_target = "",
+  control = true,
+  ar = true,
+  auto_play = true,
   usdzFile = false,
   multiple = false,
   onClick = () => {},
@@ -36,12 +39,9 @@ const ModelViewer = ({
         camera-target='${camera_target}'
         alt=""
         shadow-intensity="1"
-        camera-controls
-        auto-rotate
-        autoplay
-        ar
-        ar-placement="floor"
-        ar-modes="scene-viewer webxr"
+        ${control ? 'camera-controls' : ''}
+        ${auto_play ? 'auto-rotate autoplay' : ''}
+        ${ar ? 'ar ar-placement="floor" ar-modes="scene-viewer webxr"' : ''}
         max-field-of-view=${zoom}
         ></model-viewer>`;
 

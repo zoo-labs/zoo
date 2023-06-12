@@ -112,6 +112,9 @@ function Header() {
                <ModelViewer className='aspect-square border rounded-full border-white bg-black'
               usdz={data.usdz}
               glb={data.glb}
+              ar={false}
+              control = {false}
+              auto_play = {false}
             ></ModelViewer>
             <p className='text-[10px] text-white'>{data.name}</p>
             </>

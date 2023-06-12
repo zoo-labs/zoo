@@ -1,6 +1,6 @@
 function Aiding() {
   return (
-    <div className="bg-black md:py-32 lg:py-52 max-md:pb-28">
+    <div className="bg-black md:py-32 lg:py-52 max-md:py-28">
       <div className='flex flex-col'>
         <h1 className='text-white md:text-center xl:text-5xl md:text-4xl max-md:text-4xl max-md: px-8'>Aiding Species with Digital Twins</h1>
         <div className='flex max-md:flex-col max-md:px-8 justify-between md:space-x-16 max-md:space-y-8 xl:px-64 lg:px-32 md:px-16 pt-16'>
