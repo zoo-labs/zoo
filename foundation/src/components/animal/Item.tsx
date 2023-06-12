@@ -34,7 +34,7 @@ function Item({list, linkFlag=true}: {
         },
         {
           title: "Siberian Tiger",
-          href: "/animals/sibertian_tiger",
+          href: "/animals/siberian_tiger",
           usdz: "/models/Tiger/TIGER_ADULT.usdz",
           glb: "/models/Tiger/TIGER_ADULT.glb",
           camera_orbit: "",
