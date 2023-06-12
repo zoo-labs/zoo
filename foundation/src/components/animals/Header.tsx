@@ -14,7 +14,7 @@ function Header({title,content,front,back,front_m,back_m}: {
   return (
     <div className="bg-black md:px-16 lg:px-32 xl:px-40 2xl:px-64 max-md:pt-20">
       <div className="flex max-md:flex-col items-center justify-between md:py-20 max-md:pt-2 max-md:pb-8">
-        <div className='relative md:w-1/2 max-md:w-full max-md:px-4 2xl:pr-32 xl:pr-28 lg:pr-24 md:pr-16'>
+        <div className={`relative md:w-1/2 ${flip ? 'front-card' : 'back-card'} max-md:w-full max-md:px-4 2xl:pr-32 xl:pr-28 lg:pr-24 md:pr-16`}>
             <ReactCardFlip isFlipped={flip}
               flipDirection="horizontal">
               {/* <Image
