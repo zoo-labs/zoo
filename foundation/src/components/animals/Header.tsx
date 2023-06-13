@@ -75,7 +75,7 @@ function Header({title,content,front,back,front_m,back_m}: {
         <Link href="/animals/pygmy_hippo" className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ title == "Pygmy Hippo" ? 'active' : ''} text-sm font-medium`} >{'Pygmy Hippo'}</Link>
         <Link href="/animals/siberian_tiger" className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ title == "Siberian Tiger" ? 'active' : ''} text-sm font-medium`} >{'Siberian Tiger'}</Link>
         <Link href="/animals/sumatran_elephant" className={`text-white text-center border hover:rounded-full border-black hover:border-white px-3 py-2 ${ title == "Sumatran Elephant" ? 'active' : ''} text-sm font-medium`} >{'Sumatran Elephant'}</Link>
-        <Link href="/animals/javen_rhino" className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ title == "Javan Rhino" ? 'active' : ''} text-sm font-medium`} >{'Javan Rhino'}</Link>
+        <Link href="/animals/javan_rhino" className={`text-white text-center px-3 border hover:rounded-full border-black hover:border-white py-2 ${ title == "Javan Rhino" ? 'active' : ''} text-sm font-medium`} >{'Javan Rhino'}</Link>
       </div>
     </div>
   );

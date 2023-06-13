@@ -17,7 +17,7 @@ function Comment() {
           title: "18.7M",
           comment: "Annually, 18.7M acres of forest loss affects 80% of terrestrial species' habitats.",
           link: "Deforestation",
-          href: "#deforestation"
+          href: "/getinvolved#ground_activity"
         },
         {
           title: "38,000+",
