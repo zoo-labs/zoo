@@ -326,7 +326,9 @@ svg {
 }
 .back-card .react-card-back {
   transform: rotateY(-180deg) translateZ(1px) !important;
+  -webkit-transform: rotateY(-180deg) translateZ(1px) !important;
 }
 .front-card .react-card-front {
   transform: rotateY(-180deg) translateZ(1px) !important;
+  -webkit-transform: rotateY(-180deg) translateZ(1px) !important;
 }

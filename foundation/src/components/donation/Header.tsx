@@ -24,13 +24,17 @@ function Header() {
             </div>
         </div>
         <div className='md:w-1/2 xl:pr-32 pr-4 max-md:w-full'>
-            <Image
+        
+            {/* <Image
                 className='intro-bg float-right'
                 src='/images/donation_header.png'
                 width='1000'
                 height='1000'
                 alt=''
-            />
+            /> */}
+            <video  autoPlay loop muted playsInline className="w-full float-right">
+              <source src="/videos/pygmy_flower.mp4" type="video/mp4"/>
+            </video>
         </div>
       </div>
       <div className='md:flex md:pl-16 max-md:flex space-x-4 max-md:px-4 lg:hidden w-2/3 max-md:w-full items-center justify-between md:pb-32'>
