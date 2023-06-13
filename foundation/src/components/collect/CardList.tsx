@@ -25,7 +25,7 @@ function CardList() {
         {
             card: "/videos/RHINO_Card_front.webm",
             card_mp4: "/videos/RHINO_Card_front.mp4",
-            url: "/animals/javen_rhino"
+            url: "/animals/javan_rhino"
         },
         {
             card: "/videos/Hippo_Card_front.webm",

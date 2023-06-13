@@ -19,7 +19,8 @@ function Detail() {
             /> */}
             <ModelViewer className='w-4/5 aspect-square border rounded-xl p-4'
               usdz="/models/Wolf/WOLF_ADULT.usdz"
-              glb="/models/Wolf/WOLF_ADULT.glb"
+              glb="/models/Wolf/WOLF-ADULT.glb"
+              camera_target="0.05m 0.05m 0m"
             ></ModelViewer>
         </div>
         <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[280px] flex flex-col  max-md:pl-15 max-md:pr-15   lg:pr-8'>

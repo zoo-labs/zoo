@@ -40,7 +40,7 @@ function Footer() {
             <Link href="/animals/sumatran_elephant" className='text-sm lg:text-lg text-white'>Sumatran Elephant</Link>
         </div>
         <div className='flex flex-col space-y-8'>
-            <Link href="/animals/javen_rhino" className='text-sm lg:text-lg text-white'>Javan Rhino</Link>
+            <Link href="/animals/javan_rhino" className='text-sm lg:text-lg text-white'>Javan Rhino</Link>
             <Link href="/animals/pygmy_hippo" className='text-sm lg:text-lg text-white'>Pygmy Hippo</Link>
             <Link href="/animals/siberian_tiger" className='text-sm lg:text-lg text-white'>Siberian Tiger</Link>
         </div>
