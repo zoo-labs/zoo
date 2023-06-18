@@ -9,7 +9,7 @@ function Principles() {
               <p className='text-white md:text-md lg:text-lg xl:text-3xl max-md:pb-10 pb-5'>We leverage <b>innovative technology.</b></p>
               <p className='text-white md:text-md lg:text-lg xl:text-3xl max-md:pb-10 pb-5'>We engage communities for <b>species protection.</b></p>
               <p className='text-white md:text-md lg:text-lg xl:text-3xl max-md:pb-10 pb-8'>We foster human-nature <b>coexistence.</b></p>
-              <div className='flex items-center justify-center space-x-6'>
+              <div className='flex items-center justify-center md:space-x-6'>
                   <Link
                       href="/donation"
                       className="text-black hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full border-white border-2 text-xl font-medium hidden md:block"
