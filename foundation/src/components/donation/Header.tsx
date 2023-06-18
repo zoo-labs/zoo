@@ -1,11 +1,50 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Switch from "react-switch";
+import axios from "axios";
+import { useStripe } from '@stripe/react-stripe-js'
+import { fetchPostJSON, fetchGetJSON } from '../../utils/api_helpers'
 function Header() {
     const [checked, setChecked] = useState(false);
+    const [amount, setAmount] = useState();
+    const stripe = useStripe();
     const handleChange = (e:boolean) => {
         setChecked(e);
+    };
+    const handleInputChange = (e:any) => {
+      setAmount(e.target.value);
     }
+    const handleSubmit = async () => {
+      if(amount == null || amount == 0)return;
+      if(!checked) {
+        const response = await fetchPostJSON('/api/checkout_sessions', {
+          amount: amount,
+        })
+    
+        if (response.statusCode === 500) {
+          console.error(response.message)
+          return
+        }
+    
+        // Redirect to Checkout.
+        const { error } = await stripe!.redirectToCheckout({
+          // Make the id field from the Checkout Session creation API response
+          // available to this file, so you can provide it as parameter here
+          // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+          sessionId: response.id,
+        })
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer
+        // using `error.message`.
+        console.warn(error.message)
+      }else {
+        
+        // const session_id  = await fetch(`/api/subscription/${price.id}`).then(res => res.id);
+        const { data } = await axios.get(`/api/subscription/${amount}`);
+        // console.log(session_id);
+        await stripe!.redirectToCheckout({ sessionId: data.id });
+      }
+    };
   return (
     <div className="bg-black max-md:pt-20">
       <div className='flex max-md:flex-col items-center justify-between pt-20'>
@@ -19,8 +58,8 @@ function Header() {
                     <Switch onChange={handleChange} height={24} width={48}  uncheckedIcon={false} checkedIcon={false} checked={checked} />
                     <p className='text-xs leading-[0.5rem] text-center text-white'>Switch to Monthly</p>
                 </div>
-                <input className=' w-1/3 rounded-md outline-none text-center px-4 border border-white py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $' />
-                <button className='w-1/3 rounded-md px-4 py-2 text-white border border-white md:text-sm lg:text-md xl:text-lg'>Donate Now</button>
+                <input onChange={handleInputChange} value={amount} className=' w-1/3 rounded-md outline-none text-center px-4 border border-white py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $' />
+                <button onClick={handleSubmit} className='w-1/3 rounded-md px-4 py-2 text-white border border-white md:text-sm lg:text-md xl:text-lg'>Donate Now</button>
             </div>
         </div>
         <div className='md:w-1/2 xl:pr-32 pr-4 max-md:w-full'>
@@ -42,8 +81,8 @@ function Header() {
               <Switch onChange={handleChange} height={20} width={40}  uncheckedIcon={false} checkedIcon={false} checked={checked} />
               <p className='text-[0.5rem] leading-[0.5rem] text-center text-white'>Switch to Monthly</p>
           </div>
-          <input className=' w-1/3 rounded-md max-md:rounded-full outline-none max-md:text-xs  border border-white text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $ Amount' />
-          <button className='w-1/3 rounded-md max-md:rounded-full px-4 py-2 max-md:px-2 max-md:text-xs md:text-sm border border-white text-white'>Donate Now</button>
+          <input className=' w-1/3 rounded-md max-md:rounded-full outline-none max-md:text-xs  border border-white text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $ Amount' value={amount} onChange={handleInputChange}/>
+          <button onClick={handleSubmit} className='w-1/3 rounded-md max-md:rounded-full px-4 py-2 max-md:px-2 max-md:text-xs md:text-sm border border-white text-white'>Donate Now</button>
       </div>
     </div>
   );
