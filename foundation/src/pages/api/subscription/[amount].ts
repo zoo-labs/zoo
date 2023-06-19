@@ -1,8 +1,9 @@
 import { formatAmountForStripe } from "../../../utils/stripe_helpers";
 import cookie from "cookie";
-import initStripe from "stripe";
+import Stripe from "stripe";
+import { NextApiRequest, NextApiResponse } from 'next';
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // const { user } = await supabase.auth.api.getUserByCookie(req);
 
   // if (!user) {
@@ -22,25 +23,30 @@ const handler = async (req, res) => {
   //   .select("stripe_customer")
   //   .eq("id", user.id)
   //   .single();
-  
-  const stripe = initStripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
+
+
+  const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || '', {
+    apiVersion: '2022-11-15',
+  })
+
   const product_name = "donate_" + new Date().valueOf();
-  console.log(product_name);
   const product = await stripe.products.create({
     name: product_name,
     description: 'Donation',
   });
   console.log(product.id);
   const { amount } = req.query;
+  const numericAmount = typeof amount === 'string' ? Number(amount) : 0;
+
   const price = await stripe.prices.create({
-    unit_amount: formatAmountForStripe(amount,'usd'),
+    unit_amount: formatAmountForStripe(numericAmount,'usd'),
     currency: 'usd',
     product: product.id,
     recurring: {
       interval: 'month',
     },
   });
-  
+
   const host = req.headers.host;
   const lineItems = [
     {

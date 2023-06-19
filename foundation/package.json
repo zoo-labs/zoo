@@ -20,7 +20,7 @@
     "@fontsource/poppins": "^5.0.1",
     "@google/model-viewer": "1.10.1",
     "@mui/material": "^5.13.4",
-    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/react-stripe-js": "^2.1.1",
     "@stripe/stripe-js": "^1.54.0",
     "@supabase/supabase-js": "^2.25.0",
     "@types/cookie": "^0.5.1",
