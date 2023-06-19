@@ -27,6 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             quantity: 1,
           },
         ],
+        mode: 'payment',
         success_url: `${req.headers.origin}/donation?result=success`,
         cancel_url: `${req.headers.origin}/donation?result=cancelled`,
       }
