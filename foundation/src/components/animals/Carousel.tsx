@@ -40,7 +40,7 @@ function Carosuel() {
           </div>
         ))}
         </Slider>
-        <Link href='#digital' className='bg-white m-auto text-black text-lg rounded-full px-6 py-2 '>Digital</Link>
+        <Link href='https://app.zoolabs.io/' className='bg-white m-auto text-black text-lg rounded-full px-6 py-2 '>Digital</Link>
     </div>
   );
 }

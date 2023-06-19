@@ -21,7 +21,7 @@ export default function DonationPage() {
       const result = router.query.result;
       if(result=='success'){
         toast.success("Thank you for donating!");
-      }else {
+      }else if(result=='cancelled') {
         toast.warning("Donation is cancelled!!!");
       }
     }
