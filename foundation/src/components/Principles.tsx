@@ -25,7 +25,7 @@ function Principles() {
                     
                   </Link>
                   <Link
-                      href="#learnmore"
+                      href="/getinvolved"
                       className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-xl font-medium hidden max-md:block"
                   >
                     
