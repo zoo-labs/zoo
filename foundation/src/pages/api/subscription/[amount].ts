@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     apiVersion: '2022-11-15',
   })
 
-  const product_name = "donate_" + new Date().valueOf();
+  const product_name = "support Zoo Labs Foundation";// + new Date().valueOf();
   const product = await stripe.products.create({
     name: product_name,
     description: 'Donation',
