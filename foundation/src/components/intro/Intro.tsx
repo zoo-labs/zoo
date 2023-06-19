@@ -35,7 +35,7 @@ function Intro({breadcrumbs,title,comment}: {
                 height='1000'
                 alt=''
             /> */}
-            <video  autoPlay loop muted playsInline playbackspeed='2.0' className="w-full">
+            <video  autoPlay loop muted playsInline className="w-full">
               <source src="/videos/Giraffe_teen.webm" type="video/webm"/>
               <source src="/videos/Giraffe_teen.mp4" type="video/mp4"/>
             </video>
