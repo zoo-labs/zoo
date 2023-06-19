@@ -3,10 +3,11 @@ export async function fetchGetJSON(url: string) {
       const data = await fetch(url).then(res => res.json())
       return data
     } catch (err) {
-      throw new Error(err.message)
+      const message = (err as Error)?.message ?? 'An unknown error occurred';
+      throw new Error(message)
     }
   }
-  
+
   export async function fetchPostJSON(url: string, data?: {}) {
     try {
       // Default options are marked with *
@@ -25,6 +26,7 @@ export async function fetchGetJSON(url: string) {
       })
       return await response.json() // parses JSON response into native JavaScript objects
     } catch (err) {
-      throw new Error(err.message)
+      const message = (err as Error)?.message ?? 'An unknown error occurred';
+      throw new Error(message)
     }
   }

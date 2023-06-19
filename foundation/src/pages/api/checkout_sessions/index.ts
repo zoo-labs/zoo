@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { formatAmountForStripe } from '../../../utils/stripe_helpers'
 import Stripe from 'stripe'
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY, {
-  apiVersion: '2019-12-03',
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || '', {
+  apiVersion: '2022-11-15',
 })
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -10,16 +10,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const amount: number = req.body.amount;
     console.log("amount:",amount);
     try {
-      
+
       // Create Checkout Sessions from body params.
       const params: Stripe.Checkout.SessionCreateParams = {
         submit_type: 'donate',
         payment_method_types: ['card'],
         line_items: [
           {
-            name: 'Amount donation',
-            amount: formatAmountForStripe(amount, 'usd'),
-            currency: 'usd',
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'Amount donation',
+              },
+              unit_amount: formatAmountForStripe(amount, 'usd'),
+            },
             quantity: 1,
           },
         ],
@@ -32,7 +36,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       res.status(200).json(checkoutSession)
     } catch (err) {
-      res.status(500).json({ statusCode: 500, message: err.message })
+      const message = (err as Error)?.message ?? 'An unknown error occurred';
+      res.status(500).json({ statusCode: 500, message: message })
     }
   } else {
     res.setHeader('Allow', 'POST')
