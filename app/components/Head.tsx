@@ -16,7 +16,7 @@ type Props = {
 export const Head: FC<Props> = ({
   ogImage = '/og-image.png',
   title = 'ZOO | Decentralized Animal Preservation Protocol',
-  description = 'Supporting endangered species via human endeavors and virtual animal sales.',
+  description = 'Supporting endangered species that are threatened with extinction.',
 }) => {
   return (
     <NextHead>
