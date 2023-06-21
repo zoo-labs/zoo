@@ -50,11 +50,27 @@ import Popover from '../../primitives/Popover'
 import PseudoInput from '../../primitives/PseudoInput'
 import { useFallbackState } from '../../hooks'
 import { Currency } from '../../types/Currency'
+import { CurrencySelector } from '../CurrencySelector'
 
 type BidCallbackData = {
   tokenId?: string
   collectionId?: string
   bidData: BidData | null
+}
+
+const ModalCopy = {
+  titleSetPrice: 'Make an Offer',
+  titleConfirm: 'Complete Offer',
+  titleComplete: 'Offer Submitted',
+  ctaBidDisabled: 'Enter a Price',
+  ctaBid: '',
+  ctaConvertManually: 'Convert Manually',
+  ctaConvertAutomatically: '',
+  ctaAwaitingApproval: 'Waiting for Approval',
+  ctaEditOffer: 'Edit Offer',
+  ctaRetry: 'Retry',
+  ctaViewOffers: 'View Offers',
+  ctaClose: 'Close',
 }
 
 type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
@@ -63,8 +79,9 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   collectionId?: string
   attribute?: Trait
   normalizeRoyalties?: boolean
-  currency?: Currency
+  currencies?: Currency[]
   oracleEnabled?: boolean
+  copyOverrides?: Partial<typeof ModalCopy>
   onViewOffers?: () => void
   onClose?: (
     data: BidCallbackData,
@@ -75,14 +92,14 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   onBidError?: (error: Error, data: any) => void
 }
 
-function titleForStep(step: BidStep) {
+function titleForStep(step: BidStep, copy: typeof ModalCopy) {
   switch (step) {
     case BidStep.SetPrice:
-      return 'Make an Offer'
+      return copy.titleSetPrice
     case BidStep.Offering:
-      return 'Complete Offer'
+      return copy.titleConfirm
     case BidStep.Complete:
-      return 'Offer Submitted'
+      return copy.titleComplete
   }
 }
 
@@ -117,13 +134,15 @@ export function BidModal({
   collectionId,
   attribute,
   normalizeRoyalties,
-  currency,
+  currencies,
   oracleEnabled = false,
+  copyOverrides,
   onViewOffers,
   onClose,
   onBidComplete,
   onBidError,
 }: Props): ReactElement {
+  const copy: typeof ModalCopy = { ...ModalCopy, ...copyOverrides }
   const [open, setOpen] = useFallbackState(
     openState ? openState[0] : false,
     openState
@@ -148,8 +167,8 @@ export function BidModal({
       collectionId={collectionId}
       attribute={attribute}
       normalizeRoyalties={normalizeRoyalties}
-      currency={currency}
       oracleEnabled={oracleEnabled}
+      currencies={currencies}
     >
       {({
         token,
@@ -172,7 +191,9 @@ export function BidModal({
         transactionError,
         stepData,
         bidData,
-        isBanned,
+        currencies,
+        currency,
+        setCurrency,
         setBidAmount,
         setExpirationOption,
         setBidStep,
@@ -187,8 +208,8 @@ export function BidModal({
           : undefined
 
         const itemImage =
-          token && token.token?.image
-            ? token.token?.image
+          token && token.token?.imageSmall
+            ? token.token?.imageSmall
             : (collection?.image as string)
 
         useEffect(() => {
@@ -271,7 +292,7 @@ export function BidModal({
           <Modal
             size={bidStep !== BidStep.Complete ? ModalSize.LG : ModalSize.MD}
             trigger={trigger}
-            title={titleForStep(bidStep)}
+            title={titleForStep(bidStep, copy)}
             open={open}
             onOpenChange={(open) => {
               if (!open && onClose) {
@@ -309,12 +330,6 @@ export function BidModal({
                   trait={trait}
                 />
                 <MainContainer css={{ p: '$4' }}>
-                  {isBanned && (
-                    <ErrorWell
-                      message="Token is not tradable on OpenSea"
-                      css={{ mb: '$2', p: '$2', borderRadius: 4 }}
-                    />
-                  )}
                   <Flex justify="between">
                     <Text style="tiny">Offer Amount</Text>
                     <Text
@@ -342,11 +357,22 @@ export function BidModal({
                       style="body1"
                       color="subtle"
                     >
-                      <CryptoCurrencyIcon
-                        css={{ height: 20 }}
-                        address={wrappedContractAddress}
-                      />
-                      {wrappedContractName}
+                      {currencies.length > 1 ? (
+                        <CurrencySelector
+                          currency={currency}
+                          currencies={currencies}
+                          setCurrency={setCurrency}
+                          triggerCss={{ width: 90 }}
+                        />
+                      ) : (
+                        <>
+                          <CryptoCurrencyIcon
+                            css={{ height: 20 }}
+                            address={wrappedContractAddress}
+                          />
+                          {wrappedContractName}
+                        </>
+                      )}
                     </Text>
                     <Input
                       type="number"
@@ -567,7 +593,7 @@ export function BidModal({
                     )}
                     {bidAmount === '' && (
                       <Button disabled={true} css={{ width: '100%' }}>
-                        Enter a Price
+                        {copy.ctaBidDisabled}
                       </Button>
                     )}
                     {bidAmount !== '' && hasEnoughWrappedCurrency && (
@@ -575,7 +601,9 @@ export function BidModal({
                         onClick={() => placeBid()}
                         css={{ width: '100%' }}
                       >
-                        {token && token.token
+                        {copy.ctaBid.length > 0
+                          ? copy.ctaBid
+                          : token && token.token
                           ? 'Make an Offer'
                           : trait
                           ? 'Make an Attribute Offer'
@@ -613,7 +641,7 @@ export function BidModal({
                               window.open(convertLink, '_blank')
                             }}
                           >
-                            Convert Manually
+                            {copy.ctaConvertManually}
                           </Button>
                           {canAutomaticallyConvert && (
                             <Button
@@ -622,8 +650,11 @@ export function BidModal({
                               onClick={() => placeBid()}
                             >
                               <Text style="h6" color="button" ellipsify>
-                                Convert {amountToWrap}{' '}
-                                {balance?.symbol || 'ETH'} for me
+                                {copy.ctaConvertAutomatically.length > 0
+                                  ? copy.ctaConvertAutomatically
+                                  : `Convert ${amountToWrap} ${
+                                      balance?.symbol || 'ETH'
+                                    } for me`}
                               </Text>
                             </Button>
                           )}
@@ -664,7 +695,6 @@ export function BidModal({
                         />
                       )}
                       {stepData.currentStep.kind !== 'signature' && (
-                        // <WethApproval style={{ margin: '0 auto' }} />
                         <Flex align="center" justify="center">
                           <Flex
                             css={{
@@ -706,7 +736,7 @@ export function BidModal({
                   {!transactionError && (
                     <Button css={{ width: '100%', mt: 'auto' }} disabled={true}>
                       <Loader />
-                      Waiting for Approval
+                      {copy.ctaAwaitingApproval}
                     </Button>
                   )}
                   {transactionError && (
@@ -716,10 +746,10 @@ export function BidModal({
                         css={{ flex: 1 }}
                         onClick={() => setBidStep(BidStep.SetPrice)}
                       >
-                        Edit Offer
+                        {copy.ctaEditOffer}
                       </Button>
                       <Button css={{ flex: 1 }} onClick={() => placeBid()}>
-                        Retry
+                        {copy.ctaRetry}
                       </Button>
                     </Flex>
                   )}
@@ -745,7 +775,7 @@ export function BidModal({
                       onViewOffers()
                     }}
                   >
-                    View Offers
+                    {copy.ctaViewOffers}
                   </Button>
                 ) : (
                   <Button
@@ -754,7 +784,7 @@ export function BidModal({
                       setOpen(false)
                     }}
                   >
-                    Close
+                    {copy.ctaClose}
                   </Button>
                 )}
               </Flex>

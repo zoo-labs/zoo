@@ -22,7 +22,7 @@ import {
   Anchor,
   ErrorWell,
 } from '../../primitives'
-import { ApprovalCollapsible } from '../ApprovalCollapsible'
+import { ApprovePurchasingCollapsible } from '../ApprovePurchasingCollapsible'
 import { Modal } from '../Modal'
 import SigninStep from '../SigninStep'
 import { TokenCheckout } from '../TokenCheckout'
@@ -40,13 +40,22 @@ type SweepCallbackData = {
   stepData: SweepModalStepData | null
 }
 
+const ModalCopy = {
+  title: 'Buy',
+  ctaClose: 'Close',
+  ctaBuy: 'Buy',
+  ctaBuyDisabled: 'Select Items to Buy',
+  ctaInsufficientFunds: 'Add Funds to Purchase',
+  ctaAwaitingApproval: 'Waiting for Approval...',
+}
+
 type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>]
   collectionId?: string
-  referrerFeeBps?: number | null
-  referrerFeeFixed?: number | null
-  referrer?: string | null
+  feesOnTopBps?: string[] | null
+  feesOnTopFixed?: string[] | null
   normalizeRoyalties?: boolean
+  copyOverrides?: Partial<typeof ModalCopy>
   onSweepComplete?: (data: SweepCallbackData) => void
   onSweepError?: (error: Error, data: SweepCallbackData) => void
   onClose?: (data: SweepCallbackData, currentStep: SweepStep) => void
@@ -56,14 +65,15 @@ export function SweepModal({
   openState,
   trigger,
   collectionId,
-  referrerFeeBps,
-  referrerFeeFixed,
-  referrer,
+  feesOnTopBps,
+  feesOnTopFixed,
   normalizeRoyalties,
+  copyOverrides,
   onSweepComplete,
   onSweepError,
   onClose,
 }: Props): ReactElement {
+  const copy: typeof ModalCopy = { ...ModalCopy, ...copyOverrides }
   const [open, setOpen] = useFallbackState(
     openState ? openState[0] : false,
     openState
@@ -73,9 +83,8 @@ export function SweepModal({
     <SweepModalRenderer
       open={open}
       collectionId={collectionId}
-      referrerFeeBps={referrerFeeBps}
-      referrerFeeFixed={referrerFeeFixed}
-      referrer={referrer}
+      feesOnTopBps={feesOnTopBps}
+      feesOnTopFixed={feesOnTopFixed}
       normalizeRoyalties={normalizeRoyalties}
     >
       {({
@@ -90,9 +99,13 @@ export function SweepModal({
         setIsItemsToggled,
         maxInput,
         currency,
+        chainCurrency,
         isChainCurrency,
         total,
         totalUsd,
+        feeOnTop,
+        feeUsd,
+        usdPrice,
         currentChain,
         availableTokens,
         balance,
@@ -129,9 +142,7 @@ export function SweepModal({
         const hasTokens = availableTokens && availableTokens.length > 0
 
         const images = selectedTokens.slice(0, 2).map((token) => {
-          if (token?.token?.image) {
-            return token?.token?.image
-          }
+          return `${currentChain?.baseApiUrl}/redirect/tokens/${token.contract}:${token.tokenId}/image/v1?imageSize=small`
         }) as string[]
 
         const pathMap = stepData?.path
@@ -147,18 +158,24 @@ export function SweepModal({
             )
           : {}
 
-        const totalPurchases =
-          stepData?.currentStep?.items?.reduce(
-            (total, item) => total + (item?.salesData?.length || 0),
-            0
-          ) || 0
-
-        const failedPurchases = (selectedTokens.length || 0) - totalPurchases
+        const salesTxHashes =
+          stepData?.currentStep?.items?.reduce((txHashes, item) => {
+            item.salesData?.forEach((saleData) => {
+              if (saleData.txHash) {
+                txHashes.add(saleData.txHash)
+              }
+            })
+            return txHashes
+          }, new Set<string>()) || []
+        const totalSales = Array.from(salesTxHashes).length
+        const failedSales =
+          totalSales - (stepData?.currentStep?.items?.length || 0)
+        const successfulSales = totalSales - failedSales
 
         return (
           <Modal
             trigger={trigger}
-            title="Buy"
+            title={copy.title}
             open={open}
             loading={loading}
             onOpenChange={(open) => {
@@ -187,13 +204,18 @@ export function SweepModal({
             {!loading && hasTokens && sweepStep === SweepStep.Idle && (
               <Flex direction="column">
                 <Flex direction="column" css={{ px: '$4', pt: '$4', pb: '$2' }}>
-                  {transactionError ? (
-                    <ErrorWell message={transactionError.message} />
-                  ) : null}
+                  {transactionError ? <ErrorWell /> : null}
                   <Slider
                     min={0}
                     max={isItemsToggled ? Math.min(50, maxInput) : maxInput}
-                    step={isItemsToggled ? 1 : 0.01}
+                    step={
+                      isItemsToggled
+                        ? 1
+                        : Math.min(
+                            0.01,
+                            availableTokens?.[0]?.totalPrice || 0.01
+                          )
+                    }
                     value={
                       isItemsToggled ? [itemAmount || 0] : [ethAmount || 0]
                     }
@@ -263,23 +285,15 @@ export function SweepModal({
                       >
                         {selectedTokens.map((token, i) => (
                           <SweepItem
-                            key={`${token?.token?.tokenId}-${i}`}
-                            name={
-                              token.token?.name || `#${token?.token?.tokenId}`
-                            }
-                            image={
-                              token.token?.image ||
-                              token?.token?.collection?.image
-                            }
+                            key={`${token?.tokenId}-${i}`}
+                            name={`#${token.tokenId}`}
+                            image={`${currentChain?.baseApiUrl}/redirect/tokens/${token.contract}:${token.tokenId}/image/v1?imageSize=small`}
                             currency={currency}
                             amount={
+                              token?.currency != chainCurrency.address &&
                               isChainCurrency
-                                ? token?.market?.floorAsk?.price?.amount // native price is null for tokens with dynamic pricing
-                                    ?.native ||
-                                  token?.market?.floorAsk?.price?.amount
-                                    ?.decimal
-                                : token?.market?.floorAsk?.price?.amount
-                                    ?.decimal
+                                ? token?.buyInQuote
+                                : token?.totalPrice
                             }
                           />
                         ))}
@@ -294,6 +308,25 @@ export function SweepModal({
                       </Text>
                     )}
                   </Flex>
+                  {feeOnTop > 0 && (
+                    <Flex
+                      direction="column"
+                      css={{ width: '100%', py: '$4', gap: '$1' }}
+                    >
+                      <Flex align="center" justify="between">
+                        <Text style="subtitle2">Referral Fee</Text>
+                        <FormatCryptoCurrency
+                          amount={feeOnTop}
+                          address={currency?.address}
+                          decimals={currency?.decimals}
+                          symbol={currency?.symbol}
+                        />
+                      </Flex>
+                      <Flex justify="end">
+                        <FormatCurrency amount={feeUsd} color="subtle" />
+                      </Flex>
+                    </Flex>
+                  )}
                   <Flex justify="between" align="start" css={{ height: 34 }}>
                     <Text style="h6">Total</Text>
                     <Flex direction="column" align="end" css={{ gap: '$1' }}>
@@ -321,7 +354,9 @@ export function SweepModal({
                     }
                     onClick={sweepTokens}
                   >
-                    {selectedTokens.length > 0 ? 'Buy' : 'Select Items to Buy'}
+                    {selectedTokens.length > 0
+                      ? copy.ctaBuy
+                      : copy.ctaBuyDisabled}
                   </Button>
                 ) : (
                   <Flex direction="column" align="center" css={{ px: '$3' }}>
@@ -343,7 +378,7 @@ export function SweepModal({
                       disabled={true}
                       onClick={sweepTokens}
                     >
-                      Add Funds to Purchase
+                      {copy.ctaInsufficientFunds}
                     </Button>
                   </Flex>
                 )}
@@ -362,7 +397,7 @@ export function SweepModal({
                     itemCount={selectedTokens.length}
                     images={images}
                     totalPrice={total}
-                    usdPrice={totalUsd}
+                    usdPrice={usdPrice}
                     currency={currency}
                     chain={currentChain}
                   />
@@ -383,7 +418,7 @@ export function SweepModal({
                       <SigninStep css={{ mt: 48, mb: '$4', gap: 20 }} />
                       <Button disabled={true} css={{ mt: '$4', width: '100%' }}>
                         <Loader />
-                        Waiting for Approval...
+                        {copy.ctaAwaitingApproval}
                       </Button>
                     </>
                   ) : null}
@@ -407,11 +442,11 @@ export function SweepModal({
                             transactions.
                           </Text>
                           {stepData?.currentStep?.items.map((item) => (
-                            <ApprovalCollapsible
+                            <ApprovePurchasingCollapsible
                               item={item}
                               pathMap={pathMap}
                               usdPrice={totalUsd}
-                              cartChain={currentChain}
+                              chain={currentChain}
                               open={true}
                             />
                           ))}
@@ -440,7 +475,7 @@ export function SweepModal({
                             css={{ mt: '$4', width: '100%' }}
                           >
                             <Loader />
-                            Waiting for Approval...
+                            {copy.ctaAwaitingApproval}
                           </Button>
                         </Flex>
                       )}
@@ -487,7 +522,10 @@ export function SweepModal({
                     blockchain. The transaction will continue in the background.
                   </Text>
                   <Box css={{ color: '$neutralSolid' }}>
-                    <FontAwesomeIcon icon={faCube} width={32} height={32} />
+                    <FontAwesomeIcon
+                      icon={faCube}
+                      style={{ width: 32, height: 32 }}
+                    />
                   </Box>
                 </Flex>
               </Flex>
@@ -506,24 +544,20 @@ export function SweepModal({
                 >
                   <Box
                     css={{
-                      color: failedPurchases
-                        ? '$errorAccent'
-                        : '$successAccent',
+                      color: failedSales ? '$errorAccent' : '$successAccent',
                     }}
                   >
                     <FontAwesomeIcon
-                      icon={
-                        failedPurchases ? faCircleExclamation : faCheckCircle
-                      }
+                      icon={failedSales ? faCircleExclamation : faCheckCircle}
                       fontSize={32}
                     />
                   </Box>
                   <Text style="h5" css={{ textAlign: 'center' }}>
-                    {failedPurchases
-                      ? `${totalPurchases} ${
-                          totalPurchases > 1 ? 'items' : 'item'
-                        } purchased, ${failedPurchases} ${
-                          failedPurchases > 1 ? 'items' : 'item'
+                    {failedSales
+                      ? `${successfulSales} ${
+                          successfulSales > 1 ? 'items' : 'item'
+                        } purchased, ${failedSales} ${
+                          failedSales > 1 ? 'items' : 'item'
                         } failed`
                       : 'Congrats! Purchase was successful.'}
                   </Text>
@@ -550,7 +584,7 @@ export function SweepModal({
                   </Flex>
                 </Flex>
                 <Button css={{ width: '100%' }} onClick={() => setOpen(false)}>
-                  Close
+                  {copy.ctaClose}
                 </Button>
               </Flex>
             )}

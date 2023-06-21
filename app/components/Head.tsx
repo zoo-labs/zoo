@@ -31,7 +31,7 @@ export const Head: FC<Props> = ({
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@zoo_labs" />
+      <meta name="twitter:site" content="@reservoir0x" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
@@ -46,7 +46,7 @@ export const Head: FC<Props> = ({
       <meta property="og:image:type" content="image/png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="ZOO Banner" />
+      <meta property="og:image:alt" content="Reservoir Market Banner" />
     </NextHead>
   )
 }

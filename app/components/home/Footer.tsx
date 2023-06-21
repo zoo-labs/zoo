@@ -33,30 +33,30 @@ const SectionLink: FC<SectionLinkProps> = ({ name, href }) => (
 const developerSectionLinks = [
   {
     name: 'Docs',
-    href: 'https://docs.zoolabs.io',
+    href: 'https://docs.reservoir.tools/docs',
+  },
+  {
+    name: 'API Reference',
+    href: 'https://docs.reservoir.tools/reference/overview',
   },
   {
     name: 'Github',
-    href: 'https://github.com/zoo-labs',
-  },
-  {
-    name: 'Help',
-    href: 'https://twitter.com/zoo_labs',
+    href: 'https://github.com/reservoirprotocol',
   },
 ]
 
 const companySectionLinks = [
   {
-    name: 'About',
-    href: 'https://zoo.ngo',
+    name: 'Jobs',
+    href: 'https://jobs.ashbyhq.com/reservoir',
   },
   {
     name: 'Terms of Use',
-    href: '/terms',
+    href: 'https://reservoir.tools/terms',
   },
   {
     name: 'Privacy Policy',
-    href: '/privacy',
+    href: 'https://reservoir.tools/privacy',
   },
 ]
 
@@ -85,7 +85,7 @@ export const Footer = () => {
           ))}
         </Flex>
         <Flex direction="column">
-          <SectionTitle title="Foundation" />
+          <SectionTitle title="Company" />
           {companySectionLinks.map((props) => (
             <SectionLink key={props.name} {...props} />
           ))}
@@ -95,12 +95,12 @@ export const Footer = () => {
         direction="column"
         css={{ alignItems: 'flex-start', '@bp600': { alignItems: 'flex-end' } }}
       >
-        <SectionTitle title="Join Zoo Community" />
+        <SectionTitle title="Join Reservoir Community" />
         <Flex css={{ gap: '$4', mt: 16 }}>
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://twitter.com/zoo_labs"
+            href="https://twitter.com/reservoir0x"
           >
             <Button size="xs" color="gray3">
               <FontAwesomeIcon icon={faTwitter} width={14} height={14} />

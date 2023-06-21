@@ -1,11 +1,4 @@
-import {
-  Anchor,
-  Box,
-  Button,
-  Flex,
-  FormatCryptoCurrency,
-  Text,
-} from 'components/primitives'
+import { Anchor, Box, Button, Flex, Text } from 'components/primitives'
 import { Avatar } from 'components/primitives/Avatar'
 import * as RadixDialog from '@radix-ui/react-dialog'
 import {
@@ -21,7 +14,7 @@ import { useAccount, useDisconnect } from 'wagmi'
 import { ConnectWalletButton } from 'components/ConnectWalletButton'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { FullscreenModal } from 'components/common/FullscreenModal'
-import { useENSResolver } from 'hooks'
+import { useENSResolver, useMarketplaceChain } from 'hooks'
 import ThemeSwitcher from 'components/navbar/ThemeSwitcher'
 import Wallet from 'components/navbar/Wallet'
 
@@ -33,6 +26,7 @@ const HamburgerMenu = () => {
     shortName: shortEnsName,
   } = useENSResolver(address)
   const { disconnect } = useDisconnect()
+  const { routePrefix } = useMarketplaceChain()
 
   const trigger = (
     <Button
@@ -64,13 +58,13 @@ const HamburgerMenu = () => {
           align="center"
           justify="between"
         >
-          <Link href="/" legacyBehavior>
+          <Link href="/">
             <Box css={{ width: 34, cursor: 'pointer' }}>
               <Image
-                src="/zooLogo.svg"
+                src="/reservoirLogo.svg"
                 width={34}
                 height={39}
-                alt="ZOO"
+                alt="Reservoir"
               />
             </Box>
           </Link>
@@ -127,7 +121,7 @@ const HamburgerMenu = () => {
                 </Flex>
               </Flex>
             </Link>
-            <Link href="/collection-rankings" legacyBehavior>
+            <Link href={`/${routePrefix}/collection-rankings`} legacyBehavior>
               <Text
                 style="subtitle1"
                 css={{
@@ -166,7 +160,7 @@ const HamburgerMenu = () => {
               >
                 <Text style="subtitle1">Portfolio</Text>
                 <Text style="body3" color="subtle">
-                  Manage your digital animals, collections, listings and offers
+                  Manage your items, collections, listings and offers
                 </Text>
               </Flex>
             </Link>
@@ -238,7 +232,7 @@ const HamburgerMenu = () => {
                 </Text>
               </Link>
               <Anchor
-                href="https://zoo.ngo"
+                href="https://docs.reservoir.tools/docs"
                 target="_blank"
                 css={{
                   borderBottom: '1px solid $gray4',
@@ -248,7 +242,7 @@ const HamburgerMenu = () => {
                   width: '100%',
                 }}
               >
-                <Text style="subtitle1">Foundation</Text>
+                <Text style="subtitle1">Docs</Text>
               </Anchor>
             </Flex>
             <Box>
@@ -280,7 +274,7 @@ const HamburgerMenu = () => {
         </Flex>
       </Flex>
     </FullscreenModal>
-  );
+  )
 }
 
 export default HamburgerMenu

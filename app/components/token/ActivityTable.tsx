@@ -15,7 +15,6 @@ import {
   useUsersActivity,
 } from '@reservoir0x/reservoir-kit-ui'
 import LoadingSpinner from 'components/common/LoadingSpinner'
-import { constants } from 'ethers'
 import { useENSResolver, useMarketplaceChain, useTimeSince } from 'hooks'
 import Link from 'next/link'
 import { FC, useEffect, useRef } from 'react'
@@ -30,6 +29,7 @@ import {
   TableRow,
   Text,
 } from '../primitives'
+import { zeroAddress } from 'viem'
 
 type CollectionActivityResponse = ReturnType<typeof useCollectionActivity>
 type CollectionActivity = CollectionActivityResponse['data'][0]
@@ -71,6 +71,8 @@ export const TokenActivityTable: FC<TokenActivityTableProps> = ({
     id,
     {
       types: activityTypes,
+      //@ts-ignore - until we add the types
+      es: 1,
     },
     {
       revalidateOnMount: true,
@@ -283,9 +285,8 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
                 gap: '$3',
               }}
             >
-              {activity.fromAddress &&
-              activity.fromAddress !== constants.AddressZero ? (
-                <Link href={`/portfolio/${activity.fromAddress}`} legacyBehavior>
+              {activity.fromAddress && activity.fromAddress !== zeroAddress ? (
+                <Link href={`/portfolio/${activity.fromAddress}`}>
                   <Text
                     style="subtitle3"
                     css={{
@@ -307,9 +308,8 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
               >
                 to
               </Text>
-              {activity.toAddress &&
-              activity.toAddress !== constants.AddressZero ? (
-                <Link href={`/portfolio/${activity.toAddress}`} legacyBehavior>
+              {activity.toAddress && activity.toAddress !== zeroAddress ? (
+                <Link href={`/portfolio/${activity.toAddress}`}>
                   <Text
                     style="subtitle3"
                     css={{
@@ -329,7 +329,7 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
           </Flex>
         </TableCell>
       </TableRow>
-    );
+    )
   }
 
   return (
@@ -402,14 +402,13 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
               gap: '$3',
             }}
           >
-            {activity.fromAddress &&
-            activity.fromAddress !== constants.AddressZero ? (
+            {activity.fromAddress && activity.fromAddress !== zeroAddress ? (
               <Link
                 style={{
                   display: 'flex',
                 }}
                 href={`/portfolio/${activity.fromAddress}`}
-                legacyBehavior>
+              >
                 <Text
                   style="subtitle2"
                   css={{
@@ -428,14 +427,13 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
             <Text style="body2" color="subtle">
               to
             </Text>
-            {activity.toAddress &&
-            activity.toAddress !== constants.AddressZero ? (
+            {activity.toAddress && activity.toAddress !== zeroAddress ? (
               <Link
                 style={{
                   display: 'flex',
                 }}
                 href={`/portfolio/${activity.toAddress}`}
-                legacyBehavior>
+              >
                 <Text
                   style="subtitle2"
                   css={{
@@ -455,5 +453,5 @@ const ActivityTableRow: FC<ActivityTableRowProps> = ({ activity }) => {
         </Flex>
       </TableCell>
     </TableRow>
-  );
+  )
 }
