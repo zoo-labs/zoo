@@ -10,20 +10,23 @@ import {
   useTokens,
   useCoinConversion,
   useReservoirClient,
-  useTokenOpenseaBanned,
   useCollections,
   useListings,
   useChainCurrency,
 } from '../../hooks'
-import { useAccount, useBalance, useSigner, useNetwork } from 'wagmi'
+import { useAccount, useBalance, useWalletClient, useNetwork } from 'wagmi'
 
-import { BigNumber, utils } from 'ethers'
-import { Execute, ReservoirClientActions } from '@reservoir0x/reservoir-sdk'
+import {
+  BuyPath,
+  Execute,
+  ReservoirClientActions,
+} from '@reservoir0x/reservoir-sdk'
 import { UseBalanceToken } from '../../types/wagmi'
 import { toFixed } from '../../lib/numbers'
-import { formatUnits, parseUnits } from 'ethers/lib/utils.js'
-import { constants } from 'ethers'
+import { formatUnits, parseUnits, zeroAddress } from 'viem'
 import { Currency } from '../../types/Currency'
+
+type Item = Parameters<ReservoirClientActions['buyToken']>['0']['items'][0]
 
 export enum BuyStep {
   Checkout,
@@ -41,6 +44,9 @@ export type BuyModalStepData = {
 }
 
 type Token = NonNullable<NonNullable<ReturnType<typeof useTokens>>['data']>[0]
+type BuyTokenOptions = NonNullable<
+  Parameters<ReservoirClientActions['buyToken']>['0']['options']
+>
 
 type ChildrenProps = {
   loading: boolean
@@ -58,21 +64,19 @@ type ChildrenProps = {
   >
   mixedCurrencies: boolean
   totalPrice: number
-  referrerFee: number
+  feeOnTop: number
   buyStep: BuyStep
   transactionError?: Error | null
   hasEnoughCurrency: boolean
   feeUsd: number
   totalUsd: number
-  usdPrice: ReturnType<typeof useCoinConversion>
-  isBanned: boolean
-  balance?: BigNumber
+  usdPrice: number
+  balance?: bigint
   address?: string
   blockExplorerBaseUrl: string
   steps: Execute['steps'] | null
   stepData: BuyModalStepData | null
   quantity: number
-  listingsToBuy: Record<string, number>
   setBuyStep: React.Dispatch<React.SetStateAction<BuyStep>>
   setQuantity: React.Dispatch<React.SetStateAction<number>>
   buyToken: () => void
@@ -83,9 +87,8 @@ type Props = {
   tokenId?: string
   collectionId?: string
   orderId?: string
-  referrerFeeBps?: number | null
-  referrerFeeFixed?: number | null
-  referrer?: string | null
+  feesOnTopBps?: string[] | null
+  feesOnTopFixed?: string[] | null
   normalizeRoyalties?: boolean
   children: (props: ChildrenProps) => ReactNode
 }
@@ -95,19 +98,19 @@ export const BuyModalRenderer: FC<Props> = ({
   tokenId,
   collectionId,
   orderId,
-  referrer,
-  referrerFeeBps,
-  referrerFeeFixed,
+  feesOnTopBps,
+  feesOnTopFixed,
   normalizeRoyalties,
   children,
 }) => {
-  const { data: signer } = useSigner()
+  const { data: signer } = useWalletClient()
   const [totalPrice, setTotalPrice] = useState(0)
   const [averageUnitPrice, setAverageUnitPrice] = useState(0)
-  const [listingsToBuy, setListingsToBuy] = useState<Record<string, number>>({})
+  const [path, setPath] = useState<BuyPath>([])
+  const [isFetchingPath, setIsFetchingPath] = useState(false)
   const [currency, setCurrency] = useState<undefined | Currency>()
   const [mixedCurrencies, setMixedCurrencies] = useState(false)
-  const [referrerFee, setReferrerFee] = useState(0)
+  const [feeOnTop, setFeeOnTop] = useState(0)
   const [buyStep, setBuyStep] = useState<BuyStep>(BuyStep.Checkout)
   const [transactionError, setTransactionError] = useState<Error | null>()
   const [hasEnoughCurrency, setHasEnoughCurrency] = useState(true)
@@ -125,6 +128,7 @@ export const BuyModalRenderer: FC<Props> = ({
     open && {
       tokens: [`${contract}:${tokenId}`],
       includeLastSale: true,
+      includeQuantity: true,
       normalizeRoyalties,
     },
     {
@@ -141,7 +145,7 @@ export const BuyModalRenderer: FC<Props> = ({
   const { data: balance } = useBalance({
     address: address,
     token:
-      currency?.contract !== constants.AddressZero
+      currency?.contract !== zeroAddress
         ? (currency?.contract as UseBalanceToken)
         : undefined,
     watch: open,
@@ -151,11 +155,6 @@ export const BuyModalRenderer: FC<Props> = ({
   const collection = collections && collections[0] ? collections[0] : undefined
   const token = tokens && tokens.length > 0 ? tokens[0] : undefined
   const is1155 = token?.token?.kind === 'erc1155'
-  let listingOrderId = orderId && orderId.length > 0 ? orderId : undefined
-
-  if (!listingOrderId && !is1155) {
-    listingOrderId = token?.market?.floorAsk?.id
-  }
 
   const {
     data: listingsData,
@@ -164,44 +163,111 @@ export const BuyModalRenderer: FC<Props> = ({
   } = useListings(
     {
       token: `${contract}:${tokenId}`,
-      ids: listingOrderId,
+      ids: orderId,
       normalizeRoyalties,
       status: 'active',
-      limit: 1000,
+      limit: 1,
       sortBy: 'price',
     },
     {
       revalidateFirstPage: true,
     },
-    open && (token?.market?.floorAsk?.id !== undefined || orderId)
-      ? true
-      : false
+    open && orderId && orderId.length > 0 ? true : false
   )
 
-  const listings = useMemo(
-    () => listingsData.filter((listing) => listing.maker !== address),
+  const listing = useMemo(
+    () => listingsData.find((listing) => listing.maker !== address),
     [listingsData]
   )
-  const listing =
-    listings && listings[0] && listings[0].status === 'active'
-      ? listings[0]
-      : undefined
-  const quantityRemaining =
-    listings.length > 1
-      ? listings.reduce(
-          (total, listing) => total + (listing.quantityRemaining || 0),
-          0
-        )
-      : listing?.quantityRemaining
 
-  const usdPrice = useCoinConversion(
+  const quantityRemaining = useMemo(() => {
+    if (orderId) {
+      return listing?.quantityRemaining || 0
+    } else if (is1155) {
+      return path
+        ? path.reduce((total, pathItem) => total + (pathItem.quantity || 0), 0)
+        : 0
+    } else {
+      return token?.market?.floorAsk?.quantityRemaining || 0
+    }
+  }, [listing, token, path, is1155, orderId])
+
+  const usdConversion = useCoinConversion(
     open && token ? 'USD' : undefined,
     currency?.symbol
   )
-  const feeUsd = referrerFee * (usdPrice || 0)
-  const totalUsd = totalPrice * (usdPrice || 0)
+  const usdPrice = usdConversion.length > 0 ? usdConversion[0].price : 0
+  const feeUsd = feeOnTop * usdPrice
+  const totalUsd = totalPrice * usdPrice
 
   const client = useReservoirClient()
+
+  const fetchPath = useCallback(() => {
+    if (
+      !open ||
+      !client ||
+      !tokenId ||
+      !contract ||
+      !signer ||
+      !is1155 ||
+      orderId
+    ) {
+      setPath(undefined)
+      return
+    }
+
+    setIsFetchingPath(true)
+
+    const options: BuyTokenOptions = {
+      onlyPath: true,
+      partial: true,
+    }
+
+    if (normalizeRoyalties !== undefined) {
+      options.normalizeRoyalties = normalizeRoyalties
+    }
+    client.actions
+      .buyToken({
+        options,
+        items: [
+          {
+            token: `${contract}:${tokenId}`,
+            quantity: 1000,
+            fillType: 'trade',
+          },
+        ],
+        signer,
+        onProgress: () => {},
+        precheck: true,
+      })
+      .then((response) => {
+        if (response && response.path) {
+          setPath(response.path)
+        } else {
+          setPath([])
+        }
+      })
+      .catch((err) => {
+        setPath([])
+        throw err
+      })
+      .finally(() => {
+        setIsFetchingPath(false)
+      })
+  }, [
+    open,
+    client,
+    signer,
+    tokenId,
+    contract,
+    is1155,
+    orderId,
+    normalizeRoyalties,
+  ])
+
+  useEffect(() => {
+    fetchPath()
+  }, [fetchPath])
 
   const buyToken = useCallback(() => {
     if (!signer) {
@@ -224,14 +290,29 @@ export const BuyModalRenderer: FC<Props> = ({
 
     const contract = collectionId?.split(':')[0]
 
-    let options: Parameters<
-      ReservoirClientActions['buyToken']
-    >['0']['options'] = {}
+    let options: BuyTokenOptions = {}
 
-    if (referrer && referrerFee) {
-      const atomicUnitsFee = parseUnits(`${referrerFee}`, currency?.decimals)
-      options.feesOnTop = [`${referrer}:${atomicUnitsFee}`]
-    } else if (referrer === null && referrerFeeBps === null) {
+    if (feesOnTopBps && feesOnTopBps?.length > 0) {
+      const fixedFees = feesOnTopBps.map((fullFee) => {
+        const [referrer, feeBps] = fullFee.split(':')
+        const totalFeeTruncated = toFixed(
+          totalPrice - feeOnTop,
+          currency?.decimals || 18
+        )
+        const fee =
+          Number(
+            parseUnits(
+              `${Number(totalFeeTruncated)}`,
+              currency?.decimals || 18
+            ) * BigInt(feeBps)
+          ) / 10000
+        const atomicUnitsFee = formatUnits(BigInt(fee), 0)
+        return `${referrer}:${atomicUnitsFee}`
+      })
+      options.feesOnTop = fixedFees
+    } else if (feesOnTopFixed && feesOnTopFixed.length > 0) {
+      options.feesOnTop = feesOnTopFixed
+    } else if (!feesOnTopFixed && !feesOnTopBps) {
       delete options.feesOnTop
     }
 
@@ -240,33 +321,27 @@ export const BuyModalRenderer: FC<Props> = ({
     }
 
     setBuyStep(BuyStep.Approving)
-    type Item = Parameters<ReservoirClientActions['buyToken']>['0']['items'][0]
     const items: Item[] = []
-
-    if (quantity > 1) {
-      Object.keys(listingsToBuy).forEach((listingId) => {
-        items.push({
-          orderId: listingId,
-          quantity: listingsToBuy[listingId],
-        })
-      })
-    } else {
-      const item: Item = {
-        quantity: 1,
-      }
-
-      if (orderId) {
-        item.orderId = orderId
-      } else {
-        item.token = `${contract}:${tokenId}`
-      }
-      items.push(item)
+    const item: Item = {
+      fillType: 'trade',
+      quantity,
     }
+
+    if (is1155) {
+      options.partial = true
+    }
+
+    if (orderId) {
+      item.orderId = orderId
+    } else {
+      item.token = `${contract}:${tokenId}`
+    }
+    items.push(item)
 
     client.actions
       .buyToken({
         items: items,
-        expectedPrice: totalPrice - referrerFee,
+        expectedPrice: totalPrice - feeOnTop,
         signer,
         onProgress: (steps: Execute['steps']) => {
           if (!steps) {
@@ -340,6 +415,7 @@ export const BuyModalRenderer: FC<Props> = ({
           }
           mutateCollection()
           mutateTokens()
+          fetchPath()
         }
         setBuyStep(BuyStep.Checkout)
         setStepData(null)
@@ -349,14 +425,14 @@ export const BuyModalRenderer: FC<Props> = ({
     tokenId,
     collectionId,
     orderId,
-    referrer,
-    referrerFee,
+    feesOnTopBps,
+    feesOnTopFixed,
     quantity,
     normalizeRoyalties,
+    is1155,
     client,
     currency,
     totalPrice,
-    listingsToBuy,
     mutateListings,
     mutateTokens,
     mutateCollection,
@@ -364,41 +440,58 @@ export const BuyModalRenderer: FC<Props> = ({
 
   useEffect(() => {
     let currency: Currency | undefined
-    if (listing) {
-      let total = 0
-      if (quantity > 1) {
-        let orders: Record<string, number> = {}
-        let mixedCurrencies = false
-        let currencies: string[] = []
-        let nativeTotal = 0
-        let orderCurrencyTotal = 0
-        let totalQuantity = 0
-        for (let i = 0; i < listings.length; i++) {
-          const listingQuantity = listings[i].quantityRemaining
-          const listingPrice = listings[i].price
-          const listingAmount = listingPrice?.amount
-          const listingId = listings[i].id
-          if (
-            !listingPrice?.currency?.contract ||
-            !listingAmount ||
-            !listingQuantity
-          ) {
+
+    if (
+      !token ||
+      (orderId && !listing && isValidatingListing) ||
+      (is1155 && !path && isFetchingPath)
+    ) {
+      setBuyStep(BuyStep.Unavailable)
+      setTotalPrice(0)
+      setAverageUnitPrice(0)
+      setCurrency(undefined)
+      setMixedCurrencies(false)
+      return
+    }
+
+    let total = 0
+    if (orderId) {
+      total = (listing?.price?.amount?.decimal || 0) * quantity
+      if (listing?.price?.currency) {
+        currency = listing?.price?.currency as Currency
+        setCurrency(currency)
+      }
+      setMixedCurrencies(false)
+    } else if (is1155) {
+      let orders: Record<string, number> = {}
+      let mixedCurrencies = false
+      let currencies: string[] = []
+      let nativeTotal = 0
+      let orderCurrencyTotal = 0
+      let totalQuantity = 0
+      if (path && path.length > 0) {
+        for (let i = 0; i < path.length; i++) {
+          const pathItem = path[i]
+          const pathQuantity = pathItem.quantity || 0
+          const pathPrice = pathItem.totalPrice || 0
+          const listingId = pathItem.orderId
+          if (!pathItem?.currency || !listingId) {
             continue
           }
           const quantityLeft = quantity - totalQuantity
-          if (!currencies.includes(listingPrice.currency.contract)) {
-            currencies.push(listingPrice.currency.contract)
+          if (!currencies.includes(pathItem.currency)) {
+            currencies.push(pathItem.currency)
             mixedCurrencies = currencies.length >= 2
           }
           let quantityToTake = 0
-          if (quantityLeft >= listingQuantity) {
-            quantityToTake = listingQuantity
+          if (quantityLeft >= pathQuantity) {
+            quantityToTake = pathQuantity
           } else {
             quantityToTake = quantityLeft
           }
 
-          nativeTotal += (listingAmount.native || 0) * quantityToTake
-          orderCurrencyTotal += (listingAmount.decimal || 0) * quantityToTake
+          nativeTotal += (pathItem.buyInQuote || pathPrice) * quantityToTake
+          orderCurrencyTotal += pathPrice * quantityToTake
           orders[listingId] = quantityToTake
           totalQuantity += quantityToTake
 
@@ -407,64 +500,65 @@ export const BuyModalRenderer: FC<Props> = ({
           }
         }
         total = mixedCurrencies ? nativeTotal : orderCurrencyTotal
-        setListingsToBuy(orders)
         currency = mixedCurrencies
           ? {
               contract: chainCurrency.address,
               symbol: chainCurrency.symbol,
               decimals: chainCurrency.decimals,
-              name: chainCurrency.name,
             }
-          : (listing.price?.currency as any)
+          : {
+              contract: path[0].currency as string,
+              symbol: path[0].currencySymbol as string,
+              decimals: path[0].currencyDecimals as number,
+            }
         setCurrency(currency)
         setMixedCurrencies(mixedCurrencies)
-      } else if (listing.price?.amount?.decimal) {
-        total = listing.price.amount.decimal
-        currency = listing.price.currency as Currency
+      }
+    } else if (token?.market?.floorAsk) {
+      total = token.market.floorAsk.price?.amount?.decimal || 0
+      if (token.market.floorAsk.price?.currency) {
+        currency = token.market.floorAsk.price?.currency as Currency
         setCurrency(currency)
-        setMixedCurrencies(false)
       }
-
-      if (total > 0) {
-        if (referrerFeeBps && referrer) {
-          const fee = (referrerFeeBps / 10000) * total
-          total += fee
-          setReferrerFee(fee)
-        } else if (referrerFeeFixed && referrer) {
-          const fee = Number(
-            formatUnits(
-              BigNumber.from(`${referrerFeeFixed}`),
-              currency?.decimals
-            )
-          )
-          total += fee
-          setReferrerFee(fee)
-        }
-        setTotalPrice(total)
-        setAverageUnitPrice(total / quantity)
-        setBuyStep(BuyStep.Checkout)
-      } else {
-        setBuyStep(BuyStep.Unavailable)
-        setTotalPrice(0)
-        setAverageUnitPrice(0)
-        setListingsToBuy({})
-        setCurrency(undefined)
-        setMixedCurrencies(false)
+      setMixedCurrencies(false)
+    }
+    if (total > 0) {
+      if (feesOnTopBps && feesOnTopBps.length > 0) {
+        const fees = feesOnTopBps.reduce((totalFees, feeOnTop) => {
+          const [_, fee] = feeOnTop.split(':')
+          return totalFees + (Number(fee) / 10000) * total
+        }, 0)
+        total += fees
+        setFeeOnTop(fees)
+      } else if (feesOnTopFixed && feesOnTopFixed.length > 0) {
+        const fees = feesOnTopFixed.reduce((totalFees, feeOnTop) => {
+          const [_, fee] = feeOnTop.split(':')
+          const parsedFee = formatUnits(BigInt(fee), currency?.decimals || 18)
+          return totalFees + Number(parsedFee)
+        }, 0)
+        total += fees
+        setFeeOnTop(fees)
       }
-    } else if (!listing && !isValidatingListing && token) {
+      setTotalPrice(total)
+      setAverageUnitPrice(total / quantity)
+      setBuyStep(BuyStep.Checkout)
+    } else {
       setBuyStep(BuyStep.Unavailable)
       setTotalPrice(0)
       setAverageUnitPrice(0)
-      setListingsToBuy({})
       setCurrency(undefined)
       setMixedCurrencies(false)
     }
   }, [
     listing,
+    path,
     isValidatingListing,
-    referrerFeeBps,
-    referrerFeeFixed,
-    referrer,
+    isFetchingPath,
+    is1155,
+    orderId,
+    feesOnTopBps,
+    feesOnTopFixed,
+    feeOnTop,
     client,
     quantity,
     token,
@@ -477,9 +571,8 @@ export const BuyModalRenderer: FC<Props> = ({
       if (!balance.value) {
         setHasEnoughCurrency(false)
       } else if (
-        balance.value.lt(
-          utils.parseUnits(`${totalPriceTruncated}`, currency?.decimals)
-        )
+        balance.value <
+        parseUnits(`${totalPriceTruncated as number}`, currency?.decimals || 18)
       ) {
         setHasEnoughCurrency(false)
       } else {
@@ -495,15 +588,18 @@ export const BuyModalRenderer: FC<Props> = ({
       setStepData(null)
       setSteps(null)
       setQuantity(1)
+      setPath(undefined)
     }
   }, [open])
-
-  const isBanned = useTokenOpenseaBanned(open ? contract : undefined, tokenId)
 
   return (
     <>
       {children({
-        loading: (!listing && isValidatingListing) || !token,
+        loading:
+          (!listing && isValidatingListing) ||
+          !token ||
+          isFetchingPath ||
+          (is1155 && !path && !orderId),
         token,
         collection,
         listing,
@@ -512,21 +608,19 @@ export const BuyModalRenderer: FC<Props> = ({
         mixedCurrencies,
         totalPrice,
         averageUnitPrice,
-        referrerFee,
+        feeOnTop,
         buyStep,
         transactionError,
         hasEnoughCurrency,
         feeUsd,
         totalUsd,
         usdPrice,
-        isBanned,
         balance: balance?.value,
         address: address,
         blockExplorerBaseUrl,
         steps,
         stepData,
         quantity,
-        listingsToBuy,
         setQuantity,
         setBuyStep,
         buyToken,

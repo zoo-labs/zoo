@@ -1,9 +1,7 @@
-import { arrayify } from 'ethers/lib/utils'
 import { Execute, paths } from '../types'
 import { pollUntilHasData, pollUntilOk } from './pollApi'
-import { Signer } from 'ethers'
-import { TypedDataSigner } from '@ethersproject/abstract-signer'
-import { axios } from '../utils'
+import { Account, WalletClient, createPublicClient, http, toBytes } from 'viem'
+import { axios, zora } from '../utils'
 import { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
 import { getClient } from '../actions/index'
 import { setParams } from './params'
@@ -11,6 +9,41 @@ import { version } from '../../package.json'
 import { LogLevel } from '../utils/logger'
 import { generateEvent } from '../utils/events'
 import { sendTransactionSafely } from './transaction'
+import * as allChains from 'viem/chains'
+import { executeResults } from './executeResults'
+
+function checkExpectedPrice(
+  quote: number,
+  isSell: boolean,
+  isBuy: boolean,
+  expectedPrice?: number
+) {
+  let error: null | Error | { type: string; message: string } = null
+  if (expectedPrice === undefined) {
+    error = {
+      type: 'price mismatch',
+      message: `Attention: the offer price of this token is now ${quote}`,
+    }
+    return
+  }
+
+  // Check if the user is selling
+  if (isSell && Number((quote - expectedPrice).toFixed(6)) < -0.00001) {
+    error = {
+      type: 'price mismatch',
+      message: `Attention: the offer price of this token is now ${quote}`,
+    }
+  }
+
+  // Check if the user is buying
+  if (isBuy && Number((quote - expectedPrice).toFixed(6)) > 0.00001) {
+    error = {
+      type: 'price mismatch',
+      message: `Attention: the price of this token is now ${quote}`,
+    }
+  }
+  return error
+}
 
 /**
  * When attempting to perform actions, such as, selling a token or
@@ -23,30 +56,51 @@ import { sendTransactionSafely } from './transaction'
  * @param signer Ethereum signer object provided by the browser
  * @param setState Callback to update UI state has execution progresses
  * @param newJson Data passed around, which contains steps and items etc
- * @param expectedPrice Expected price to check for price moves before starting to process the steps
+ * @param expectedPrice Expected price to check for price moves before starting to process the steps. Can be a number or an object representing currency contract address to expected price
+ * @param chainId Optional parameter to override the default chain
  * @returns A promise you can await on
  */
 
 export async function executeSteps(
   request: AxiosRequestConfig,
-  signer: Signer,
+  signer: WalletClient,
   setState: (steps: Execute['steps'], path: Execute['path']) => any,
   newJson?: Execute,
-  expectedPrice?: number
+  expectedPrice?: number | Record<string, number>,
+  chainId?: number
 ) {
   const client = getClient()
-  const currentReservoirChain = client?.currentChain()
+  let reservoirChain = client?.currentChain()
+  if (chainId) {
+    reservoirChain = client.chains.find((chain) => chain.id === chainId) || null
+  }
+
+  let viemChain: allChains.Chain = allChains.mainnet
+  if (reservoirChain?.id === zora.id) {
+    viemChain = zora
+  } else {
+    viemChain =
+      Object.values(allChains).find(
+        (chain) => chain.id === (reservoirChain?.id || 1)
+      ) || allChains.mainnet
+  }
+
+  const viemClient = createPublicClient({
+    chain: viemChain,
+    transport: http(),
+  })
+
   let json = newJson
   try {
     if (!request.headers) {
       request.headers = {}
     }
 
-    if (currentReservoirChain?.baseApiUrl) {
-      request.baseURL = currentReservoirChain.baseApiUrl
+    if (reservoirChain?.baseApiUrl) {
+      request.baseURL = reservoirChain.baseApiUrl
     }
-    if (currentReservoirChain?.apiKey) {
-      request.headers['x-api-key'] = currentReservoirChain.apiKey
+    if (reservoirChain?.apiKey) {
+      request.headers['x-api-key'] = reservoirChain.apiKey
     }
     if (client?.uiVersion) {
       request.headers['x-rkui-version'] = client.uiVersion
@@ -64,45 +118,60 @@ export async function executeSteps(
     // Handle errors
     if (json.error || !json.steps) throw json
 
-    const isBuy = request.url?.includes('/execute/buy')
-    const isSell = request.url?.includes('/execute/sell')
+    const isBuy = request.url?.includes('/execute/buy') || false
+    const isSell = request.url?.includes('/execute/sell') || false
 
     // Handle price changes to protect users from paying more
     // than expected when buying and selling for less than expected
     const path = json.path as {
       quote?: number //This is the quote, matching the order currency
       buyInQuote?: number //This is the "Buy In" quote, when converting to a currency to buy an order in
+      currency?: string
     }[]
     if (path && expectedPrice) {
-      const quote = path.reduce((total: number, { quote, buyInQuote }) => {
-        total += buyInQuote || quote || 0
-        return total
-      }, 0)
       client.log(
         [
           'Execute Steps: checking expected price',
           'expected price',
           expectedPrice,
-          'quote',
-          quote,
+          'path',
+          path,
         ],
         LogLevel.Verbose
       )
-
-      // Check if the user is selling
-      let error: null | Error | { type: string; message: string } = null
-      if (isSell && Number((quote - expectedPrice).toFixed(6)) < -0.00001) {
-        error = {
-          type: 'price mismatch',
-          message: `Attention: the offer price of this token is now ${quote}`,
-        }
-      }
-
-      // Check if the user is buying
-      if (isBuy && Number((quote - expectedPrice).toFixed(6)) > 0.00001) {
-        error = {
-          type: 'price mismatch',
-          message: `Attention: the price of this token is now ${quote}`,
+      let error: ReturnType<typeof checkExpectedPrice>
+      if (typeof expectedPrice === 'number') {
+        const quote = path.reduce((total: number, { quote, buyInQuote }) => {
+          total += buyInQuote || quote || 0
+          return total
+        }, 0)
+        error = checkExpectedPrice(quote, isSell, isBuy, expectedPrice)
+      } else {
+        const quotes: Record<string, number> = path.reduce(
+          (quotes, { quote, buyInQuote, currency }) => {
+            if (currency) {
+              if (!quotes[currency]) {
+                quotes[currency] = buyInQuote || quote || 0
+              } else {
+                quotes[currency] += buyInQuote || quote || 0
+              }
+            }
+            return quotes
+          },
+          {} as Record<string, number>
+        )
+        const quoteEntries = Object.entries(quotes)
+        for (let i = 0; i < quoteEntries.length; i++) {
+          const [currency, quote] = quoteEntries[i]
+          error = checkExpectedPrice(
+            quote,
+            isSell,
+            isBuy,
+            expectedPrice[currency]
+          )
+          if (error) {
+            break
+          }
         }
       }
 
@@ -136,10 +205,7 @@ export async function executeSteps(
     // There are no more incomplete steps
     if (incompleteStepIndex === -1) {
       client.log(['Execute Steps: all steps complete'], LogLevel.Verbose)
-      client._sendEvent(
-        generateEvent(request, json),
-        currentReservoirChain?.id || 1
-      )
+      client._sendEvent(generateEvent(request, json), reservoirChain?.id || 1)
       return
     }
 
@@ -206,108 +272,134 @@ export async function executeSteps(
             switch (kind) {
               // Make an on-chain transaction
               case 'transaction': {
-                client.log(
-                  [
-                    'Execute Steps: Begin transaction step for, sending transaction',
-                  ],
-                  LogLevel.Verbose
-                )
-                await sendTransactionSafely(stepData, signer, (tx) => {
-                  client.log(
-                    ['Execute Steps: Transaction step, got transaction', tx],
-                    LogLevel.Verbose
-                  )
-                  stepItem.txHash = tx.hash
-                  if (json) {
-                    setState([...json.steps], path)
-                  }
-                })
-                client.log(
-                  [
-                    'Execute Steps: Transaction finished, starting to poll for confirmation',
-                  ],
-                  LogLevel.Verbose
-                )
-
-                //Implicitly poll the confirmation url to confirm the transaction went through
-                const confirmationUrl = new URL(
-                  `${request.baseURL}/transactions/${stepItem.txHash}/synced/v1`
-                )
-                const headers: AxiosRequestHeaders = {
-                  'x-rkc-version': version,
-                }
-
-                if (request.headers && request.headers['x-api-key']) {
-                  headers['x-api-key'] = request.headers['x-api-key']
-                }
-
-                if (request.headers && client?.uiVersion) {
-                  request.headers['x-rkui-version'] = client.uiVersion
-                }
-                await pollUntilOk(
-                  {
-                    url: confirmationUrl.href,
-                    method: 'get',
-                    headers: headers,
-                  },
-                  (res) => {
-                    client.log(
-                      ['Execute Steps: Polling for confirmation', res],
-                      LogLevel.Verbose
-                    )
-                    return res && res.data.synced
-                  }
-                )
-
-                //Confirm that on-chain tx has been picked up by the indexer
-                if (
-                  step.id === 'sale' &&
-                  stepItem.txHash &&
-                  (isSell || isBuy)
-                ) {
+                try {
                   client.log(
                     [
-                      'Execute Steps: Polling sales to verify transaction was indexed',
+                      'Execute Steps: Begin transaction step for, sending transaction',
                     ],
                     LogLevel.Verbose
                   )
-                  const indexerConfirmationUrl = new URL(
-                    `${request.baseURL}/sales/v4`
-                  )
-                  const queryParams: paths['/sales/v4']['get']['parameters']['query'] =
-                    {
-                      txHash: stepItem.txHash,
+
+                  await sendTransactionSafely(
+                    viemChain,
+                    viemClient,
+                    stepData,
+                    signer,
+                    (tx) => {
+                      client.log(
+                        [
+                          'Execute Steps: Transaction step, got transaction',
+                          tx,
+                        ],
+                        LogLevel.Verbose
+                      )
+                      stepItem.txHash = tx
+                      if (json) {
+                        setState([...json.steps], path)
+                      }
                     }
-                  setParams(indexerConfirmationUrl, queryParams)
-                  let salesData: paths['/sales/v4']['get']['responses']['200']['schema'] =
-                    {}
+                  )
+                  client.log(
+                    [
+                      'Execute Steps: Transaction finished, starting to poll for confirmation',
+                    ],
+                    LogLevel.Verbose
+                  )
+
+                  //Implicitly poll the confirmation url to confirm the transaction went through
+                  const confirmationUrl = new URL(
+                    `${request.baseURL}/transactions/${stepItem.txHash}/synced/v1`
+                  )
+                  const headers: AxiosRequestHeaders = {
+                    'x-rkc-version': version,
+                  }
+
+                  if (request.headers && request.headers['x-api-key']) {
+                    headers['x-api-key'] = request.headers['x-api-key']
+                  }
+
+                  if (request.headers && client?.uiVersion) {
+                    request.headers['x-rkui-version'] = client.uiVersion
+                  }
                   await pollUntilOk(
                     {
-                      url: indexerConfirmationUrl.href,
+                      url: confirmationUrl.href,
                       method: 'get',
                       headers: headers,
                     },
                     (res) => {
                       client.log(
-                        [
-                          'Execute Steps: Polling sales to check if indexed',
-                          res,
-                        ],
+                        ['Execute Steps: Polling for confirmation', res],
                         LogLevel.Verbose
                       )
-                      if (res.status === 200) {
-                        salesData = res.data
-                        return salesData.sales && salesData.sales.length > 0
-                          ? true
-                          : false
-                      }
-                      return false
+                      return res && res.data.synced
                     }
                   )
-                  stepItem.salesData = salesData.sales
-                  setState([...json?.steps], path)
-                }
 
+                  //Confirm that on-chain tx has been picked up by the indexer
+                  if (
+                    step.id === 'sale' &&
+                    stepItem.txHash &&
+                    (isSell || isBuy)
+                  ) {
+                    client.log(
+                      [
+                        'Execute Steps: Polling sales to verify transaction was indexed',
+                      ],
+                      LogLevel.Verbose
+                    )
+                    const indexerConfirmationUrl = new URL(
+                      `${request.baseURL}/sales/v4`
+                    )
+                    const queryParams: paths['/sales/v4']['get']['parameters']['query'] =
+                      {
+                        txHash: stepItem.txHash,
+                      }
+                    setParams(indexerConfirmationUrl, queryParams)
+                    let salesData: paths['/sales/v4']['get']['responses']['200']['schema'] =
+                      {}
+                    await pollUntilOk(
+                      {
+                        url: indexerConfirmationUrl.href,
+                        method: 'get',
+                        headers: headers,
+                      },
+                      (res) => {
+                        client.log(
+                          [
+                            'Execute Steps: Polling sales to check if indexed',
+                            res,
+                          ],
+                          LogLevel.Verbose
+                        )
+                        if (res.status === 200) {
+                          salesData = res.data
+                          return salesData.sales && salesData.sales.length > 0
+                            ? true
+                            : false
+                        }
+                        return false
+                      }
+                    )
+                    stepItem.salesData = salesData.sales
+                    setState([...json?.steps], path)
+                  }
+                  executeResults({
+                    request,
+                    stepId: step.id,
+                    requestId: json?.requestId,
+                    txHash: stepItem.txHash,
+                  })
+                } catch (e) {
+                  executeResults({
+                    request,
+                    stepId: step.id,
+                    requestId: json?.requestId,
+                    txHash: stepItem.txHash,
+                    error: e,
+                  })
+                  throw e
+                }
                 break
               }
 
@@ -329,24 +421,28 @@ export async function executeSteps(
                     )
                     if (signData.message.match(/0x[0-9a-fA-F]{64}/)) {
                       // If the message represents a hash, we need to convert it to raw bytes first
-                      signature = await signer.signMessage(
-                        arrayify(signData.message)
-                      )
+                      signature = await signer.signMessage({
+                        account: signer.account as Account,
+                        message: toBytes(signData.message).toString(),
+                      })
                     } else {
-                      signature = await signer.signMessage(signData.message)
+                      signature = await signer.signMessage({
+                        account: signer.account as Account,
+                        message: signData.message,
+                      })
                     }
                   } else if (signData.signatureKind === 'eip712') {
                     client.log(
                       ['Execute Steps: Signing with eip712'],
                       LogLevel.Verbose
                     )
-                    signature = await (
-                      signer as unknown as TypedDataSigner
-                    )._signTypedData(
-                      signData.domain,
-                      signData.types,
-                      signData.value
-                    )
+                    signature = await signer.signTypedData({
+                      account: signer.account as Account,
+                      domain: signData.domain,
+                      types: signData.types,
+                      primaryType: signData.primaryType,
+                      message: signData.value,
+                    })
                   }
 
                   if (signature) {
@@ -429,7 +525,7 @@ export async function executeSteps(
             }
             reject(error)
           }
-        });
+        })
       })
 
     await Promise.all(promises)
@@ -437,7 +533,19 @@ export async function executeSteps(
     // Recursively call executeSteps()
     await executeSteps(request, signer, setState, json)
   } catch (err: any) {
-    client.log(['Execute Steps: An error occurred', err], LogLevel.Error)
+    let blockNumber = 0n
+    try {
+      blockNumber = await viemClient.getBlockNumber()
+    } catch (blockError) {
+      client.log(
+        ['Execute Steps: Failed to get block number', blockError],
+        LogLevel.Error
+      )
+    }
+    client.log(
+      ['Execute Steps: An error occurred', err, 'Block Number:', blockNumber],
+      LogLevel.Error
+    )
     const error = err as Error
     const errorMessage = error ? error.message : 'Error: something went wrong'
 
@@ -446,10 +554,7 @@ export async function executeSteps(
       setState([...json?.steps], json.path)
     }
 
-    client._sendEvent(
-      generateEvent(request, json),
-      currentReservoirChain?.id || 1
-    )
+    client._sendEvent(generateEvent(request, json), reservoirChain?.id || 1)
 
     throw err
   }
