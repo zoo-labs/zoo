@@ -50,7 +50,8 @@ const { chains, publicClient } = configureChains(supportedChains, [
 ])
 
 const { connectors } = getDefaultWallets({
-  appName: 'Reservoir Marketplace',
+  appName: 'ZOO',
+  projectId: '00b0b8749c07022874d0323d84e49e99',
   chains,
 })
 
