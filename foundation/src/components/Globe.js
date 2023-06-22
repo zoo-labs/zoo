@@ -245,7 +245,8 @@ function Globe() {
       // _globe.controls().maxAzimuthAngle = 0;
       // _globe.controls().maxPolarAngle = 0;
       _globe.controls().enableZoom = false;
-      _globe.controls().autoRotate = false;
+      _globe.controls().autoRotate = true;
+      _globe.controls().autoRotateSpeed = 0.7;
     }
 }, [globeRef]);
   const size = useWindowSize();
@@ -280,14 +281,14 @@ function Globe() {
     return windowSize;
   }
 var marker_flag = false;
-return <div className={`w-full ${size.width < 768 ? 'px-[10%]': 'padding-globe'} bg-black`}>
+return <div className={`w-full bg-black`}>
     
     <Globe_
     ref={globeRef}
     globeImageUrl={"//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"}
     backgroundColor={"#000"}
-    width={`${size.width < 768? size.width * 0.8 :size.width / 2}`}
-    height={`${size.width < 768? size.width * 0.8 + 50 :size.width / 2 + 100}`}
+    width={size.width}
+    height={`${size.width < 768? size.width + 100 :size.width * 9 / 16}`}
     htmlElementsData={locationData}
     onGlobeClick={(e) => {
       console.log("globe click!!!",marker_flag);
