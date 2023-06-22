@@ -4,8 +4,8 @@ function Collecting() {
   return (
     <div className="bg-black lg:py-52 md:py-32 max-md:py-0">
         <div className='w-full text-center items-center flex flex-col justify-between'>
-            <Link href='/collect'  className='text-white md:text-4xl xl:text-6xl max-md:text-3xl max-md:my-5 pb-8'>Start Collecting</Link>
-            <Link href='/collect'  className='text-center w-3/5 max-md:w-[90%] py-12'>
+            <Link href='/animals'  className='text-white md:text-4xl xl:text-6xl max-md:text-3xl max-md:my-5 pb-8'>Start Collecting</Link>
+            <Link href='/animals'  className='text-center w-3/5 max-md:w-[90%] py-12'>
               <div className='relative top-0 left-0 w-full aspect-[1182/833]'>
                 <div className='absolute w-[38%] left-0 top-0 -rotate-6 z-[10]'>
                   <video autoPlay loop muted playsInline className="w-full aspect-[473/833] border rounded-xl">
@@ -28,7 +28,7 @@ function Collecting() {
               </div>
             </Link>
             <div className='flex max-md:flex-col pt-8 items-center justify-center md:space-x-8 max-md:space-y-4'>
-                <Link href="/collect"  className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10' legacyBehavior>
+                <Link href="/animals"  className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10' legacyBehavior>
                   <a>
                     <span className='pr-[15px]'>View Endangered Cards</span>
                     <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">

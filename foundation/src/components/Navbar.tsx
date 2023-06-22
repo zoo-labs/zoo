@@ -56,7 +56,7 @@ function Navbar() {
               <div className="hidden md:block">
                   <div className="mx-10 flex items-baseline xl:space-x-16 md:space-x-4 lg:space-x-8 2xl:space-x-20">
                   <Link
-                      href="/collect"
+                      href="/animals"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
                   >
                       Animals
@@ -98,7 +98,7 @@ function Navbar() {
           <div className="md:hidden fixed z-50 h-[100vh] top-20 w-full bg-black" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link
-                href="/collect"
+                href="/animals"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Animals
