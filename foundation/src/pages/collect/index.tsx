@@ -16,6 +16,8 @@ import Aiding from '@/components/Aiding';
 import TradingCard from '@/components/collect/TradingCard';
 import CardList from '@/components/collect/CardList';
 import Support from '@/components/collect/Support';
+import Slider from '@/components/collect/Slider';
+import Globe from '@/components/Globe';
 
 export default function CollectPage() {
   return (
@@ -23,6 +25,10 @@ export default function CollectPage() {
         <Seo />
         <Navbar />
         <Header />
+        <Globe />
+        <div className='max-md:block hidden'>
+        <Slider />
+        </div>
         <Aiding />
         <TradingCard />
         <CardList />
