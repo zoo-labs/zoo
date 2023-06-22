@@ -1,5 +1,4 @@
 import { formatAmountForStripe } from "../../../utils/stripe_helpers";
-import cookie from "cookie";
 import Stripe from "stripe";
 import { NextApiRequest, NextApiResponse } from 'next';
 

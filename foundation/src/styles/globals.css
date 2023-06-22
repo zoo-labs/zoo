@@ -332,3 +332,19 @@ svg {
   transform: rotateY(-180deg) translateZ(1px) !important;
   -webkit-transform: rotateY(-180deg) translateZ(1px) !important;
 }
+.info-panel:before {
+  content: ' ';
+  height: 0;
+  position: absolute;
+  width: 0;
+  left: -18px;
+  border: 10px solid transparent;
+  border-right-color: white;
+}
+.scene-container {
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.scene-container canvas, .scene-container div {
+  max-width: 100%;
+}
