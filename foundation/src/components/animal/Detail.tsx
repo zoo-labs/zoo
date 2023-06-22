@@ -59,14 +59,21 @@ function Detail() {
     <div className='bg-black flex flex-col hidden max-md:block px-4'>
         <p className='text-white text-center pb-8 max-md:text-lg'>ENDANGERED SPECIES WE SUPPORT</p>
         <div className='max-md:w-full aspect-square relative flex flex-col items-center justify-between border rounded-xl border-white '>
-            <video
+            {/* <video
                 className='w-full m-1 h-full'
                 autoPlay loop muted playsInline
             >
               <source src='/videos/teen_wolf.webm'  type="video/webm"/>
                 <source src='/videos/teen_wolf.mp4'  type="video/mp4"/>
-            </video>
-            <Link href='/animals/red_wolf' className='flex items-center absolute bottom-[0px] cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
+            </video> */}
+            <ModelViewer className='w-4/5 aspect-square border rounded-xl p-4'
+              usdz="/models/Wolf/WOLF_ADULT.usdz"
+              glb="/models/Wolf/WOLF-ADULT.glb"
+              camera_target="0.05m 0.05m 0m"
+            ></ModelViewer>
+            
+        </div>
+        <Link href='/animals/red_wolf' className='flex items-center justify-center pt-4 cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
               <>
                 <span className='pr-[15px]'>Red Wolf</span>
                 <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,7 +81,6 @@ function Detail() {
                 </svg>
               </>
             </Link>
-        </div>
     </div>
     </div>
   );

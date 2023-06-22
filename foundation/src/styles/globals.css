@@ -314,23 +314,28 @@ svg {
   transform: rotateY(180deg);
 }
 .react-card-flipper > div {
-  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d !important;
   -ms-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   -o-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden !important;
   -moz-backface-visibility: hidden;
   -o-backface-visibility: hidden;
-  backface-visibility: hidden;
+  
 }
 .back-card .react-card-back {
-  transform: rotateY(-180deg) translateZ(1px) !important;
-  -webkit-transform: rotateY(-180deg) translateZ(1px) !important;
+  transform: rotateY(-180deg) rotateX(0deg) translateZ(1px) !important;
+  -webkit-transform: rotateY(-180deg) rotateX(0deg) translateZ(1px) !important;
+  -moz-transform: rotateY(-180deg) rotateX(0deg) translateZ(1px) !important;
+  -o-transform: rotateY(-180deg) rotateX(0deg) translateZ(1px) !important;
 }
 .front-card .react-card-front {
-  transform: rotateY(-180deg) translateZ(1px) !important;
-  -webkit-transform: rotateY(-180deg) translateZ(1px) !important;
+  transform: rotateY(-180deg) rotateX(0deg) translateZ(1px) !important;
+  -webkit-transform: rotateY(-180deg) rotateX(0deg) translateZ(1px) !important;
+  -moz-transform: rotateY(-180deg) rotateX(0deg) translateZ(1px) !important;
+  -o-transform: rotateY(-180deg) rotateX(0deg) translateZ(1px) !important;
 }
 .info-panel:before {
   content: ' ';
@@ -347,4 +352,8 @@ svg {
 }
 .scene-container canvas, .scene-container div {
   max-width: 100%;
+}
+.padding-globe {
+  padding-left: 25%;
+  padding-right: 25%;
 }

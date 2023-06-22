@@ -25,7 +25,9 @@ export default function CollectPage() {
         <Seo />
         <Navbar />
         <Header />
+        {/* <div className='px-[10%] bg-black'> */}
         <Globe />
+        {/* </div> */}
         <div className='max-md:block hidden'>
         <Slider />
         </div>

@@ -174,17 +174,126 @@ function Globe() {
       location: "Ujung Kulon National Park , Java, Indonesia",
       link: '/animals/javan_rhino'
     },
-  ]
+  ];
+  const arcsData = [{
+    startLat: 16.35562470208783,
+    startLng: 30.190179066974082,
+    endLat: 8.633207935723622,
+    endLng: 39.42326110933409,
+    color: ['orange','orange']
+  },
+  {
+    startLat: 8.633207935723622,
+    startLng: 39.42326110933409,
+    endLat: 0.47300209922687764,
+    endLng: 37.870876773462285,
+    color: ['orange','orange']
+  },{
+    startLat: 0.47300209922687764,
+    startLng: 37.870876773462285,
+    endLat: 1.531451858707507,
+    endLng: 32.276718283426035,
+    color: ['orange','orange']
+  },{
+    startLat: 1.531451858707507,
+    startLng: 32.276718283426035,
+    endLat: 16.35562470208783,
+    endLng: 30.190179066974082,
+    color: ['orange','orange']
+  },{
+    startLat: 45.3523116,
+    startLng: 132.0691275,
+    endLat: 43.83872868926112,
+    endLng: 126.54842744956659,
+    color: ['blue','blue']
+  },{
+    startLat: 8.555912688734379,
+    startLng: -11.93188504132818,
+    endLat: 10.430783079619287,
+    endLng: -11.05788480394038,
+    color: ['brown','brown']
+  },{
+    startLat: 10.430783079619287,
+    startLng: -11.05788480394038,
+    endLat: 7.600263138954803,
+    endLng: -5.5740189822360104,
+    color: ['brown','brown']
+  },{
+    startLat: 7.600263138954803,
+    startLng: -5.5740189822360104,
+    endLat: 6.299971104902609,
+    endLng: -9.33259268241796,
+    color: ['brown','brown']
+  },{
+    startLat: 6.299971104902609,
+    startLng: -9.33259268241796,
+    endLat: 8.555912688734379,
+    endLng: -11.93188504132818,
+    color: ['brown','brown']
+  },{
+    startLat: 47.52364129104774,
+    startLng: 138.01555438190678,
+    endLat: 46.42478474206638,
+    endLng: 128.21550477246348,
+    color: ['purple','purple']
+  }];
+  const size = useWindowSize();
+  function useWindowSize() {
+    // Initialize state with undefined width/height so server and client renders match
+    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+    const [windowSize, setWindowSize] = useState({
+      width: undefined,
+      height: undefined,
+    });
   
-
-
-return <>
+    useEffect(() => {
+      // only execute all the code below in client side
+      // Handler to call on window resize
+      function handleResize() {
+        // Set window width/height to state
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+       
+      // Call handler right away so state gets updated with initial window size
+      handleResize();
+      
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount
+    return windowSize;
+  }
+var marker_flag = false;
+return <div className={`w-full ${size.width < 768 ? 'px-[10%]': 'padding-globe'} bg-black`}>
     
     <Globe_
+    
     globeImageUrl={"//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"}
     backgroundColor={"#000"}
-    // width={width}
+    arcsData={arcsData}
+    arcColor={'color'}
+    arcDashLength={0.5}
+    arcDashGap={0.2}
+    arcDashAnimateTime={() => 1000}
+    width={`${size.width < 768? size.width * 0.8 :size.width / 2}`}
+    height={`${size.width < 768? size.width * 0.8 + 50 :size.width / 2 + 100}`}
     htmlElementsData={locationData}
+    onGlobeClick={(e) => {
+      console.log("globe click!!!",marker_flag);
+      if(!marker_flag){
+        const info_panels = document.getElementsByClassName('info-panel');
+        Array.from(info_panels).forEach(element => {
+          element.classList.add('hidden');
+        });
+      }
+      marker_flag = false;
+      return;
+    }}
     htmlElement={d => {
       const el = document.createElement('div');
       el.innerHTML = `
@@ -193,8 +302,8 @@ return <>
         <path fill="currentColor" d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z"></path>
         <circle fill="black" cx="14" cy="14" r="7"></circle>
       </svg>
-      <div id='info_panel_${d.index}' class='info-panel absolute top-[-5px] left-[20px] flex hidden flex-col min-w-[180px] bg-white rounded-lg min-h-[150px] p-2 space-y-4'>
-        <div class='w-full flex items-center space-x-4'>
+      <div id='info_panel_${d.index}' class='info-panel absolute top-[-5px] left-[20px] flex hidden flex-col md:min-w-[180px] max-md:min-w-[140px] bg-white rounded-lg min-h-[150px] p-2 space-y-4 max-md:space-y-2'>
+        <div class='w-full flex items-center space-x-4 max-md:space-x-2'>
           <Image
             class='flex-1 w-1/2'
             src='/images/${d.img}'
@@ -202,11 +311,11 @@ return <>
             height='1000'
             alt=''
           />
-          <p class='flex-1 text-base text-black'>${d.name}</p>
+          <p class='flex-1 text-base max-md:text-xs text-black'>${d.name}</p>
         </div>
-        <p class='text-sm text-black'>${d.location}</p>
+        <p class='text-sm max-md:text-xs text-black'>${d.location}</p>
         <a href='${d.link}' class='flex items-center text-black justify-between'>
-          <p class='text-sm '>Learn More</p>
+          <p class='text-sm max-md:text-xs'>Learn More</p>
           <svg width="8" height="9" viewBox="0 0 8 9" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M7.76727 4.33639C7.88057 4.41604 7.88057 4.58396 7.76727 4.66361L1.7141 8.91907C1.64504 8.96762 1.55294 8.96758 1.48393 8.91899L0.232426 8.03776C0.119235 7.95806 0.119297 7.79024 0.232548 7.71062L4.56676 4.66361C4.68006 4.58396 4.68006 4.41604 4.56676 4.33639L0.232555 1.28938C0.119305 1.20977 0.119241 1.04194 0.232432 0.962242L1.48393 0.0810142C1.55294 0.0324163 1.64504 0.0323817 1.7141 0.0809275L7.76727 4.33639Z" fill="black"/>
           </svg>
@@ -219,7 +328,13 @@ return <>
       var flag = false;
       el.style['pointer-events'] = 'auto';
       el.style.cursor = 'pointer';
-      el.onclick = () => {const info_panel = document.getElementById('info_panel_'+d.index);
+      el.onclick = () => {
+        marker_flag = true;
+      const info_panels = document.getElementsByClassName('info-panel');
+      Array.from(info_panels).forEach(element => {
+        element.classList.add('hidden');
+      });
+      const info_panel = document.getElementById('info_panel_'+d.index);
       if(!flag)info_panel.classList.remove("hidden")
       else info_panel.classList.add('hidden')
       flag = !flag;
@@ -228,6 +343,6 @@ return <>
     }}
     />
     
-</>
+</div>
 }
 export default Globe
