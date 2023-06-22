@@ -78,7 +78,7 @@ function Header() {
                 height='1000'
                 alt=''
             /> */}
-            <ModelViewer onClick={link} className='float-right max-md:h-[190px] aspect-square'
+            <ModelViewer  className='float-right max-md:h-[190px] aspect-square'
               usdz={animal.usdz}
               glb={animal.glb}
             ></ModelViewer>
