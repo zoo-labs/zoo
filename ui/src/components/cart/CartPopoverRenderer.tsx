@@ -1,7 +1,7 @@
 import { useCoinConversion, useCart, useReservoirClient } from '../../hooks'
 import React, { FC, ReactNode, useEffect, useMemo, useState } from 'react'
 import { useAccount, useBalance, useNetwork } from 'wagmi'
-import { BigNumber, constants, utils } from 'ethers'
+import { zeroAddress, parseUnits } from 'viem'
 import { UseBalanceToken } from '../../types/wagmi'
 import { toFixed } from '../../lib/numbers'
 import {
@@ -16,11 +16,10 @@ type ChildrenProps = {
   cartCurrencyConverted?: Boolean
   totalPrice: number
   referrerFee?: number
-  usdPrice: ReturnType<typeof useCoinConversion>
-  balance?: BigNumber
+  usdPrice: number | null
+  balance?: bigint
   hasEnoughCurrency: boolean
   items: Cart['items']
-  flaggedItems: Cart['items']
   unavailableItems: Cart['items']
   priceChangeItems: Cart['items']
   transaction?: Cart['transaction']
@@ -52,10 +51,11 @@ export const CartPopoverRenderer: FC<Props> = ({ open, children }) => {
     referrerFee,
     chain: cartChain,
   } = data
-  const usdPrice = useCoinConversion(
+  const usdConversion = useCoinConversion(
     open ? 'USD' : undefined,
     currency?.symbol || currency?.name
   )
+  const usdPrice = usdConversion.length > 0 ? usdConversion[0].price : null
 
   const { chains } = useNetwork()
   const chain = chains.find((chain) => chain.id === transaction?.chain.id)
@@ -77,10 +77,6 @@ export const CartPopoverRenderer: FC<Props> = ({ open, children }) => {
     }
   }, [open])
 
-  const flaggedItems = useMemo(
-    () => items.filter((item) => item.isBannedOnOpensea),
-    [items]
-  )
   const unavailableItems = useMemo(
     () => items.filter((item) => !item.price),
     [items]
@@ -100,7 +96,7 @@ export const CartPopoverRenderer: FC<Props> = ({ open, children }) => {
     chainId: cartChain?.id || client?.currentChain()?.id,
     address: address,
     token:
-      currency?.contract !== constants.AddressZero
+      currency?.contract !== zeroAddress
         ? (currency?.contract as UseBalanceToken)
         : undefined,
     watch: open,
@@ -113,9 +109,8 @@ export const CartPopoverRenderer: FC<Props> = ({ open, children }) => {
       if (!balance.value) {
         setHasEnoughCurrency(false)
       } else if (
-        balance.value.lt(
-          utils.parseUnits(`${totalPriceTruncated}`, currency?.decimals)
-        )
+        balance.value <
+        parseUnits(`${totalPriceTruncated as number}`, currency?.decimals || 18)
       ) {
         setHasEnoughCurrency(false)
       } else {
@@ -138,7 +133,6 @@ export const CartPopoverRenderer: FC<Props> = ({ open, children }) => {
       {children({
         loading: isValidating,
         items,
-        flaggedItems,
         unavailableItems,
         priceChangeItems,
         currency,
