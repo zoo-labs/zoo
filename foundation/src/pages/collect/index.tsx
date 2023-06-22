@@ -17,7 +17,7 @@ import TradingCard from '@/components/collect/TradingCard';
 import CardList from '@/components/collect/CardList';
 import Support from '@/components/collect/Support';
 import Slider from '@/components/collect/Slider';
-import Globe from '@/components/Globe';
+import Globe from '@/components/WrapGlobe';
 
 export default function CollectPage() {
   return (
