@@ -2,15 +2,26 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReactCardFlip from "react-card-flip";
-function Header({title,content,front,back,front_m,back_m}: {
+import axios from "axios";
+import { useStripe } from '@stripe/react-stripe-js'
+function Header({title,content,front,back,front_m,back_m,route}: {
   content: string;
   title: string;
   front: string;
   back: string;
   front_m: string;
   back_m: string;
+  route: string;
 }) {
   const [flip, setFlip] = useState(false);
+  // const cardId = "prod_O76Ynu7J5bDEYy";
+  const stripe = useStripe();
+  const buyCard = async () => {
+    const { data } = await axios.get(`/api/buy_card/${route}`);
+        // console.log(session_id);
+        
+    await stripe!.redirectToCheckout({ sessionId: data.id });
+  };
   return (
     <div className="bg-black md:px-16 lg:px-32 xl:px-40 2xl:px-64 max-md:pt-20">
       <div className="flex max-md:flex-col items-center justify-between md:py-20 max-md:pt-2 max-md:pb-8">
@@ -37,7 +48,7 @@ function Header({title,content,front,back,front_m,back_m}: {
                 
               </video>
               <video autoPlay loop muted playsInline className="w-full aspect-[473/833] border rounded-xl p-1" src={back_m}>
-              <source src={back}  type="video/webm"/>
+              {/* <source src={back}  type="video/webm"/> */}
                 <source src={back_m}  type="video/mp4"/>
               </video>
             </ReactCardFlip>
@@ -52,18 +63,17 @@ function Header({title,content,front,back,front_m,back_m}: {
             <p className='text-white md:text-lg lg:text-xl xl:text-2xl max-md:pb-10 md:pb-10' dangerouslySetInnerHTML={{__html: content}}></p>
 
             <div className='flex items-center md:pt-10 space-x-8'>
-                <Link
-                    href="#"
+                <button
+                    onClick={buyCard}
                     className="text-black hover:bg-gray-700 bg-white hover:text-white px-12 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
                     Buy $25
-                </Link>
-                <Link
-                    href="#save"
+                </button>
+                <button
                     className="text-white hover:bg-gray-700 bg-black hover:text-black px-6 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
                 >
-                    + Cart
-                </Link>
+                    Design
+                </button>
             </div>
         </div>
 

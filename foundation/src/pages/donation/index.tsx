@@ -8,6 +8,7 @@ import Newsletter from '@/components/Newsletter';
 import Campaign from '@/components/Campaign';
 import Footer from '@/components/Footer';
 import Header from '@/components/donation/Header';
+import Donation_Spent from '@/components/donation/Donation_Spent';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { ToastContainer, toast } from 'react-toastify';
@@ -34,6 +35,7 @@ export default function DonationPage() {
         <Elements stripe={stripePromise}>
         <Header />
         </Elements>
+        <Donation_Spent />
         <StartCollecting />
         <Campaign />
         <Newsletter />
