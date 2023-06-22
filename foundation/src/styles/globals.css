@@ -323,7 +323,7 @@ svg {
   -webkit-backface-visibility: hidden !important;
   -moz-backface-visibility: hidden;
   -o-backface-visibility: hidden;
-  
+  z-index: 2;
 }
 .fontf-medium {
   font-family: medium;
