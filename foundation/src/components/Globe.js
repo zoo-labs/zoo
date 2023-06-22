@@ -3,7 +3,7 @@ import  React,{useReducer,useRef,useEffect,useState} from "react";
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { SizeMe } from 'react-sizeme'
-const Globe_ = dynamic(import('react-globe.gl'), { ssr: false });
+import Globe_ from "react-globe.gl";
 // import Globe from 'react-globe.gl';
 
 function Globe() {
@@ -101,7 +101,7 @@ function Globe() {
       lat: 8.555912688734379,
       lng: -11.93188504132818,
       size: 15,
-      color: 'brown',
+      color: 'deeppink',
       name: 'Pygmy Hippo',
       index: '8',
       img: 'hippo_card.png',
@@ -112,7 +112,7 @@ function Globe() {
       lat: 10.430783079619287,
       lng: -11.05788480394038,
       size: 15,
-      color: 'brown',
+      color: 'deeppink',
       name: 'Pygmy Hippo',
       index: '9',
       img: 'hippo_card.png',
@@ -123,7 +123,7 @@ function Globe() {
       lat: 7.600263138954803,
       lng: -5.5740189822360104,
       size: 15,
-      color: 'brown',
+      color: 'deeppink',
       name: 'Pygmy Hippo',
       index: '10',
       img: 'hippo_card.png',
@@ -134,7 +134,7 @@ function Globe() {
       lat: 6.299971104902609,
       lng: -9.33259268241796,
       size: 15,
-      color: 'brown',
+      color: 'deeppink',
       name: 'Pygmy Hippo',
       index: '11',
       img: 'hippo_card.png',
@@ -211,25 +211,25 @@ function Globe() {
     startLng: -11.93188504132818,
     endLat: 10.430783079619287,
     endLng: -11.05788480394038,
-    color: ['brown','brown']
+    color: ['deeppink','deeppink']
   },{
     startLat: 10.430783079619287,
     startLng: -11.05788480394038,
     endLat: 7.600263138954803,
     endLng: -5.5740189822360104,
-    color: ['brown','brown']
+    color: ['deeppink','deeppink']
   },{
     startLat: 7.600263138954803,
     startLng: -5.5740189822360104,
     endLat: 6.299971104902609,
     endLng: -9.33259268241796,
-    color: ['brown','brown']
+    color: ['deeppink','deeppink']
   },{
     startLat: 6.299971104902609,
     startLng: -9.33259268241796,
     endLat: 8.555912688734379,
     endLng: -11.93188504132818,
-    color: ['brown','brown']
+    color: ['deeppink','deeppink']
   },{
     startLat: 47.52364129104774,
     startLng: 138.01555438190678,
@@ -237,6 +237,17 @@ function Globe() {
     endLng: 128.21550477246348,
     color: ['purple','purple']
   }];
+  const globeRef = useRef();
+  useEffect(() => {
+    const _globe = globeRef.current;
+    if (_globe && _globe.controls) {
+      // _globe.controls().enableZoom = false;
+      // _globe.controls().maxAzimuthAngle = 0;
+      // _globe.controls().maxPolarAngle = 0;
+      _globe.controls().enableZoom = false;
+      _globe.controls().autoRotate = false;
+    }
+}, [globeRef]);
   const size = useWindowSize();
   function useWindowSize() {
     // Initialize state with undefined width/height so server and client renders match
@@ -272,14 +283,9 @@ var marker_flag = false;
 return <div className={`w-full ${size.width < 768 ? 'px-[10%]': 'padding-globe'} bg-black`}>
     
     <Globe_
-    
+    ref={globeRef}
     globeImageUrl={"//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"}
     backgroundColor={"#000"}
-    arcsData={arcsData}
-    arcColor={'color'}
-    arcDashLength={0.5}
-    arcDashGap={0.2}
-    arcDashAnimateTime={() => 1000}
     width={`${size.width < 768? size.width * 0.8 :size.width / 2}`}
     height={`${size.width < 768? size.width * 0.8 + 50 :size.width / 2 + 100}`}
     htmlElementsData={locationData}
