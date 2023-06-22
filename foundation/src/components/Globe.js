@@ -30,51 +30,51 @@ function Globe() {
       location: 'Sudan',
       link: '/animals/nubian_giraffe'
     },
-    {
-      lat: 8.633207935723622,
-      lng: 39.42326110933409,
-      size: 15,
-      color: 'orange',
-      name: 'Nubian Giraffe',
-      index: '2',
-      img: 'giraffe_card.png',
-      location: 'Ethiopia',
-      link: '/animals/nubian_giraffe'
+    // {
+    //   lat: 8.633207935723622,
+    //   lng: 39.42326110933409,
+    //   size: 15,
+    //   color: 'orange',
+    //   name: 'Nubian Giraffe',
+    //   index: '2',
+    //   img: 'giraffe_card.png',
+    //   location: 'Ethiopia',
+    //   link: '/animals/nubian_giraffe'
       
-    },
-    {
-      lat: 0.47300209922687764,
-      lng: 37.870876773462285,
-      size: 15,
-      color: 'orange',
-      name: 'Nubian Giraffe',
-      index: '3',
-      img: 'giraffe_card.png',
-      location: 'Kenya',
-      link: '/animals/nubian_giraffe'
-    },
-    {
-      lat: 1.531451858707507,
-      lng: 32.276718283426035,
-      size: 15,
-      color: 'orange',
-      name: 'Nubian Giraffe',
-      index: '4',
-      img: 'giraffe_card.png',
-      location: 'Uganda',
-      link: '/animals/nubian_giraffe'
-    },
-    {
-      lat: 45.3523116,
-      lng: 132.0691275,
-      size: 15,
-      color: 'blue',
-      name: 'Amur Leopard',
-      index: '5',
-      img: 'leopard_card.png',
-      location: 'Primorsky Krai region, North Korea',
-      link: '/animals/amur_leopard'
-    },
+    // },
+    // {
+    //   lat: 0.47300209922687764,
+    //   lng: 37.870876773462285,
+    //   size: 15,
+    //   color: 'orange',
+    //   name: 'Nubian Giraffe',
+    //   index: '3',
+    //   img: 'giraffe_card.png',
+    //   location: 'Kenya',
+    //   link: '/animals/nubian_giraffe'
+    // },
+    // {
+    //   lat: 1.531451858707507,
+    //   lng: 32.276718283426035,
+    //   size: 15,
+    //   color: 'orange',
+    //   name: 'Nubian Giraffe',
+    //   index: '4',
+    //   img: 'giraffe_card.png',
+    //   location: 'Uganda',
+    //   link: '/animals/nubian_giraffe'
+    // },
+    // {
+    //   lat: 45.3523116,
+    //   lng: 132.0691275,
+    //   size: 15,
+    //   color: 'blue',
+    //   name: 'Amur Leopard',
+    //   index: '5',
+    //   img: 'leopard_card.png',
+    //   location: 'Primorsky Krai region, North Korea',
+    //   link: '/animals/amur_leopard'
+    // },
     {
       lat: 43.83872868926112,
       lng: 126.54842744956659,
@@ -108,39 +108,39 @@ function Globe() {
       location: 'Sierra Leone',
       link: '/animals/pygmy_hippo'
     },
-    {
-      lat: 10.430783079619287,
-      lng: -11.05788480394038,
-      size: 15,
-      color: 'deeppink',
-      name: 'Pygmy Hippo',
-      index: '9',
-      img: 'hippo_card.png',
-      location: 'Guinea',
-      link: '/animals/pygmy_hippo'
-    },
-    {
-      lat: 7.600263138954803,
-      lng: -5.5740189822360104,
-      size: 15,
-      color: 'deeppink',
-      name: 'Pygmy Hippo',
-      index: '10',
-      img: 'hippo_card.png',
-      location: 'Ivory Coast',
-      link: '/animals/pygmy_hippo'
-    },
-    {
-      lat: 6.299971104902609,
-      lng: -9.33259268241796,
-      size: 15,
-      color: 'deeppink',
-      name: 'Pygmy Hippo',
-      index: '11',
-      img: 'hippo_card.png',
-      location: 'Liberia',
-      link: '/animals/pygmy_hippo'
-    },
+    // {
+    //   lat: 10.430783079619287,
+    //   lng: -11.05788480394038,
+    //   size: 15,
+    //   color: 'deeppink',
+    //   name: 'Pygmy Hippo',
+    //   index: '9',
+    //   img: 'hippo_card.png',
+    //   location: 'Guinea',
+    //   link: '/animals/pygmy_hippo'
+    // },
+    // {
+    //   lat: 7.600263138954803,
+    //   lng: -5.5740189822360104,
+    //   size: 15,
+    //   color: 'deeppink',
+    //   name: 'Pygmy Hippo',
+    //   index: '10',
+    //   img: 'hippo_card.png',
+    //   location: 'Ivory Coast',
+    //   link: '/animals/pygmy_hippo'
+    // },
+    // {
+    //   lat: 6.299971104902609,
+    //   lng: -9.33259268241796,
+    //   size: 15,
+    //   color: 'deeppink',
+    //   name: 'Pygmy Hippo',
+    //   index: '11',
+    //   img: 'hippo_card.png',
+    //   location: 'Liberia',
+    //   link: '/animals/pygmy_hippo'
+    // },
     {
       lat: 47.52364129104774,
       lng: 138.01555438190678,
@@ -152,17 +152,17 @@ function Globe() {
       location: 'Sikhote-Alin mountain range, Russia',
       link: '/animals/siberian_tiger'
     },
-    {
-      lat: 46.42478474206638,
-      lng: 128.21550477246348,
-      size: 15,
-      color: 'purple',
-      name: 'Siberian Tiger',
-      index: '13',
-      img: 'tiger_card.png',
-      location: "Northeast China's Heilongjiang Province",
-      link: '/animals/siberian_tiger'
-    },
+    // {
+    //   lat: 46.42478474206638,
+    //   lng: 128.21550477246348,
+    //   size: 15,
+    //   color: 'purple',
+    //   name: 'Siberian Tiger',
+    //   index: '13',
+    //   img: 'tiger_card.png',
+    //   location: "Northeast China's Heilongjiang Province",
+    //   link: '/animals/siberian_tiger'
+    // },
     {
       lat: -6.784491972807376,
       lng: 105.37508733885018,
@@ -246,7 +246,7 @@ function Globe() {
       // _globe.controls().maxPolarAngle = 0;
       _globe.controls().enableZoom = false;
       _globe.controls().autoRotate = true;
-      _globe.controls().autoRotateSpeed = 0.7;
+      _globe.controls().autoRotateSpeed = 1;
     }
 }, [globeRef]);
   const size = useWindowSize();

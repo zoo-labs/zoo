@@ -75,7 +75,7 @@ function Header() {
                   <div className='flex items-center border rounded-full border-white'>
                     <input onChange={handleInputChange} value={amount} className='w-full xl:pl-[88px] outline-none bg-transparent text-white text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $' />
                     
-                    <Switch className="border border-white rounded-full px-[2px]" offColor="#000" onColor="#000" uncheckedHandleIcon={<FaCircle size={40} className='absolute left-[1px] top-[1px]' />} checkedHandleIcon={<FaCheckCircle size={40} className='absolute left-[1px] top-[1px]' />} onChange={handleChange} height={44} width={88}  uncheckedIcon={false} checkedIcon={false} checked={checked} />
+                    <Switch className="border border-white rounded-full px-[2px]" offColor="#000" onColor="#000" uncheckedHandleIcon={<FaCircle size={40} className='absolute left-[1px] top-[1px]' />} checkedHandleIcon={<FaCheckCircle size={36} className='absolute left-[3px] top-[3px]' />} onChange={handleChange} height={44} width={88}  uncheckedIcon={false} checkedIcon={false} checked={checked} />
                     
                   </div>
                   <BootstrapTooltip title="If you choose the monthly option you will make a donation every month on the same date or the nearest date to the calendar date you make today. Your payment method will be charged the amount you type in now, if you wish to change the monthly amount you or discontinue donations send an email to hello@zoo.ngo." placement="top">
