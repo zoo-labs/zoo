@@ -13,21 +13,19 @@ import {
   useMarketplaces,
   useListingPreapprovalCheck,
   useCollections,
-  useTokenOpensea,
   useUserTokens,
   useChainCurrency,
   useOnChainRoyalties,
 } from '../../hooks'
-import { useAccount, useSigner } from 'wagmi'
+import { useAccount, useWalletClient } from 'wagmi'
 
 import { Execute, ReservoirClientActions } from '@reservoir0x/reservoir-sdk'
-import { formatUnits, parseUnits } from 'ethers/lib/utils.js'
 import dayjs from 'dayjs'
 import { Marketplace } from '../../hooks/useMarketplaces'
 import { ExpirationOption } from '../../types/ExpirationOption'
 import expirationOptions from '../../lib/defaultExpirationOptions'
-import { constants } from 'ethers'
 import { Currency } from '../../types/Currency'
+import { formatUnits, parseUnits, zeroAddress } from 'viem'
 
 export enum ListStep {
   SelectMarkets,
@@ -57,7 +55,7 @@ type ChildrenProps = {
   quantityAvailable: number
   collection?: NonNullable<ReturnType<typeof useCollections>['data']>[0]
   listStep: ListStep
-  usdPrice: ReturnType<typeof useCoinConversion>
+  usdPrice: number
   expirationOptions: ExpirationOption[]
   expirationOption: ExpirationOption
   marketplaces: Marketplace[]
@@ -92,26 +90,18 @@ type Props = {
   children: (props: ChildrenProps) => ReactNode
 }
 
-type PaymentTokens = NonNullable<
-  NonNullable<ReturnType<typeof useTokenOpensea>['response']>['collection']
->['payment_tokens']
-
-const isCurrencyAllowed = (
-  currency: Currency,
-  marketplace: Marketplace,
-  openseaPaymentTokens: PaymentTokens
-) => {
+const isCurrencyAllowed = (currency: Currency, marketplace: Marketplace) => {
   if (marketplace.listingEnabled) {
-    if (currency.contract === constants.AddressZero) {
+    if (currency.contract === zeroAddress) {
       return true
     }
     switch (marketplace.orderbook) {
       case 'reservoir':
         return true
+
+      // Will fix this properly soon once backend stores opensea collection payment_tokens
       case 'opensea':
-        return openseaPaymentTokens.some(
-          (token) => token.address === currency.contract
-        )
+        return false
     }
   }
   return false
@@ -127,7 +117,7 @@ export const ListModalRenderer: FC<Props> = ({
   oracleEnabled = false,
   children,
 }) => {
-  const { data: signer } = useSigner()
+  const { data: signer } = useWalletClient()
   const account = useAccount()
   const client = useReservoirClient()
   const [listStep, setListStep] = useState<ListStep>(ListStep.SelectMarkets)
@@ -173,7 +163,7 @@ export const ListModalRenderer: FC<Props> = ({
 
   const onChainRoyaltyBps = useMemo(() => {
     const totalRoyalty = onChainRoyalties?.[1].reduce((total, royalty) => {
-      total += parseFloat(formatUnits(royalty, currency.decimals))
+      total += parseFloat(formatUnits(royalty, currency.decimals || 18))
       return total
     }, 0)
     if (totalRoyalty) {
@@ -212,13 +202,6 @@ export const ListModalRenderer: FC<Props> = ({
     }
   )
 
-  const { response: openSeaToken } = useTokenOpensea(
-    open ? contract : undefined,
-    open ? tokenId : undefined
-  )
-
-  const paymentTokens = openSeaToken?.collection?.payment_tokens
-
   const token = tokens && tokens.length > 0 ? tokens[0] : undefined
   const is1155 = token?.token?.kind === 'erc1155'
 
@@ -234,11 +217,12 @@ export const ListModalRenderer: FC<Props> = ({
       ? Number(userTokens[0].ownership?.tokenCount || 1)
       : 1
 
-  const usdPrice = useCoinConversion(
+  const coinConversion = useCoinConversion(
     open ? 'USD' : undefined,
     currency.symbol,
     currency.coinGeckoId
   )
+  const usdPrice = coinConversion.length > 0 ? coinConversion[0].price : 0
 
   const toggleMarketplace = (marketplace: Marketplace) => {
     const updatedMarketplaces = marketplaces.map((market) => {
@@ -285,11 +269,7 @@ export const ListModalRenderer: FC<Props> = ({
     ) {
       let updatedMarketplaces = allMarketplaces.map(
         (marketplace): Marketplace => {
-          const listingEnabled = isCurrencyAllowed(
-            currency,
-            marketplace,
-            paymentTokens || [chainCurrency]
-          )
+          const listingEnabled = isCurrencyAllowed(currency, marketplace)
           return {
             ...marketplace,
             price: '',
@@ -308,11 +288,7 @@ export const ListModalRenderer: FC<Props> = ({
     if (open && loadedInitalPrice) {
       let updatedMarketplaces = allMarketplaces.map(
         (marketplace): Marketplace => {
-          const listingEnabled = isCurrencyAllowed(
-            currency,
-            marketplace,
-            paymentTokens || [chainCurrency]
-          )
+          const listingEnabled = isCurrencyAllowed(currency, marketplace)
           return {
             ...marketplace,
             listingEnabled,
@@ -322,7 +298,7 @@ export const ListModalRenderer: FC<Props> = ({
       )
       setMarketplaces(updatedMarketplaces)
     }
-  }, [open, currency, paymentTokens])
+  }, [open, currency])
 
   useEffect(() => {
     if (marketplaces) {
@@ -395,9 +371,10 @@ export const ListModalRenderer: FC<Props> = ({
       if (market.isSelected) {
         const listing: Listings[0] = {
           token: `${contract}:${tokenId}`,
-          weiPrice: parseUnits(`${+market.price}`, currency.decimals)
-            .mul(quantity)
-            .toString(),
+          weiPrice: (
+            parseUnits(`${+market.price}`, currency.decimals || 18) *
+            BigInt(quantity)
+          ).toString(),
           //@ts-ignore
           orderbook: market.orderbook,
           //@ts-ignore
@@ -409,10 +386,10 @@ export const ListModalRenderer: FC<Props> = ({
           onChainRoyalties &&
           listing.orderKind?.includes('seaport')
         ) {
-          const royalties = onChainRoyalties.recipients.map((recipient, i) => {
+          const royalties = onChainRoyalties[0].map((recipient, i) => {
             const bps =
               (parseFloat(
-                formatUnits(onChainRoyalties.amounts[i], currency.decimals)
+                formatUnits(onChainRoyalties[1][i], currency.decimals || 18)
               ) /
                 1) *
               10000
@@ -439,7 +416,7 @@ export const ListModalRenderer: FC<Props> = ({
           listing.expirationTime = expirationTime
         }
 
-        if (currency && currency.contract != constants.AddressZero) {
+        if (currency && currency.contract != zeroAddress) {
           listing.currency = currency.contract
         }
 

@@ -36,15 +36,28 @@ type PurchaseData = {
   steps?: Execute['steps']
 }
 
+const ModalCopy = {
+  titleInsufficientFunds: 'Add Funds',
+  titleUnavilable: 'Selected item is no longer Available',
+  titleDefault: 'Complete Checkout',
+  ctaClose: 'Close',
+  ctaCheckout: 'Checkout',
+  ctaInsufficientFunds: 'Add Funds',
+  ctaGoToToken: '',
+  ctaAwaitingValidation: 'Waiting for transaction to be validated',
+  ctaAwaitingApproval: 'Waiting for approval...',
+  ctaCopyAddress: 'Copy Wallet Address',
+}
+
 type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>]
   tokenId?: string
   collectionId?: string
   orderId?: string
-  referrerFeeBps?: number | null
-  referrerFeeFixed?: number | null
-  referrer?: string | null
+  feesOnTopBps?: string[] | null
+  feesOnTopFixed?: string[] | null
   normalizeRoyalties?: boolean
+  copyOverrides?: Partial<typeof ModalCopy>
   onGoToToken?: () => any
   onPurchaseComplete?: (data: PurchaseData) => void
   onPurchaseError?: (error: Error, data: PurchaseData) => void
@@ -55,14 +68,14 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   ) => void
 }
 
-function titleForStep(step: BuyStep) {
+function titleForStep(step: BuyStep, copy: typeof ModalCopy) {
   switch (step) {
     case BuyStep.AddFunds:
-      return 'Add Funds'
+      return copy.titleInsufficientFunds
     case BuyStep.Unavailable:
-      return 'Selected item is no longer Available'
+      return copy.titleUnavilable
     default:
-      return 'Complete Checkout'
+      return copy.titleDefault
   }
 }
 
@@ -72,15 +85,16 @@ export function BuyModal({
   tokenId,
   collectionId,
   orderId,
-  referrer,
-  referrerFeeBps,
-  referrerFeeFixed,
+  feesOnTopBps,
+  feesOnTopFixed,
   normalizeRoyalties,
+  copyOverrides,
   onPurchaseComplete,
   onPurchaseError,
   onClose,
   onGoToToken,
 }: Props): ReactElement {
+  const copy: typeof ModalCopy = { ...ModalCopy, ...copyOverrides }
   const [open, setOpen] = useFallbackState(
     openState ? openState[0] : false,
     openState
@@ -94,23 +108,21 @@ export function BuyModal({
       tokenId={tokenId}
       collectionId={collectionId}
       orderId={orderId}
-      referrer={referrer}
-      referrerFeeBps={referrerFeeBps}
-      referrerFeeFixed={referrerFeeFixed}
+      feesOnTopBps={feesOnTopBps}
+      feesOnTopFixed={feesOnTopFixed}
       normalizeRoyalties={normalizeRoyalties}
     >
       {({
         loading,
         token,
         collection,
-        listing,
         quantityAvailable,
         quantity,
         averageUnitPrice,
         currency,
         mixedCurrencies,
         totalPrice,
-        referrerFee,
+        feeOnTop,
         buyStep,
         transactionError,
         hasEnoughCurrency,
@@ -119,7 +131,6 @@ export function BuyModal({
         feeUsd,
         totalUsd,
         usdPrice,
-        isBanned,
         balance,
         address,
         blockExplorerBaseUrl,
@@ -127,7 +138,7 @@ export function BuyModal({
         setBuyStep,
         buyToken,
       }) => {
-        const title = titleForStep(buyStep)
+        const title = titleForStep(buyStep, copy)
 
         useEffect(() => {
           if (buyStep === BuyStep.Complete && onPurchaseComplete) {
@@ -158,13 +169,27 @@ export function BuyModal({
           steps?.filter((step) => step.items && step.items.length > 0) || []
         const lastStepItems =
           executableSteps[executableSteps.length - 1]?.items || []
-        let finalTxHash = lastStepItems[lastStepItems.length - 1]?.txHash
 
-        let price = listing?.price?.amount?.decimal || 0
+        const purchaseTxHashes =
+          stepData?.currentStep?.items?.reduce((txHashes, item) => {
+            item.salesData?.forEach((saleData) => {
+              if (saleData.txHash) {
+                txHashes.add(saleData.txHash)
+              }
+            })
+            return txHashes
+          }, new Set<string>()) || []
 
-        if (!price && token?.token?.lastSale?.price?.amount?.decimal) {
-          price = token?.token.lastSale?.price.amount.decimal
-        }
+        const totalPurchases = Array.from(purchaseTxHashes).length
+
+        const failedPurchases =
+          totalPurchases - (stepData?.currentStep?.items?.length || 0)
+
+        const successfulPurchases = totalPurchases - failedPurchases
+        const finalTxHash = lastStepItems[lastStepItems.length - 1]?.txHash
+
+        const price =
+          totalPrice || token?.token?.lastSale?.price?.amount?.decimal || 0
 
         return (
           <Modal
@@ -196,7 +221,6 @@ export function BuyModal({
                 <TokenLineItem
                   tokenDetails={token}
                   collection={collection}
-                  isSuspicious={isBanned}
                   usdConversion={usdPrice || 0}
                   isUnavailable={true}
                   price={quantity > 1 ? averageUnitPrice : price}
@@ -210,7 +234,7 @@ export function BuyModal({
                   }}
                   css={{ m: '$4' }}
                 >
-                  Close
+                  {copy.ctaClose}
                 </Button>
               </Flex>
             )}
@@ -262,7 +286,6 @@ export function BuyModal({
                   tokenDetails={token}
                   collection={collection}
                   usdConversion={usdPrice || 0}
-                  isSuspicious={isBanned}
                   price={quantity > 1 ? averageUnitPrice : price}
                   currency={currency}
                   css={{ border: 0 }}
@@ -290,7 +313,7 @@ export function BuyModal({
                     />
                   </Flex>
                 )}
-                {referrerFee > 0 && (
+                {feeOnTop > 0 && (
                   <>
                     <Flex
                       align="center"
@@ -299,7 +322,7 @@ export function BuyModal({
                     >
                       <Text style="subtitle2">Referral Fee</Text>
                       <FormatCryptoCurrency
-                        amount={referrerFee}
+                        amount={feeOnTop}
                         address={currency?.contract}
                         decimals={currency?.decimals}
                         symbol={currency?.symbol}
@@ -344,7 +367,7 @@ export function BuyModal({
                       css={{ width: '100%' }}
                       color="primary"
                     >
-                      Checkout
+                      {copy.ctaCheckout}
                     </Button>
                   ) : (
                     <Flex direction="column" align="center">
@@ -368,7 +391,7 @@ export function BuyModal({
                         }}
                         css={{ width: '100%' }}
                       >
-                        Add Funds
+                        {copy.ctaInsufficientFunds}
                       </Button>
                     </Flex>
                   )}
@@ -382,7 +405,6 @@ export function BuyModal({
                   tokenDetails={token}
                   collection={collection}
                   usdConversion={usdPrice || 0}
-                  isSuspicious={isBanned}
                   price={quantity > 1 ? averageUnitPrice : price}
                   currency={currency}
                   priceSubtitle={quantity > 1 ? 'Average Price' : undefined}
@@ -406,8 +428,8 @@ export function BuyModal({
                 <Button disabled={true} css={{ m: '$4' }}>
                   <Loader />
                   {stepData?.currentStepItem.txHash
-                    ? 'Waiting for transaction to be validated'
-                    : 'Waiting for approval...'}
+                    ? copy.ctaAwaitingValidation
+                    : copy.ctaAwaitingApproval}
                 </Button>
               </Flex>
             )}
@@ -423,56 +445,126 @@ export function BuyModal({
                     textAlign: 'center',
                   }}
                 >
-                  <Text style="h5" css={{ mb: 24 }}>
-                    Congratulations!
-                  </Text>
-                  <img
-                    src={token?.token?.image}
-                    style={{ width: 100, height: 100 }}
-                  />
-                  <Flex
-                    css={{ mb: 24, mt: '$2', maxWidth: '100%' }}
-                    align="center"
-                    justify="center"
-                  >
-                    {!!token.token?.collection?.image && (
-                      <Box css={{ mr: '$1' }}>
-                        <img
-                          src={token.token?.collection?.image}
-                          style={{ width: 24, height: 24, borderRadius: '50%' }}
+                  {totalPurchases === 1 ? (
+                    <>
+                      <Text
+                        style="h5"
+                        css={{ textAlign: 'center', mt: 24, mb: 24 }}
+                      >
+                        Congratulations!
+                      </Text>
+                    </>
+                  ) : (
+                    <>
+                      <Box
+                        css={{
+                          color: failedPurchases
+                            ? '$errorAccent'
+                            : '$successAccent',
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={
+                            failedPurchases
+                              ? faCircleExclamation
+                              : faCheckCircle
+                          }
+                          fontSize={32}
                         />
                       </Box>
-                    )}
+                      <Text
+                        style="h5"
+                        css={{ textAlign: 'center', mt: 24, mb: 24 }}
+                      >
+                        {failedPurchases
+                          ? `${successfulPurchases} ${
+                              successfulPurchases > 1 ? 'items' : 'item'
+                            } purchased, ${failedPurchases} ${
+                              failedPurchases > 1 ? 'items' : 'item'
+                            } failed`
+                          : 'Congrats! Purchase was successful.'}
+                      </Text>
+                    </>
+                  )}
+                  {totalPurchases === 1 && (
+                    <img
+                      src={token?.token?.imageSmall}
+                      style={{ width: 100, height: 100 }}
+                    />
+                  )}
+                  {totalPurchases > 1 && (
+                    <Flex direction="column" css={{ gap: '$2' }}>
+                      {stepData?.currentStep.items?.map((item) => {
+                        const txHash = item.txHash
+                          ? `${item.txHash.slice(0, 4)}...${item.txHash.slice(
+                              -4
+                            )}`
+                          : ''
+                        return (
+                          <Anchor
+                            href={`${blockExplorerBaseUrl}/tx/${item?.txHash}`}
+                            color="primary"
+                            weight="medium"
+                            target="_blank"
+                            css={{ fontSize: 12 }}
+                          >
+                            View transaction: {txHash}
+                          </Anchor>
+                        )
+                      })}
+                    </Flex>
+                  )}
 
-                    <Text
-                      style="subtitle2"
-                      css={{ maxWidth: '100%' }}
-                      ellipsify
-                    >
-                      {token?.token?.name
-                        ? token?.token?.name
-                        : `#${token?.token?.tokenId}`}
-                    </Text>
-                  </Flex>
-
-                  <Flex css={{ mb: '$2' }} align="center">
-                    <Box css={{ color: '$successAccent', mr: '$2' }}>
-                      <FontAwesomeIcon icon={faCheckCircle} />
-                    </Box>
-                    <Text style="body1">
-                      Your transaction went through successfully
-                    </Text>
-                  </Flex>
-                  <Anchor
-                    color="primary"
-                    weight="medium"
-                    css={{ fontSize: 12 }}
-                    href={`${blockExplorerBaseUrl}/tx/${finalTxHash}`}
-                    target="_blank"
-                  >
-                    View on{' '}
-                    {activeChain?.blockExplorers?.default.name || 'Etherscan'}
-                  </Anchor>
+                  {totalPurchases === 1 && (
+                    <>
+                      <Flex
+                        css={{ mb: 24, mt: 24, maxWidth: '100%' }}
+                        align="center"
+                        justify="center"
+                      >
+                        {!!token.token?.collection?.image && (
+                          <Box css={{ mr: '$1' }}>
+                            <img
+                              src={token.token?.collection?.image}
+                              style={{
+                                width: 24,
+                                height: 24,
+                                borderRadius: '50%',
+                              }}
+                            />
+                          </Box>
+                        )}
+                        <Text
+                          style="subtitle2"
+                          css={{ maxWidth: '100%' }}
+                          ellipsify
+                        >
+                          {token?.token?.name
+                            ? token?.token?.name
+                            : `#${token?.token?.tokenId}`}
+                        </Text>
+                      </Flex>
+                      <Flex css={{ mb: '$2' }} align="center">
+                        <Box css={{ color: '$successAccent', mr: '$2' }}>
+                          <FontAwesomeIcon icon={faCheckCircle} />
+                        </Box>
+                        <Text style="body1">
+                          Your transaction went through successfully
+                        </Text>
+                      </Flex>
+                      <Anchor
+                        color="primary"
+                        weight="medium"
+                        css={{ fontSize: 12 }}
+                        href={`${blockExplorerBaseUrl}/tx/${finalTxHash}`}
+                        target="_blank"
+                      >
+                        View on{' '}
+                        {activeChain?.blockExplorers?.default.name ||
+                          'Etherscan'}
+                      </Anchor>
+                    </>
+                  )}
                 </Flex>
                 <Flex
                   css={{
@@ -493,7 +585,7 @@ export function BuyModal({
                         css={{ flex: 1 }}
                         color="ghost"
                       >
-                        Close
+                        {copy.ctaClose}
                       </Button>
                       <Button
                         style={{ flex: 1 }}
@@ -502,7 +594,11 @@ export function BuyModal({
                           onGoToToken()
                         }}
                       >
-                        Go to Token
+                        {copy.ctaGoToToken.length > 0
+                          ? copy.ctaGoToToken
+                          : `Go to ${
+                              successfulPurchases > 1 ? 'Tokens' : 'Token'
+                            }`}
                       </Button>
                     </>
                   ) : (
@@ -513,7 +609,7 @@ export function BuyModal({
                       style={{ flex: 1 }}
                       color="primary"
                     >
-                      Close
+                      {copy.ctaClose}
                     </Button>
                   )}
                 </Flex>
@@ -622,7 +718,7 @@ export function BuyModal({
                   color="primary"
                   onClick={() => copyToClipboard(address as string)}
                 >
-                  Copy Wallet Address
+                  {copy.ctaCopyAddress}
                 </Button>
               </Flex>
             )}

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState, useCallback, ReactNode } from 'react'
 import { useCoinConversion, useReservoirClient, useBids } from '../../hooks'
-import { useSigner, useNetwork } from 'wagmi'
+import { useWalletClient, useNetwork } from 'wagmi'
 import { Execute } from '@reservoir0x/reservoir-sdk'
 
 export enum CancelStep {
@@ -23,7 +23,7 @@ type ChildrenProps = {
   cancelStep: CancelStep
   transactionError?: Error | null
   totalUsd: number
-  usdPrice: ReturnType<typeof useCoinConversion>
+  usdPrice: number
   blockExplorerBaseUrl: string
   steps: Execute['steps'] | null
   stepData: CancelBidStepData | null
@@ -44,7 +44,7 @@ export const CancelBidModalRenderer: FC<Props> = ({
   normalizeRoyalties,
   children,
 }) => {
-  const { data: signer } = useSigner()
+  const { data: signer } = useWalletClient()
   const [cancelStep, setCancelStep] = useState<CancelStep>(CancelStep.Cancel)
   const [transactionError, setTransactionError] = useState<Error | null>()
   const [stepData, setStepData] = useState<CancelBidStepData | null>(null)
@@ -73,10 +73,7 @@ export const CancelBidModalRenderer: FC<Props> = ({
     open && bid ? 'USD' : undefined,
     currency?.symbol
   )
-  const usdPrice =
-    coinConversion !== undefined && coinConversion !== null
-      ? Number(coinConversion)
-      : 0
+  const usdPrice = coinConversion.length > 0 ? coinConversion[0].price : 0
   const totalUsd = usdPrice * (bid?.price?.amount?.decimal || 0)
 
   const client = useReservoirClient()
@@ -158,7 +155,7 @@ export const CancelBidModalRenderer: FC<Props> = ({
         const errorStatus = (error as any)?.statusCode
         let message = 'Oops, something went wrong. Please try again.'
         if (errorStatus >= 400 && errorStatus < 500) {
-          message = error.message 
+          message = error.message
         }
         const transactionError = new Error(message, {
           cause: error,

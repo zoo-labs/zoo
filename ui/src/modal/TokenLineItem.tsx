@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Box, ErrorWell } from '../primitives'
+import { Box } from '../primitives'
 import TokenPrimitive from './TokenPrimitive'
 import { useCollections, useTokens } from '../hooks'
 import { CSSProperties } from '@stitches/react'
@@ -8,9 +8,11 @@ type TokenLineItemProps = {
   tokenDetails?: NonNullable<
     NonNullable<ReturnType<typeof useTokens>>['data']
   >[0]
-  collection?: NonNullable<ReturnType<typeof useCollections>['data']>[0]
+  collection?: Pick<
+    NonNullable<ReturnType<typeof useCollections>['data']>[0],
+    'name' | 'royalties' | 'image'
+  >
   usdConversion?: number
-  isSuspicious?: Boolean
   isUnavailable?: boolean
   warning?: string
   price: number
@@ -31,7 +33,6 @@ const TokenLineItem: FC<TokenLineItemProps> = ({
   tokenDetails,
   collection,
   usdConversion = 0,
-  isSuspicious,
   isUnavailable,
   price,
   priceSubtitle,
@@ -53,8 +54,8 @@ const TokenLineItem: FC<TokenLineItemProps> = ({
   const collectionName =
     tokenDetails?.token?.collection?.name || collection?.name || ''
 
-  const img = tokenDetails?.token?.image
-    ? tokenDetails.token.image
+  const img = tokenDetails?.token?.imageSmall
+    ? tokenDetails.token.imageSmall
     : (collection?.image as string)
 
   const royaltiesBps =
@@ -81,12 +82,6 @@ const TokenLineItem: FC<TokenLineItemProps> = ({
         royaltiesBps={royaltiesBps}
         quantity={quantity}
       />
-      {!!isSuspicious && (
-        <ErrorWell
-          css={{ p: '$3', mt: '$3', borderRadius: 4 }}
-          message="Token is not tradable on OpenSea"
-        />
-      )}
     </Box>
   )
 }

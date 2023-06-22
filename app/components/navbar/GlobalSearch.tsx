@@ -1,12 +1,4 @@
-import {
-  Box,
-  Text,
-  Flex,
-  Input,
-  Button,
-  FormatCurrency,
-  FormatCrypto,
-} from '../primitives'
+import { Box, Text, Flex, Input, Button, FormatCrypto } from '../primitives'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
 
@@ -31,13 +23,19 @@ import { SearchCollection } from 'pages/api/globalSearch'
 import { formatNumber } from 'utils/numbers'
 import { useTheme } from 'next-themes'
 import Img from 'components/primitives/Img'
+import optimizeImage from 'utils/optimizeImage'
 
 type Props = {
   collection: SearchCollection
+  largestVolume?: number
   handleSelectResult: (result: SearchCollection) => void
 }
 
-const CollectionItem: FC<Props> = ({ collection, handleSelectResult }) => {
+const CollectionItem: FC<Props> = ({
+  collection,
+  largestVolume,
+  handleSelectResult,
+}) => {
   const { theme } = useTheme()
 
   const tokenCount = useMemo(
@@ -45,12 +43,16 @@ const CollectionItem: FC<Props> = ({ collection, handleSelectResult }) => {
     [collection.tokenCount]
   )
 
+  const collectionImage = useMemo(() => {
+    return optimizeImage(collection.image!, 250)
+  }, [collection.image!])
+
   return (
     <Link
-      href={`/collection/${collection.chainName}/${collection.collectionId}`}
+      href={`${collection.chainName}/collection/${collection.collectionId}`}
       style={{ overflow: 'hidden', width: '100%', minWidth: 0 }}
       onClick={() => handleSelectResult(collection)}
-      legacyBehavior>
+    >
       <Flex
         css={{
           p: '$2',
@@ -65,7 +67,7 @@ const CollectionItem: FC<Props> = ({ collection, handleSelectResult }) => {
         align="center"
       >
         <Img
-          src={collection.image!}
+          src={collectionImage}
           style={{ width: 36, height: 36, borderRadius: 4 }}
           width={36}
           height={36}
@@ -96,22 +98,52 @@ const CollectionItem: FC<Props> = ({ collection, handleSelectResult }) => {
                 {tokenCount} items
               </Text>
             )}
+            {collection.floorAskPrice && tokenCount ? (
+              <Text style="subtitle3" color="subtle">
+                ⸱
+              </Text>
+            ) : null}
+            {collection.floorAskPrice !== undefined && (
+              <Flex css={{ flexShrink: 0, gap: '$1', color: '$gray11' }}>
+                <FormatCrypto
+                  textStyle="subtitle3"
+                  amount={collection.floorAskPrice}
+                  decimals={collection.floorAskCurrencyDecimals}
+                  maximumFractionDigits={2}
+                  css={{ color: '$gray11' }}
+                />
+                <Text style="subtitle3" color="subtle">
+                  {collection.floorAskCurrencySymbol}
+                </Text>
+              </Flex>
+            )}
           </Flex>
         </Flex>
-        {collection.volumeCurrencySymbol && (
-          <Flex css={{ ml: 'auto', flexShrink: 0, gap: '$1' }}>
-            <FormatCrypto
-              textStyle="subtitle2"
-              amount={collection.allTimeVolume}
-              decimals={collection.volumeCurrencyDecimals}
-              maximumFractionDigits={2}
-            />
-            {collection.volumeCurrencySymbol}
-          </Flex>
-        )}
+        {largestVolume !== undefined &&
+        collection.allTimeUsdVolume !== undefined ? (
+          <Box
+            css={{
+              background: '$gray7',
+              borderRadius: 4,
+              width: 70,
+              height: 4,
+              ml: 'auto',
+              overflow: 'hidden',
+              flexShrink: 0,
+            }}
+          >
+            <Box
+              css={{
+                background: '$primary9',
+                width: (collection.allTimeUsdVolume / largestVolume) * 100,
+                height: '100%',
+              }}
+            ></Box>
+          </Box>
+        ) : null}
       </Flex>
     </Link>
-  );
+  )
 }
 
 type WalletItemProps = {
@@ -126,7 +158,7 @@ type WalletItemProps = {
 
 const WalletItem: FC<WalletItemProps> = ({ wallet }) => {
   return (
-    <Link href={`/portfolio/${wallet.address}`} legacyBehavior>
+    <Link href={`/portfolio/${wallet.address}`}>
       <Flex
         css={{
           p: '$2',
@@ -151,7 +183,7 @@ const WalletItem: FC<WalletItemProps> = ({ wallet }) => {
         <Text style="subtitle1">{wallet.displayName}</Text>
       </Flex>
     </Link>
-  );
+  )
 }
 
 type SearchResultProps = {
@@ -159,11 +191,13 @@ type SearchResultProps = {
     type: 'collection' | 'wallet'
     data: any
   }
+  largestVolume?: number
   handleSelectResult: (result: SearchCollection) => void
 }
 
 const SearchResult: FC<SearchResultProps> = ({
   result,
+  largestVolume,
   handleSelectResult,
 }) => {
   if (result.type == 'collection') {
@@ -171,6 +205,7 @@ const SearchResult: FC<SearchResultProps> = ({
       <CollectionItem
         collection={result.data}
         handleSelectResult={handleSelectResult}
+        largestVolume={largestVolume}
       />
     )
   } else {
@@ -194,6 +229,15 @@ const GlobalSearch = forwardRef<
   const debouncedSearch = useDebounce(search, 500)
 
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
+  const largestVolume = useMemo(() => {
+    let volume = 0
+    results.forEach((result: SearchResultProps['result']) => {
+      if (result.data && result.data.allTimeUsdVolume >= volume) {
+        volume = result.data.allTimeUsdVolume
+      }
+    })
+    return volume
+  }, [results])
 
   useEffect(() => {
     const getSearchResults = async () => {
@@ -374,6 +418,7 @@ const GlobalSearch = forwardRef<
                   <SearchResult
                     result={result}
                     handleSelectResult={handleSelectResult}
+                    largestVolume={largestVolume}
                   />
                 ))}
 

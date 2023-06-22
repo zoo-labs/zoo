@@ -13,7 +13,7 @@ function Donation() {
         },
         {
           title: "Custom",
-          comment: "85% of your donation funds program activities and 15% goes towards operational costs.",
+          comment: "70% of your donation funds program activities, and 30% goes towards fundaraising and admin.",
           type: "custom"
         }
       ];
