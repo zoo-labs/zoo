@@ -25,7 +25,7 @@ function Intro({breadcrumbs,title,comment}: {
             <h1 className='text-white md:text-7xl xl:text-9xl max-md:text-5xl max-md:my-5'>{title}</h1>
             <p className='text-white md:text-lg lg:text-2xl xl:text-3xl max-md:pb-10'>{comment}</p>
             <hr className='max-md:hidden'/>
-            <p className='text-white max-md:hidden pb-8 md:text-sm md:pb-20 lg:text-lg lg:pb-24 xl:text-2xl xl:pb-32'>Supporting endangered species via human endeavors and virtual animal sales.</p>
+            <p className='text-white max-md:hidden pb-8 md:text-sm md:pb-20 lg:text-lg lg:pb-24 xl:text-2xl xl:pb-32'>Supporting endangered species that are threatened with extinction.</p>
         </div>
         <div className='md:w-1/2 max-md:absolute max-md:w-[800px] max-md:right-0 max-md:z-0'>
             {/* <Image

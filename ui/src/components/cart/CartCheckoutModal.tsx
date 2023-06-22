@@ -16,9 +16,8 @@ import {
 import { ProviderOptionsContext } from '../../ReservoirKitProvider'
 import { TokenCheckout } from '../../modal/TokenCheckout'
 import { Cart, CheckoutStatus } from '../../context/CartProvider'
-import { useCoinConversion } from '../../hooks'
 import SigninStep from '../../modal/SigninStep'
-import { ApprovalCollapsible } from '../../modal/ApprovalCollapsible'
+import { ApprovePurchasingCollapsible } from '../../modal/ApprovePurchasingCollapsible'
 import { Execute } from '@reservoir0x/reservoir-sdk'
 
 const Title = styled(DialogPrimitive.Title, {
@@ -30,7 +29,7 @@ export type Path = NonNullable<Execute['path']>[0]
 type Props = {
   items: Cart['items']
   totalPrice: number
-  usdPrice: ReturnType<typeof useCoinConversion>
+  usdPrice: number
   currency: NonNullable<Cart['items'][0]['price']>['currency']
   cartChain: Cart['chain']
   blockExplorerBaseUrl: string
@@ -57,15 +56,22 @@ export function CartCheckoutModal({
     const { token, collection } = item
     const contract = collection.id.split(':')[0]
 
-    return `${cartChain?.baseApiUrl}/redirect/tokens/${contract}:${token.id}/image/v1`
+    return `${cartChain?.baseApiUrl}/redirect/tokens/${contract}:${token.id}/image/v1?imageSize=small`
   })
 
-  const totalPurchases =
-    transaction?.currentStep?.items?.reduce(
-      (total, item) => total + (item?.salesData?.length || 0),
-      0
-    ) || 0
-  const failedPurchases = (transaction?.items?.length || 0) - totalPurchases
+  const salesTxHashes =
+    transaction?.currentStep?.items?.reduce((txHashes, item) => {
+      item.salesData?.forEach((saleData) => {
+        if (saleData.txHash) {
+          txHashes.add(saleData.txHash)
+        }
+      })
+      return txHashes
+    }, new Set<string>()) || []
+  const totalSales = Array.from(salesTxHashes).length
+  const failedSales =
+    totalSales - (transaction?.currentStep?.items?.length || 0)
+  const successfulSales = totalSales - failedSales
 
   const pathMap = transaction?.path
     ? (transaction.path as Path[]).reduce(
@@ -189,11 +195,11 @@ export function CartCheckoutModal({
                                   separate transactions.
                                 </Text>
                                 {transaction.currentStep?.items.map((item) => (
-                                  <ApprovalCollapsible
+                                  <ApprovePurchasingCollapsible
                                     item={item}
                                     pathMap={pathMap}
                                     usdPrice={usdPrice}
-                                    cartChain={cartChain}
+                                    chain={cartChain}
                                     open={true}
                                   />
                                 ))}
@@ -251,7 +257,10 @@ export function CartCheckoutModal({
                           background.
                         </Text>
 
-                        <FontAwesomeIcon icon={faCube} width="24" />
+                        <FontAwesomeIcon
+                          icon={faCube}
+                          style={{ height: 24, width: 24 }}
+                        />
                       </Flex>
                     </Flex>
                     <Button disabled={true} css={{ m: '$4' }}>
@@ -274,26 +283,24 @@ export function CartCheckoutModal({
                     >
                       <Box
                         css={{
-                          color: failedPurchases
+                          color: failedSales
                             ? '$errorAccent'
                             : '$successAccent',
                         }}
                       >
                         <FontAwesomeIcon
                           icon={
-                            failedPurchases
-                              ? faCircleExclamation
-                              : faCheckCircle
+                            failedSales ? faCircleExclamation : faCheckCircle
                           }
                           fontSize={32}
                         />
                       </Box>
                       <Text style="h5" css={{ textAlign: 'center' }}>
-                        {failedPurchases
-                          ? `${totalPurchases} ${
-                              totalPurchases > 1 ? 'items' : 'item'
-                            } purchased, ${failedPurchases} ${
-                              failedPurchases > 1 ? 'items' : 'item'
+                        {failedSales
+                          ? `${successfulSales} ${
+                              successfulSales > 1 ? 'items' : 'item'
+                            } purchased, ${failedSales} ${
+                              failedSales > 1 ? 'items' : 'item'
                             } failed`
                           : 'Congrats! Purchase was successful.'}
                       </Text>

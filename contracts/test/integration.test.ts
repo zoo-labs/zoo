@@ -317,7 +317,7 @@ describe('integration', async () => {
       await run()
       const afterBalance = await token.balanceOf(curatorAddress)
 
-      // 15% creator fee + 20% curator fee = 2 ZOO * 85% * 20% = 0.34 ZooToken
+      // 15% creator fee + 20% curator fee = 2 ZOO *  * 20% = 0.34 ZooToken
       expect(afterBalance).to.eq(beforeBalance.add(THOUSANDTH_ZOO.mul(400)))
     })
   })
