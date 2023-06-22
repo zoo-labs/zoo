@@ -15,7 +15,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import PriceInput from './PriceInput'
 import InfoTooltip from '../../primitives/InfoTooltip'
-import { constants } from 'ethers'
+import { zeroAddress } from 'viem'
+
+const ModalCopy = {
+  title: 'Edit Listing',
+  ctaClose: 'Close',
+  ctaConfirm: 'Confirm',
+  ctaConvertManually: 'Convert Manually',
+  ctaConvertAutomatically: '',
+  ctaAwaitingApproval: 'Waiting for approval...',
+  ctaAwaitingValidation: 'Waiting for transaction to be validated',
+}
 
 type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>]
@@ -24,6 +34,7 @@ type Props = Pick<Parameters<typeof Modal>['0'], 'trigger'> & {
   collectionId?: string
   normalizeRoyalties?: boolean
   enableOnChainRoyalties?: boolean
+  copyOverrides?: Partial<typeof ModalCopy>
   onClose?: (data: any, currentStep: EditListingStep) => void
   onEditListingComplete?: (data: any) => void
   onEditListingError?: (error: Error, data: any) => void
@@ -39,10 +50,12 @@ export function EditListingModal({
   trigger,
   normalizeRoyalties,
   enableOnChainRoyalties = false,
+  copyOverrides,
   onClose,
   onEditListingComplete,
   onEditListingError,
 }: Props): ReactElement {
+  const copy: typeof ModalCopy = { ...ModalCopy, ...copyOverrides }
   const [open, setOpen] = useFallbackState(
     openState ? openState[0] : false,
     openState
@@ -124,7 +137,7 @@ export function EditListingModal({
         return (
           <Modal
             trigger={trigger}
-            title="Edit Listing"
+            title={copy.title}
             open={open}
             onOpenChange={(open) => {
               if (!open && onClose) {
@@ -184,7 +197,7 @@ export function EditListingModal({
                 )}
                 <Box css={{ p: '$4', borderBottom: '1px solid $borderColor' }}>
                   <TokenPrimitive
-                    img={token?.token?.image}
+                    img={token?.token?.imageSmall}
                     name={listing.criteria?.data?.token?.name}
                     price={listing?.price?.amount?.decimal}
                     priceSubtitle="Price"
@@ -284,7 +297,7 @@ export function EditListingModal({
                       price !== null &&
                       price !== 0 &&
                       price >= MINIMUM_AMOUNT &&
-                      currency?.contract === constants.AddressZero &&
+                      currency?.contract === zeroAddress &&
                       price < collection?.floorAsk?.price.amount.native && (
                         <Box>
                           <Text style="body3" color="error">
@@ -343,7 +356,7 @@ export function EditListingModal({
                       color="secondary"
                       css={{ flex: 1 }}
                     >
-                      Close
+                      {copy.ctaClose}
                     </Button>
                     <Button
                       disabled={
@@ -354,7 +367,7 @@ export function EditListingModal({
                       onClick={editListing}
                       css={{ flex: 1 }}
                     >
-                      Confirm
+                      {copy.ctaConfirm}
                     </Button>
                   </Flex>
                 </Flex>
@@ -364,7 +377,7 @@ export function EditListingModal({
               <Flex direction="column">
                 <Box css={{ p: '$4', borderBottom: '1px solid $borderColor' }}>
                   <TokenPrimitive
-                    img={token?.token?.image}
+                    img={token?.token?.imageSmall}
                     name={token?.token?.name}
                     price={profit}
                     usdPrice={updatedTotalUsd}
@@ -393,8 +406,8 @@ export function EditListingModal({
                 <Button disabled={true} css={{ m: '$4' }}>
                   <Loader />
                   {stepData?.currentStepItem.txHash
-                    ? 'Waiting for transaction to be validated'
-                    : 'Waiting for approval...'}
+                    ? copy.ctaAwaitingValidation
+                    : copy.ctaAwaitingApproval}
                 </Button>
               </Flex>
             )}
@@ -429,7 +442,7 @@ export function EditListingModal({
                   }}
                   css={{ m: '$4' }}
                 >
-                  Close
+                  {copy.ctaClose}
                 </Button>
               </Flex>
             )}

@@ -1,7 +1,7 @@
-import { ethers } from 'ethers'
 import fetcher from 'utils/fetcher'
 import { paths } from '@reservoir0x/reservoir-sdk'
 import supportedChains from 'utils/chains'
+import { isAddress as isViemAddress } from 'viem'
 
 const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL
 
@@ -14,7 +14,10 @@ export type SearchCollection = NonNullable<
   darkChainIcon: string
   volumeCurrencySymbol: string
   volumeCurrencyDecimals: number
+  floorAskCurrencySymbol?: string
+  floorAskCurrencyDecimals?: number
   tokenCount: string
+  allTimeUsdVolume?: number
 }
 
 type Collection = NonNullable<
@@ -53,12 +56,16 @@ export default async function handler(req: Request) {
       query.community = community
     }
 
-    promises.push(
-      fetcher(`${reservoirBaseUrl}/search/collections/v1`, query, headers)
+    const promise = fetcher(
+      `${reservoirBaseUrl}/search/collections/v1`,
+      query,
+      headers
     )
+    promise.catch((e: any) => console.warn('Failed to search', e))
+    promises.push(promise)
   })
 
-  let isAddress = ethers.utils.isAddress(query as string)
+  let isAddress = isViemAddress(query as string)
 
   if (isAddress) {
     const promises = supportedChains.map(async (chain) => {
@@ -80,7 +87,9 @@ export default async function handler(req: Request) {
           image: collection.image,
           name: collection.name,
           allTimeVolume: collection.volume?.allTime,
-          floorAskPrice: collection.floorAsk?.price?.amount?.decimal,
+          floorAskPrice: collection.floorAsk?.price?.amount?.native,
+          floorAskCurrencySymbol: chain.nativeCurrency.symbol,
+          floorAskCurrencyDecimals: chain.nativeCurrency.decimals,
           openseaVerificationStatus: collection.openseaVerificationStatus,
           chainName: chain.name.toLowerCase(),
           chainId: chain.id,
@@ -146,9 +155,12 @@ export default async function handler(req: Request) {
       (res) => res.json()
     )
 
-    const responses = await Promise.all(promises)
+    const responses = await Promise.allSettled(promises)
     responses.forEach((response, index) => {
-      const chainSearchResults = response.data.collections.map(
+      if (response.status === 'rejected') {
+        return
+      }
+      const chainSearchResults = response.value.data.collections.map(
         (collection: SearchCollection) => ({
           type: 'collection',
           data: {
@@ -166,6 +178,10 @@ export default async function handler(req: Request) {
                 collection.allTimeVolume *
                   usdCoinPrices?.prices?.[index]?.current_price) ||
               0,
+            floorAskCurrencySymbol:
+              supportedChains[index].nativeCurrency.symbol,
+            floorAskCurrencyDecimals:
+              supportedChains[index].nativeCurrency.decimals,
           },
         })
       )

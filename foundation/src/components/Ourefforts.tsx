@@ -16,7 +16,7 @@ function Ourefforts() {
         },
         {
             title: "Rescuing Animals",
-            content: "Dedicated to animals orphaned by  poachers, by providing care and assistance to help reintegrate them back into their habitats.",
+            content: "Dedicated to animals orphaned by poachers, by providing care and assistance to help reintegrate them back into their habitats.",
             icon: "/images/rescuing.png",
             url: "/getinvolved#rescuing_animal"
         },

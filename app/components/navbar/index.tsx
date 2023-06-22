@@ -12,7 +12,7 @@ import HamburgerMenu from './HamburgerMenu'
 import MobileSearch from './MobileSearch'
 import { useTheme } from 'next-themes'
 import { useMediaQuery } from 'react-responsive'
-import { useMounted } from '../../hooks'
+import { useMarketplaceChain, useMounted } from '../../hooks'
 import { useAccount } from 'wagmi'
 import CartButton from './CartButton'
 import { AccountSidebar } from 'components/navbar/AccountSidebar'
@@ -25,6 +25,7 @@ const Navbar = () => {
   const { isConnected } = useAccount()
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
   const isMounted = useMounted()
+  const { routePrefix } = useMarketplaceChain()
 
   let searchRef = useRef<HTMLInputElement>(null)
 
@@ -58,13 +59,13 @@ const Navbar = () => {
     >
       <Box css={{ flex: 1 }}>
         <Flex align="center">
-          <Link href="/" legacyBehavior>
-            <Box css={{ width: 48, cursor: 'pointer' }}>
+          <Link href={`/${routePrefix}`}>
+            <Box css={{ width: 34, cursor: 'pointer' }}>
               <Image
-                src="/zooLogo.svg"
-                width={48}
-                height={48}
-                alt="ZOO"
+                src="/reservoirLogo.svg"
+                width={34}
+                height={39}
+                alt="Reservoir"
               />
             </Box>
           </Link>
@@ -97,21 +98,21 @@ const Navbar = () => {
     >
       <Box css={{ flex: 1 }}>
         <Flex align="center">
-          <Link href="/" legacyBehavior>
-            <Box css={{ width: 64, cursor: 'pointer' }}>
+          <Link href={`/${routePrefix}`}>
+            <Box css={{ width: 112, cursor: 'pointer' }}>
               {theme == 'dark' ? (
                 <Image
-                  src="/zooLogo.svg"
-                  width={64}
-                  height={64}
-                  alt="ZOO"
+                  src="/reservoirMarketLogo.svg"
+                  width={112}
+                  height={36}
+                  alt="Reservoir"
                 />
               ) : (
                 <Image
-                  src="/zooLogoLight.svg"
-                  width={64}
-                  height={64}
-                  alt="ZOO"
+                  src="/reservoirMarketLogoLight.svg"
+                  width={112}
+                  height={36}
+                  alt="Reservoir"
                 />
               )}
             </Box>
@@ -119,25 +120,22 @@ const Navbar = () => {
           <Box css={{ flex: 1, px: '$5', maxWidth: 460 }}>
             <GlobalSearch
               ref={searchRef}
-              placeholder="Search for animal"
+              placeholder="Search collections and addresses"
               containerCss={{ width: '100%' }}
               key={router.asPath}
             />
           </Box>
           <Flex align="center" css={{ gap: '$5', mr: '$5' }}>
-            <Link href="https://zoo.ngo/collect" legacyBehavior>
-              <NavItem active={false}>Animals</NavItem>
-            </Link>
-            <Link href="/collection-rankings" legacyBehavior>
-              <NavItem active={router.pathname == '/collection-rankings'}>
+            <Link href={`/${routePrefix}/collection-rankings`}>
+              <NavItem active={router.pathname.includes('collection-rankings')}>
                 Collections
               </NavItem>
             </Link>
-            <Link href="https://zoo.ngo/about" legacyBehavior>
-              <NavItem active={false}>Foundation</NavItem>
+            <Link href="/portfolio">
+              <NavItem active={router.pathname == '/portfolio'}>Sell</NavItem>
             </Link>
-            <Link href="/portfolio" legacyBehavior>
-              <NavItem active={router.pathname == '/portfolio'}>Trade</NavItem>
+            <Link href="https://docs.reservoir.tools/docs">
+              <NavItem active={false}>Docs</NavItem>
             </Link>
           </Flex>
         </Flex>
@@ -155,7 +153,7 @@ const Navbar = () => {
         )}
       </Flex>
     </Flex>
-  );
+  )
 }
 
 export default Navbar
