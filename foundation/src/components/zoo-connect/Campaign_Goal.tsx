@@ -49,7 +49,7 @@ function Campaign_Goal() {
             name: "Esther Howard",
             img: "/images/face1.png",
             date: "Today",
-            content: "Hopefully Alice can get surgery soon, recover from her illness.",
+            content: "Finally, an easy and interactive way to support the wildlife we love. Keep up the excellent work, and count me in for future support!",
             like_text: "You and 48 liked this comment",
             like_flag: true
         },
@@ -57,7 +57,7 @@ function Campaign_Goal() {
             name: "Robert Fox",
             img: "/images/face2.png",
             date: "Today",
-            content: "Hopefully Alice can get surgery soon, recover from her illness.",
+            content: "Donated and shared with my friends. This is the kind of cause I want to support—transparent, dedicated, and meaningful.",
             like_text: "39 people liked this comment",
             like_flag: false
         },
@@ -111,7 +111,7 @@ function Campaign_Goal() {
         </div>
         <hr />
         <div className='flex justify-between items-center'>
-            <p className='text-xl'>Comments from Good People</p>
+            <p className='text-xl'>Comments from campaign donors</p>
             <p className='text-sm text-[#13B156]'>See all</p>
         </div>
         <Slider {...settings} className='bg-black w-full pb-8'>
