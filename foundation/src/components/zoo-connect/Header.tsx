@@ -35,15 +35,14 @@ function Header() {
             </Slider>
         </div>
         <div className="flex flex-col max-md:py-4 px-4">
-          <p className='px-2 max-md:py-2 text-white text-2xl pb-4'>Fund Zoo Connect A Voice for Species Globally</p>
-          <p className='px-2 text-white text-sm'><span className='text-[#3C9465]'>$6,679</span> fund raised from $8,200</p>
+          <p className='px-2 max-md:py-2 text-white text-2xl pb-4'>Fund Zoo Connect A Voice for Endangered Animals</p>
+          <p className='px-2 text-white text-sm'><span className='text-[#3C9465]'>$2,679</span> fund raised from $25,000</p>
           <ProgressBar className='px-2 pt-2' completed={80} isLabelVisible={false} bgColor='#3C9465' height="5px"/>
           <div className='flex justify-between px-2 pt-2 text-white text-sm'>
-            <p><span className='text-[#3C9465]'>3,274</span> Donators</p>
+            <p><span className='text-[#3C9465]'>3,274</span> Donors</p>
             <p><span className='text-[#3C9465]'>12</span> days left</p>
           </div>
           <div className='flex items-center justify-between px-2 pt-6 text-white text-sm'>
-            <button className='text-[#3C9465] border border-[#3C9465] rounded-full px-2 py-[2px] text-xs'>Medical</button>
             <div className='flex items-center space-x-1'>
                 <Image
                     className='w-[40px]'

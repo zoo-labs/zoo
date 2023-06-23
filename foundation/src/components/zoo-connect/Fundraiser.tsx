@@ -13,6 +13,7 @@ function Fundraiser() {
                 height='100'
                 alt=''
             />
+        <a href="https://twitter.com/finessequeeenn">
             <div className='w-full flex flex-col'>
                 <p className='text-xl'>Antje Worring</p>
                 <p className='text-sm'>Verified <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,6 +27,7 @@ function Fundraiser() {
 </svg>
 </p>
             </div>
+            </a>
             <button className='text-[#3C9465] border-2 border-[#3C9465] text-base rounded-full px-4 py-1'>Follow</button>
         </div>
         <p className='text-xl'>Functions</p>
