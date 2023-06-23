@@ -162,9 +162,13 @@ model-viewer {
 .slick-dots li button:before {
   color: white !important;
 }
-.slick-dots {
+.Carousel .slick-dots {
   left: 0;
   bottom: -50px !important;
+}
+.zoo-connect .slick-dots {
+  left: 0;
+  bottom: 10px !important;
 }
 .bg-blue {
   background-color: #2517FF;
