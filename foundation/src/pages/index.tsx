@@ -19,7 +19,7 @@ export default function IndexPage() {
     <Layout>
       <Seo />
       <Navbar />
-      <Intro breadcrumbs="Zoo Labs Foundation" title="Preserve" comment=" wildlife biodiversity through aligned charities, education, research and active conservation efforts."/>
+      <Intro breadcrumbs="Zoo Labs Foundation" title="Preserve" comment=" Wildlife biodiversity through aligned charities, education, research and active conservation efforts."/>
       <Comment />
       <Principles />
       <Donation />
