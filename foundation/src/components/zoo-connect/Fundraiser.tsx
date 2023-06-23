@@ -27,8 +27,8 @@ function Fundraiser() {
 </svg>
 </p>
             </div>
-            </a>
             <button className='text-[#3C9465] border-2 border-[#3C9465] text-base rounded-full px-4 py-1'>Follow</button>
+         </a>
         </div>
         <p className='text-xl'>Functions</p>
         <div className='flex items-center space-x-4'>
