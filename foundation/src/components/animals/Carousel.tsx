@@ -18,7 +18,7 @@ function Carosuel() {
   };
 
   return (
-    <div className="bg-black text-center xl:px-52 lg:px-32 md:px-16 px-6 pt-32">
+    <div className="Carousel bg-black text-center xl:px-52 lg:px-32 md:px-16 px-6 pt-32">
         <p className='text-gray-300 text-lg md:text-center text-left'>3D Metaverse Animals</p>
         <h1 className='text-white md:text-center text-left md:text-3xl xl:text-6xl max-md:text-2xl mt-5 mb-8'>Emotional Intelligence with AI</h1>
         <p className='text-gray-300 text-sm md:text-center text-left xl:text-xl pb-16 xl:px-52 lg:px-32 md:px-16'>The future upgrades will have powers, allow them to speak with you. play with you and much more for you to decide!</p>
