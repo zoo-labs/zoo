@@ -2,7 +2,6 @@
 import  React,{useReducer,useRef,useEffect,useState} from "react";
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { SizeMe } from 'react-sizeme'
 import Globe_ from "react-globe.gl";
 // import Globe from 'react-globe.gl';
 
@@ -246,7 +245,7 @@ function Globe() {
       // _globe.controls().maxPolarAngle = 0;
       _globe.controls().enableZoom = false;
       _globe.controls().autoRotate = true;
-      _globe.controls().autoRotateSpeed = 1;
+      _globe.controls().autoRotateSpeed = 0.7;
     }
 }, [globeRef]);
   const size = useWindowSize();
