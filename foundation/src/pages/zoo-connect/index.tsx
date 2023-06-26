@@ -7,16 +7,19 @@ import Fundraiser from '@/components/zoo-connect/Fundraiser';
 import Campaign_Goal from '@/components/zoo-connect/Campaign_Goal';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 export default function ZooConnect() {
+  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || '');
   return (
     <Layout>
         <Seo />
         <Navbar />
-        <div className='flex max-md:flex-col md:justify-between bg-black md:px-8 lg:px-12 xl:px-16 2xl:px-24 md:space-x-8 lg:space-x-16 xl:space-x-24 md:pt-20'>
+        <Elements stripe={stripePromise}>
           <Header />
-          <Fundraiser />
-        </div>
+        </Elements>
+        <Fundraiser />
         <Campaign_Goal />
         <Footer />
     </Layout>

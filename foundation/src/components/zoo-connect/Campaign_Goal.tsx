@@ -38,11 +38,30 @@ function Campaign_Goal() {
         dots: false,
         infinite: false,
         speed: 500,
-        slidesToShow: 1.2,
+        slidesToShow: 3,
         slidesToScroll: 1,
         draggable: true,
         autoplay: false,
-        arrows: false
+        arrows: false,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              arrows: false,
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              initialSlide: 2
+            },
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              arrows: false,
+              slidesToShow: 1.2,
+              slidesToScroll: 1
+            },
+          }
+        ],
       };
     const comments = [
         {
@@ -61,13 +80,29 @@ function Campaign_Goal() {
             like_text: "39 people liked this comment",
             like_flag: false
         },
+        {
+          name: "Esther Howard",
+          img: "/images/face1.png",
+          date: "Today",
+          content: "Hopefully Alice can get surgery soon, recover from her illness.",
+          like_text: "You and 48 liked this comment",
+          like_flag: true
+      },
+      {
+          name: "Robert Fox",
+          img: "/images/face2.png",
+          date: "Today",
+          content: "Hopefully Alice can get surgery soon, recover from her illness.",
+          like_text: "39 people liked this comment",
+          like_flag: false
+      },
     ];
   return (
-    <div className="bg-black text-white md:py-8 lg:py-12 px-16 max-md:py-4 max-md:px-4">
+    <div className="bg-black md:px-12 lg:px-24 xl:px-32 text-white md:py-8 lg:py-12 px-16 max-md:py-4 max-md:px-4">
       <div className='flex flex-col space-y-4'>
         <p className='text-xl'>Campaign Goal</p>
         <p className='text-sm pt-2'>To provide an App/platform for vulnerable, ill-treated, and endangered species worldwide, by boosting the reach and influence of organizations of all sizes that are dedicated to their preservation and well-being. <span onClick={()=>setMoreFlag(false)} className={`${moreFlag ? 'inherit' : 'hidden'} cursor-pointer text-[#3C9465]`}>Read less</span></p>
-        <p onClick={()=>setMoreFlag(true)} className={`${moreFlag ? 'hidden' : 'block'} cursor-pointer text-base text-[#3C9465]`}>Read More...</p>
+        <p onClick={()=>setMoreFlag(true)} className={`${moreFlag ? 'hidden' : 'block'} cursor-pointer text-base text-[#3C9465] md:pt-12 pt-0`}>Read More...</p>
         <div className={`${moreFlag ? 'flex' : 'hidden'} flex-col space-y-5`}>
             <hr />
             <p className='text-xl'>What we know</p>
@@ -109,12 +144,12 @@ function Campaign_Goal() {
             <p className='text-xl'>Fundraising Purpose</p>
             <p className='text-sm'>Funds raised through this campaign will go towards developing the Zoo Connect platform and maintaining it for the first year of operation. By enhancing our outreach and educational capabilities, Zoo Connect will further our mission to conserve wildlife and their habitats.</p>
         </div>
-        <hr />
-        <div className='flex justify-between items-center'>
+        <hr className='w-full md:w-[400px]'/>
+        <div className='flex w-full md:w-[400px] justify-between items-center'>
             <p className='text-xl'>Comments from Good People</p>
-            <p className='text-sm text-[#13B156]'>See all</p>
+            <p className='text-sm text-[#13B156] cursor-pointer'>See all</p>
         </div>
-        <Slider {...settings} className='bg-black w-full pb-8'>
+        <Slider {...settings} className='comments bg-black w-full pb-8'>
             {comments.map((data, index) => (
                 <Comments name={data.name} img={data.img} date={data.date} like_text={data.like_text} like_flag={data.like_flag} content={data.content}/>
             ))}
