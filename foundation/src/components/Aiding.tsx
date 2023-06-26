@@ -11,7 +11,7 @@ function Aiding() {
           <p className='w-1/2 max-md:w-full text-white text-xl'>We are developing intellectually stimulating content for both children and adults. Our  platform will host a variety of interactive experiences with our Zoo Animals, aimed at lasting impact and raising awareness.</p>
         </div>
 
-        <Link href='/zoo-connect' className="hidden max-md:flex bg-[#1E1F23] flex-col border border-[#1E1F23] mt-12 rounded-xl pb-4">
+        <Link href='/campaign' className="hidden max-md:flex bg-[#1E1F23] flex-col border border-[#1E1F23] mt-12 rounded-xl pb-4">
           <>
           <Image
             className='w-full'
