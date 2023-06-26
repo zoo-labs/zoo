@@ -33,13 +33,15 @@ function Footer() {
             <Link href="/getinvolved#volunteer" className='text-sm lg:text-lg text-white'>Initiatives</Link>
         </div>
         <div className='flex flex-col space-y-8'>
+            <Link href="/campaign" className='text-sm lg:text-lg text-white'>Campaign</Link>
             <Link href="https://app.zoolabs.io/" className='text-sm lg:text-lg text-white'>Digital Collectibles</Link>
             <Link href="/animals/red_wolf"  className='text-sm lg:text-lg text-white'>Red Wolf</Link>
             <Link href="/animals/nubian_giraffe" className='text-sm lg:text-lg text-white'>Nubian Giraffe</Link>
             <Link href="/animals/amur_leopard" className='text-sm lg:text-lg text-white'>Amur Leopard</Link>
-            <Link href="/animals/sumatran_elephant" className='text-sm lg:text-lg text-white'>Sumatran Elephant</Link>
+            
         </div>
         <div className='flex flex-col space-y-8'>
+        <Link href="/animals/sumatran_elephant" className='text-sm lg:text-lg text-white'>Sumatran Elephant</Link>
             <Link href="/animals/javan_rhino" className='text-sm lg:text-lg text-white'>Javan Rhino</Link>
             <Link href="/animals/pygmy_hippo" className='text-sm lg:text-lg text-white'>Pygmy Hippo</Link>
             <Link href="/animals/siberian_tiger" className='text-sm lg:text-lg text-white'>Siberian Tiger</Link>
@@ -54,13 +56,14 @@ function Footer() {
     <div className='bg-black hidden max-md:block'>
       <div className='flex flex-col items-center justify-center'>
         <p className='text-xl text-white'>Zoo Labs Foundation</p>
-        <div className='flex items-center pt-8 space-x-16'>
+        <div className='flex items-center pt-8 space-x-8'>
           <Link href="/" className='text-lg text-white'>Home</Link>
           <Link href="/about" className='text-lg text-white'>About</Link>
           <Link href="/campaign" className='text-lg text-white'>Campaign</Link>
-          <Link href="/getinvolved" className='text-lg text-white'>Get Involved</Link>
+          
         </div>
-        <div className='flex items-center pt-6 space-x-16'>
+        <div className='flex items-center pt-6 space-x-8'>
+            <Link href="/getinvolved" className='text-lg text-white'>Get Involved</Link>
             <Link href="/animals" className='text-lg text-white'>Animals</Link>
             <Link href="/donation" className='text-lg text-white'>Donate</Link>
         </div>
