@@ -13,8 +13,8 @@ function Fundraiser() {
                 height='100'
                 alt=''
             />
-        <a href="https://twitter.com/finessequeeenn">
-            <div className='w-full flex flex-col'>
+        <Link href="https://twitter.com/finessequeeenn" className='w-full flex flex-col'>
+            <div >
                 <p className='text-xl'>Antje Worring</p>
                 <p className='text-sm'>Verified <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M15.3334 8L13.7067 6.14L13.9334 3.68L11.5267 3.13333L10.2667 1L8.00008 1.97333L5.73341 1L4.47341 3.12667L2.06675 3.66667L2.29341 6.13333L0.666748 8L2.29341 9.86L2.06675 12.3267L4.47341 12.8733L5.73341 15L8.00008 14.02L10.2667 14.9933L11.5267 12.8667L13.9334 12.32L13.7067 9.86L15.3334 8ZM6.25341 10.6733L4.66675 9.07333C4.40675 8.81333 4.40675 8.39333 4.66675 8.13333L4.71341 8.08667C4.97341 7.82667 5.40008 7.82667 5.66008 8.08667L6.73341 9.16667L10.1667 5.72667C10.4267 5.46667 10.8534 5.46667 11.1134 5.72667L11.1601 5.77333C11.4201 6.03333 11.4201 6.45333 11.1601 6.71333L7.21341 10.6733C6.94008 10.9333 6.52008 10.9333 6.25341 10.6733Z" fill="url(#paint0_linear_173_2433)"/>
@@ -27,8 +27,10 @@ function Fundraiser() {
 </svg>
 </p>
             </div>
-            <button className='text-[#3C9465] border-2 border-[#3C9465] text-base rounded-full px-4 py-1'>Follow</button>
-         </a>
+        </Link>
+        <Link href="https://twitter.com/finessequeeenn" className='text-[#3C9465] border-2 border-[#3C9465] text-base rounded-full px-4 py-1'>
+            {'Follow'}
+         </Link>
         </div>
         <p className='text-xl max-md:block md:hidden'>Functions</p>
         <div className='items-center space-x-4 max-md:flex md:hidden'>
