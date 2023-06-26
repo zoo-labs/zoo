@@ -11,7 +11,7 @@ function Campaign_Goal() {
 //       width: undefined,
 //       height: undefined,
 //     });
-
+  
 //     useEffect(() => {
 //       // only execute all the code below in client side
 //       // Handler to call on window resize
@@ -22,13 +22,13 @@ function Campaign_Goal() {
 //           height: window.innerHeight,
 //         });
 //       }
-
+      
 //       // Add event listener
 //       window.addEventListener("resize", handleResize);
-
+       
 //       // Call handler right away so state gets updated with initial window size
 //       handleResize();
-
+      
 //       // Remove event listener on cleanup
 //       return () => window.removeEventListener("resize", handleResize);
 //     }, []); // Empty array ensures that effect is only run on mount
@@ -144,10 +144,17 @@ function Campaign_Goal() {
             <p className='text-xl'>Fundraising Purpose</p>
             <p className='text-sm'>Funds raised through this campaign will go towards developing the Zoo Connect platform and maintaining it for the first year of operation. By enhancing our outreach and educational capabilities, Zoo Connect will further our mission to conserve wildlife and their habitats.</p>
         </div>
+<<<<<<< HEAD
         <hr />
         <div className='flex justify-between items-center'>
             <p className='text-xl'>Comments from campaign donors</p>
             <p className='text-sm text-[#13B156]'>See all</p>
+=======
+        <hr className='w-full md:w-[400px]'/>
+        <div className='flex w-full md:w-[400px] justify-between items-center'>
+            <p className='text-xl'>Comments from Good People</p>
+            <p className='text-sm text-[#13B156] cursor-pointer'>See all</p>
+>>>>>>> preview
         </div>
         <Slider {...settings} className='comments bg-black w-full pb-8'>
             {comments.map((data, index) => (
