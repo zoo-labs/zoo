@@ -57,6 +57,7 @@ function Footer() {
         <div className='flex items-center pt-8 space-x-16'>
           <Link href="/" className='text-lg text-white'>Home</Link>
           <Link href="/about" className='text-lg text-white'>About</Link>
+          <Link href="/campaign" className='text-lg text-white'>Campaign</Link>
           <Link href="/getinvolved" className='text-lg text-white'>Get Involved</Link>
         </div>
         <div className='flex items-center pt-6 space-x-16'>
