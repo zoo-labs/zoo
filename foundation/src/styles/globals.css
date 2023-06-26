@@ -308,6 +308,9 @@ svg {
 .collect-slider .slick-list {
   margin: 0 30px !important;
 }
+.comments .slick-track {
+  margin:inherit !important;
+}
 .slick-prev {
   left: 10px !important;
 }

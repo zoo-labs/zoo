@@ -2,10 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 function Fundraiser() {
   return (
-    <div className="bg-black text-white max-md:py-4 max-md:px-4 md:flex-1">
+    <div className="bg-black text-white md:px-12 lg:px-24 xl:px-32  max-md:py-4 max-md:px-4 md:pt-24 md:flex-1">
       <div className='flex flex-col space-y-4'>
         <p className='text-xl'>Fundraiser</p>
-        <div className='flex items-center space-x-4'>
+        <div className='flex items-center space-x-4 w-full md:w-[400px]'>
             <Image
                 className='w-[40px]'
                 src='/images/antje.png'
@@ -28,8 +28,8 @@ function Fundraiser() {
             </div>
             <button className='text-[#3C9465] border-2 border-[#3C9465] text-base rounded-full px-4 py-1'>Follow</button>
         </div>
-        <p className='text-xl'>Functions</p>
-        <div className='flex items-center space-x-4'>
+        <p className='text-xl max-md:block md:hidden'>Functions</p>
+        <div className='items-center space-x-4 max-md:flex md:hidden'>
             <div className='w-[50px] h-[50px] pt-[7px] text-center rounded-full bg-[#13B15649]'>
                 <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M29.0833 10.4167H17.6582L14.1582 6.91666H6.91667C5.3085 6.91666 4 8.22516 4 9.83332V26.1667C4 27.7748 5.3085 29.0833 6.91667 29.0833H29.0833C30.6915 29.0833 32 27.7748 32 26.1667V13.3333C32 11.7252 30.6915 10.4167 29.0833 10.4167ZM30.8333 26.1667C30.8333 27.1317 30.0483 27.9167 29.0833 27.9167H6.91667C5.95166 27.9167 5.16667 27.1317 5.16667 26.1667V9.83332C5.16667 8.86832 5.95166 8.08332 6.91667 8.08332H13.6752L17.1752 11.5833H29.0833C30.0483 11.5833 30.8333 12.3683 30.8333 13.3333V26.1667Z" fill="white"/>
@@ -51,7 +51,7 @@ function Fundraiser() {
 </p>
             </div>
         </div>
-        <div className='flex items-center space-x-4'>
+        <div className='items-center space-x-4 max-md:flex md:hidden'>
             <div className='w-[50px] h-[50px] pt-[12px] text-center rounded-full bg-[#13B15649]'>
                 <svg width="34" height="28" viewBox="0 0 34 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M27.1645 19.619C26.5799 19.6201 26.0123 19.4372 25.5554 19.1004L24.9887 18.6807C24.7895 18.5336 24.6905 18.2997 24.7288 18.0671C24.7673 17.8344 24.9373 17.6383 25.1748 17.5527C25.4124 17.4669 25.6814 17.5047 25.8806 17.6518L26.4465 18.0715C26.686 18.248 26.9917 18.3294 27.2963 18.2979C27.6007 18.2663 27.8793 18.1244 28.0705 17.9034C28.2617 17.6825 28.3499 17.4003 28.3157 17.1193C28.2815 16.8382 28.1278 16.5812 27.8883 16.4048L27.4124 16.055C27.2132 15.9079 27.1142 15.674 27.1527 15.4413C27.191 15.2086 27.361 15.0126 27.5987 14.9269C27.8362 14.8413 28.1052 14.879 28.3043 15.0261L28.7802 15.3767C29.3417 15.7903 29.691 16.4011 29.744 17.0622C29.7971 17.7234 29.5492 18.375 29.0599 18.8604C28.5706 19.3457 27.8842 19.6211 27.1658 19.6199L27.1645 19.619Z" fill="white"/>
@@ -86,7 +86,7 @@ function Fundraiser() {
             <p className='text-xl'>Fund Zoo Connect</p>
             <Link href='/donation' className='text-[#3C9465] border-2 border-[#3C9465] text-lg rounded-full px-6 py-1'>Donate</Link>
         </div>
-        <hr />
+        <hr className='w-full md:w-[400px]'/>
       </div>
     </div>
   );
