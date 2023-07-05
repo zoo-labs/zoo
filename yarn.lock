@@ -7417,10 +7417,10 @@
     redux-thunk "^2.4.2"
     reselect "^4.1.8"
 
-"@reservoir0x/reservoir-kit-ui@1.1.14":
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/@reservoir0x/reservoir-kit-ui/-/reservoir-kit-ui-1.1.14.tgz#b272372c32c7c8eb1a53cd145f1f35cbcb043acf"
-  integrity sha512-Ggloevfx43u6YbsvnmZh5ztzD6AtQK0RWTxNZgdmTL57TYZCwuVe8xaurmGTRoiJllBKElG5jUmgDYxC3YGSjQ==
+"@reservoir0x/reservoir-kit-ui@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@reservoir0x/reservoir-kit-ui/-/reservoir-kit-ui-1.2.0.tgz#bfa5533ea7391af116800935fa6ee7c2e7a4abdc"
+  integrity sha512-vIVeGvwOCv4+q7oBKXGpNyNuRPlwVb5vQ4xyW51Lgy66UO5gN3okFmoqzbZKm7/pameAc+wP7kolOUsB9SpT4g==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-solid-svg-icons" "^6.1.1"
@@ -7436,7 +7436,7 @@
     "@radix-ui/react-toggle-group" "1.0.4"
     "@radix-ui/react-tooltip" "1.0.6"
     "@react-hookz/web" "^19.2.0"
-    "@reservoir0x/reservoir-sdk" "1.1.13"
+    "@reservoir0x/reservoir-sdk" "1.1.14"
     "@stitches/react" "1.3.1-1"
     dayjs "^1.11.4"
     flatpickr "^4.6.13"
@@ -7444,10 +7444,10 @@
     react-flatpickr "^3.10.13"
     swr "2.0.1"
 
-"@reservoir0x/reservoir-sdk@1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@reservoir0x/reservoir-sdk/-/reservoir-sdk-1.1.13.tgz#43babd0799fce8d1bfc6355ea48cd9f739ef3f49"
-  integrity sha512-e0XXwoDIcf84E7mvFmK9HpGUpgTQ45y4O0z7CIM18bYhCh/PwdC3kSETqBJzbXCAaDN7r/3mUURduBUOwbPJ5w==
+"@reservoir0x/reservoir-sdk@1.1.14":
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/@reservoir0x/reservoir-sdk/-/reservoir-sdk-1.1.14.tgz#2a63cfc44c273f3ee5e724467371af416c8c3ed8"
+  integrity sha512-oOKxom2X4YHskPyMYvmkyJ/8Ny20lThnuxl856yhWsv67hmms7Zg7UBTzHHk+wQ6nQm35H/oYDv7DJ2gipHJIQ==
   dependencies:
     axios "^0.27.2"
 
@@ -11125,6 +11125,11 @@ abitype@0.8.7:
   version "0.8.7"
   resolved "https://registry.yarnpkg.com/abitype/-/abitype-0.8.7.tgz#e4b3f051febd08111f486c0cc6a98fa72d033622"
   integrity sha512-wQ7hV8Yg/yKmGyFpqrNZufCxbszDe5es4AZGYPBitocfSqXtjrTG9JMWFcc4N30ukl2ve48aBTwt7NJxVQdU3w==
+
+abitype@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/abitype/-/abitype-0.9.0.tgz#738aca930ecfb32bef143455607a29b630f1e7ca"
+  integrity sha512-6T0BC3Yo3pIZ1kABVRokXYZULob3lWEfcJosJsrCAxfKVeyXvUMGIeJADgwHioccz/mYFye2vR3eq0sNAtBk2w==
 
 abort-controller@^3.0.0:
   version "3.0.0"
@@ -30782,9 +30787,9 @@ postcss@^8.1.0, postcss@^8.1.10, postcss@^8.3.11, postcss@^8.4.18, postcss@^8.4.
     source-map-js "^1.0.2"
 
 posthog-js@^1.68.5:
-  version "1.68.5"
-  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.68.5.tgz#2cca51de69450b3bdeb6709178d8272c71e10df3"
-  integrity sha512-EqQuIX0k564T2fhmzQK2Gcb8s/XRhHTpk6JOeGtJV7lpMI8Hffe+gGjGHcqIc4RoOg3LjAGYNHj6XgN+QPggLg==
+  version "1.69.0"
+  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.69.0.tgz#34d281d4c0810740c68b0cede637c795862ec3ab"
+  integrity sha512-VaeKxbwCBGG3cN1UdFOdb9DBnTHAT3ZoDVubUV3irr0kjB8jIQjWYlnBLkdg++RLPQwAFfsiAGam7EFvXJrZiw==
   dependencies:
     fflate "^0.4.1"
 
@@ -37025,12 +37030,12 @@ typescript@^3.7.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
   integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
 
-typescript@^4.4.3, typescript@^4.8.2, typescript@^4.9.4, typescript@^4.9.5:
+typescript@^4.4.3, typescript@^4.8.2, typescript@^4.9.5:
   version "4.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
-typescript@^5.1.3:
+typescript@^5.1.3, typescript@^5.1.6:
   version "5.1.6"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.6.tgz#02f8ac202b6dad2c0dd5e0913745b47a37998274"
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
