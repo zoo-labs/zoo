@@ -1,8 +1,0 @@
-{
-  "fileName": "Fee.ts",
-  "filePath": "zdk/src/enums/Fee.ts",
-  "url": "zoo-labs/zoo/blob/master/zdk/src/enums/Fee.ts",
-  "summary": "This code defines an enum called `Fee` with a single value `DEFAULT` set to 30. The purpose of this enum is to provide a default fee value for the zoo project. The `Fee` enum can be used throughout the project to set and retrieve the default fee value. \n\nFor example, if the zoo project has a feature that allows visitors to purchase tickets online, the `Fee` enum can be used to set the default fee for the ticket purchase. The code for setting the default fee would look like this:\n\n```\nimport { Fee } from 'zoo';\n\nconst ticketFee = Fee.DEFAULT;\n```\n\nThis code imports the `Fee` enum from the `zoo` module and sets the `ticketFee` variable to the default fee value of 30. \n\nOverall, this code provides a simple and reusable way to set and retrieve a default fee value for the zoo project.",
-  "questions": "1. **What is the purpose of this enum?** \nA smart developer might wonder what this `Fee` enum is used for and how it fits into the overall functionality of the `zoo` project. \n\n2. **Are there any other tiers of fees besides the default?** \nThe comment `Tiers TBD` suggests that there may be additional tiers of fees in the future. A smart developer might want to know if there are any plans to add more tiers and how they would be implemented. \n\n3. **How is the default fee value used in the project?** \nSince the `DEFAULT` value is set to 30, a smart developer might want to know how this value is used in the `zoo` project and if it is subject to change.",
-  "checksum": "59d0a8a2b335393fb1f53edb21a34835"
-}
