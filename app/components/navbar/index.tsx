@@ -126,16 +126,19 @@ const Navbar = () => {
             />
           </Box>
           <Flex align="center" css={{ gap: '$5', mr: '$5' }}>
+            <Link href="https://zoo.ngo/animals">
+              <NavItem active={false}>Animals</NavItem>
+            </Link>
             <Link href={`/${routePrefix}/collection-rankings`}>
               <NavItem active={router.pathname.includes('collection-rankings')}>
                 Collections
               </NavItem>
             </Link>
-            <Link href="/portfolio">
-              <NavItem active={router.pathname == '/portfolio'}>Sell</NavItem>
+            <Link href="https://zoo.ngo">
+              <NavItem active={false}>Foundation</NavItem>
             </Link>
-            <Link href="https://docs.reservoir.tools/docs">
-              <NavItem active={false}>Docs</NavItem>
+            <Link href="/portfolio">
+              <NavItem active={router.pathname == '/portfolio'}>Trade</NavItem>
             </Link>
           </Flex>
         </Flex>
