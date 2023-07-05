@@ -18,7 +18,7 @@ const nextConfig = {
   sentry: {
     hideSourceMaps: false,
   },
-  transpilePackages: ['@reservoir0x/reservoir-kit-ui', "@zoolabs/core", "@zoolabs/ui", "@zoolabs/sdk"],
+  transpilePackages: ['@reservoir0x/reservoir-kit-ui'],
   async redirects() {
     return [
       {

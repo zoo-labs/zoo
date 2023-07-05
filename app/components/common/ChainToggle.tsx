@@ -31,11 +31,17 @@ const ChainToggle: FC = () => {
 
   const switchChains = useCallback(
     (chainOption: (typeof supportedChains)[0]) => {
-      const newUrl = router.asPath.replace(
-        chain.routePrefix,
-        chainOption.routePrefix
-      )
-      router.replace(newUrl, undefined, { scroll: false })
+      if (router.query.chain) {
+        Object.keys(router.query).forEach((param) => delete router.query[param])
+        router.replace(
+          {
+            pathname: router.pathname,
+            query: router.query,
+          },
+          undefined,
+          { shallow: true }
+        )
+      }
       switchCurrentChain(chainOption.id)
     },
     [router.query, switchCurrentChain]
@@ -93,7 +99,14 @@ const ChainToggle: FC = () => {
             <DropdownMenuItem
               key={supportedChain.id}
               css={{ py: '$3', px: '$1', display: 'flex', gap: '$2' }}
-              onClick={() => switchChains(supportedChain)}
+              onClick={() => {
+                const newUrl = router.asPath.replace(
+                  chain.routePrefix,
+                  supportedChain.routePrefix
+                )
+                switchCurrentChain(supportedChain.id)
+                router.replace(newUrl, undefined, { scroll: false })
+              }}
             >
               <Flex css={{ width: 30 }} justify="center" align="center">
                 <img
@@ -123,7 +136,12 @@ const ChainToggle: FC = () => {
               value={chainOption.name}
               disabled={chainOption.name === chain.name}
               onClick={() => {
-                switchChains(chainOption)
+                const newUrl = router.asPath.replace(
+                  chain.routePrefix,
+                  chainOption.routePrefix
+                )
+                switchCurrentChain(chainOption.id)
+                router.replace(newUrl, undefined, { scroll: false })
               }}
             >
               <Box
