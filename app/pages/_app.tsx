@@ -44,6 +44,9 @@ export const NORMALIZE_ROYALTIES = process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES
   ? process.env.NEXT_PUBLIC_NORMALIZE_ROYALTIES === 'true'
   : false
 
+const WALLET_CONNECT_PROJECT_ID =
+  process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || ''
+
 const { chains, publicClient } = configureChains(supportedChains, [
   alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID || '' }),
   publicProvider(),
@@ -51,7 +54,7 @@ const { chains, publicClient } = configureChains(supportedChains, [
 
 const { connectors } = getDefaultWallets({
   appName: 'ZOO',
-  projectId: '00b0b8749c07022874d0323d84e49e99',
+  projectId: WALLET_CONNECT_PROJECT_ID,
   chains,
 })
 
