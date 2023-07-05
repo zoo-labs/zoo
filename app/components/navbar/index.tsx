@@ -99,20 +99,20 @@ const Navbar = () => {
       <Box css={{ flex: 1 }}>
         <Flex align="center">
           <Link href={`/${routePrefix}`}>
-            <Box css={{ width: 112, cursor: 'pointer' }}>
+            <Box css={{ width: 64, cursor: 'pointer' }}>
               {theme == 'dark' ? (
                 <Image
-                  src="/reservoirMarketLogo.svg"
-                  width={112}
-                  height={36}
-                  alt="Reservoir"
+                  src="/zooLogo.svg"
+                  width={64}
+                  height={32}
+                  alt="ZOO"
                 />
               ) : (
                 <Image
-                  src="/reservoirMarketLogoLight.svg"
-                  width={112}
-                  height={36}
-                  alt="Reservoir"
+                  src="/zooLogoLight.svg"
+                  width={64}
+                  height={32}
+                  alt="ZOO"
                 />
               )}
             </Box>
