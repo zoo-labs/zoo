@@ -14,10 +14,8 @@ export type SearchCollection = NonNullable<
   darkChainIcon: string
   volumeCurrencySymbol: string
   volumeCurrencyDecimals: number
-  floorAskCurrencySymbol?: string
-  floorAskCurrencyDecimals?: number
   tokenCount: string
-  allTimeUsdVolume?: number
+  chainRoutePrefix: string
 }
 
 type Collection = NonNullable<
@@ -25,7 +23,7 @@ type Collection = NonNullable<
 >[0]
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
 export default async function handler(req: Request) {
@@ -87,11 +85,10 @@ export default async function handler(req: Request) {
           image: collection.image,
           name: collection.name,
           allTimeVolume: collection.volume?.allTime,
-          floorAskPrice: collection.floorAsk?.price?.amount?.native,
-          floorAskCurrencySymbol: chain.nativeCurrency.symbol,
-          floorAskCurrencyDecimals: chain.nativeCurrency.decimals,
+          floorAskPrice: collection.floorAsk?.price?.amount?.decimal,
           openseaVerificationStatus: collection.openseaVerificationStatus,
           chainName: chain.name.toLowerCase(),
+          chainRoutePrefix: chain.routePrefix,
           chainId: chain.id,
           lightChainIcon: chain.lightIconUrl,
           darkChainIcon: chain.darkIconUrl,
@@ -166,6 +163,7 @@ export default async function handler(req: Request) {
           data: {
             ...collection,
             chainName: supportedChains[index].name.toLowerCase(),
+            chainRoutePrefix: supportedChains[index].routePrefix,
             chainId: supportedChains[index].id,
             lightChainIcon: supportedChains[index].lightIconUrl,
             darkChainIcon: supportedChains[index].darkIconUrl,
@@ -178,10 +176,6 @@ export default async function handler(req: Request) {
                 collection.allTimeVolume *
                   usdCoinPrices?.prices?.[index]?.current_price) ||
               0,
-            floorAskCurrencySymbol:
-              supportedChains[index].nativeCurrency.symbol,
-            floorAskCurrencyDecimals:
-              supportedChains[index].nativeCurrency.decimals,
           },
         })
       )
