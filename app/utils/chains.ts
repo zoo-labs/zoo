@@ -3,59 +3,27 @@ import { arbitrum, mainnet, polygon, optimism, Chain, bsc } from 'wagmi/chains'
 //Chains that are missing from wagmi:
 export const zora = {
   id: 7777777,
-  name: 'Zora',
+  name: 'ZORA',
   network: 'zora',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     default: {
       http: ['https://rpc.zora.co'],
+      webSocket: ['wss://rpc.zora.co'],
     },
     public: {
       http: ['https://rpc.zora.co'],
+      webSocket: ['wss://rpc.zora.co'],
     },
   },
   blockExplorers: {
     etherscan: {
-      name: 'Zora explorer',
-      url: 'https://explorer.zora.co',
+      name: 'ZORA',
+      url: 'https://explorer.zora.energy',
     },
     default: {
-      name: 'Zora explorer',
-      url: 'https://explorer.zora.co',
-    },
-  },
-} as const satisfies Chain
-
-//Chains that are missing from wagmi:
-export const arbitrumNova = {
-  id: 42_170,
-  name: 'Arbitrum Nova',
-  network: 'arbitrum-nova',
-  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-  rpcUrls: {
-    blast: {
-      http: ['https://arbitrum-nova.public.blastapi.io'],
-      webSocket: ['wss://arbitrum-nova.public.blastapi.io'],
-    },
-    default: {
-      http: ['https://nova.arbitrum.io/rpc'],
-    },
-    public: {
-      http: ['https://nova.arbitrum.io/rpc'],
-    },
-  },
-  blockExplorers: {
-    etherscan: { name: 'Arbiscan', url: 'https://nova.arbiscan.io' },
-    blockScout: {
-      name: 'BlockScout',
-      url: 'https://nova-explorer.arbitrum.io/',
-    },
-    default: { name: 'Arbiscan', url: 'https://nova.arbiscan.io' },
-  },
-  contracts: {
-    multicall3: {
-      address: '0xca11bde05977b3631167028862be2a173976ca11',
-      blockCreated: 1746963,
+      name: 'ZORA',
+      url: 'https://explorer.zora.energy',
     },
   },
 } as const satisfies Chain
@@ -130,18 +98,6 @@ export default [
     coingeckoId: 'arbitrum-iou',
     collectionSetId: process.env.NEXT_PUBLIC_ARBITRUM_COLLECTION_SET_ID,
     community: process.env.NEXT_PUBLIC_ARBITRUM_COMMUNITY,
-  },
-  {
-    ...arbitrumNova,
-    lightIconUrl: '/icons/arbitrum-nova-icon-dark.svg',
-    darkIconUrl: '/icons/arbitrum-nova-icon-light.svg',
-    reservoirBaseUrl: 'https://api-arbitrum-nova.reservoir.tools',
-    proxyApi: '/api/reservoir/arbitrum-nova',
-    routePrefix: 'arbitrum-nova',
-    apiKey: process.env.ARBITRUM_NOVA_RESERVOIR_API_KEY,
-    coingeckoId: 'ethereum',
-    collectionSetId: process.env.NEXT_PUBLIC_ARBITRUM_NOVA_COLLECTION_SET_ID,
-    community: process.env.NEXT_PUBLIC_ARBITRUM_NOVA_COMMUNITY,
   },
   {
     ...optimism,
