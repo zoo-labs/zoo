@@ -4,7 +4,7 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { loadTranslation } from "../entities";
 
-// import Home from "./home";
+import Home from "../components/home";
 import HomeLayout from "layouts/Home";
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
@@ -45,6 +45,7 @@ export default function Dashboard(props) {
         <title>ZOO</title>
         <meta name="description" content="Zoo" />
       </Head>
+      <Home />
     </div>
   );
 }

@@ -102,7 +102,7 @@ const HeroSection = () => {
 
   return (
     <div className=" flex items-center justify-center relative Hero bg-zooo">
-      <div className="relative m-0 -mt-5 overflow-hidden w-ful">
+      <div className="relative m-0  overflow-hidden w-ful">
         <div
           className={`flex w-[100vw] absolute  h-full transition duration-1000 ease-in whitespace-nowrap mt-4 `}
         >
@@ -127,7 +127,8 @@ const HeroSection = () => {
                       {slide.title}
                     </h1>
 
-                    <Link href={slide.uri} passHref legacyBehavior>
+                    <Link href={slide.uri}>
+                      <>
                       <button
                         onMouseOut={() => videoCurrent?.play()}
                         onMouseOver={() => videoCurrent?.pause()}
@@ -137,6 +138,7 @@ const HeroSection = () => {
                           ? `Buy ${capitalize(slide.type)}  - $${slide.price}`
                           : "Explore the Zoo"}
                       </button>
+                      </>
                     </Link>
                   </div>
                 </div>
