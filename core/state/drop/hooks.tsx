@@ -159,7 +159,8 @@ export function useGetDrops() {
   const { library, chainId } = useActiveWeb3React();
 
   // If no ZooKeeper is present, reject the Promise
-  if (!zooKeeper) return Promise.reject()
+  //if (!zooKeeper) return Promise.reject()
+  if (!zooKeeper) return;
 
   // Function for getting drops using useCallback to prevent unnecessary rerenders
   return useCallback(() => {

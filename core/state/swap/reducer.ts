@@ -3,6 +3,7 @@ import { Field, replaceSwapState, selectCurrency, setRecipient, switchCurrencies
 import { createReducer } from '@reduxjs/toolkit'
 
 export interface SwapState {
+  readonly activeChain: number | null
   readonly independentField: Field
   readonly typedValue: string
   readonly [Field.INPUT]: {
@@ -16,6 +17,7 @@ export interface SwapState {
 }
 
 const initialState: SwapState = {
+  activeChain: 1,
   independentField: Field.INPUT,
   typedValue: '',
   [Field.INPUT]: {
@@ -33,6 +35,7 @@ export default createReducer<SwapState>(initialState, (builder) =>
       replaceSwapState,
       (state, { payload: { typedValue, recipient, field, inputCurrencyId, outputCurrencyId } }) => {
         return {
+          activeChain: 1,
           [Field.INPUT]: {
             currencyId: inputCurrencyId,
           },

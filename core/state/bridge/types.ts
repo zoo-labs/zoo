@@ -22,10 +22,10 @@ export interface Proposal {
 }
 export interface Token {
     address: string;
-    decimals: number
-    eip2612?: boolean
-    logoURI: string
-    name: string
+    decimals: number;
+    eip2612?: boolean;
+    logoURI: string;
+    name: string;
     symbol: string;
     isNative: boolean;
 }
