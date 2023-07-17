@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "PORT=3006 next dev",
-    "build": "yarn lang && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "lang:extract": "NODE_ENV=development lingui extract --clean",
