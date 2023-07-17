@@ -221,9 +221,9 @@ function MyApp({
                   persistor={persistor}
                 >
                   <>
-                    <ListsUpdater />
+                    {/* <ListsUpdater /> */}
                     <UserUpdater />
-                    <ApplicationUpdater />
+                    {/* <ApplicationUpdater /> */}
                     <TransactionUpdater />
                     <MulticallUpdater />
                   </>
