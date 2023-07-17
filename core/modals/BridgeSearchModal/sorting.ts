@@ -39,7 +39,8 @@ function getTokenComparator(balances: Balance[]): (tokenA: Token, tokenB: Token)
 
 export function useTokenComparator(inverted: boolean): (tokenA: Token, tokenB: Token) => number {
   const balances = useAllTokenBalances()
-  const comparator = useMemo(() => getTokenComparator(balances ?? Balance[]), [balances])
+  const allBalances = Object.values(balances).flat();
+  const comparator = useMemo(() => getTokenComparator(allBalances), [balances])
   return useMemo(() => {
 
     if (inverted) {

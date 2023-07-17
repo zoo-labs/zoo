@@ -25,7 +25,6 @@ import NextNProgress from 'nextjs-progressbar'
 // import Web3ReactManager from "../components/Web3ReactManager";
 // import { Web3ReactProvider } from "@web3-react/core";
 import dynamic from "next/dynamic";
-import getLibrary from "../functions/getLibrary";
 import { i18n } from "@lingui/core";
 import { nanoid } from "@reduxjs/toolkit";
 import { remoteLoader } from "@lingui/remote-loader";
