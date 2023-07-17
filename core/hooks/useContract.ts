@@ -1,4 +1,5 @@
 import { AddressZero } from "@ethersproject/constants";
+import { Web3Provider } from "@ethersproject/providers";
 import { Contract } from "@ethersproject/contracts";
 import {
   AddressMap,
@@ -80,7 +81,7 @@ export function useContract(
 ): Contract | null {
   const { library, account, chainId } = useActiveWeb3React();
 
-  const provider = ethers.getDefaultProvider()
+  //const provider = ethers.getDefaultProvider()
 
   let address: string | AddressMap | undefined = nameOrAddress;
   let chainIdStr = chainId ? chainId.toString() : "1";
@@ -93,22 +94,22 @@ export function useContract(
         : null;
   }
 
-  const newLibrary = library ?? (canUseDefaultProvider && provider);
+  //const newLibrary = library ?? (canUseDefaultProvider && provider);
 
   return useMemo(() => {
-    if (!address || !ABI || !newLibrary) return null;
+    if (!address || !ABI || !library) return null;
     try {
       return getContract(
         altAddress ?? address.toString(),
         ABI,
-        newLibrary,
+        library,
         withSignerIfPossible && account ? account : undefined
       );
     } catch (error) {
       console.error("Failed to get contract", error);
       return null;
     }
-  }, [address, ABI, newLibrary, withSignerIfPossible, account]);
+  }, [address, ABI, library, withSignerIfPossible, account]);
 }
 
 export function useApp(): Contract | null {

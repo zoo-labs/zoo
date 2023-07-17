@@ -272,7 +272,7 @@ export function KashiProvider({ children }) {
 
       const allPairAddresses = logPairs
         .filter((pair) => {
-          const oracle = getOracle(pair, chainId, tokens);
+          const oracle = getOracle(pair, chainId, Object.values(tokens));
 
           if (!oracle.valid) {
             // console.log(pair, oracle.valid, oracle.error)
@@ -533,7 +533,7 @@ export function KashiProvider({ children }) {
                 "/" +
                 pair.collateral.tokenInfo.symbol;
 
-              pair.oracle = getOracle(pair, chainId, tokens);
+              pair.oracle = getOracle(pair, chainId, Object.values(tokens));
 
               pair.interestPerYear = {
                 value: pair.interestPerYear,
