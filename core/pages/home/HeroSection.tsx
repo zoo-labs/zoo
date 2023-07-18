@@ -7,7 +7,7 @@ import Tiger from '../../../public/gifs/siberian-tiger.gif'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useBuyZoo } from '../../state/zoo/hooks'
-import { useWeb3React } from '@web3-react/core'
+import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 // import { useFaucet } from 'hooks'
 import { getZooBalance } from '../../state/zoo/actions'
 import { handleFunds } from '../../utils/handleFunds'
@@ -15,7 +15,7 @@ import { useGif } from '../../context/GifContext'
 import { createRequire } from 'module'
 
 const HeroSection = ({ animal3d }) => {
-  const { account, library, chainId } = useWeb3React()
+  const { account, library, chainId } = useActiveWeb3React()
   const buyZoo = useBuyZoo()
   // const faucet = useFaucet()
 
