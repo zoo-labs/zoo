@@ -1,7 +1,7 @@
 import _ from 'lodash'
 //import ZooBabyAnim from "../../components/Babylon";
 import dynamic from 'next/dynamic'
-const ModelViewer = dynamic(() => import('@zoolabs/core/components/ModelViewer'), {
+const ModelViewer = dynamic(() => import('../../components/ModelViewer'), {
   ssr: false,
 })
 
@@ -17,7 +17,7 @@ const ZooNewsSection = dynamic(() => import('./ZooNewsSection'))
 const AnimalFamilySection = dynamic(() => import('./AnimalFamilySection'))
 const JoinZooSection = dynamic(() => import('./JoinZooSection'))
 const FaqSection = dynamic(() => import('./FaqSection'))
-import { useTokenTypes } from '@zoolabs/core/zoo/state'
+import { useTokenTypes } from '../../zoo/state'
 
 const BASE_NFT_URL = 'https://db.zoolabs.io'
 
