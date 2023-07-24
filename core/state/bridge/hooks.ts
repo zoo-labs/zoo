@@ -43,9 +43,10 @@ export function useAllTokens(): { [chainId in ChainId]?: Token[] } {
   return useSelector((state: AppState) => state.bridge.tokens);
 }
 export function useGetAvailableTokens(): (chain?: number) => void {
-  const activeChain: number = useSelector(
-    (state: AppState) => state.bridge.activeChain
-  );
+  const activeChain: number = 1;
+  //const activeChain: number = useSelector(
+  //  (state: AppState) => state.bridge.activeChain
+  //);
 
   const dispatch = useDispatch();
   //const { Moralis } = useMoralis();
@@ -356,9 +357,19 @@ export function useSwap(): () => void {
     // let amount = Number(fromAmount * 10 ** currentTrade.from.decimals);
     dispatch(loading(true));
     const amount = utils.parseUnits(
-      currentAmount["from"],
-      currentTrade.from.decimals
+      currentAmount["from"].toString(),
+      //currentTrade.from.decimals
+      18,
     ).toString();
+
+    if (!('symbol' in currentTrade.to)) {
+      console.error('currentTrade.to is not a Token. Aborting swap.');
+      return
+    }
+    if (!('symbol' in currentTrade.from)) {
+      console.error('currentTrade.from is not a Token. Aborting swap.');
+      return
+    }
 
     if (currentTrade.from.symbol !== "ETH") {
       const allowance = await oneInch.hasAllowance({
@@ -442,10 +453,11 @@ export function useGetTokenFiatValue(): (address) => Promise<number> {
 export const useTokenBalance = (token) => {
   //const { Moralis } = useMoralis();
   const { balances } = useAppSelector((state: AppState) => state.bridge);
-  const tokenBalance = balances.find(
+  const allBalances: Balance[] = Object.values(balances).flat();
+  const tokenBalance = allBalances.find(
     (balance) => balance.symbol === token.symbol
   );
-  return balances.length > 0 && tokenBalance
+  return allBalances.length > 0 && tokenBalance
     ? utils.formatUnits(tokenBalance.balance, "gwei")
     : "0";
 };
@@ -453,14 +465,16 @@ export const useTokenBalance = (token) => {
 export const useAllTokenBalances = () => {
   const { balances } = useAppSelector((state: AppState) => state.bridge);
 
-  return balances.length > 0 ? balances : [];
+  const allBalances: Balance[] = Object.values(balances).flat();
+  return allBalances.length > 0 ? allBalances : [];
 };
 
 export const useToken = (address) => {
   const { tokens } = useAppSelector((state: AppState) => state.bridge);
 
-  return tokens.length > 0
-    ? tokens.find((token) => token.address === address)
+  const allTokens: Token[] = Object.values(tokens).flat();
+  return allTokens.length > 0
+    ? allTokens.find((token) => token.address === address)
     : null;
 };
 
