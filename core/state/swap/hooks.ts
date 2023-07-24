@@ -357,6 +357,7 @@ export function queryParametersToSwapState(parsedQs: ParsedQs, chainId: ChainId 
   const recipient = validatedRecipient(parsedQs.recipient)
 
   return {
+    activeChain: 1,
     [Field.INPUT]: {
       currencyId: inputCurrency,
     },
