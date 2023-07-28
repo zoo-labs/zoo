@@ -124,7 +124,8 @@ const MarketPlaceSection = ({ slideData }: any) => {
                   <Link
                     href="/partnerships"
                     className="flex items-center justify-between w-full"
-                    legacyBehavior>
+                    >
+                      <>
                     <span className="mr-2">Donate Now</span>
                     <Image
                       src="/icons/forward-arrow-black.svg"
@@ -132,7 +133,7 @@ const MarketPlaceSection = ({ slideData }: any) => {
                       height={32}
                       alt=""
                     />
-
+                    </>
                   </Link>
                 </div>
                 <div className="px-2 lg:px-6 py-3 text-[16px] font-semibold bg-transparent border border-[#A6A6A6] text-[#A6A6A6] flex items-center justify-between rounded-full w-full md:text-lg md:px-6 hover:cursor-pointer">

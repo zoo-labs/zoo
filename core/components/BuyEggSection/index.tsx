@@ -8,7 +8,10 @@ import CustomLoader from "../CustomLoader";
 import { useGetAvailableEggs } from "../../state/zoo/hooks";
 import { useGif } from "../../context/GifContext";
 import { useZooKeeper } from "../../hooks";
-
+import dynamic from "next/dynamic";
+const ModelViewer = dynamic(() => import("components/ModelViewer"), {
+  ssr: false,
+});
 interface BuyEggSectionProps {}
 
 const BuyEggSection: FC<BuyEggSectionProps> = ({}) => {
@@ -19,7 +22,27 @@ const BuyEggSection: FC<BuyEggSectionProps> = ({}) => {
   const zookeeper = useZooKeeper();
 
   const [isLoadingEggs, setIsLoadingEggs] = useState(false);
-
+  const eggs = [
+    {
+      title: "Endangerd Egg",
+      href: "/",
+      usdz: "/models/Eggs/origin_endangered_egg_2.usdz",
+      glb: "/models/Eggs/origin_endangered_egg_2.glb",
+    },
+    
+    {
+      title: "Sublime Egg",
+      href: "/",
+      usdz: "/models/Eggs/origin_sublime_egg.usdz",
+      glb: "/models/Eggs/origin_sublime_egg.glb",
+    },
+    {
+      title: "Rare Egg",
+      href: "/",
+      usdz: "/models/Eggs/origin_rare_egg.usdz",
+      glb: "/models/Eggs/origin_rare_egg.glb",
+    },
+  ]
   useEffect(() => {
     if (zookeeper) {
       getAvailableEggs(setIsLoadingEggs);
@@ -31,58 +54,33 @@ const BuyEggSection: FC<BuyEggSectionProps> = ({}) => {
         <h1 className="font-bold text-3xl md:text-[44px] leading-[3rem] lg:leading-4 text-center ">
 
         <Link href="/drop">
-       Buy Gen 0 NFTs.
+       {"Buy Origin Egg NFTs."}
        </Link>
 
         </h1>
         <p className="text-sm sm:text-base mt-4 mb-8 sm:mt-12 sm:mb-16 text-center">
           <Link href="/drop">
-            Each Egg from the Gen 0 drop could mint 1,500+ NFT Animals.
+            {"Each Origin Egg can mint 1,500+ NFTs."}
           </Link>
         </p>
 
-        {isLoadingEggs ? (
-          <CustomLoader />
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {availableEggs.map((data: any) => {
-              return (
-                <div
-                  className="w-full flex flex-col items-center mb-4 AnimalFamily__nfts bg-black rounded-md pb-4"
-                  key={data.id}
-                >
-                  <div className="flex flex-col items-center w-full h-[300px] AnimalFamily__image">
-                    <div className="p-px mb-2.5 overflow-hidden h-full w-full">
-                      <div className="overflow-hidden bg-black rounded-md h-full w-full">
-                        <video
-                          autoPlay
-                          loop={true}
-                          playsInline={true}
-                          muted
-                          className="overflow-hidden rounded object-cover object-center max-h-full w-full"
-                        >
-                          <source src={data.animation_url}></source>
-                        </video>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="pr-4 w-full text-center flex justify-end">
-                    <Link href={`/market/egg/${data.id}`} passHref legacyBehavior>
-                      <button className="outline-none rounded-full bg-33 w-12 h-12 flex items-center justify-center ">
-                          <Image
-                            src="/icons/forward-arrow.svg"
-                            width={24}
-                            height={24}
-                            alt=""
-                          />
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+        <div className="flex max-md:flex-col items-center justify-center gap-8">
+        {eggs.map((data, index) => (
+          <div className="bg-black w-[220px] h-[288px] p-2 relative">
+          <ModelViewer className='aspect-square'
+          usdz={data.usdz}
+          glb={data.glb}
+        ></ModelViewer>
+          <Link href={data.href} className="bg-[#333] rounded-full absolute bottom-2 right-2 p-[6px] w-[39px] h-[39px] text-center">
+          <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.8708 6.52246L22.5469 13.1985L15.8708 19.8746" stroke="white" stroke-width="1.31982" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.84943 13.1982H22.3599" stroke="white" stroke-width="1.31982" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+          </Link>
+        </div>
+        ))}
+        </div>
       </div>
     </div>
   );
