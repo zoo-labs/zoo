@@ -65,7 +65,7 @@ const Navbar = () => {
                 src="/reservoirLogo.svg"
                 width={34}
                 height={39}
-                alt="Reservoir"
+                alt="ZOO"
               />
             </Box>
           </Link>
@@ -103,7 +103,7 @@ const Navbar = () => {
               {theme == 'dark' ? (
                 <Image
                   src="/reservoirMarketLogo.svg"
-                  width={112}
+                  width={69}
                   height={36}
                   alt="Reservoir"
                 />
@@ -112,7 +112,7 @@ const Navbar = () => {
                   src="/reservoirMarketLogoLight.svg"
                   width={112}
                   height={36}
-                  alt="Reservoir"
+                  alt="ZOO"
                 />
               )}
             </Box>
@@ -134,7 +134,7 @@ const Navbar = () => {
             <Link href="/portfolio">
               <NavItem active={router.pathname == '/portfolio'}>Sell</NavItem>
             </Link>
-            <Link href="https://docs.reservoir.tools/docs">
+            <Link href="https://docs.zoolabs.io">
               <NavItem active={false}>Docs</NavItem>
             </Link>
           </Flex>
