@@ -15,8 +15,8 @@ type Props = {
  */
 export const Head: FC<Props> = ({
   ogImage = '/og-image.png',
-  title = 'ZOO | Decentralized Animal Preservation Protocol',
-  description = 'Supporting endangered species that are threatened with extinction.',
+  title = 'ZOO | Decentralized protocol to buy, sell and trade animals',
+  description = 'ZOO is an decentralized protocol to collect, breed, and trade Metaverse-ready 3D animals on the blockchain',
 }) => {
   return (
     <NextHead>
