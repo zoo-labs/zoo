@@ -29,10 +29,10 @@ const GrabAnimal = ({ grabAnimal, grabAnimal2 } : any) => {
                       {_.icon && (
                         <Image
                           src={_.icon}
-                          width={100}
-                          height={100}
+                          width={500}
+                          height={500}
                           alt=""
-                          className="md:object-cover"
+                          className="m-auto w-auto h-80"
                         />
                       )}
                     </div>
@@ -57,14 +57,14 @@ const GrabAnimal = ({ grabAnimal, grabAnimal2 } : any) => {
           {grabAnimal2?.map((_:any, i:any) => (
             <div key={i}>
               <div className="mx-auto bg-black justify-center  rounded-xl md:h-[364px] flex items-center ">
-                <div className="relative lg:w-[400px] h-64 overflow-y-hidden  ">
+                <div className="relative h-[364px] overflow-y-hidden  ">
                   {_.icon && (
                     <Image
                       src={_.icon}
                       alt=""
-                      width={100}
-                      height={100}
-                      className="object-cover"
+                      width={500}
+                      height={500}
+                      className="m-auto w-auto h-[364px] rounded-xl"
                     />
                   )}
                 </div>
