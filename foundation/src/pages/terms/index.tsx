@@ -95,6 +95,23 @@ By providing us with your email address, you consent to receive communications f
 
 This Privacy Policy and any disputes related to it or our privacy practices shall be governed by the laws of the United States and the applicable state laws where Zoo Labs Foundation is headquartered, without regard to any conflict of laws principles.
             </p>
+            <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl'>Refund Policy for Zoo NGO</h1>
+            <p className='text-white text-xl'>
+            1. General Policy: Donations made to Zoo NGO are generally non-refundable. Exceptions are at the organization's discretion and must meet specific criteria.<br /><br />
+
+2. Error Correction: Donors who make an error, such as the wrong amount or duplicate transactions, must contact us within 48 hours for a refund.<br /><br />
+
+3. Unauthorized Donations: Report suspected fraudulent activity immediately for verification and potential refund.<br /><br />
+
+4. Tax Implications: Refunds may affect tax obligations. Consult a tax professional for guidance.<br /><br />
+
+5. Request Process: To request a refund, contact a@zoo.ngo in writing within the eligibility period.<br /><br />
+
+6. Refund Timing: Approved refunds are processed within 14 business days via the original payment method.<br /><br />
+
+7. Amendments: Zoo NGO reserves the right to amend this policy.<br /><br />
+By donating, you agree to this refund policy.
+            </p>
         </div>
         <Newsletter />
         <Footer />
