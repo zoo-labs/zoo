@@ -23,9 +23,9 @@ const MarketPlaceSection = ({ slideData }: any) => {
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
-    slidesToShow: 1,
+    slidesToShow: 3,
     slidesToScroll: 1,
   };
 
@@ -75,7 +75,7 @@ const MarketPlaceSection = ({ slideData }: any) => {
     <section className="w-full mt-28">
       <div className=" bg-[#000]">
         <div className="md:w-4/5 mx-auto">
-          <div className="flex flex-col-reverse items-start px-6 mx-auto pb-16 lg:py-8 lg:h-[438px] overflow-y-hidden lg:flex-row-reverse max-w-7xl">
+          <div className="flex flex-col-reverse items-start px-6 mx-auto pb-16 lg:py-24  overflow-y-hidden lg:flex-row-reverse max-w-7xl">
             <div className="relative z-30 flex flex-col mb-8 lg:basis-1/2">
               <div className="flex lg:justify-end">
                 <div className="lg:w-3/4 text-[#A6A6A6]">
@@ -155,11 +155,12 @@ const MarketPlaceSection = ({ slideData }: any) => {
           Resources for Getting Started
         </p>
         <div className="mt-16">
-          { <div className="flex gap-6 oveflow-x-auto ">
-            {slideData &&
+          { 
+            
+                <Slider ref={sliderRef} {...settings}  className="w-full">
+                {slideData &&
               slideData.map((_ : any, i: any) => (
-                <Slider ref={sliderRef} {...settings} key={i} className="">
-                  <div className=" bg-gray-100 rounded-xl">
+                  <div className=" bg-gray-100 rounded-xl" key={i}>
                     <div className="flex justify-between mb-8 h-full w-full ">
                       <div className="w-full h-[220px] rounded-xl">
                         <img
@@ -173,9 +174,10 @@ const MarketPlaceSection = ({ slideData }: any) => {
                       <p className="font-semibold">Quantity</p>
                     </div>
                   </div>
+                  ))}
                 </Slider>
-              ))}
-          </div> }
+              
+          }
         </div>
       </div>
     </section>
