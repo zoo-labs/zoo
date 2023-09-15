@@ -48,6 +48,7 @@ function Footer() {
         </div>
         <div className='flex flex-col space-y-8'>
             <Link href="/terms" className='text-sm lg:text-lg text-white'>Terms of Use</Link>
+            <Link href="/terms-refund" className='text-sm lg:text-lg text-white'>Terms of Refund</Link>
             <Link href="https://zoolabs.io" className='text-lg lg:text-md text-white'>Zoo Labs</Link>
             <p className='text-sm lg:text-lg text-white'>hello@zoo.ngo</p>
         </div>
@@ -78,7 +79,8 @@ function Footer() {
         <hr className='w-full bg-white my-4'/>
         <div className='flex items-center space-x-16'>
           <Link href="/privacy" className='text-lg text-white '>Privacy Policy</Link>
-          <Link href="/terms" className='text-lg text-white'>Term of service</Link>
+          <Link href="/terms" className='text-lg text-white'>Terms of service</Link>
+          <Link href="/terms-refund" className='text-lg text-white'>Terms of Refund</Link>
         </div>
         <p className='text-lg text-white pt-6 pb-16'>© 2023 Zoo Labs Foundation Inc</p>
       </div>
