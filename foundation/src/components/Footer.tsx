@@ -33,7 +33,7 @@ function Footer() {
             <Link href="/getinvolved#volunteer" className='text-sm lg:text-lg text-white'>Initiatives</Link>
         </div>
         <div className='flex flex-col space-y-8'>
-            <Link href="/campaign" className='text-sm lg:text-lg text-white'>Campaign</Link>
+            {/* <Link href="/campaign" className='text-sm lg:text-lg text-white'>Campaign</Link> */}
             <Link href="https://app.zoolabs.io/" className='text-sm lg:text-lg text-white'>Digital Collectibles</Link>
             <Link href="/animals/red_wolf"  className='text-sm lg:text-lg text-white'>Red Wolf</Link>
             <Link href="/animals/nubian_giraffe" className='text-sm lg:text-lg text-white'>Nubian Giraffe</Link>
@@ -60,7 +60,7 @@ function Footer() {
         <div className='flex items-center pt-8 space-x-8'>
           <Link href="/" className='text-lg text-white'>Home</Link>
           <Link href="/about" className='text-lg text-white'>About</Link>
-          <Link href="/campaign" className='text-lg text-white'>Campaign</Link>
+          {/* <Link href="/campaign" className='text-lg text-white'>Campaign</Link> */}
           
         </div>
         <div className='flex items-center pt-6 space-x-8'>
