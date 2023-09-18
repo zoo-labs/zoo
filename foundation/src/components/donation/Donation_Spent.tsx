@@ -10,7 +10,7 @@ function Donation_Spent() {
                     <p className="lg:text-sm md:text-xs max-md:text-xs">10%</p>
                 </div>
                 <div className="flex flex-col items-center px-4 md:px-1 py-2 xl:w-[20%] lg:w-[25%] bg-[#5AE299] border-x border-black md:w-[30%]">
-                    <p className="lg:text-sm md:text-xs max-md:text-xs">Fundraising</p>
+                    <p className="lg:text-sm md:text-xs max-md:text-xs">Marketing</p>
                     <p className="lg:text-sm md:text-xs max-md:text-xs">20%</p>
                 </div>
                 <div className="flex flex-col items-center px-4 md:px-1 lg:px-4 py-2">
@@ -25,18 +25,18 @@ function Donation_Spent() {
                 <p className="lg:text-base md:text-xs">70% of your donation supports our practical conservation initiatives, such as habitat preservation, species protection, and community engagement, making a real-world difference.</p>
             </div>
             <div className="flex flex-col border-y border-black pt-4 pb-12 md:pb-8 space-y-8">
-                <h3 className="2xl:text-3xl xl:text-2xl lg:text-2xl md:text-base  md:min-h-[48px] lg:min-h-[64px] 2xl:min-h-[72px] ">Fundraising</h3>
-                <p className="lg:text-base md:text-xs">20% of your funds also help us raise further awareness and financial support for our cause, aiding us to broaden our reach and escalate our impact in the conservation landscape.</p>
+                <h3 className="2xl:text-3xl xl:text-2xl lg:text-2xl md:text-base  md:min-h-[48px] lg:min-h-[64px] 2xl:min-h-[72px] ">Marketing</h3>
+                <p className="lg:text-base md:text-xs">20% of your donations help raise further awareness and financial support for our cause, aiding us to broaden our reach and escalate our impact in the conservation landscape.</p>
             </div>
             <div className="flex flex-col border-b border-black pt-4 pb-12 md:pb-8 space-y-8">
                 <h3 className="2xl:text-3xl xl:text-2xl lg:text-2xl md:text-base ">Administrative Costs</h3>
-                <p className="md:text-xs lg:text-base">10% of your contribution backs the operational backbone of our organization, enabling us to navigate legal avenues effectively and maintain essential collaborations for wildlife protection.</p>
+                <p className="md:text-xs lg:text-base">10% of your donation backs the operational backbone of our organization, enabling us to navigate legal avenues effectively and maintain essential collaborations for wildlife protection.</p>
             </div>
           </div>
         </div>
       </div>
     );
   }
-  
+
 export default Donation_Spent;
-  
+
