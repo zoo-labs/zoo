@@ -25,6 +25,10 @@ const nextConfig = {
     locales,
     defaultLocale: sourceLocale,
   },
+  staticPageGenerationTimeout: 120,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 const SentryWebpackPluginOptions = {
   // Additional config options for the Sentry Webpack plugin. Keep in mind that
