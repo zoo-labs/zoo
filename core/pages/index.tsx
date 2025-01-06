@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 export default function Dashboard(props) {
   return (
     <div>
-      <Head>
+      <Head children={undefined}>
         <title>ZOO</title>
         <meta name="description" content="Zoo" />
       </Head>

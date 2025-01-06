@@ -116,10 +116,7 @@ function ImportList({ listURL, list, setModalView, onDismiss }: ImportProps) {
           <Button
             color="gradient"
             size="default"
-            style={{
-              padding: '10px 1rem',
-            }}
-            className="w-full"
+            className="w-full py-[10px] px-4"
             disabled={!confirmed}
             onClick={handleAddList}
           >

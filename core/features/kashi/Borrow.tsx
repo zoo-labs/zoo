@@ -514,7 +514,6 @@ export default function Borrow({ pair }: BorrowProps) {
                   variant="outlined"
                   size="xs"
                   color="pink"
-                  key={i}
                   onClick={() => {
                     onMultiply(multipler);
                     setSwap(true);

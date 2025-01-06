@@ -94,7 +94,7 @@ export default function SwapModalFooter({
       <ButtonError
         onClick={onConfirm}
         disabled={disabledConfirm}
-        id="confirm-swap-or-send"
+        error={Boolean(swapErrorMessage)}
         className="text-xl font-semibold"
       >
         {i18n._(t`Confirm Swap`)}

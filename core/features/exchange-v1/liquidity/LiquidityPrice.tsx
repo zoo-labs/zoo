@@ -20,7 +20,7 @@ export default function LiquidityPrice({
   noLiquidity?: boolean;
   poolTokenPercentage?: Percent;
   className?: string;
-}): JSX.Element {
+}): React.ReactElement {
   const { i18n } = useLingui();
   return (
     <div

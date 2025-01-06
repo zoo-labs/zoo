@@ -11,22 +11,22 @@ import kashiLogo from "../../../public/kashi-logo.png";
 import { useRouter } from "next/router";
 
 interface LayoutProps {
-  left?: JSX.Element;
-  children?: React.ReactChild | React.ReactChild[];
-  right?: JSX.Element;
+  left?: React.ReactNode;
+  children?: React.ReactNode | React.ReactNode[];
+  right?: React.ReactNode;
 }
 
 export default function Layout({
   left = undefined,
   children = undefined,
   right = undefined,
-}: LayoutProps): JSX.Element {
+}: LayoutProps): React.ReactElement {
   const router = useRouter();
   return (
     <div className="z-0 flex flex-col items-start w-full h-screen">
       <Header />
-      <Main isModal={false}>
-        <Container className="px-4 py-4 md:py-8 lg:py-12" maxWidth="7xl">
+      <Main isModal={false} children={undefined}>
+        <Container className="px-4 py-4 md:py-8 lg:py-12" maxWidth="7xl" children={undefined}>
           <div className={`mb-2 grid grid-cols-12 gap-4`}>
             <div className="flex justify-center col-span-12 xl:col-span-3 lg:justify-start">
               <Link
@@ -41,7 +41,7 @@ export default function Layout({
             <div className="flex items-end col-span-12 xl:col-span-9">
               <nav className="flex items-center justify-between w-full">
                 <div className="flex">
-                  <NavLink href="/lend">
+                  <NavLink href="/lend" children={undefined}>
                     <a
                       className={
                         "pl-4 pr-2 sm:pl-8 sm:pr-4 flex items-center font-medium " +
@@ -53,7 +53,7 @@ export default function Layout({
                       <div className="text-base whitespace-nowrap">Lend</div>
                     </a>
                   </NavLink>
-                  <NavLink href="/borrow">
+                  <NavLink href="/borrow" children={undefined}>
                     <a
                       className={
                         "px-2 sm:px-4 flex items-center font-medium " +
@@ -66,7 +66,7 @@ export default function Layout({
                     </a>
                   </NavLink>
 
-                  <NavLink href="/kashi/create">
+                  <NavLink href="/kashi/create" children={undefined}>
                     <a
                       className={
                         "px-2 sm:px-4 flex items-center font-medium " +
@@ -80,7 +80,7 @@ export default function Layout({
                   </NavLink>
                 </div>
                 <div className="flex pr-2 sm:pr-4">
-                  <NavLink href="/balances">
+                  <NavLink href="/balances" children={undefined}>
                     <a
                       className={`px-2 sm:px-4 flex justify-end items-center font-medium ${
                         router.pathname === "/balances"

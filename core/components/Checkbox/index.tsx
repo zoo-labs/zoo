@@ -21,7 +21,7 @@ const Checkbox = ({
   className = "",
   ...rest
 }: CheckboxProps &
-  React.InputHTMLAttributes<HTMLInputElement>): JSX.Element => {
+  React.InputHTMLAttributes<HTMLInputElement>): React.ReactElement => {
   return (
     <input
       type="checkbox"

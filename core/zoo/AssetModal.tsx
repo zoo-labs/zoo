@@ -110,7 +110,7 @@ const AssetModal = (props: any) => {
                     <HowOffline onClick={() => showSection("setAsk")} />
                   ) : (
                     <>
-                      <SetAsk tokenId={tokenId}>
+                      <SetAsk tokenId={tokenId} children={undefined}>
                         {/* <p className="text-center">You cannot withdraw a reservation once submitted.</p> */}
                         <p
                           className="pt-8 text-center text-gray-500 cursor-pointer"
@@ -133,7 +133,7 @@ const AssetModal = (props: any) => {
                     <HowReservations onClick={() => showSection("setBid")} />
                   ) : (
                     <>
-                      <SetBid tokenId={tokenId}>
+                      <SetBid tokenId={tokenId} children={undefined}>
                         <p
                           className="pt-8 text-center text-gray-500 cursor-pointer"
                           onClick={() => showSection("howReservations")}

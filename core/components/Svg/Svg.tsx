@@ -1,6 +1,4 @@
 import styled, { css, keyframes } from "styled-components";
-// import { space } from 'styled-system'
-// import getThemeValue from '../../util/getThemeValue'
 import { SvgProps } from "./types";
 
 const rotate = keyframes`
@@ -16,16 +14,18 @@ const spinStyle = css`
   animation: ${rotate} 2s linear infinite;
 `;
 
-const Svg = styled.svg<SvgProps>`
-  // fill: white;
+
+const DefaultSvg = styled.svg<SvgProps>`
   flex-shrink: 0;
+  ${({ spin }) => spin && spinStyle}
 `;
 
-Svg.defaultProps = {
-  color: "text",
-  width: "20px",
-  xmlns: "http://www.w3.org/2000/svg",
-  spin: false,
-};
+const Svg: React.FC<SvgProps> = ({
+  color = "text",
+  width = "20px",
+  spin = false,
+  ...props
+}) => <DefaultSvg color={color} width={width} spin={spin} {...props} />;
+
 
 export default Svg;

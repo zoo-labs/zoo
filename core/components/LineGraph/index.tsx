@@ -29,7 +29,7 @@ interface GraphProps extends LineGraphProps {
   height: number
 }
 
-function Graph({ data, stroke, strokeWidth, width, height }: GraphProps): JSX.Element {
+function Graph({ data, stroke, strokeWidth, width, height }: GraphProps): React.ReactElement {
   const xScale = useMemo(
     () =>
       scaleLinear<number>({
@@ -69,7 +69,7 @@ export default function LineGraph({
   data,
   stroke = { solid: '#0993EC' },
   strokeWidth = 2,
-}: LineGraphProps): JSX.Element {
+}: LineGraphProps): React.ReactElement {
   return (
     <>
       {data && (

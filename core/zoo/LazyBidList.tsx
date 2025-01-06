@@ -29,7 +29,7 @@ export type LazyBidListProps = {
   where?: LazyBidFilter
   showToken?: boolean
   onClick?: any
-  empty?: JSX.Element
+  empty?: React.ReactNode
 }
 
 const LazyBidList = ({ where, empty, showToken, onClick }: LazyBidListProps) => {

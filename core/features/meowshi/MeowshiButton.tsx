@@ -135,7 +135,7 @@ const MeowshiButton: FC<MeowshiButtonProps> = ({ meowshiState }) => {
   if (approvalState === ApprovalState.PENDING)
     return (
       <Button color="gradient" disabled={true}>
-        <Dots>{i18n._(t`Approving`)}</Dots>
+        <Dots children={undefined}>{i18n._(t`Approving`)}</Dots>
       </Button>
     );
 

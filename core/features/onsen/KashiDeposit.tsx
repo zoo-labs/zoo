@@ -98,7 +98,7 @@ const KashiDeposit = ({ pair, useBento }) => {
           disabled={kashiApprovalState !== BentoApprovalState.NOT_APPROVED}
         >
           {kashiApprovalState === BentoApprovalState.PENDING ? (
-            <Dots>{i18n._(t`Approving Kashi`)}</Dots>
+            <Dots children={undefined}>{i18n._(t`Approving Kashi`)}</Dots>
           ) : (
             i18n._(t`Approve Kashi`)
           )}
@@ -113,7 +113,7 @@ const KashiDeposit = ({ pair, useBento }) => {
           disabled={tokenApprovalState !== ApprovalState.NOT_APPROVED}
         >
           {tokenApprovalState === ApprovalState.PENDING ? (
-            <Dots>
+            <Dots children={undefined}>
               {i18n._(t`Approving`)} {assetToken?.symbol}
             </Dots>
           ) : (

@@ -14,8 +14,7 @@ const Menu = ({ positionsLength }) => {
         <NavLink
           exact
           href={`/farm?filter=portfolio`}
-          activeClassName="font-bold bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900"
-        >
+          activeClassName="font-bold bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900" children={undefined}        >
           <a className="flex items-center justify-between px-4 py-6 text-base font-bold border border-transparent rounded cursor-pointer bg-dark-900 hover:bg-dark-800">
             Your Farms
           </a>
@@ -34,8 +33,7 @@ const Menu = ({ positionsLength }) => {
       <NavLink
         exact
         href="/farm"
-        activeClassName="font-bold bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900"
-      >
+        activeClassName="font-bold bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900" children={undefined}      >
         <a className="flex items-center justify-between px-4 py-6 text-base font-bold border border-transparent rounded cursor-pointer bg-dark-900 hover:bg-dark-800">
           All Farms
         </a>
@@ -46,8 +44,7 @@ const Menu = ({ positionsLength }) => {
           <NavLink
             exact
             href={`/farm?filter=kashi`}
-            activeClassName="font-bold bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900"
-          >
+            activeClassName="font-bold bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900" children={undefined}          >
             <a className="flex items-center justify-between px-4 py-6 text-base font-bold border border-transparent rounded cursor-pointer bg-dark-900 hover:bg-dark-800">
               Kashi Farms
             </a>
@@ -55,8 +52,7 @@ const Menu = ({ positionsLength }) => {
           <NavLink
             exact
             href={`/farm?filter=sushi`}
-            activeClassName="font-bold bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900"
-          >
+            activeClassName="font-bold bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900" children={undefined}          >
             <a className="flex items-center justify-between px-4 py-6 text-base font-bold border border-transparent rounded cursor-pointer bg-dark-900 hover:bg-dark-800">
               SushiSwap Farms
             </a>
@@ -68,8 +64,7 @@ const Menu = ({ positionsLength }) => {
         <NavLink
           exact
           href={`/farm?filter=2x`}
-          activeClassName="bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900"
-        >
+          activeClassName="bg-transparent border rounded text-high-emphesis border-transparent border-gradient-r-blue-pink-dark-900" children={undefined}        >
           <a className="flex items-center justify-between px-4 py-6 text-base font-bold border border-transparent rounded cursor-pointer bg-dark-900 hover:bg-dark-800">
             2x Reward Farms
           </a>

@@ -244,7 +244,7 @@ export function CurrencySearch({
       ) : filteredSortedTokens?.length > 0 ||
         filteredInactiveTokens?.length > 0 ? (
         <div className="h-screen">
-          <AutoSizer disableWidth>
+          <AutoSizer children={undefined} disableWidth>
             {({ height }) => (
               <CurrencyList
                 height={height}
@@ -272,7 +272,6 @@ export function CurrencySearch({
       {allowManageTokenList && (
         <div className="mt-3">
           <Button
-            id="list-token-manage-button"
             onClick={showManageView}
             color="gray"
           >

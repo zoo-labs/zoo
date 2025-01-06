@@ -61,11 +61,11 @@ export default function LangSwitcher() {
               <div className="p-2">
                 {locales.map((locale) => {
                   return (
-                    <Menu.Item key={locale}>
+                    <Menu.Item>
                       {({ active }) => (
-                        (<Link
-                        href={asPath}
-                        locale={locale}
+                        <Link
+                          href={asPath}
+                          locale={locale}
                         className={classNames(
                           active ? 'bg-dark-700 text-high-emphesis' : 'text-primary',
                           'group flex items-center p-2 text-sm hover:bg-dark-700 focus:bg-dark-700 rounded font-bold'
@@ -82,8 +82,7 @@ export default function LangSwitcher() {
                             aria-hidden="true"
                           />
                           <span className="ml-2">{LANG_TO_COUNTRY[locale]}</span>
-
-                        </Link>)
+                        </Link>
                       )}
                     </Menu.Item>
                   );

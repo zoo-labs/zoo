@@ -15,7 +15,7 @@ import { useKashiApprovalPending } from '../../state/application/hooks'
 import useKashiApproveCallback from '../../hooks/useKashiApproveCallback'
 import { useLingui } from '@lingui/react'
 
-export default function LendWithdrawAction({ pair }: any): JSX.Element {
+export default function LendWithdrawAction({ pair }: any): React.ReactElement {
   const { account } = useActiveWeb3React()
   const pendingApprovalMessage = useKashiApprovalPending()
 

@@ -317,7 +317,7 @@ const Curves = ({
                 yMax={yBrushMax}
                 xScale={brushXScale}
                 yScale={brushYScale}
-                key={i}
+                index={i}
               />
             )
           })}
@@ -341,8 +341,7 @@ const Curves = ({
             initialBrushPosition={initialBrushPosition}
             onChange={onBrushChange}
             onClick={() => setFilteredData(data)}
-            selectedBoxStyle={selectedBrushStyle}
-          />
+            selectedBoxStyle={selectedBrushStyle} disableDraggingSelection={false}          />
         </Group>
       </svg>
     </div>

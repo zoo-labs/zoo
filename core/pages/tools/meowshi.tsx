@@ -152,11 +152,12 @@ export default function Meowshi() {
 
   return (
     <Container
+      children={undefined}
       id="meowshi-page"
       className="py-4 md:py-8 lg:py-12"
       maxWidth="2xl"
     >
-      <Head>
+      <Head children={undefined}>
         <title>Meowshi | Sushi</title>
         <meta
           key="description"

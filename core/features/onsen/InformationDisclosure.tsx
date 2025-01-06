@@ -47,7 +47,7 @@ const InformationDisclosure = ({ farm }) => {
                     <Typography variant="sm">
                       {i18n._(t`Provide liquidity to the`)}
                       {` `}
-                      <NavLink href={`/add/${farm.pair.token0.id}/${farm.pair.token1.id}`}>
+                      <NavLink href={`/add/${farm.pair.token0.id}/${farm.pair.token1.id}`} children={undefined}>
                         <a className="text-sm text-blue">
                           {farm.pair.token0.symbol}/{farm.pair.token1.symbol}
                         </a>
@@ -55,7 +55,7 @@ const InformationDisclosure = ({ farm }) => {
                       {` `}
                       {i18n._(t`pool (or`)}
                       {` `}
-                      <NavLink href={`/migrate`}>
+                      <NavLink href={`/migrate`} children={undefined}>
                         <a className="text-sm text-blue">migrate liquidity</a>
                       </NavLink>
                       {i18n._(t`) to receive SLP tokens.`)}
@@ -70,7 +70,7 @@ const InformationDisclosure = ({ farm }) => {
                     {` `}
                     {i18n._(t`to the`)}
                     {` `}
-                    <NavLink href={`/lend/${farm.pair.id}`}>
+                    <NavLink href={`/lend/${farm.pair.id}`} children={undefined}>
                       <a className="text-sm text-blue">
                         {farm.pair.token0.symbol}/{farm.pair.token1.symbol}
                       </a>

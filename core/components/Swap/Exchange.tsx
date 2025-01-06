@@ -180,7 +180,7 @@ export default function ExchangePanel({
                 >
                   {`Balance:`}{" "}
                   {parseFloat(
-                    balance ? Web3.utils.fromWei(balance.balance) : "0"
+                    balance ? Web3.utils.fromWei(balance.balance, 'ether') : "0"
                   ).toFixed(2)}{" "}
                   {token.symbol}
                 </div>

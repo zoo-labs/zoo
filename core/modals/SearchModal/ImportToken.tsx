@@ -47,6 +47,7 @@ export function ImportToken({
         title={`Import ${plural(tokens.length, {
           one: "Token",
           many: "Tokens",
+          other: "Tokens",
         })}`}
       />
       <Typography className="text-center">

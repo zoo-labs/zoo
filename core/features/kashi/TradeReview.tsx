@@ -44,9 +44,9 @@ function TradeReview({
               />
             </div>
             <div className="text-lg">
-              {`${trade.minimumAmountOut(allowedSlippage)?.toSignificant(4)} ${
-                trade.outputAmount.currency.symbol
-              }` ?? "-"}
+              {trade.minimumAmountOut(allowedSlippage)
+                ? `${trade.minimumAmountOut(allowedSlippage).toSignificant(4)} ${trade.outputAmount.currency.symbol}`
+                : "-"}
             </div>
           </div>
           <div className="flex items-center justify-between">
@@ -73,9 +73,8 @@ function TradeReview({
             </div>
             <div className="text-lg">
               {realizedLPFee
-                ? `${realizedLPFee.toSignificant(4)} ${
-                    trade.inputAmount.currency.symbol
-                  }`
+                ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol
+                }`
                 : "-"}
             </div>
           </div>

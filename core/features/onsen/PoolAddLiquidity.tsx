@@ -323,12 +323,10 @@ const PoolDeposit = ({ currencyA, currencyB }) => {
                   size="lg"
                   onClick={approveACallback}
                   disabled={approvalA === ApprovalState.PENDING}
-                  style={{
-                    width: approvalB !== ApprovalState.APPROVED ? '48%' : '100%',
-                  }}
+                   className={approvalB !== ApprovalState.APPROVED ? `w-[48%]` : `w-[100%]`}
                 >
                   {approvalA === ApprovalState.PENDING ? (
-                    <Dots>{i18n._(t`Approving ${currencies[Field.CURRENCY_A]?.symbol}`)}</Dots>
+                    <Dots children={undefined}>{i18n._(t`Approving ${currencies[Field.CURRENCY_A]?.symbol}`)}</Dots>
                   ) : (
                     i18n._(t`Approve ${currencies[Field.CURRENCY_A]?.symbol}`)
                   )}
@@ -340,12 +338,10 @@ const PoolDeposit = ({ currencyA, currencyB }) => {
                   size="lg"
                   onClick={approveBCallback}
                   disabled={approvalB === ApprovalState.PENDING}
-                  style={{
-                    width: approvalA !== ApprovalState.APPROVED ? '48%' : '100%',
-                  }}
+                  className={approvalA !== ApprovalState.APPROVED ? `w-[48%]` : `w-[100%]`}
                 >
                   {approvalB === ApprovalState.PENDING ? (
-                    <Dots>{i18n._(t`Approving ${currencies[Field.CURRENCY_B]?.symbol}`)}</Dots>
+                    <Dots children={undefined}>{i18n._(t`Approving ${currencies[Field.CURRENCY_B]?.symbol}`)}</Dots>
                   ) : (
                     i18n._(t`Approve ${currencies[Field.CURRENCY_B]?.symbol}`)
                   )}

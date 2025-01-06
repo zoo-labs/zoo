@@ -134,7 +134,6 @@ const Info = () => {
                   </div>
                   <div className="flex-1">
                     <select
-                      placeholder="State"
                       className="w-full px-4 py-2 bg-transparent bg-[#1f1f1f] border border-gray-400 outline-none"
                     >
                       <option>State</option>

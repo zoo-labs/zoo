@@ -153,7 +153,6 @@ const ManageBar = ({ farm }) => {
               variant="outlined"
               size="xs"
               color={toggle ? 'blue' : 'pink'}
-              key={i}
               onClick={() => {
                 toggle
                   ? setDepositValue(balance.multiply(multipler).divide(100).toExact())
@@ -192,7 +191,7 @@ const ManageBar = ({ farm }) => {
               onClick={approve}
               disabled={approvalState !== ApprovalState.NOT_APPROVED}
             >
-              {approvalState === ApprovalState.PENDING ? <Dots>{i18n._(t`Approving`)}</Dots> : i18n._(t`Approve`)}
+              {approvalState === ApprovalState.PENDING ? <Dots children={undefined}>{i18n._(t`Approving`)}</Dots> : i18n._(t`Approve`)}
             </Button>
           ) : (
             <ButtonError

@@ -9,7 +9,7 @@ import { useContract } from '../hooks'
 import BidItem from './BidItem'
 import { AcceptBidButton } from './AcceptBidButton'
 
-export default function BidModal({ bid, isOpen, onClose }): JSX.Element | null {
+export default function BidModal({ bid, isOpen, onClose }): React.ReactElement | null {
   const { account } = useActiveWeb3React()
   const [offline, setOffline] = useState(false)
   const market = useContract('Market')
