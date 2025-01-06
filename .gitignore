@@ -92,3 +92,5 @@ lokalise.yaml
 
 *.sedbak
 .parcel-cache/
+
+.vercel
