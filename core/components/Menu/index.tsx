@@ -38,7 +38,7 @@ const items = (i18n: I18n) => [
 
 export default function Menu() {
   const { i18n } = useLingui();
-  const solutions = items(i18n);
+  const solutions = items(i18n as any); // Type assertion to fix type mismatch between lingui v3 and v4
 
   return (
     <Popover className="relative">

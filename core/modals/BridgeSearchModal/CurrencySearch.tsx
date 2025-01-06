@@ -266,7 +266,7 @@ export function CurrencySearch({
             </div>
           ) : filteredSortedTokens?.length > 0 ? (
             <div className="h-[400px] overflow-y-auto w-[72%]">
-              <AutoSizer disableWidth>
+              <AutoSizer children={undefined} disableWidth>
                 {({ height }) => (
                   <CurrencyList
                     height={height}

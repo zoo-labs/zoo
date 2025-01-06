@@ -38,7 +38,7 @@ function Typography({
   children = [],
   onClick = undefined,
   ...rest
-}: React.HTMLAttributes<React.ReactHTML> & TypographyProps): JSX.Element {
+}: React.HTMLAttributes<React.ReactHTML> & TypographyProps): React.ReactElement {
   return React.createElement(
     component,
     {

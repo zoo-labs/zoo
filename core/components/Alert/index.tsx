@@ -64,7 +64,7 @@ export const TYPE = {
 
 export interface AlertProps {
   title?: string;
-  message?: string | React.ReactChild | React.ReactChild[] | JSX.Element[];
+  message?: string | React.ReactNode;
   type?: "warning" | "error" | "information";
   showIcon?: boolean;
   dismissable?: boolean;
@@ -81,7 +81,7 @@ export default function Alert({
   dismissable = true,
   show,
   setShow,
-}: AlertProps & React.HTMLAttributes<HTMLDivElement>): JSX.Element | null {
+}: AlertProps & React.HTMLAttributes<HTMLDivElement>): React.ReactElement | null {
   // TODO: Persist this...
   const [defaultShow, setDefaultShow] = useState(true);
   const { color, icon } = TYPE[type];

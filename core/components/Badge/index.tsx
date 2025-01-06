@@ -4,7 +4,7 @@ export type BadgeColor = "default" | "blue" | "pink" | "gradient";
 export type BadgeSize = "default" | "medium" | "large";
 
 export interface BadgeProps {
-  children?: React.ReactChild | React.ReactChild[] | JSX.Element[];
+  children?: React.ReactNode;
   color?: BadgeColor;
   size?: BadgeSize;
 }
@@ -28,7 +28,7 @@ function Badge({
   size = "default",
   children,
   className = "",
-}: BadgeProps & React.HTMLAttributes<HTMLDivElement>): JSX.Element {
+}: BadgeProps & React.HTMLAttributes<HTMLDivElement>): React.ReactElement {
   return (
     <div className={`${COLOR[color]} ${SIZE[size]} ${className}`}>
       <>{children}</>

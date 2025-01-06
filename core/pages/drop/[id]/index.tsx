@@ -40,7 +40,7 @@ const SingleDrop = ({}: AppProps & {
   }, [drops, id]);
 
   return (
-    <DropLayout isMarginTop={false}>
+    <DropLayout children={undefined} isMarginTop={false}>
       <div className="min-h-screen mx-auto max-w-7xl my-28">
         <div className="relative flex flex-col-reverse items-start min-h-screen px-4 lg:flex-row">
           <div className="flex-1 w-full lg:max-w-[650px] lg:pl-24 lg:pt-28 z-50">

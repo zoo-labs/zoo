@@ -109,7 +109,7 @@ export default function UnsupportedCurrencyFooter({
       </Modal>
       <Button
         variant="empty"
-        style={{ padding: "0px" }}
+        className="p-0"
         onClick={() => setShowDetails(true)}
       >
         <div>Read more about unsupported assets</div>

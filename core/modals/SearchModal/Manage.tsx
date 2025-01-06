@@ -52,7 +52,7 @@ function Manage({
       </div>
       <div className="h-screen">
         {tabIndex === 0 && (
-          <AutoSizer disableWidth>
+          <AutoSizer children={undefined} disableWidth>
             {({ height }) => (
               <ManageLists
                 height={height}

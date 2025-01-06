@@ -17,7 +17,7 @@ import { useCurrency } from "../../hooks/Tokens";
 import { useKashiInfo } from "./context";
 import { useLingui } from "@lingui/react";
 
-export default function Deposit({ pair }: any): JSX.Element {
+export default function Deposit({ pair }: any): React.ReactElement {
   const { chainId } = useActiveWeb3React();
   const assetToken = useCurrency(pair.asset.address) || undefined;
 

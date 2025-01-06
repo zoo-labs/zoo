@@ -141,7 +141,7 @@ const BuyEggModal: React.FC<BuyEggModalProps> = ({}) => {
           .send({
             from: account,
             gasPrice: gasPrice,
-            value: Web3.utils.toWei(eggPriceBNB),
+            value: Web3.utils.toWei(eggPriceBNB, 'ether'),
           })
           .then((res) => {
             toastClear();

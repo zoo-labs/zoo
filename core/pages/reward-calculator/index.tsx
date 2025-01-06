@@ -139,7 +139,7 @@ const RewardCalculator = () => {
                 Select Term and Animal to show data
               </p>
             ) : (
-              <ResponsiveContainer width={"100%"} height="100%">
+              <ResponsiveContainer children={undefined} width={"100%"} height="100%">
                 <LineChart
                   data={data}
                   margin={{ top: 5, right: 20, left: 20, bottom: 5 }}

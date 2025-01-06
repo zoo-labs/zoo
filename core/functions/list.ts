@@ -1,13 +1,19 @@
 import { contenthashToUri, uriToHttp } from './convert'
 
 import Ajv from 'ajv'
+import addFormats from 'ajv-formats'
 import { DEFAULT_LIST_OF_LISTS } from '../config/token-lists'
 import { TokenList } from '@uniswap/token-lists'
 import { Version } from '@uniswap/token-lists'
 import { parseENSAddress } from './ens'
 import schema from '@uniswap/token-lists/src/tokenlist.schema.json'
 
-const tokenListValidator = new Ajv({ allErrors: true }).compile(schema)
+// Initialize Ajv and register formats
+const ajv = new Ajv({ allErrors: true })
+addFormats(ajv)
+
+// Compile the schema
+const tokenListValidator = ajv.compile(schema)
 
 /**
  * Contains the logic for resolving a list URL to a validated token list
@@ -52,12 +58,13 @@ export async function getTokenList(
     if (!tokenListValidator(json)) {
       const validationErrors: string =
         tokenListValidator.errors?.reduce<string>((memo, error) => {
-          const add = `${error.dataPath} ${error.message ?? ''}`
-          return memo.length > 0 ? `${memo}; ${add}` : `${add}`
+          const typedError = error as unknown as { dataPath: string; message?: string };
+          const add = `${typedError.dataPath} ${typedError.message ?? ''}`;
+          return memo.length > 0 ? `${memo}; ${add}` : `${add}`;
         }, '') ?? 'unknown error'
       throw new Error(`Token list failed validation: ${validationErrors}`)
     }
-    return json
+    return json as TokenList;
   }
   throw new Error('Unrecognized list URL protocol.')
 }

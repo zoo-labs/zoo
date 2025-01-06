@@ -12,8 +12,8 @@ const COLOR = {
 interface ExternalLinkProps
   extends Omit<HTMLProps<HTMLAnchorElement>, "as" | "ref" | "onClick"> {
   href: string;
-  startIcon?: JSX.Element;
-  endIcon?: JSX.Element;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
 }
 
 const ExternalLink: FC<ExternalLinkProps> = ({

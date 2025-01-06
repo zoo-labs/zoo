@@ -66,7 +66,7 @@ const OpenOrders: FC = () => {
               <div className="flex items-center cursor-pointer hover:text-primary">
                 {i18n._(t`Pay`)}
               </div>
-              <div className="flex items-center hidden text-left cursor-pointer hover:text-primary md:block">
+              <div className="items-center hidden text-left cursor-pointer hover:text-primary md:block">
                 {i18n._(t`Rate`)}
               </div>
               <div className="flex items-center justify-end cursor-pointer hover:text-primary" />
@@ -138,7 +138,7 @@ const OpenOrders: FC = () => {
         ) : (
           <span>
             No open limit orders. Why not{" "}
-            <NavLink href="/limit-order">
+            <NavLink href="/limit-order" children={undefined}>
               <a className="text-sm underline cursor-pointer text-blue">
                 place one?
               </a>

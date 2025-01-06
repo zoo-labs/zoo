@@ -101,7 +101,10 @@ export interface ButtonProps
   size?: ButtonSize;
   variant?: ButtonVariant;
   ref?: React.Ref<HTMLButtonElement>;
-  children?: any;
+  children?: React.ReactNode;
+  className?: string;
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
 function Button({
@@ -111,7 +114,7 @@ function Button({
   size = "default",
   variant = "filled",
   ...rest
-}: ButtonProps): JSX.Element {
+}: ButtonProps): React.ReactElement {
   return (
     <button
       className={classNames(

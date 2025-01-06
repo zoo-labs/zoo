@@ -255,8 +255,8 @@ function ManageLists({
           return l1.name.toLowerCase() < l2.name.toLowerCase()
             ? -1
             : l1.name.toLowerCase() === l2.name.toLowerCase()
-            ? 0
-            : 1;
+              ? 0
+              : 1;
         }
         if (l1) return -1;
         if (l2) return 1;
@@ -340,11 +340,7 @@ function ManageLists({
             ) : (
               <Button
                 color="gradient"
-                style={{
-                  width: "fit-content",
-                  padding: "6px 8px",
-                  fontSize: "14px",
-                }}
+                className="py-[6px] px-[8px] w-fit"
                 onClick={handleImport}
               >
                 Import

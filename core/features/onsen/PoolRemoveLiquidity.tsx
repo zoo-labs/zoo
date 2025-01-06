@@ -429,7 +429,6 @@ const PoolWithdraw = ({ currencyA, currencyB }) => {
                     variant="outlined"
                     size="xs"
                     color="pink"
-                    key={i}
                     onClick={() => {
                       setInnerLiquidityPercentage(multipler)
                     }}
@@ -491,7 +490,7 @@ const PoolWithdraw = ({ currencyA, currencyB }) => {
             onClick={onAttemptToApprove}
             disabled={approval !== ApprovalState.NOT_APPROVED || signatureData !== null}
           >
-            {approval === ApprovalState.PENDING ? <Dots>{i18n._(t`Approving`)}</Dots> : i18n._(t`Approve`)}
+            {approval === ApprovalState.PENDING ? <Dots children={undefined}>{i18n._(t`Approving`)}</Dots> : i18n._(t`Approve`)}
           </Button>
         ) : (
           <ButtonError

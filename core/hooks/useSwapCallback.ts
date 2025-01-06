@@ -17,9 +17,9 @@ import { useFactoryContract, useRouterContract } from './useContract'
 import { ARCHER_RELAY_URI } from '../config/archer'
 import { ArcherRouter } from '../functions/archerRouter'
 import { BigNumber } from '@ethersproject/bignumber'
-import Common from '@ethereumjs/common'
+import { Common } from '@ethereumjs/common'
 import { SignatureData } from './useERC20Permit'
-import { TransactionFactory } from '@ethereumjs/tx'
+import { TransactionFactory, TypedTxData } from '@ethereumjs/tx'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
 import approveAmountCalldata from '../functions/approveAmountCalldata'
 import { calculateGasMargin } from '../functions/trade'
@@ -352,7 +352,6 @@ export function useSwapCallback(
               data: calldata,
               // let the wallet try if we can't estimate the gas
               ...('gasEstimate' in bestCallOption ? { gasLimit: calculateGasMargin(bestCallOption.gasEstimate) } : {}),
-              gasPrice: !eip1559 && chainId === ChainId.HARMONY ? BigNumber.from('2000000000') : undefined,
               ...(value && !isZero(value) ? { value } : {}),
             })
             .then((response) => {
@@ -447,33 +446,23 @@ export function useSwapCallback(
                 hardfork: 'berlin',
               })
               const txParams = {
-                nonce:
-                  fullTx.nonce !== undefined
-                    ? hexlify(fullTx.nonce, {
-                      hexPad: 'left',
-                    })
-                    : undefined,
-                gasPrice: fullTx.gasPrice !== undefined ? hexlify(fullTx.gasPrice, { hexPad: 'left' }) : undefined,
+                nonce: fullTx.nonce !== undefined ? hexlify(fullTx.nonce, { hexPad: 'left' }) : undefined,
                 gasLimit: fullTx.gasLimit !== undefined ? hexlify(fullTx.gasLimit, { hexPad: 'left' }) : undefined,
                 to: fullTx.to,
-                value:
-                  fullTx.value !== undefined
-                    ? hexlify(fullTx.value, {
-                      hexPad: 'left',
-                    })
-                    : undefined,
+                value: fullTx.value !== undefined ? hexlify(fullTx.value, { hexPad: 'left' }) : undefined,
                 data: fullTx.data?.toString(),
                 chainId: fullTx.chainId !== undefined ? hexlify(fullTx.chainId) : undefined,
-                type: fullTx.type !== undefined ? hexlify(fullTx.type) : undefined,
+                maxFeePerGas: fullTx.maxFeePerGas,
+                maxPriorityFeePerGas: fullTx.maxPriorityFeePerGas,
+                type: 2 // EIP-1559 transaction type
               }
-              const tx: any = TransactionFactory.fromTxData(txParams, {
+              const tx = TransactionFactory.fromTxData(txParams as TypedTxData, {
                 common,
               })
               const unsignedTx = tx.getMessageToSign()
               // console.log('unsignedTx', unsignedTx)
-
               return library.provider
-                .request({ method: 'eth_sign', params: [account, hexlify(unsignedTx)] })
+                .request({ method: 'eth_sign', params: [account, hexlify(Array.isArray(unsignedTx) ? unsignedTx[0] : unsignedTx)] })
                 .then((signature) => {
                   const signatureParts = splitSignature(signature)
                   // really crossing the streams here

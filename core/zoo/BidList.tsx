@@ -36,7 +36,7 @@ export type BidListProps = {
   where?: BidFilter
   showToken?: boolean
   onClick?: any
-  empty?: JSX.Element
+  empty?: React.ReactNode
 }
 
 const BidList = ({ where, empty, showToken, onClick }: BidListProps) => {

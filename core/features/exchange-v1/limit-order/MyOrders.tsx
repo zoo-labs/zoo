@@ -12,7 +12,7 @@ const MyOrders: FC = () => {
   const { pending } = useLimitOrders()
 
   return (
-    <NavLink href="/open-order">
+    <NavLink href="/open-order" children={undefined}>
       <a className="text-secondary hover:text-high-emphesis">
         <div className="md:flex hidden gap-3 items-center">
           <div>{i18n._(t`My Orders`)}</div>

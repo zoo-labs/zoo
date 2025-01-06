@@ -82,10 +82,7 @@ export default function ImportRow({
         <Button
           color="gradient"
           size="xs"
-          style={{
-            width: "fit-content",
-            padding: "6px 12px",
-          }}
+          className="px-3 py-[6px] w-fit"
           onClick={() => {
             setImportToken && setImportToken(token);
             showImportView();

@@ -36,7 +36,7 @@ export type AskListProps = {
   where?: AskFilter
   title?: string
   showToken?: boolean
-  empty?: JSX.Element
+  empty?: React.ReactNode
 }
 
 const AskList = ({ where, empty, showToken }: AskListProps) => {

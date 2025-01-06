@@ -72,7 +72,7 @@ export type AssetListProps = {
   showPageNumbers?: boolean;
   animate?: boolean;
   large?: boolean;
-  empty?: JSX.Element;
+  empty?: React.ReactNode;
   getTriggerProps?: GetTriggerProps;
   onLoadAssets?: (assets: object[]) => void;
   openModal?: OpenModal;

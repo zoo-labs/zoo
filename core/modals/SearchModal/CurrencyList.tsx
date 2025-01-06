@@ -86,11 +86,12 @@ function TokenTags({ currency }: { currency: Currency }) {
 
   return (
     <TagContainer>
-      <MouseoverTooltip text={tag.description}>
+      <MouseoverTooltip  children = 'undefined' text={tag.description}>
         <Tag key={tag.id}>{tag.name}</Tag>
       </MouseoverTooltip>
       {tags.length > 1 ? (
         <MouseoverTooltip
+          children = 'undefined'
           text={tags
             .slice(1)
             .map(({ name, description }) => `${name}: ${description}`)

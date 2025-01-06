@@ -186,7 +186,7 @@ const Drop = ({}: AppProps & {
   }, [drops]);
 
   return (
-    <DropLayout isMarginTop={false}>
+    <DropLayout children={undefined} isMarginTop={false}>
       <div className="">
         <div className="bg-drop-tree min-h-[850px] flex flex-col items-center justify-center w-full px-4 mb-10">
           <div className="max-w-7xl">

@@ -112,7 +112,7 @@ const AssetModal = (props: any) => {
                         <HowOffline onClick={() => showSection('setAsk')} />
                       ) : (
                         <>
-                          <LazySetAsk dropId={DROP_ID} name={tokenTypeName as string}>
+                          <LazySetAsk dropId={DROP_ID} name={tokenTypeName as string} children={undefined}>
                             <p
                               className="pt-8 text-center text-gray-500 cursor-pointer"
                               onClick={() => showSection('howOffline')}
@@ -136,7 +136,7 @@ const AssetModal = (props: any) => {
                         <HowReservations onClick={() => showSection('setBid')} />
                       ) : (
                         <>
-                          <SetSaleBid dropId={DROP_ID} name={tokenTypeName as string}>
+                          <SetSaleBid dropId={DROP_ID} name={tokenTypeName as string} children={undefined}>
                             <p
                               className="pt-8 text-center text-gray-500 cursor-pointer"
                               onClick={() => showSection('howReservations')}

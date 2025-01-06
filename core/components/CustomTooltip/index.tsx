@@ -3,13 +3,14 @@ import React, { FC } from "react";
 
 interface CustomTooltipProps {
   title: string;
-  children: any;
+  children: React.ReactNode;
   center?: boolean;
 }
 
 const CustomTooltip: FC<CustomTooltipProps> = ({ title, children, center }) => {
   return (
     <Tooltip
+      children={<span className="cursor-pointer">{children}</span>}
       PopperProps={{
         sx: {
           "& .MuiTooltip-tooltip": {
@@ -28,7 +29,7 @@ const CustomTooltip: FC<CustomTooltipProps> = ({ title, children, center }) => {
       title={title}
       placement={center ? "top" : "top-start"}
     >
-      <div className="cursor-pointer">{children}</div>
+      <span className="cursor-pointer">{children}</span>
     </Tooltip>
   );
 };

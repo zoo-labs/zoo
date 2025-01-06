@@ -19,7 +19,7 @@ export default function LazyBidModal({
   bid,
   isOpen,
   onClose,
-}): JSX.Element | null {
+}): React.ReactElement | null {
   const { account } = useActiveWeb3React();
   const [offline, setOffline] = useState(false);
   const [owner, setOwner] = useState(null);
