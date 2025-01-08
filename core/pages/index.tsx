@@ -41,9 +41,13 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 export default function Dashboard(props) {
   return (
     <div>
-      <Head children={undefined}>
+      <Head children = {
+        <>
         <title>ZOO</title>
         <meta name="description" content="Zoo" />
+        </>
+      }>
+        
       </Head>
       <Home />
     </div>

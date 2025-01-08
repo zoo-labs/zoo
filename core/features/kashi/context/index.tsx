@@ -208,11 +208,8 @@ export function rpcToObj(rpc_obj: any, obj?: any) {
 
 const BLACKLISTED_ORACLES = ["0x8f2CC3376078568a04eBC600ae5F0a036DBfd812"];
 
-export function KashiProvider({ children }) {
-  const [state, dispatch] = useReducer<React.Reducer<State, Reducer>>(
-    reducer,
-    initialState
-  );
+export function KashiProvider({ children }: { children: React.ReactNode }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const blockNumber = useBlockNumber();
 
   const { account, chainId } = useActiveWeb3React();

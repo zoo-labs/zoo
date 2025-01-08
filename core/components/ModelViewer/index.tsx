@@ -20,7 +20,7 @@ const ModelViewer = ({
     "/models/Hippo/HIPPO_YOUNG_TEEN.glb",
     "/models/Rhino/RHINO_YOUNG_TEEN.glb",
   ];
-  const elementRef = useRef();
+  // const elementRef = useRef();
   const [index, setindex] = useState(0);
   const [currentAnimal, setCurrentAnimal] = useState(animals[index]);
 

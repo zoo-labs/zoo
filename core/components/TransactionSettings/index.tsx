@@ -33,7 +33,7 @@ export default function TransactionSettings({
 }: TransactionSettingsProps) {
   const { i18n } = useLingui();
 
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement|null>(null);
 
   const userSlippageTolerance = useUserSlippageTolerance();
   const setUserSlippageTolerance = useSetUserSlippageTolerance();

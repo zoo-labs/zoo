@@ -73,7 +73,7 @@ export function CurrencySearch({
   const { chainId } = useActiveWeb3React();
 
   // refs for fixed size lists
-  const fixedList = useRef<FixedSizeList>();
+  const fixedList = useRef<FixedSizeList | null>(null);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const debouncedQuery = useDebounce(searchQuery, 200);
@@ -160,7 +160,7 @@ export function CurrencySearch({
   }, [isOpen]);
 
   // manage focus on modal show
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const handleInput = useCallback((event) => {
     const input = event.target.value;
     const checksummedInput = isAddress(input);
@@ -190,7 +190,7 @@ export function CurrencySearch({
 
   // menu ui
   const [open, toggle] = useToggle(false);
-  const node = useRef<HTMLDivElement>();
+  const node = useRef<HTMLDivElement | null>(null);
   useOnClickOutside(node, open ? toggle : undefined);
 
   // if no results on main list, show option to expand into inactive
@@ -244,24 +244,24 @@ export function CurrencySearch({
       ) : filteredSortedTokens?.length > 0 ||
         filteredInactiveTokens?.length > 0 ? (
         <div className="h-screen">
-          <AutoSizer children={undefined} disableWidth>
-            {({ height }) => (
-              <CurrencyList
-                height={height}
-                currencies={
-                  includeNativeCurrency
-                    ? filteredSortedTokensWithETH
-                    : filteredSortedTokens
-                }
-                otherListTokens={filteredInactiveTokens}
-                onCurrencySelect={handleCurrencySelect}
-                otherCurrency={otherSelectedCurrency}
-                selectedCurrency={selectedCurrency}
-                fixedListRef={fixedList}
-                showImportView={showImportView}
-                setImportToken={setImportToken}
-              />
-            )}
+          <AutoSizer children={({ height }) => (
+            <CurrencyList
+              height={height}
+              currencies={
+                includeNativeCurrency
+                  ? filteredSortedTokensWithETH
+                  : filteredSortedTokens
+              }
+              otherListTokens={filteredInactiveTokens}
+              onCurrencySelect={handleCurrencySelect}
+              otherCurrency={otherSelectedCurrency}
+              selectedCurrency={selectedCurrency}
+              fixedListRef={fixedList}
+              showImportView={showImportView}
+              setImportToken={setImportToken}
+            />
+          )} disableWidth>
+            
           </AutoSizer>
         </div>
       ) : (

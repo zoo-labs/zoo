@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 
 // animation
 import { fadeInOnScroll } from "animation";
 
 const ComingSoon = () => {
-  const comingSoonRef = React.useRef();
+  const comingSoonRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    fadeInOnScroll(comingSoonRef.current);
+    if (comingSoonRef.current) {
+      // @ts-ignore
+      fadeInOnScroll(comingSoonRef.current);
+    }
   }, []);
   return (
     <div className="">

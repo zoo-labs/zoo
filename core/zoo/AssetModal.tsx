@@ -110,14 +110,17 @@ const AssetModal = (props: any) => {
                     <HowOffline onClick={() => showSection("setAsk")} />
                   ) : (
                     <>
-                      <SetAsk tokenId={tokenId} children={undefined}>
+                      <SetAsk tokenId={tokenId}
+                        children={
+                          <p
+                            className="pt-8 text-center text-gray-500 cursor-pointer"
+                            onClick={() => showSection("howOffline")}
+                          >
+                            How do offline asks work?
+                          </p>
+                        }>
                         {/* <p className="text-center">You cannot withdraw a reservation once submitted.</p> */}
-                        <p
-                          className="pt-8 text-center text-gray-500 cursor-pointer"
-                          onClick={() => showSection("howOffline")}
-                        >
-                          How do offline asks work?
-                        </p>
+
                       </SetAsk>
                       <div className="pt-8 text-indigo-500">Bids</div>
                       <BidList
@@ -133,13 +136,16 @@ const AssetModal = (props: any) => {
                     <HowReservations onClick={() => showSection("setBid")} />
                   ) : (
                     <>
-                      <SetBid tokenId={tokenId} children={undefined}>
-                        <p
-                          className="pt-8 text-center text-gray-500 cursor-pointer"
-                          onClick={() => showSection("howReservations")}
-                        >
-                          How do reservations work?
-                        </p>
+                      <SetBid tokenId={tokenId}
+                        children={
+                          <p
+                            className="pt-8 text-center text-gray-500 cursor-pointer"
+                            onClick={() => showSection("howReservations")}
+                          >
+                            How do reservations work?
+                          </p>
+                        }
+                      >
                       </SetBid>
                       <div className="pt-8 text-indigo-500">Bids</div>
                       <BidList

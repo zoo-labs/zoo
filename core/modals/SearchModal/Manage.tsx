@@ -11,6 +11,7 @@ import { TokenList } from "@uniswap/token-lists";
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { classNames } from "../../functions";
+import { height } from "styled-system";
 
 function Manage({
   onDismiss,
@@ -52,15 +53,17 @@ function Manage({
       </div>
       <div className="h-screen">
         {tabIndex === 0 && (
-          <AutoSizer children={undefined} disableWidth>
-            {({ height }) => (
-              <ManageLists
-                height={height}
-                setModalView={setModalView}
-                setImportList={setImportList}
-                setListUrl={setListUrl}
-              />
-            )}
+          <AutoSizer disableWidth={true}
+            children={
+              ({ height }) => (
+                <ManageLists
+                  height={height}
+                  setModalView={setModalView}
+                  setImportList={setImportList}
+                  setListUrl={setListUrl}
+                />
+              )}
+          >
           </AutoSizer>
         )}
         {tabIndex === 1 && (

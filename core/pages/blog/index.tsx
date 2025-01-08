@@ -56,7 +56,7 @@ const all: any = [...news, ...guides].sort((a: any, b: any): any => {
 
 const Blog = () => {
   const [category, setCategory] = useState(0);
-  const blogHeaderRef = React.useRef();
+  const blogHeaderRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     fadeInOnScroll(blogHeaderRef.current);

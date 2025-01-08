@@ -131,7 +131,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
                 Balance {balance} {selectedCurrencyToken?.symbol}
               </div>
             ) : (
-              <Dots>{i18n._(t`Loading`)}</Dots>
+              <Dots children={<span>{i18n._(t`Loading`)}</span>}></Dots>
             )}
           </>
         </div>

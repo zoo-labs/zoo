@@ -47,7 +47,7 @@ const useStakeSushiToCreamStrategy = (): StrategyHook => {
   const zenkoContract = useZenkoContract()
   const inariContract = useInariContract()
   const balances = useTokenBalances(account, [SUSHI[ChainId.MAINNET], CRXSUSHI])
-  const cTokenAmountRef = useRef<CurrencyAmount<Token>>()
+  const cTokenAmountRef = useRef<CurrencyAmount<Token> | null>(null)
   const approveAmount = useMemo(() => (zapIn ? inputValue : cTokenAmountRef.current), [inputValue, zapIn])
 
   // Override approveCallback for this strategy as we need to approve CRXSUSHI on zapOut

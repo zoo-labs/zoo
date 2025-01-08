@@ -1,9 +1,9 @@
-import { Button, Tooltip } from "@mui/material";
-import React, { FC } from "react";
+import { Tooltip } from "@mui/material";
+import React, { FC, ReactNode } from "react";
 
 interface CustomTooltipProps {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
   center?: boolean;
 }
 
@@ -29,7 +29,6 @@ const CustomTooltip: FC<CustomTooltipProps> = ({ title, children, center }) => {
       title={title}
       placement={center ? "top" : "top-start"}
     >
-      <span className="cursor-pointer">{children}</span>
     </Tooltip>
   );
 };

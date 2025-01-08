@@ -112,13 +112,17 @@ const AssetModal = (props: any) => {
                         <HowOffline onClick={() => showSection('setAsk')} />
                       ) : (
                         <>
-                          <LazySetAsk dropId={DROP_ID} name={tokenTypeName as string} children={undefined}>
-                            <p
-                              className="pt-8 text-center text-gray-500 cursor-pointer"
-                              onClick={() => showSection('howOffline')}
-                            >
-                              How do offline asks work?
-                            </p>
+                          <LazySetAsk dropId={DROP_ID} name={tokenTypeName as string}
+                            children={
+                              <p
+                                className="pt-8 text-center text-gray-500 cursor-pointer"
+                                onClick={() => showSection('howOffline')}
+                              >
+                                How do offline asks work?
+                              </p>
+                            }
+                          >
+
                           </LazySetAsk>
 
                           <div className="pt-8 text-indigo-500">Bids</div>
@@ -136,13 +140,17 @@ const AssetModal = (props: any) => {
                         <HowReservations onClick={() => showSection('setBid')} />
                       ) : (
                         <>
-                          <SetSaleBid dropId={DROP_ID} name={tokenTypeName as string} children={undefined}>
-                            <p
-                              className="pt-8 text-center text-gray-500 cursor-pointer"
-                              onClick={() => showSection('howReservations')}
-                            >
-                              How do bids work?
-                            </p>
+                          <SetSaleBid dropId={DROP_ID} name={tokenTypeName as string}
+                            children={
+                              <p
+                                className="pt-8 text-center text-gray-500 cursor-pointer"
+                                onClick={() => showSection('howReservations')}
+                              >
+                                How do bids work?
+                              </p>
+                            }
+                          >
+
                           </SetSaleBid>
                           <div className="pt-8 text-indigo-500">Bids</div>
                           <LazyBidList

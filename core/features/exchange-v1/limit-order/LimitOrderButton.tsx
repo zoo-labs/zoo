@@ -166,7 +166,7 @@ const LimitOrderButton: FC<LimitOrderButtonProps> = ({
         onClick={deposit}
         {...rest}
       >
-        <Dots children={undefined}>{i18n._(t`Depositing ${currency.symbol} into BentoBox`)}</Dots>
+        <Dots children={<span>{i18n._(t`Depositing ${currency.symbol} into BentoBox`)}</span>}></Dots>
       </Button>
     );
   else if (!account)
@@ -196,7 +196,7 @@ const LimitOrderButton: FC<LimitOrderButtonProps> = ({
         {...rest}
       >
         {tokenApprovalState === ApprovalState.PENDING ? (
-          <Dots children={undefined}>{i18n._(t`Approving ${currency.symbol}`)}</Dots>
+          <Dots children={<span>{i18n._(t`Approving ${currency.symbol}`)}</span>}></Dots>
         ) : (
           i18n._(t`Approve ${currency.symbol}`)
         )}
@@ -211,7 +211,7 @@ const LimitOrderButton: FC<LimitOrderButtonProps> = ({
         {...rest}
       >
         {approvalState === BentoApprovalState.PENDING ? (
-          <Dots children={undefined}>{i18n._(t`Approving Limit Order`)}</Dots>
+          <Dots children={<span>{i18n._(t`Approving Limit Order`)}</span>}></Dots>
         ) : (
           i18n._(t`Approve Limit Order`)
         )}

@@ -32,7 +32,7 @@ const Toast: React.FC<ToastProps> = ({
   ttl,
   ...props
 }) => {
-  const timer = useRef<number>();
+  const timer = useRef<number | null>(null);
   const ref = useRef(null);
   const removeHandler = useRef(onRemove);
   const { id, title, description, type, action } = toast;

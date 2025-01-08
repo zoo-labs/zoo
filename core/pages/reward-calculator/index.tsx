@@ -139,33 +139,22 @@ const RewardCalculator = () => {
                 Select Term and Animal to show data
               </p>
             ) : (
-              <ResponsiveContainer children={undefined} width={"100%"} height="100%">
-                <LineChart
-                  data={data}
-                  margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
-                >
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    vertical={false}
-                    color="#333333"
-                    opacity={0.24}
-                  />
-                  <XAxis
-                    dataKey="name"
-                    tickLine={false}
-                    minTickGap={10}
-                    padding={{ left: 0 }}
-                    tick={{ fontSize: 10 }}
-                  />
-                  <YAxis
-                    axisLine={false}
-                    tickLine={false}
-                    domain={[0, "auto"]}
-                    tick={{ fontSize: 10 }}
-                  />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="amt" stroke="#fff" />
-                </LineChart>
+              <ResponsiveContainer width={"100%"} height="100%"
+                children={
+                  <LineChart
+                    data={data}
+                    margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                      color="#333333"
+                      opacity={0.24}
+                    />
+                  </LineChart>
+                }
+              >
+
               </ResponsiveContainer>
             )}
           </div>
