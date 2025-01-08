@@ -1,3 +1,4 @@
+'use client'
 import { ChainId } from '@zoolabs/zdk'
 
 export const sortData = (data: Array<any>, byType: string) => {

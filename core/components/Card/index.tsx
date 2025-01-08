@@ -15,8 +15,8 @@ function Header({ className, children }) {
 }
 
 type CardProps = {
-  header?: React.ReactChild;
-  footer?: React.ReactChild;
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
   backgroundImage?: string;
   title?: string;
   description?: string;

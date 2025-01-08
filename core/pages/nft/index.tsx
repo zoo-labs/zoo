@@ -7,8 +7,8 @@ import PopularNftsSection from "../../components/home/PopularNftsSection";
 import { fadeInFromLeft, fadeInFromRight } from "animation";
 
 const Nft = () => {
-  const nftImageRef = React.useRef();
-  const nftContentRef = React.useRef();
+  const nftImageRef = React.useRef<HTMLDivElement | null>(null);
+  const nftContentRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     fadeInFromLeft(nftImageRef.current);

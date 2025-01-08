@@ -77,7 +77,7 @@ export function CurrencySearch({
   const getAvailableTokens = useGetAvailableTokens();
 
   // refs for fixed size lists
-  const fixedList = useRef<FixedSizeList>();
+  const fixedList = useRef<FixedSizeList | null>(null);
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const debouncedQuery = useDebounce(searchQuery, 200);
@@ -159,7 +159,7 @@ export function CurrencySearch({
   }, [isOpen]);
 
   // manage focus on modal show
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const handleInput = useCallback((event) => {
     const input = event.target.value;
     const checksummedInput = isAddress(input);
@@ -178,7 +178,7 @@ export function CurrencySearch({
         } else if (filteredSortedTokensWithETH.length > 0) {
           if (
             filteredSortedTokensWithETH[0].symbol?.toLowerCase() ===
-              debouncedQuery.trim().toLowerCase() ||
+            debouncedQuery.trim().toLowerCase() ||
             filteredSortedTokensWithETH.length === 1
           ) {
             handleCurrencySelect(filteredSortedTokensWithETH[0]);
@@ -191,7 +191,7 @@ export function CurrencySearch({
 
   // menu ui
   const [open, toggle] = useToggle(false);
-  const node = useRef<HTMLDivElement>();
+  const node = useRef<HTMLDivElement | null>(null);
   useOnClickOutside(node, open ? toggle : undefined);
 
   useEffect(() => {
@@ -241,9 +241,8 @@ export function CurrencySearch({
                 className="flex flex-col items-center justify-center w-full h-20 py-1.5 px-3 cursor-pointer "
               >
                 <div
-                  className={`flex flex-col items-center justify-center w-16 h-16 rounded ${
-                    selectedNetwork === network && "border-2"
-                  } bg-dark-700 border-primary-300`}
+                  className={`flex flex-col items-center justify-center w-16 h-16 rounded ${selectedNetwork === network && "border-2"
+                    } bg-dark-700 border-primary-300`}
                 >
                   <img
                     className="w-8 h-8 rounded-full"
@@ -266,23 +265,25 @@ export function CurrencySearch({
             </div>
           ) : filteredSortedTokens?.length > 0 ? (
             <div className="h-[400px] overflow-y-auto w-[72%]">
-              <AutoSizer children={undefined} disableWidth>
-                {({ height }) => (
-                  <CurrencyList
-                    height={height}
-                    currencies={
-                      includeNativeCurrency
-                        ? filteredSortedTokensWithETH
-                        : filteredSortedTokens
-                    }
-                    onCurrencySelect={handleCurrencySelect}
-                    otherCurrency={otherSelectedCurrency}
-                    selectedCurrency={selectedCurrency}
-                    fixedListRef={fixedList}
-                    showImportView={showImportView}
-                    setImportToken={setImportToken}
-                  />
-                )}
+              <AutoSizer disableWidth
+                children={
+                  ({ height }) => (
+                    <CurrencyList
+                      height={height}
+                      currencies={
+                        includeNativeCurrency
+                          ? filteredSortedTokensWithETH
+                          : filteredSortedTokens
+                      }
+                      onCurrencySelect={handleCurrencySelect}
+                      otherCurrency={otherSelectedCurrency}
+                      selectedCurrency={selectedCurrency}
+                      fixedListRef={fixedList}
+                      showImportView={showImportView}
+                      setImportToken={setImportToken}
+                    />
+                  )
+                }>
               </AutoSizer>
             </div>
           ) : (

@@ -54,7 +54,7 @@ const SetBid = ({ tokenId, children }) => {
                 Balance {formattedBalance} {symbol}
               </div>
             ) : (
-              <Dots>{i18n._(t`Loading`)}</Dots>
+              <Dots children={<span>{i18n._(t`Loading`)}</span>}></Dots>
             )}
           </>
         </div>

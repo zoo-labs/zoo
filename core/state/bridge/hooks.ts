@@ -453,7 +453,7 @@ export function useGetTokenFiatValue(): (address) => Promise<number> {
 export const useTokenBalance = (token) => {
   //const { Moralis } = useMoralis();
   const { balances } = useAppSelector((state: AppState) => state.bridge);
-  const allBalances: Balance[] = Object.values(balances) as Balance[];
+  const allBalances: Balance[] = Object.values(balances).flat() as Balance[];
   const tokenBalance = allBalances.find(
     (balance) => balance.symbol === token.symbol
   );
@@ -465,14 +465,14 @@ export const useTokenBalance = (token) => {
 export const useAllTokenBalances = () => {
   const { balances } = useAppSelector((state: AppState) => state.bridge);
 
-  const allBalances: Balance[] = Object.values(balances) as Balance[];
+  const allBalances: Balance[] = Object.values(balances).flat() as Balance[];
   return allBalances.length > 0 ? allBalances : [];
 };
 
 export const useToken = (address) => {
   const { tokens } = useAppSelector((state: AppState) => state.bridge);
 
-  const allTokens: Token[] = Object.values(tokens) as Token[];
+  const allTokens: Token[] = Object.values(tokens).flat() as Token[];
   return allTokens.length > 0
     ? allTokens.find((token) => token.address === address)
     : undefined;

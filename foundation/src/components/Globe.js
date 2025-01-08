@@ -236,7 +236,7 @@ function Globe() {
     endLng: 128.21550477246348,
     color: ['purple','purple']
   }];
-  const globeRef = useRef();
+  const globeRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const _globe = globeRef.current;
     if (_globe && _globe.controls) {

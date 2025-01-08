@@ -43,7 +43,7 @@ export function MouseoverTooltip({
   const open = useCallback(() => setShow(true), [setShow]);
   const close = useCallback(() => setShow(false), [setShow]);
   return (
-    <Tooltip children={undefined} {...rest} show={show}>
+    <Tooltip {...rest} show={show}>
       <div onMouseEnter={open} onMouseLeave={close}>
         <>{children}</>
       </div>
@@ -60,7 +60,7 @@ export function MouseoverTooltipContent({
   const open = useCallback(() => setShow(true), [setShow]);
   const close = useCallback(() => setShow(false), [setShow]);
   return (
-    <TooltipContent children={undefined} {...rest} show={show} content={content}>
+    <TooltipContent {...rest} show={show} content={content}>
       <div
         style={{ display: "inline-block", lineHeight: 0, padding: "0.25rem" }}
         onMouseEnter={open}

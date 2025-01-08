@@ -79,9 +79,7 @@ export function TokenApproveButton({
 
   return showApprove ? (
     <Button color={color} onClick={approve} className="mb-4">
-      <Dots children={undefined}>
-        {i18n._(t`Approve`)} {token.symbol}
-      </Dots>
+      <Dots children={<span>{i18n._(t`Approve`)} {token.symbol}</span>}></Dots>
     </Button>
   ) : (
     React.cloneElement(children, { color })

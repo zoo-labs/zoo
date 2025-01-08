@@ -9,20 +9,24 @@ export default function LiquidityHeader({ input = undefined, output = undefined 
     <div className="grid grid-cols-2 rounded-md p-3px bg-dark-800">
       <NavLink
         activeClassName="font-bold text-high-emphesis bg-dark-900"
-        href={`/add/${currencyId(input)}/${currencyId(output)}`} children={undefined}      >
+        href={`/add/${currencyId(input)}/${currencyId(output)}`}
+        children={
         <a className="flex items-center justify-center px-4 py-3 text-base font-medium text-center rounded-md md:px-10 text-secondary hover:text-high-emphesis">
           Add
-        </a>
+        </a>} >
+       
       </NavLink>
       <NavLink
         onClick={(event) => {
           if (!output) event.preventDefault()
         } }
         activeClassName="text-high-emphesis font-bold bg-dark-900"
-        href={`/remove/${currencyId(input)}/${currencyId(output)}`} children={undefined}      >
+        href={`/remove/${currencyId(input)}/${currencyId(output)}`}
+        children={
         <a className="flex items-center justify-center px-4 py-3 text-base font-medium text-center rounded-md md:px-10 text-secondary hover:text-high-emphesis">
           Remove
-        </a>
+        </a>} >
+       
       </NavLink>
     </div>
   )

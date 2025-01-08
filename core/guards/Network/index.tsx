@@ -26,8 +26,11 @@ const Component: FC<NetworkGuardProps> = ({ children, networks = [] }) => {
   const { chainId, library, account } = useActiveWeb3React();
 
   const link = (
-    <NavLink href="/swap" children={undefined}>
-      <a className="text-blue focus:outline-none">{i18n._(t`home page`)}</a>
+    <NavLink href="/swap"
+      children={
+        <a className="text-blue focus:outline-none">{i18n._(t`home page`)}</a>
+      }
+    >
     </NavLink>
   );
 

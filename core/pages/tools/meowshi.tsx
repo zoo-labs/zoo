@@ -1,3 +1,4 @@
+'use client'
 import { ArrowDownIcon, InformationCircleIcon } from "@heroicons/react/solid";
 import { ChainId, Currency, Token } from "@zoolabs/zdk";
 import { MEOW, SUSHI, XSUSHI } from "../../config/tokens";
@@ -61,14 +62,14 @@ export default function Meowshi() {
           currencies[Field.INPUT] === XSUSHI
             ? meowshiPerXSushi.mul(e10(5))
             : meowshiPerXSushi
-                .mul(e10(5))
-                .mulDiv(e10(18), sushiPerXSushi.toString().toBigNumber(18));
+              .mul(e10(5))
+              .mulDiv(e10(18), sushiPerXSushi.toString().toBigNumber(18));
         const outputRate =
           currencies[Field.OUTPUT] === XSUSHI
             ? xSushiPerMeowshi.div(e10(5))
             : xSushiPerMeowshi
-                .mulDiv(sushiPerXSushi.toString().toBigNumber(18), e10(18))
-                .div(e10(5));
+              .mulDiv(sushiPerXSushi.toString().toBigNumber(18), e10(18))
+              .div(e10(5));
 
         if (field === Field.INPUT) {
           if (currencies[Field.OUTPUT] === MEOW) {
@@ -152,67 +153,75 @@ export default function Meowshi() {
 
   return (
     <Container
-      children={undefined}
       id="meowshi-page"
       className="py-4 md:py-8 lg:py-12"
       maxWidth="2xl"
-    >
-      <Head children={undefined}>
-        <title>Meowshi | Sushi</title>
-        <meta
-          key="description"
-          name="description"
-          content="SushiSwap Meowshi..."
-        />
-      </Head>
-
-      <div className="z-0 relative mb-[-38px] md:mb-[-54px] ml-0 md:ml-4 flex justify-between gap-6 items-center">
-        <div className="min-w-[168px] hidden md:block">
-          <Image
-            src="/neon-cat.png"
-            alt="neon-cat"
-            width={168}
-            height={168}
-          />
-        </div>
-
-        <div className="bg-[rgba(255,255,255,0.04)] p-4 py-2 rounded flex flex-row items-center gap-4 mb-[54px]">
-          <InformationCircleIcon width={48} height={48} color="pink" />
-          <Typography variant="xs" weight={700}>
-            {i18n._(t`MEOW tokens wrap xSUSHI into BentoBox for double yields and can be
-              used to vote in special MEOW governor contracts.`)}
-          </Typography>
-        </div>
-      </div>
-      <div className="relative grid gap-4 p-4 border-2 rounded z-1 bg-dark-900 shadow-swap border-dark-800">
-        <HeaderToggle meowshiState={meowshiState} />
-        <CurrencyInputPanel
-          field={Field.INPUT}
-          showMax={true}
-          meowshiState={meowshiState}
-        />
-        <div className="relative mt-[-24px] mb-[-24px] ml-[28px] flex items-center">
-          <div
-            className="inline-flex p-2 border-2 rounded-full cursor-pointer border-dark-900 bg-dark-800"
-            onClick={switchCurrencies}
+      children={
+        <>
+          <Head
+            children={
+              <>
+                <title>Meowshi | Sushi</title>
+                <meta
+                  key="description"
+                  name="description"
+                  content="SushiSwap Meowshi..."
+                />
+              </>
+            }
           >
-            <ArrowDownIcon width={24} height={24} />
+          </Head>
+
+          <div className="z-0 relative mb-[-38px] md:mb-[-54px] ml-0 md:ml-4 flex justify-between gap-6 items-center">
+            <div className="min-w-[168px] hidden md:block">
+              <Image
+                src="/neon-cat.png"
+                alt="neon-cat"
+                width={168}
+                height={168}
+              />
+            </div>
+
+            <div className="bg-[rgba(255,255,255,0.04)] p-4 py-2 rounded flex flex-row items-center gap-4 mb-[54px]">
+              <InformationCircleIcon width={48} height={48} color="pink" />
+              <Typography variant="xs" weight={700}>
+                {i18n._(t`MEOW tokens wrap xSUSHI into BentoBox for double yields and can be
+              used to vote in special MEOW governor contracts.`)}
+              </Typography>
+            </div>
           </div>
-          <Typography variant="sm" className="text-secondary ml-[26px]">
-            {currencies[Field.INPUT]?.symbol} →{" "}
-            {(currencies[Field.INPUT] === SUSHI[ChainId.MAINNET] ||
-              currencies[Field.OUTPUT] === SUSHI[ChainId.MAINNET]) &&
-              " xSUSHI → "}
-            {currencies[Field.OUTPUT]?.symbol}
-          </Typography>
-        </div>
-        <CurrencyInputPanel
-          field={Field.OUTPUT}
-          showMax={false}
-          meowshiState={meowshiState}
-        />
-        <MeowshiButton meowshiState={meowshiState} />
-      </div>
+          <div className="relative grid gap-4 p-4 border-2 rounded z-1 bg-dark-900 shadow-swap border-dark-800">
+            <HeaderToggle meowshiState={meowshiState} />
+            <CurrencyInputPanel
+              field={Field.INPUT}
+              showMax={true}
+              meowshiState={meowshiState}
+            />
+            <div className="relative mt-[-24px] mb-[-24px] ml-[28px] flex items-center">
+              <div
+                className="inline-flex p-2 border-2 rounded-full cursor-pointer border-dark-900 bg-dark-800"
+                onClick={switchCurrencies}
+              >
+                <ArrowDownIcon width={24} height={24} />
+              </div>
+              <Typography variant="sm" className="text-secondary ml-[26px]">
+                {currencies[Field.INPUT]?.symbol} →{" "}
+                {(currencies[Field.INPUT] === SUSHI[ChainId.MAINNET] ||
+                  currencies[Field.OUTPUT] === SUSHI[ChainId.MAINNET]) &&
+                  " xSUSHI → "}
+                {currencies[Field.OUTPUT]?.symbol}
+              </Typography>
+            </div>
+            <CurrencyInputPanel
+              field={Field.OUTPUT}
+              showMax={false}
+              meowshiState={meowshiState}
+            />
+            <MeowshiButton meowshiState={meowshiState} />
+          </div>
+        </>
+      }
+    >
     </Container>
   );
 }

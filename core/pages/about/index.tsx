@@ -4,8 +4,8 @@ import Image from "next/image";
 import { fadeInFromLeft, fadeInFromRight } from "../../animation";
 
 const About = () => {
-  const getStartedContentRef = React.useRef();
-  const getStartedImageRef = React.useRef();
+  const getStartedContentRef = React.useRef<HTMLDivElement | null>(null);
+  const getStartedImageRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     fadeInFromLeft(getStartedContentRef.current);

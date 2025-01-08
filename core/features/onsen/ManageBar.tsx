@@ -191,7 +191,7 @@ const ManageBar = ({ farm }) => {
               onClick={approve}
               disabled={approvalState !== ApprovalState.NOT_APPROVED}
             >
-              {approvalState === ApprovalState.PENDING ? <Dots children={undefined}>{i18n._(t`Approving`)}</Dots> : i18n._(t`Approve`)}
+              {approvalState === ApprovalState.PENDING ? <Dots children={<span>{i18n._(t`Approving`)}</span>}></Dots> : i18n._(t`Approve`)}
             </Button>
           ) : (
             <ButtonError

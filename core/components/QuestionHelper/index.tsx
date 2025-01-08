@@ -13,7 +13,7 @@ const QuestionHelper: FC<{ text?: any; children?: React.ReactNode }> = ({
 
   if (children) {
     return (
-      <Tooltip text={text} show={show} children={undefined}>
+      <Tooltip text={text} show={show}>
         <div
           className="flex items-center justify-center outline-none"
           onClick={open}
@@ -28,7 +28,7 @@ const QuestionHelper: FC<{ text?: any; children?: React.ReactNode }> = ({
 
   return (
     <span className="ml-1">
-      <Tooltip text={text} show={show} children={undefined}>
+      <Tooltip text={text} show={show}>
         <div
           className="flex items-center justify-center outline-none cursor-help hover:text-primary"
           onClick={open}

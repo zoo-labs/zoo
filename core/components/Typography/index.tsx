@@ -24,7 +24,7 @@ const VARIANTS = {
 export interface TypographyProps {
   variant?: TypographyVariant
   weight?: TypographyWeight
-  component?: keyof React.ReactHTML
+  component?: React.ElementType
   className?: string
   clickable?: boolean
 }
@@ -38,7 +38,7 @@ function Typography({
   children = [],
   onClick = undefined,
   ...rest
-}: React.HTMLAttributes<React.ReactHTML> & TypographyProps): React.ReactElement {
+}: React.HTMLAttributes<HTMLElement> & TypographyProps): React.ReactElement {
   return React.createElement(
     component,
     {

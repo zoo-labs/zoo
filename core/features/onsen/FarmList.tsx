@@ -54,18 +54,19 @@ const FarmList = ({ farms, term }) => {
         dataLength={numDisplayed}
         next={() => setNumDisplayed(numDisplayed + 5)}
         hasMore={true}
-        loader={null} 
-        children={''}
-        >
-        <div className="space-y-4">
-          {items.slice(0, numDisplayed).map((farm, index) => (
-            <FarmListItem key={index} farm={farm} />
-          ))}
-        </div>
+        loader={null}
+        children={
+          <div className="space-y-4">
+            {items.slice(0, numDisplayed).map((farm, index) => (
+              <FarmListItem key={index} farm={farm} />
+            ))}
+          </div>
+        }
+      >
       </InfiniteScroll>
     </>
   ) : (
-    <div className="w-full py-6 text-center">{term ? <span>No Results.</span> : <Dots children={undefined}>Loading</Dots>}</div>
+    <div className="w-full py-6 text-center">{term ? <span>No Results.</span> : <Dots children={<span>Loading</span>}></Dots>}</div>
   )
 }
 

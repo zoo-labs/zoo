@@ -216,7 +216,7 @@ function MyApp({
             <SubgraphProvider>
               <GifProvider>
                 <PersistGate
-                  loading={<Dots>loading</Dots>}
+                  loading={<Dots children={<span>loading</span>}></Dots>}
                   persistor={persistor}
                 >
                   <>

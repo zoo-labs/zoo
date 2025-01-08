@@ -5,7 +5,7 @@ import Link from "next/link";
 import { fadeInOnScroll } from "animation";
 
 const ComingSoon = () => {
-  const comingSoonRef = React.useRef();
+  const comingSoonRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     fadeInOnScroll(comingSoonRef.current);

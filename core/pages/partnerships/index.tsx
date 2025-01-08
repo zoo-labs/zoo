@@ -55,7 +55,7 @@ const UiSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const Partnership = () => {
-  const partnerRef = React.useRef();
+  const partnerRef = React.useRef<HTMLDivElement | null>(null);
 
   const [checked, setChecked] = useState<boolean>(false);
 

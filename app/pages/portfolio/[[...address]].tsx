@@ -115,7 +115,7 @@ const IndexPage: NextPage = () => {
     [selectedItems]
   )
 
-  const tokenTableRef = useRef<TokenTableRef>(null)
+  const tokenTableRef = useRef<TokenTableRef | null>(null)
 
   useEffect(() => {
     setSelectedItems([])

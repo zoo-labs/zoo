@@ -12,7 +12,7 @@ interface NeonSelectProps {
 
 const NeonSelect: FC<NeonSelectProps> = ({ value, children }) => {
   const [open, toggle] = useToggle(false);
-  const node = useRef<HTMLDivElement>();
+  const node = useRef<HTMLDivElement | null>(null);
   useOnClickOutside(node, open ? toggle : undefined);
 
   return (

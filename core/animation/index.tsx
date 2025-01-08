@@ -3,7 +3,7 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 // toggleAction: onEnter, onLeave, onEnterBack, onLeaveBack
-export const fadeInOnScroll = (element: string, duration = 1) => {
+export const fadeInOnScroll = (element: HTMLElement | null, duration = 1) => {
   return gsap.from(element, {
     duration: duration,
     autoAlpha: 0,
@@ -17,7 +17,7 @@ export const fadeInOnScroll = (element: string, duration = 1) => {
   });
 };
 
-export const fadeInFromRight = (element: string, ease = "ease-in") => {
+export const fadeInFromRight = (element: HTMLElement | null, ease = "ease-in") => {
   gsap.from(element, {
     x: 100,
     opacity: 0,
@@ -31,7 +31,7 @@ export const fadeInFromRight = (element: string, ease = "ease-in") => {
   });
 };
 
-export const fadeInFromRightFast = (element: string) => {
+export const fadeInFromRightFast = (element: HTMLElement | null) => {
   gsap.from(element, {
     x: 100,
     opacity: 0,
@@ -45,7 +45,7 @@ export const fadeInFromRightFast = (element: string) => {
   });
 };
 
-export const fadeInFromLeft = (element: string, ease = "ease-in") => {
+export const fadeInFromLeft = (element: HTMLElement | null, ease = "ease-in") => {
   gsap.from(element, {
     opacity: 0,
     duration: 0.9,
@@ -60,7 +60,7 @@ export const fadeInFromLeft = (element: string, ease = "ease-in") => {
   });
 };
 
-export const fadeInFromLeftFast = (element: string) => {
+export const fadeInFromLeftFast = (element: HTMLElement | null) => {
   gsap.from(element, {
     opacity: 0,
     duration: 0.7,
@@ -75,7 +75,7 @@ export const fadeInFromLeftFast = (element: string) => {
   });
 };
 
-export const fadeInOnScrollAndStagger = (element: string, trigger?: string) => {
+  export const fadeInOnScrollAndStagger = (element: HTMLElement | null, trigger?: string) => {
   gsap.from(element, {
     duration: 1.5,
     autoAlpha: 0,
