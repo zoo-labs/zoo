@@ -2,7 +2,6 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
 import Fraction from './entities/Fraction'
-import React from 'react'
 import { Zero } from '@ethersproject/constants'
 import { parseUnits } from '@ethersproject/units'
 

@@ -1,4 +1,3 @@
-'use client'
 import { useCallback, useEffect, useState } from 'react'
 
 const VISIBILITY_STATE_SUPPORTED = typeof document !== 'undefined' && 'visibilityState' in document

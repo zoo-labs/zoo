@@ -1,19 +1,30 @@
+import { useEffect } from 'react';
 import { gsap, Power4 } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
+export const useGsapAnimation = (element: HTMLElement | null, animationFn: (el: HTMLElement) => void) => {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && element) {
+      animationFn(element);
+    }
+  }, [element, animationFn]);
+};
+
 // toggleAction: onEnter, onLeave, onEnterBack, onLeaveBack
 export const fadeInOnScroll = (element: HTMLElement | null, duration = 1) => {
-  return gsap.from(element, {
-    duration: duration,
-    autoAlpha: 0,
-    y: 50,
-    ease: "ease-in",
-    scrollTrigger: {
-      trigger: element,
-      start: "top 90%",
-      toggleActions: "restart none none none",
-    },
+  useGsapAnimation(element, (el) => {
+    gsap.from(el, {
+      duration: duration,
+      autoAlpha: 0,
+      y: 50,
+      ease: "ease-in",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 90%",
+        toggleActions: "restart none none none",
+      },
+    });
   });
 };
 

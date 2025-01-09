@@ -1,4 +1,3 @@
-'use client'
 import { shortenAddress, shortenString } from "functions/format";
 
 //import useActiveWeb3React from "hooks/useActiveWeb3React";

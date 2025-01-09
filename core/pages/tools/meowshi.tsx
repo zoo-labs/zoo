@@ -1,15 +1,14 @@
-'use client'
 import { ArrowDownIcon, InformationCircleIcon } from "@heroicons/react/solid";
 import { ChainId, Currency, Token } from "@zoolabs/zdk";
 import { MEOW, SUSHI, XSUSHI } from "../../config/tokens";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import Container from "../../components/Container";
-import CurrencyInputPanel from "../../features/meowshi/CurrencyInputPanel";
+// import CurrencyInputPanel from "../../features/meowshi/CurrencyInputPanel";
 import Head from "next/head";
-import HeaderToggle from "../../features/meowshi/HeaderToggle";
+// import HeaderToggle from "../../features/meowshi/HeaderToggle";
 import Image from "next/image";
-import MeowshiButton from "../../features/meowshi/MeowshiButton";
+// import MeowshiButton from "../../features/meowshi/MeowshiButton";
 import NetworkGuard from "../../guards/Network";
 import Typography from "../../components/Typography";
 import { e10 } from "../../functions";
@@ -191,12 +190,12 @@ export default function Meowshi() {
             </div>
           </div>
           <div className="relative grid gap-4 p-4 border-2 rounded z-1 bg-dark-900 shadow-swap border-dark-800">
-            <HeaderToggle meowshiState={meowshiState} />
+            {/* <HeaderToggle meowshiState={meowshiState} />
             <CurrencyInputPanel
               field={Field.INPUT}
               showMax={true}
               meowshiState={meowshiState}
-            />
+            /> */}
             <div className="relative mt-[-24px] mb-[-24px] ml-[28px] flex items-center">
               <div
                 className="inline-flex p-2 border-2 rounded-full cursor-pointer border-dark-900 bg-dark-800"
@@ -212,12 +211,12 @@ export default function Meowshi() {
                 {currencies[Field.OUTPUT]?.symbol}
               </Typography>
             </div>
-            <CurrencyInputPanel
+            {/* <CurrencyInputPanel
               field={Field.OUTPUT}
               showMax={false}
               meowshiState={meowshiState}
             />
-            <MeowshiButton meowshiState={meowshiState} />
+            <MeowshiButton meowshiState={meowshiState} /> */}
           </div>
         </>
       }
@@ -225,5 +224,4 @@ export default function Meowshi() {
     </Container>
   );
 }
-
-Meowshi.Guard = NetworkGuard([ChainId.MAINNET]);
+// Meowshi.Guard = NetworkGuard([ChainId.MAINNET]);

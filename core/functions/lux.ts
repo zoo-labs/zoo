@@ -1,5 +1,5 @@
-'use client'
 import { ChainId } from '@zoolabs/zdk'
+import { useEffect } from 'react';
 
 export const sortData = (data: Array<any>, byType: string) => {
   return data.sort((a, b) => Number(b.tokenID) - Number(a.tokenID))
@@ -38,7 +38,9 @@ export const timer = (countDownDate) => {
     // If the count down is finished, write some text
     if (distance < 0) {
       clearInterval(x)
-      document.getElementById('demo').innerHTML = 'EXPIRED'
+      if (typeof window !== 'undefined') {
+        document.getElementById('demo').innerHTML = 'EXPIRED'
+      }
     }
     return days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's '
   }, 1000)
@@ -73,3 +75,21 @@ export const formatError = (err) => {
     return err.toString().replace(/Error: Returned error: /, '');
   }
 }
+
+export const initializeClientSideLogic = () => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // This code will only run in the browser
+      const element = document.getElementById('my-element');
+      // Perform operations with the element
+    }
+  }, []);
+};
+
+// Example function that might be using document or window
+export const someFunction = () => {
+  if (typeof window !== 'undefined') {
+    // Safe to use window or document here
+    console.log('Running in the browser');
+  }
+};

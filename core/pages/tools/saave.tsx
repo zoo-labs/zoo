@@ -1,4 +1,3 @@
-'use client'
 import Container from '../../components/Container'
 import Head from 'next/head'
 import Typography from '../../components/Typography'

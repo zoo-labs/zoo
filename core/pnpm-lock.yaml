@@ -30,10 +30,10 @@ importers:
         specifier: ^4.4.1
         version: 4.4.1
       '@emotion/react':
-        specifier: ^11.10.6
+        specifier: ^11.14.0
         version: 11.14.0(@types/react@19.0.3)(react@18.2.0)
       '@emotion/styled':
-        specifier: ^11.10.6
+        specifier: ^11.14.0
         version: 11.14.0(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react@18.2.0)
       '@ethereumjs/common':
         specifier: ^4.4.0
@@ -90,7 +90,7 @@ importers:
         specifier: 1.10.1
         version: 1.10.1
       '@headlessui/react':
-        specifier: ^1.7.11
+        specifier: ^1.7.19
         version: 1.7.19(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@heroicons/react':
         specifier: ^1.0.6
@@ -114,49 +114,49 @@ importers:
         specifier: ^3.0.80
         version: 3.0.80
       '@mui/icons-material':
-        specifier: ^5.11.9
+        specifier: ^5.16.14
         version: 5.16.14(@mui/material@5.16.14(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@19.0.3)(react@18.2.0)
       '@mui/material':
-        specifier: ^5.11.9
+        specifier: ^5.16.14
         version: 5.16.14(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@mui/styles':
-        specifier: ^5.11.9
+        specifier: ^5.16.14
         version: 5.16.14(@types/react@19.0.3)(react@18.2.0)
       '@mui/x-date-pickers':
-        specifier: ^5.0.19
+        specifier: ^5.0.20
         version: 5.0.20(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react@18.2.0))(@mui/material@5.16.14(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@mui/system@5.16.14(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(react@18.2.0))(@types/react@19.0.3)(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@netlify/plugin-nextjs':
-        specifier: ^4.30.4
+        specifier: ^4.41.3
         version: 4.41.3(encoding@0.1.13)
       '@popperjs/core':
-        specifier: ^2.11.6
+        specifier: ^2.11.8
         version: 2.11.8
       '@reduxjs/toolkit':
-        specifier: ^1.9.2
+        specifier: ^1.9.7
         version: 1.9.7(react-redux@7.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       '@sentry/nextjs':
-        specifier: ^7.38.0
+        specifier: ^7.120.2
         version: 7.120.2(encoding@0.1.13)(next@13.0.6(@babel/core@7.26.0)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(webpack@5.97.1)
       '@sentry/wizard':
-        specifier: ^1.4.0
+        specifier: ^1.4.1
         version: 1.4.1(encoding@0.1.13)
       '@sushiswap/chainlink-whitelist':
-        specifier: ^0.2.5
+        specifier: ^0.2.8
         version: 0.2.8
       '@sushiswap/core':
         specifier: ^1.4.2
         version: 1.4.2
       '@sushiswap/default-token-list':
-        specifier: ^20.18.0
+        specifier: ^20.32.0
         version: 20.32.0
       '@sushiswap/sushi-data':
         specifier: ^1.0.27
         version: 1.0.27(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@transak/transak-sdk':
-        specifier: ^1.0.31
+        specifier: ^1.4.1
         version: 1.4.1
       '@uniswap/token-lists':
-        specifier: ^1.0.0-beta.31
+        specifier: 1.0.0-beta.34
         version: 1.0.0-beta.34
       '@visx/axis':
         specifier: ^2.18.0
@@ -213,16 +213,16 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(ajv@8.17.1)
       axios:
-        specifier: ^1.3.3
+        specifier: ^1.7.9
         version: 1.7.9
       babylonjs:
-        specifier: ^5.47.0
+        specifier: ^5.57.1
         version: 5.57.1
       babylonjs-hook:
         specifier: ^0.1.1
         version: 0.1.1(@babylonjs/core@7.42.0)(react@18.2.0)
       babylonjs-loaders:
-        specifier: ^5.47.0
+        specifier: ^5.57.1
         version: 5.57.1
       bignumber.js:
         specifier: ^9.1.2
@@ -249,13 +249,13 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       embla-carousel-react:
-        specifier: ^7.0.9
+        specifier: ^7.1.0
         version: 7.1.0(react@18.2.0)
       ethers:
         specifier: ^5.7.2
         version: 5.7.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       firebase:
-        specifier: ^9.17.1
+        specifier: ^9.23.0
         version: 9.23.0(encoding@0.1.13)
       fuse.js:
         specifier: ^6.6.2
@@ -267,7 +267,7 @@ importers:
         specifier: ^2.12.6
         version: 2.12.6(graphql@14.5.8)
       gsap:
-        specifier: ^3.11.4
+        specifier: ^3.12.5
         version: 3.12.5
       ioredis:
         specifier: ^4.28.5
@@ -288,7 +288,7 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       moment:
-        specifier: ^2.29.4
+        specifier: ^2.30.1
         version: 2.30.1
       multicodec:
         specifier: ^3.2.1
@@ -312,13 +312,13 @@ importers:
         specifier: ^0.0.16
         version: 0.0.16(next@13.0.6(@babel/core@7.26.0)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       node-vibrant:
-        specifier: ^3.2.1-alpha.1
+        specifier: 3.2.1-alpha.1
         version: 3.2.1-alpha.1
       numeral:
         specifier: ^2.0.6
         version: 2.0.6
       polished:
-        specifier: ^4.2.2
+        specifier: ^4.3.1
         version: 4.3.1
       qs:
         specifier: ^6.13.1
@@ -333,13 +333,13 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
       react-babylonjs:
-        specifier: ^3.1.15
+        specifier: ^3.2.2
         version: 3.2.2(@babylonjs/core@7.42.0)(@babylonjs/gui@7.42.0(@babylonjs/core@7.42.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-calendar:
         specifier: ^3.9.0
         version: 3.9.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-countdown-hook:
-        specifier: ^1.1.1
+        specifier: ^1.1.3
         version: 1.1.3(react@18.2.0)
       react-debounce-input:
         specifier: ^3.3.0
@@ -360,13 +360,13 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1(prop-types@15.8.1)(react@18.2.0)
       react-icons:
-        specifier: ^4.7.1
+        specifier: ^4.12.0
         version: 4.12.0(react@18.2.0)
       react-infinite-scroll-component:
         specifier: ^6.1.0
         version: 6.1.0(react@18.2.0)
       react-loading-skeleton:
-        specifier: ^3.1.1
+        specifier: ^3.5.0
         version: 3.5.0(react@18.2.0)
       react-morphing-modal:
         specifier: ^0.2.2
@@ -375,7 +375,7 @@ importers:
         specifier: ^6.2.2
         version: 6.2.2(@types/react@19.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-player:
-        specifier: ^2.11.2
+        specifier: ^2.16.0
         version: 2.16.0(react@18.2.0)
       react-popper:
         specifier: ^2.3.0
@@ -384,7 +384,7 @@ importers:
         specifier: ^7.2.9
         version: 7.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-simple-wysiwyg:
-        specifier: ^2.1.4
+        specifier: ^2.2.5
         version: 2.2.5(react@18.2.0)
       react-slick:
         specifier: ^0.30.3
@@ -393,25 +393,25 @@ importers:
         specifier: ^7.8.0
         version: 7.8.0(react@18.2.0)
       react-timeago:
-        specifier: ^7.1.0
+        specifier: ^7.2.0
         version: 7.2.0(react@18.2.0)
       react-toastify:
-        specifier: ^9.1.1
+        specifier: ^9.1.3
         version: 9.1.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-transition-group:
         specifier: ^4.4.5
         version: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-virtualized:
-        specifier: ^9.22.3
+        specifier: ^9.22.5
         version: 9.22.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-virtualized-auto-sizer:
-        specifier: ^1.0.7
+        specifier: ^1.0.25
         version: 1.0.25(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-window:
-        specifier: ^1.8.8
+        specifier: ^1.8.11
         version: 1.8.11(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       recharts:
-        specifier: ^2.4.3
+        specifier: ^2.15.0
         version: 2.15.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       redux:
         specifier: ^4.2.1
@@ -423,19 +423,19 @@ importers:
         specifier: ^2.4.2
         version: 2.4.2(redux@4.2.1)
       sanitize-html:
-        specifier: ^2.10.0
+        specifier: ^2.14.0
         version: 2.14.0
       slick-carousel:
         specifier: ^1.8.1
         version: 1.8.1(jquery@3.7.1)
       styled-components:
-        specifier: ^5.3.6
+        specifier: ^5.3.11
         version: 5.3.11(@babel/core@7.26.0)(react-dom@18.2.0(react@18.2.0))(react-is@19.0.0)(react@18.2.0)
       swiper:
         specifier: ^8.4.7
         version: 8.4.7
       swr:
-        specifier: ^2.0.3
+        specifier: ^2.3.0
         version: 2.3.0(react@18.2.0)
       tiny-invariant:
         specifier: ^1.3.3
@@ -454,37 +454,37 @@ importers:
         specifier: 4.7.0
         version: 4.7.0(typescript@5.7.2)
       '@lingui/loader':
-        specifier: ^4.7.0
+        specifier: ^4.14.1
         version: 4.14.1(typescript@5.7.2)(webpack@5.97.1)
       '@next/bundle-analyzer':
-        specifier: ^13.1.6
+        specifier: ^13.5.8
         version: 13.5.8(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@testing-library/react-hooks':
         specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0(react@18.2.0))(react-test-renderer@18.3.1(react@18.2.0))(react@18.2.0)
       '@tsconfig/recommended':
-        specifier: ^1.0.1
+        specifier: ^1.0.8
         version: 1.0.8
       '@types/ioredis':
-        specifier: ^4.28.5
+        specifier: ^4.28.10
         version: 4.28.10
       '@types/jest':
-        specifier: ^29.5.11
+        specifier: ^29.5.14
         version: 29.5.14
       '@types/node':
         specifier: 17.0.5
         version: 17.0.5
       '@types/numeral':
-        specifier: ^2.0.2
+        specifier: ^2.0.5
         version: 2.0.5
       '@types/react-timeago':
-        specifier: ^4.1.3
+        specifier: ^4.1.7
         version: 4.1.7
       '@types/styled-components':
-        specifier: ^5.1.20
+        specifier: ^5.1.34
         version: 5.1.34
       '@types/styled-system':
-        specifier: ^5.1.15
+        specifier: ^5.1.23
         version: 5.1.23
       '@typescript-eslint/eslint-plugin':
         specifier: 5.62.0
@@ -496,13 +496,13 @@ importers:
         specifier: 8.0.12-beta.0
         version: 8.0.12-beta.0(@types/react@19.0.3)(immer@9.0.21)(react@18.2.0)
       autoprefixer:
-        specifier: ^10.4.13
+        specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.49)
       babel-plugin-macros:
         specifier: ^3.1.0
         version: 3.1.0
       babel-plugin-styled-components:
-        specifier: ^2.0.7
+        specifier: ^2.1.4
         version: 2.1.4(@babel/core@7.26.0)(styled-components@5.3.11(@babel/core@7.26.0)(react-dom@18.2.0(react@18.2.0))(react-is@19.0.0)(react@18.2.0))(supports-color@5.5.0)
       babel-plugin-transform-remove-console:
         specifier: ^6.9.4
@@ -514,7 +514,7 @@ importers:
         specifier: 13.1.6
         version: 13.1.6(eslint@8.56.0)(typescript@5.7.2)
       eslint-plugin-react-hooks:
-        specifier: ^4.6.0
+        specifier: ^4.6.2
         version: 4.6.2(eslint@8.56.0)
       eslint-plugin-tsdoc:
         specifier: ^0.2.17
@@ -535,22 +535,22 @@ importers:
         specifier: ^5.6.0
         version: 5.6.0(@babel/core@7.26.0)(@types/babel__core@7.20.5)(next@13.0.6(@babel/core@7.26.0)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(webpack@5.97.1)
       postcss:
-        specifier: ^8.4.21
+        specifier: ^8.4.49
         version: 8.4.49
       prettier:
         specifier: 2.8.4
         version: 2.8.4
       react-test-renderer:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.2.0)
       tailwindcss:
-        specifier: ^3.2.7
+        specifier: ^3.4.17
         version: 3.4.17
       ts-jest:
         specifier: ^29.2.5
         version: 29.2.5(@babel/core@7.26.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.7.0(@types/node@17.0.5)(babel-plugin-macros@3.1.0))(typescript@5.7.2)
       typescript:
-        specifier: ^5.1.3
+        specifier: ^5.7.2
         version: 5.7.2
 
 packages:
