@@ -1,4 +1,3 @@
-'use client'
 import { ChainId } from '@zoolabs/zdk'
 
 export const sortData = (data: Array<any>, byType: string) => {
@@ -39,8 +38,10 @@ export const timer = (countDownDate: any) => {
     // If the count down is finished, write some text
     if (distance < 0) {
       clearInterval(x)
-      const el = document.getElementById('demo')
-      if (el) el.innerHTML = 'EXPIRED'
+      if (typeof window !== 'undefined') {
+        const el = document.getElementById('demo')
+        if (el) el.innerHTML = 'EXPIRED'
+      }
     }
     return days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's '
   }, 1000)

@@ -1,4 +1,3 @@
-'use client'
 import { useState, useEffect } from "react";
 
 function usePlayer(id: null | number | string) {
@@ -8,7 +7,11 @@ function usePlayer(id: null | number | string) {
   const [clickedTime, setClickedTime] = useState();
 
   useEffect(() => {
-    const audio = document.getElementById(`player-${id}`) as HTMLAudioElement;
+    let audio: HTMLAudioElement;
+
+    if (typeof window !== 'undefined') {
+      audio = document.getElementById(`player-${id}`) as HTMLAudioElement;
+    }
 
     // state setters wrappers
     const setAudioData = () => {

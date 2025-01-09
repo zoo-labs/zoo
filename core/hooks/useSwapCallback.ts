@@ -1,4 +1,3 @@
-'use client'
 import { BIPS_BASE, EIP_1559_ACTIVATION_BLOCK } from '../constants'
 import {
   ChainId,
