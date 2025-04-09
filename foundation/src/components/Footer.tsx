@@ -15,7 +15,7 @@ function Footer() {
       <div className='grid md:grid-cols-5 grid-cols-1 gap-8 2xl:px-56 xl:px-42 lg:px-28 md:px-16 max-md:px-4 pt-20'>
         <div className='flex flex-col space-y-8'>
             <p className='text-sm lg:text-lg text-white'>Zoo Labs Foundation</p>
-            <p className='text-sm lg:text-md text-white'>All rights reserved.© 2023 Zoo Labs Foundation Inc.</p>
+            <p className='text-sm lg:text-md text-white'>All rights reserved.© 2025 Zoo Labs Foundation Inc.</p>
             <div className='flex items-center space-x-2 text-white'>
                 <Link href="https://twitter.com/zoo_labs" legacyBehavior><FaTwitter /></Link>
                 <Link href="https://t.me/zooofficial" legacyBehavior><FaTelegram /></Link>
@@ -38,7 +38,7 @@ function Footer() {
             <Link href="/animals/red_wolf"  className='text-sm lg:text-lg text-white'>Red Wolf</Link>
             <Link href="/animals/nubian_giraffe" className='text-sm lg:text-lg text-white'>Nubian Giraffe</Link>
             <Link href="/animals/amur_leopard" className='text-sm lg:text-lg text-white'>Amur Leopard</Link>
-            
+
         </div>
         <div className='flex flex-col space-y-8'>
         <Link href="/animals/sumatran_elephant" className='text-sm lg:text-lg text-white'>Sumatran Elephant</Link>
@@ -61,7 +61,7 @@ function Footer() {
           <Link href="/" className='text-lg text-white'>Home</Link>
           <Link href="/about" className='text-lg text-white'>About</Link>
           {/* <Link href="/campaign" className='text-lg text-white'>Campaign</Link> */}
-          
+
         </div>
         <div className='flex items-center pt-6 space-x-8'>
             <Link href="/getinvolved" className='text-lg text-white'>Get Involved</Link>
@@ -82,7 +82,7 @@ function Footer() {
           <Link href="/terms" className='text-lg text-white'>Terms of service</Link>
           <Link href="/terms-refund" className='text-lg text-white'>Terms of Refund</Link>
         </div>
-        <p className='text-lg text-white pt-6 pb-16'>© 2023 Zoo Labs Foundation Inc</p>
+        <p className='text-lg text-white pt-6 pb-16'>© 2025 Zoo Labs Foundation Inc</p>
       </div>
     </div>
     </div>
