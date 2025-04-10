@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import "@fontsource/poppins";
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,7 +25,7 @@ function Navbar() {
                   <span className="sr-only">Open main menu</span>
                   {!isOpen ? (
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M19 17.5H1V16H19V17.5ZM13 10.5H1V9H13V10.5ZM1 3.5V2H19V3.5H1Z" fill="white"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M19 17.5H1V16H19V17.5ZM13 10.5H1V9H13V10.5ZM1 3.5V2H19V3.5H1Z" fill="white"/>
                       </svg>
                   ) : (
                       <svg
@@ -49,7 +51,7 @@ function Navbar() {
                   <Link
                       href="/"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium">
-                      <img alt="ZOO" src="/zooLogo.svg" style={{ width: 64, height: 64 }} />
+                      <Image alt="ZOO" src="/zooLogo.svg" width={64} height={64} />
                   </Link>
                   </div>
               </div>

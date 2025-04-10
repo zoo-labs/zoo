@@ -48,7 +48,7 @@ function FutureUpgrades() {
       </div>
       <div className='grid lg:grid-cols-4 md:grid-cols-2 items-baseline pt-24 lg:gap-4 md:gap-8 2xl:gap-8 max-md:px-8 max-md:grid-cols-1 max-md:gap-8'>
       {comments.map((data, index) => (
-        <Accordion className='flex-1' open={true} header={data.title} content={data.comment}/>
+        <Accordion key={index} className='flex-1' open={true} header={data.title} content={data.comment}/>
       ))}
       </div>
     </div>

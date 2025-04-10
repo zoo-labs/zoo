@@ -30,10 +30,10 @@ function Ourefforts() {
   return (
     <div className="bg-black xl:py-52 md:py-32 max-md:py-32 2xl:px-52 xl:px-32 lg:px-24 md:px-8 max-md:px-4">
         <p className='text-gray-300 text-md xl:text-2xl text-center'>Over 38,000 endangered species</p>
-        <h1 className='text-white text-center md:text-2xl xl:text-5xl max-md:text-xl mt-8 mb-12 2xl:px-48 xl:px-32 lg:px-32 md:px-16'>We've started initiating efforts with 7 species to raise awareness, secure funding, and strive for their conservation.</h1>
+        <h1 className='text-white text-center md:text-2xl xl:text-5xl max-md:text-xl mt-8 mb-12 2xl:px-48 xl:px-32 lg:px-32 md:px-16'>We&apos;ve started initiating efforts with 7 species to raise awareness, secure funding, and strive for their conservation.</h1>
       <div className='grid md:grid-cols-2 grid-cols-1 gap-4 md:px-8 lg:px-0'>
       {efforts.map((data, index) => (
-        <div className='flex flex-col md:mb-16 lg:mb-0 max-md:mb-0'>
+        <div key={index} className='flex flex-col md:mb-16 lg:mb-0 max-md:mb-0'>
         <Link href={data.url} className='text-white text-2xl pb-4 max-md:text-2xl max-md:hidden md:block lg:hidden text-center'>{data.title}</Link>
         <div className='flex max-md:hidden items-center text-white lg:pt-16 md:pt-4 max-md:pt-16 xl:space-x-16 lg::space-x-8 md:space-x-4 xl:mx-12 lg:mx-6 md:mx-4'>
             <Image

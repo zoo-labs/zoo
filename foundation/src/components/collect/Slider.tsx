@@ -70,7 +70,7 @@ function Slide() {
         <Slider {...settings} className='bg-black w-full py-10 collect-slider'>
 
             {animals.map((data, index) => (
-            <Link href={data.url} className='flex flex-col items-center text-center space-y-4 max-sm:p-2 p-4'>
+            <Link key={index} href={data.url} className='flex flex-col items-center text-center space-y-4 max-sm:p-2 p-4'>
             <div className='rounded-lg p-[4px] bg-[#3C9465]'>
                 <ModelViewer className='aspect-square  bg-[#3C9465]'
                 usdz={data.usdz}
@@ -88,4 +88,3 @@ function Slide() {
   }
   
   export default Slide;
-  

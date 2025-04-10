@@ -156,8 +156,8 @@ function InvolvedContent({id,title,content1,content2,image,direction,type,index}
           <MdOutlineCancel className='cursor-pointer' onClick={()=>setFlag(false)}/>
         </div>
         <div className={`flex justify-between md:space-x-8 2xl:space-x-16 px-8 xl:px-24 lg:px-16 md:px-8 2xl:px-32 max-md:flex-col max-md:space-y-8`}>
-          {contents[index].map((data, index) => (
-              <div className='flex flex-1 text-white flex-col space-y-8 max-md:space-y-4'>
+          {contents[index].map((data, i) => (
+              <div key={i} className='flex flex-1 text-white flex-col space-y-8 max-md:space-y-4'>
                   <p className='2xl:text-2xl xl:text-2xl text-xl'>{data.title}</p>
                   <p className='2xl:text-xl xl:text-lg text-sm'>{data.content}</p>
               </div>

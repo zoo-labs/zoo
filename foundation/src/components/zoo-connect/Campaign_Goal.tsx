@@ -108,7 +108,7 @@ function Campaign_Goal() {
             <p className='text-xl'>What we know</p>
             <p className='text-sm'>The International Union for Conservation of Nature has identified over 16,000 animal species currently under threat of extinction. These staggering numbers include 41% of amphibians, 38% of sharks and rays, 27% of mammals, and 13% of birds. Much of this threat comes from human activities, including deforestation, overexploitation, and climate change.</p>
             <p className='text-sm'>Despite these daunting figures, only 3% of donor dollars in the US go to environmental and animal welfare organizations combined. However, a hopeful 62% of Americans believe that the government is doing too little to protect animals and their habitats.</p>
-            <p className='text-sm'>It seems there's a disconnect: if so many Americans care about animal welfare and conservation, why aren't more donor dollars going towards these causes? We're determined to bridge this gap. This is why we are launching Zoo Connect - an interactive platform that brings our zoo community closer to the animals they love and support.</p>
+            <p className='text-sm'>It seems there&apos;s a disconnect: if so many Americans care about animal welfare and conservation, why aren&apos;t more donor dollars going towards these causes? We&apos;re determined to bridge this gap. This is why we are launching Zoo Connect - an interactive platform that brings our zoo community closer to the animals they love and support.</p>
 
             <hr />
             <p className='text-xl'>Our Vision</p>
@@ -126,7 +126,7 @@ function Campaign_Goal() {
                 Learn about Animals: Discover the animals living at our zoo, their natural habitats, conservation status, and any special care we provide for them.
                 </li>
                 <li>
-                Discover Educational Programs: Find out about educational programs and events at the zoo, from wildlife lectures to animal encounters and kids' camps.
+                Discover Educational Programs: Find out about educational programs and events at the zoo, from wildlife lectures to animal encounters and kids&apos; camps.
                 </li>
                 <li>
                 Support Conservation Efforts: Learn about our conservation efforts both in the zoo and in the wild. Patrons can directly contribute to these efforts through donations.
@@ -151,7 +151,7 @@ function Campaign_Goal() {
         </div>
         <Slider {...settings} className='comments bg-black w-full pb-8'>
             {comments.map((data, index) => (
-                <Comments name={data.name} img={data.img} date={data.date} like_text={data.like_text} like_flag={data.like_flag} content={data.content}/>
+                <Comments key={index} name={data.name} img={data.img} date={data.date} like_text={data.like_text} like_flag={data.like_flag} content={data.content}/>
             ))}
         </Slider>
       </div>

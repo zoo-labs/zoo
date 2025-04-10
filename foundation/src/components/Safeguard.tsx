@@ -39,7 +39,7 @@ function Safeguard() {
           </div>
           <div className='w-1/2 max-md:w-full grid md:grid-cols-2 grid-cols-1 gap-8 max-md:gap-4 max-md:px-8'>
             {contents.map((data, index) => (
-              <div className='flex flex-col'>
+              <div key={index} className='flex flex-col'>
                   <h1 className='text-white md:text-xl xl:text-3xl max-md:text-2xl max-md:my-5 pb-4 max-md:pb-2'>{data.title}</h1>
                   <p className='text-white text-md max-md:text-lg xl:text-xl'>{data.content}</p>
               </div>

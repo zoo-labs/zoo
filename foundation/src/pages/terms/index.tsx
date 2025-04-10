@@ -20,7 +20,7 @@ We may collect the following types of information:<br /><br />
 
 a. Personal Information: This includes any information that can be used to identify you, such as your name, email address, mailing address, phone number, and payment details. We collect personal information when you make a donation, sign up for our newsletter, register for an event, or otherwise interact with us.<br /><br />
 
-b. Non-Personal Information: This refers to information that does not identify you personally, such as your browser type, IP address, device type, and usage data. We may collect non-personal information through cookies, web beacons, or other tracking technologies to analyze and improve our website's performance.<br /><br />
+b. Non-Personal Information: This refers to information that does not identify you personally, such as your browser type, IP address, device type, and usage data. We may collect non-personal information through cookies, web beacons, or other tracking technologies to analyze and improve our website&apos;s performance.<br /><br />
 
 2. How We Use Your Information<br />
 
@@ -52,7 +52,7 @@ We use cookies and other tracking technologies to collect non-personal informati
 
 We take reasonable precautions to protect your personal information from unauthorized access, loss, misuse, or alteration. However, no method of transmission over the internet or electronic storage is completely secure, and we cannot guarantee the absolute security of your information.<br /><br />
 
-4. Children's Privacy<br /><br />
+4. Children&apos;s Privacy<br /><br />
 Our website and services are not intended for children under the age of 13, and we do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child under 13, we will take steps to delete such information as soon as possible.<br /><br />
 
 5. Third-Party Links<br /><br />
@@ -73,7 +73,7 @@ We will make every effort to respond to your inquiries and address any concerns 
 
 8. Changes to This Privacy Policy<br /><br />
 
-We may update this Privacy Policy from time to time to reflect changes in our practices or relevant laws and regulations. When we make changes, we will update the "Last Updated" date at the beginning of this policy. We encourage you to review this policy periodically to stay informed about how we collect, use, and protect your personal information.<br /><br />
+We may update this Privacy Policy from time to time to reflect changes in our practices or relevant laws and regulations. When we make changes, we will update the &quot;Last Updated&quot; date at the beginning of this policy. We encourage you to review this policy periodically to stay informed about how we collect, use, and protect your personal information.<br /><br />
 
 9. International Users<br /><br />
 
@@ -85,11 +85,11 @@ If you are a California resident, you may have certain additional rights under t
 
 11. European Union Residents<br /><br />
 
-If you are a resident of the European Union (EU) or the European Economic Area (EEA), you may have additional rights under the General Data Protection Regulation (GDPR). These rights may include the right to access, rectify, erase, restrict, or object to the processing of your personal information. To exercise these rights, please contact us using the information provided in the "Contact Us" section of this Privacy Policy.<br /><br />
+If you are a resident of the European Union (EU) or the European Economic Area (EEA), you may have additional rights under the General Data Protection Regulation (GDPR). These rights may include the right to access, rectify, erase, restrict, or object to the processing of your personal information. To exercise these rights, please contact us using the information provided in the &quot;Contact Us&quot; section of this Privacy Policy.<br /><br />
 
 12. Consent to Receive Electronic Communications<br /><br />
 
-By providing us with your email address, you consent to receive communications from us electronically, including newsletters, updates, and other information related to Zoo Labs Foundation. You may unsubscribe from these communications at any time by following the "unsubscribe" instructions provided in the email or by contacting us directly.<br /><br />
+By providing us with your email address, you consent to receive communications from us electronically, including newsletters, updates, and other information related to Zoo Labs Foundation. You may unsubscribe from these communications at any time by following the &quot;unsubscribe&quot; instructions provided in the email or by contacting us directly.<br /><br />
 
 13. Governing Law<br /><br />
 
@@ -97,7 +97,7 @@ This Privacy Policy and any disputes related to it or our privacy practices shal
             </p>
             <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl'>Refund Policy for Zoo NGO</h1>
             <p className='text-white text-xl'>
-            1. General Policy: Donations made to Zoo NGO are generally non-refundable. Exceptions are at the organization's discretion and must meet specific criteria.<br /><br />
+            1. General Policy: Donations made to Zoo NGO are generally non-refundable. Exceptions are at the organization&apos;s discretion and must meet specific criteria.<br /><br />
 
 2. Error Correction: Donors who make an error, such as the wrong amount or duplicate transactions, must contact us within 48 hours for a refund.<br /><br />
 
