@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || '', {
   apiVersion: '2022-11-15',
 })
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const amount: number = req.body.amount;
     console.log("amount:",amount);
@@ -45,3 +45,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(405).end('Method Not Allowed')
   }
 }
+
+export default handler;

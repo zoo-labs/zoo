@@ -61,7 +61,7 @@ function Item({list, linkFlag=true}: {
     <div className="bg-black lg:py-52 md:py-32 max-md:py-8">
       <div className='grid md:grid-cols-3 grid-cols-1 gap-8 xl:px-56 lg:px-40 md:px-24 max-md:px-4'>
       {animals.map((data, index) => (
-        <div className='flex flex-col items-center space-y-4'>
+        <div key={index} className='flex flex-col items-center space-y-4'>
           <div className='w-full max-md:w-full flex flex-col items-center justify-between  border rounded-xl border-white space-y-8'>
               {/* <Image
                   className='w-full'
