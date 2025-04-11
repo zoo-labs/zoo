@@ -1,9 +1,10 @@
-import Image, { ImageProps } from 'next/image';
+import Image from 'next/image';
+import type { ImageProps as NextImageProps } from 'next/image';
 import * as React from 'react';
 
 import clsxm from '@/lib/clsxm';
 
-type NextImageProps = {
+type CustomImageProps = {
   useSkeleton?: boolean;
   imgClassName?: string;
   blurClassName?: string;
@@ -12,7 +13,7 @@ type NextImageProps = {
   | { width: string | number; height: string | number }
   | { layout: 'fill'; width?: string | number; height?: string | number }
 ) &
-  ImageProps;
+  NextImageProps;
 
 /**
  *
@@ -29,7 +30,7 @@ export default function NextImage({
   imgClassName,
   blurClassName,
   ...rest
-}: NextImageProps) {
+}: CustomImageProps) {
   const [status, setStatus] = React.useState(
     useSkeleton ? 'loading' : 'complete'
   );
