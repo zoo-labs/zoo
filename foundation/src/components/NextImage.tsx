@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import type { StaticImageData } from 'next/image';
 import * as React from 'react';
 
 import clsxm from '@/lib/clsxm';
@@ -9,11 +8,11 @@ type CustomImageProps = {
   imgClassName?: string;
   blurClassName?: string;
   alt: string;
-  src: string | StaticImageData;
+  src: string | any;
   width?: string | number;
   height?: string | number;
   className?: string;
-  layout?: 'fill';
+  layout?: string;
   onLoadingComplete?: () => void;
   [key: string]: any;
 };
