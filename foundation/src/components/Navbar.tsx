@@ -69,12 +69,12 @@ function Navbar() {
                   >
                       Mission
                   </Link>
-                  {/* <Link
-                      href="/campaign"
+                  <Link
+                      href="/experiences"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
                   >
-                      Campaign
-                  </Link> */}
+                      Wanderlust
+                  </Link>
                   <Link
                       href="/getinvolved"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
@@ -112,12 +112,12 @@ function Navbar() {
               >
                 Mission
               </Link>
-              {/* <Link
-                href="/campaign"
+              <Link
+                href="/experiences"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Campaign
-              </Link> */}
+                Wanderlust
+              </Link>
               <Link
                 href="/getinvolved"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"

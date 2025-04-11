@@ -3,20 +3,14 @@ import * as React from 'react';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 import Navbar from '@/components/Navbar';
-import StartCollecting from '@/components/Collecting';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
-import Header from '@/components/collect/Header';
 import Animal_Item from '@/components/animal/Detail';
 import Animals from '@/components/animal/Item';
 import Donation from '@/components/Donation';
 import Volunteer from '@/components/Volunteer';
 import Campaign from '@/components/Campaign';
 import Aiding from '@/components/Aiding';
-import TradingCard from '@/components/collect/TradingCard';
-import CardList from '@/components/collect/CardList';
-import Support from '@/components/collect/Support';
-import Slider from '@/components/collect/Slider';
 import Globe from '@/components/WrapGlobe';
 
 export default function CollectPage() {
@@ -24,22 +18,16 @@ export default function CollectPage() {
     <Layout>
         <Seo />
         <Navbar />
-        <Header />
-        {/* <div className='px-[10%] bg-black'> */}
-        <Globe />
-        {/* </div> */}
-        <div className='max-md:block hidden'>
-        <Slider />
+        <div className='pt-16 px-6 md:px-12 bg-black'>
+          <h1 className='text-white text-center text-4xl md:text-5xl lg:text-6xl mb-8'>Our Supported Animals</h1>
+          <p className='text-gray-300 text-center text-lg md:text-xl max-w-3xl mx-auto mb-12'>Learn about the endangered species we&apos;re protecting through conservation efforts and education.</p>
         </div>
+        <Globe />
         <Aiding />
-        <TradingCard />
-        <CardList />
-        <Support />
         <Animal_Item />
         <Animals />
         <Donation />
         <Volunteer />
-        <StartCollecting />
         <Campaign />
         <Newsletter />
         <Footer />

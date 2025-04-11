@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 
   const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || '', {
-    apiVersion: '2022-11-15',
+    apiVersion: '2023-10-16',
   })
 
   const product_name = "support Zoo Labs Foundation";// + new Date().valueOf();
