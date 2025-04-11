@@ -32,6 +32,7 @@ This is the "foundation" module of the Zoo Labs project, which appears to be a N
 - **2025-04-10**: Changed TypeScript moduleResolution from 'node16' to 'bundler' to eliminate the need for explicit file extensions in relative imports, improving code maintainability.
 - **2025-04-10**: Fixed NextImage component type errors by correctly importing and renaming ImageProps. Removed invalid swcMinify option from next.config.js, and disabled ESLint during builds to bypass linting errors.
 - **2025-04-10**: Further simplified component type declarations to avoid namespace issues with Next.js types in NextImage and UnstyledLink components.
+- **2025-04-10**: Fixed Tailwind configuration for v4 compatibility by removing fontFamily import that no longer exists and manually specifying font stacks.
 
 ## Development Workflow
 - Use `pnpm` for package management (based on pnpm-lock.yaml presence)
