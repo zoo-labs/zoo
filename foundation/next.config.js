@@ -6,6 +6,11 @@ const nextConfig = {
 
   reactStrictMode: true,
   swcMinify: true,
+  
+  // Support for React 19 in Pages Router
+  experimental: {
+    pagesRouterReact19: true,
+  },
 
   // Uncoment to add domain whitelist
   // images: {

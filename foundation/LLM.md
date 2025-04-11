@@ -4,14 +4,14 @@
 This is the "foundation" module of the Zoo Labs project, which appears to be a Next.js web application with a focus on animal conservation and education.
 
 ## Project Structure
-- Next.js frontend application (v14.2)
+- Next.js frontend application (v15.1)
 - React v19.0
 - TailwindCSS v4.0 for styling
 - Uses various UI components from Radix UI
 - Contains 3D model viewers (likely for animal models)
 
 ## Key Technologies
-- **Frontend Framework**: Next.js 14.2
+- **Frontend Framework**: Next.js 15.1
 - **UI Library**: React 19.0
 - **Styling**: TailwindCSS 4.0 with custom configuration
 - **UI Components**: Radix UI
@@ -25,6 +25,7 @@ This is the "foundation" module of the Zoo Labs project, which appears to be a N
 
 ## Important Issues Resolved
 - **2025-04-10**: Fixed build error related to TailwindCSS v4 configuration. TailwindCSS v4 moved the PostCSS plugin to a separate package (@tailwindcss/postcss). Updated postcss.config.js to reference the correct package.
+- **2025-04-10**: Upgraded Next.js from version 14.2.28 to 15.1.0. Updated the configuration for compatibility with React 19 in Pages Router. Updated TypeScript definitions to match React 19.
 
 ## Development Workflow
 - Use `pnpm` for package management (based on pnpm-lock.yaml presence)
