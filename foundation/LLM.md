@@ -26,6 +26,7 @@ This is the "foundation" module of the Zoo Labs project, which appears to be a N
 ## Important Issues Resolved
 - **2025-04-10**: Fixed build error related to TailwindCSS v4 configuration. TailwindCSS v4 moved the PostCSS plugin to a separate package (@tailwindcss/postcss). Updated postcss.config.js to reference the correct package.
 - **2025-04-10**: Upgraded Next.js from version 14.2.28 to 15.1.0. Updated the configuration for compatibility with React 19 in Pages Router. Updated TypeScript definitions to match React 19.
+- **2025-04-10**: Fixed build errors after Next.js upgrade by removing invalid experimental flag, creating proper ESLint configuration, and correcting PostCSS configuration for TailwindCSS.
 
 ## Development Workflow
 - Use `pnpm` for package management (based on pnpm-lock.yaml presence)
