@@ -1,4 +1,4 @@
-import Link, { LinkProps } from 'next/link';
+import Link from 'next/link';
 import * as React from 'react';
 
 import clsxm from '@/lib/clsxm';
@@ -8,7 +8,7 @@ export type UnstyledLinkProps = {
   children: React.ReactNode;
   openNewTab?: boolean;
   className?: string;
-  nextLinkProps?: Omit<LinkProps, 'href'>;
+  nextLinkProps?: any;
 } & React.ComponentPropsWithRef<'a'>;
 
 const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
