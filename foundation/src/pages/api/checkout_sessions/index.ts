@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { formatAmountForStripe } from '../../../utils/stripe_helpers'
 import Stripe from 'stripe'
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || '', {
-  apiVersion: '2022-11-15',
+  apiVersion: '2023-10-16',
 })
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

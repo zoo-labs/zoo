@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 import Navbar from '@/components/Navbar';
-import StartCollecting from '@/components/Collecting';
 import Newsletter from '@/components/Newsletter';
 import Campaign from '@/components/Campaign';
 import Footer from '@/components/Footer';
@@ -36,7 +35,6 @@ export default function DonationPage() {
         <Header />
         </Elements>
         <Donation_Spent />
-        <StartCollecting />
         <Campaign />
         <Newsletter />
         <Footer />
