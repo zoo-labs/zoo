@@ -28,6 +28,7 @@ This is the "foundation" module of the Zoo Labs project, which appears to be a N
 - **2025-04-10**: Upgraded Next.js from version 14.2.28 to 15.1.0. Updated the configuration for compatibility with React 19 in Pages Router. Updated TypeScript definitions to match React 19.
 - **2025-04-10**: Fixed build errors after Next.js upgrade by removing invalid experimental flag, creating proper ESLint configuration, and correcting PostCSS configuration for TailwindCSS.
 - **2025-04-10**: Fixed type errors by removing unused imports from components and adding type declarations for Next.js modules.
+- **2025-04-10**: Updated TailwindCSS configuration for v4 compatibility with Next.js 15.3. Changed CSS import syntax from directives to '@import "tailwindcss"' and updated PostCSS configuration to use @tailwindcss/postcss package.
 
 ## Development Workflow
 - Use `pnpm` for package management (based on pnpm-lock.yaml presence)
