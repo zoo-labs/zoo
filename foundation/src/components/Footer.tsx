@@ -15,7 +15,7 @@ function Footer() {
       <div className='grid md:grid-cols-5 grid-cols-1 gap-8 2xl:px-56 xl:px-42 lg:px-28 md:px-16 max-md:px-4 pt-20'>
         <div className='flex flex-col space-y-8'>
             <p className='text-sm lg:text-lg text-white'>Zoo Labs Foundation</p>
-            <p className='text-sm lg:text-md text-white'>All rights reserved.© 2025 Zoo Labs Foundation Inc. EIN: 42-4200000</p>
+            <p className='text-sm lg:text-md text-white'>All rights reserved.© 2025 Zoo Labs Foundation Inc. EIN: 88-3538992</p>
             <div className='flex items-center space-x-2 text-white'>
                 <Link href="https://twitter.com/zoo_labs" legacyBehavior><FaTwitter /></Link>
                 <Link href="https://t.me/zooofficial" legacyBehavior><FaTelegram /></Link>
@@ -82,7 +82,7 @@ function Footer() {
           <Link href="/terms" className='text-lg text-white'>Terms of service</Link>
           <Link href="/terms-refund" className='text-lg text-white'>Terms of Refund</Link>
         </div>
-        <p className='text-lg text-white pt-6 pb-16'>© 2025 Zoo Labs Foundation Inc. EIN: 42-4200000</p>
+        <p className='text-lg text-white pt-6 pb-16'>© 2025 Zoo Labs Foundation Inc. EIN: 88-3538992</p>
       </div>
     </div>
     </div>
