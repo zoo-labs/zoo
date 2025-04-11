@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import Image from "next/link";
+// Image isn't used in this component
+// import Image from "next/image";
 import "@google/model-viewer/dist/model-viewer";
-import Head from "next";
+// Head isn't used in this component
+// import Head from "next/head";
 const ModelViewer = ({
   glb = "/models/Tiger/TIGER_BABY.glb",
   usdz = "/models/Tiger/TIGER_BABY.usdz",
