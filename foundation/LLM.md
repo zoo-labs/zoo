@@ -29,6 +29,7 @@ This is the "foundation" module of the Zoo Labs project, which appears to be a N
 - **2025-04-10**: Fixed build errors after Next.js upgrade by removing invalid experimental flag, creating proper ESLint configuration, and correcting PostCSS configuration for TailwindCSS.
 - **2025-04-10**: Fixed type errors by removing unused imports from components and adding type declarations for Next.js modules.
 - **2025-04-10**: Updated TailwindCSS configuration for v4 compatibility with Next.js 15.3. Changed CSS import syntax from directives to '@import "tailwindcss"' and updated PostCSS configuration to use @tailwindcss/postcss package.
+- **2025-04-10**: Changed TypeScript moduleResolution from 'node16' to 'bundler' to eliminate the need for explicit file extensions in relative imports, improving code maintainability.
 
 ## Development Workflow
 - Use `pnpm` for package management (based on pnpm-lock.yaml presence)
