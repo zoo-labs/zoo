@@ -6,20 +6,10 @@ function CryptoSection({ isMobile = false }: { isMobile?: boolean }) {
     ? 'flex-1 h-[40px] rounded-full px-4 py-2 text-white bg-transparent border border-white hover:bg-white transition-colors text-xs font-medium whitespace-nowrap'
     : 'min-w-[160px] h-[44px] rounded-full px-6 py-2 text-white bg-transparent border border-white hover:bg-white transition-colors md:text-sm lg:text-md xl:text-lg font-medium whitespace-nowrap';
   
-  const hoverStyle = {
-    ':hover': {
-      color: 'black !important'
-    }
-  };
-  
   return (
     <a 
       href="/donation/crypto" 
       className={buttonClasses}
-      style={{
-        color: 'white',
-        ':hover': { color: 'black !important' }
-      }}
       onMouseEnter={(e) => e.currentTarget.style.color = 'black'}
       onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
     >
