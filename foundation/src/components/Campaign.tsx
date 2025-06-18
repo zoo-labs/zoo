@@ -10,7 +10,8 @@ function Campaign() {
             <Link
                 href="/campaign_guide"
                 rel="noopener noreferrer" target="_blank"
-                className="text-black w-[180px] hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full border-white border-2 text-xl font-medium md:block"
+                className="w-[180px] bg-white hover:bg-transparent hover:text-white px-6 py-1 rounded-full border-white border-2 text-xl font-medium md:block transition-colors"
+                style={{ color: 'black !important' }}
             >
               {'Learn More'}
             </Link>

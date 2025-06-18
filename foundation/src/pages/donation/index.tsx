@@ -8,11 +8,8 @@ import Campaign from '@/components/Campaign';
 import Footer from '@/components/Footer';
 import Header from '@/components/donation/Header';
 import Donation_Spent from '@/components/donation/Donation_Spent';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || '');
 export default function DonationPage() {
   const router = useRouter();
 
@@ -31,9 +28,7 @@ export default function DonationPage() {
         <Seo />
         <ToastContainer />
         <Navbar />
-        <Elements stripe={stripePromise}>
         <Header />
-        </Elements>
         <Donation_Spent />
         <div className="bg-black py-16">
           <div className="max-w-4xl mx-auto px-8 text-center">
