@@ -25,9 +25,8 @@ function Header() {
         <div className='w-1/2 max-md:w-full max-md:px-8 flex flex-col 2xl:pl-52 xl:pl-36 lg:pl-28 md:pl-16 pr-8 lg:pb-32'>
             <p className='text-lg text-white pb-8'>End the road to extinction</p>
             <h1 className='text-white md:text-3xl lg:text-5xl xl:text-7xl max-md:text-3xl max-md:my-5 pb-9'>Donate to the Zoo Labs Foundation</h1>
-            <p className='lg:text-lg md:text-md text-white pb-8'>&quot;It is our driving purpose to deepen the connection humans have with animals by creating sustainable animal sanctuaries for endangered species. Share the Zoo Sanctuary with local visitors, educators, host fundraisers/events, and get the Zoo Community as involved as possible to saving endandered animals all over the world. You could save a life todav w/ a monthlv donation or a one.-time contribution.
-&quot;</p>
-            <div className='lg:flex hidden items-center justify-center xl:space-x-8 space-x-6'>
+            <p className='lg:text-lg md:text-md text-white pb-8 leading-relaxed'>&quot;It is our driving purpose to deepen the connection humans have with animals by creating sustainable animal sanctuaries for endangered species. Share the Zoo Sanctuary with local visitors, educators, host fundraisers/events, and get the Zoo Community as involved as possible to saving endangered animals all over the world. You could save a life today w/ a monthly donation or a one-time contribution.&quot;</p>
+            <div className='lg:flex hidden items-center justify-start xl:space-x-8 space-x-6'>
                 <div className='flex space-x-4'>
                   <a 
                     href="https://www.paypal.biz/zoongo" 
@@ -57,7 +56,7 @@ function Header() {
             </video>
         </div>
       </div>
-      <div className='md:flex max-md:flex max-md:px-4 lg:hidden w-full items-center justify-center md:pb-32'>
+      <div className='md:flex max-md:flex max-md:px-4 lg:hidden w-full items-center justify-start md:pl-16 md:pb-32'>
           <div className='flex flex-col space-y-3 w-full max-w-md'>
             <div className='flex space-x-3'>
               <a 
