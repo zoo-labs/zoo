@@ -7,6 +7,49 @@ import Switch from "react-switch";
 import axios from "axios";
 import { useStripe } from '@stripe/react-stripe-js'
 import { fetchPostJSON, fetchGetJSON } from '../../utils/api_helpers'
+
+function CryptoSection({ isMobile = false }: { isMobile?: boolean }) {
+  const [showCrypto, setShowCrypto] = useState(false);
+  
+  const buttonClasses = isMobile 
+    ? 'w-full h-[40px] rounded-full px-3 py-2 text-black bg-transparent border border-white hover:bg-transparent hover:border-gray-300 transition-colors text-xs font-medium'
+    : 'min-w-[100px] h-[44px] rounded-full px-4 py-2 text-black bg-transparent border border-white hover:bg-transparent hover:border-gray-300 transition-colors md:text-sm lg:text-md xl:text-lg font-medium';
+  
+  const containerClasses = isMobile 
+    ? 'mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg p-3 space-y-2'
+    : 'mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg p-4 space-y-3';
+  
+  return (
+    <div className={isMobile ? 'flex-1' : ''}>
+      <button onClick={() => setShowCrypto(!showCrypto)} className={buttonClasses}>
+        Crypto
+      </button>
+      {showCrypto && (
+        <div className={containerClasses}>
+          <div>
+            <p className='text-xs font-medium text-gray-700 mb-1'>Bitcoin (BTC):</p>
+            <button 
+              onClick={() => navigator.clipboard.writeText('3G3PrtfP5LxNe83T7GRFhLPSLURz4jBdYk').then(() => alert('Bitcoin address copied!'))} 
+              className='text-xs text-gray-600 hover:text-gray-800 break-all'
+            >
+              3G3PrtfP5LxNe83T7GRFhLPSLURz4jBdYk
+            </button>
+          </div>
+          <div>
+            <p className='text-xs font-medium text-gray-700 mb-1'>Ethereum (ETH):</p>
+            <button 
+              onClick={() => navigator.clipboard.writeText('0xA59Ad3199E6fdd0046d259944d3d18ee379152CB').then(() => alert('Ethereum address copied!'))} 
+              className='text-xs text-gray-600 hover:text-gray-800 break-all'
+            >
+              0xA59Ad3199E6fdd0046d259944d3d18ee379152CB
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Header() {
   const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -84,22 +127,8 @@ function Header() {
                 </div>
                 <div className='flex space-x-4'>
                   <button onClick={handleSubmit} className='min-w-[120px] h-[44px] rounded-full px-4 py-2 text-black bg-white border border-white hover:bg-gray-100 transition-colors md:text-sm lg:text-md xl:text-lg font-medium'>Donate Now</button>
-                  <a href="https://www.paypal.biz/zoongo" target="_blank" rel="noopener noreferrer" className='min-w-[100px] h-[44px] rounded-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors md:text-sm lg:text-md xl:text-lg font-medium flex items-center justify-center'>PayPal</a>
-                  <div className='relative group'>
-                    <button className='min-w-[100px] h-[44px] rounded-full px-4 py-2 text-white bg-orange-500 hover:bg-orange-600 transition-colors md:text-sm lg:text-md xl:text-lg font-medium'>Crypto</button>
-                    <div className='absolute top-full left-0 mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10'>
-                      <div className='p-4 space-y-3'>
-                        <div>
-                          <p className='text-xs font-medium text-gray-700 mb-1'>Bitcoin (BTC):</p>
-                          <button onClick={() => navigator.clipboard.writeText('3G3PrtfP5LxNe83T7GRFhLPSLURz4jBdYk').then(() => alert('Bitcoin address copied!'))} className='text-xs text-gray-600 hover:text-gray-800 break-all'>3G3PrtfP5LxNe83T7GRFhLPSLURz4jBdYk</button>
-                        </div>
-                        <div>
-                          <p className='text-xs font-medium text-gray-700 mb-1'>Ethereum (ETH):</p>
-                          <button onClick={() => navigator.clipboard.writeText('0xA59Ad3199E6fdd0046d259944d3d18ee379152CB').then(() => alert('Ethereum address copied!'))} className='text-xs text-gray-600 hover:text-gray-800 break-all'>0xA59Ad3199E6fdd0046d259944d3d18ee379152CB</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <a href="https://www.paypal.biz/zoongo" target="_blank" rel="noopener noreferrer" className='min-w-[100px] h-[44px] rounded-full px-4 py-2 text-black bg-transparent border border-white hover:bg-transparent hover:border-gray-300 transition-colors md:text-sm lg:text-md xl:text-lg font-medium flex items-center justify-center'>Donate Online</a>
+                  <CryptoSection />
                 </div>
             </div>
         </div>
@@ -133,22 +162,8 @@ function Header() {
           <div className='flex flex-col space-y-2 w-full'>
             <button onClick={handleSubmit} className='w-full h-[44px] rounded-full text-black bg-white px-4 py-2 max-md:text-xs md:text-sm border border-white hover:bg-gray-100 transition-colors font-medium'>Donate Now</button>
             <div className='flex space-x-2'>
-              <a href="https://www.paypal.biz/zoongo" target="_blank" rel="noopener noreferrer" className='flex-1 h-[40px] rounded-full px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 transition-colors text-xs font-medium flex items-center justify-center'>PayPal</a>
-              <div className='relative group flex-1'>
-                <button className='w-full h-[40px] rounded-full px-3 py-2 text-white bg-orange-500 hover:bg-orange-600 transition-colors text-xs font-medium'>Crypto</button>
-                <div className='absolute top-full left-0 mt-2 w-56 bg-white border border-gray-300 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10'>
-                  <div className='p-3 space-y-2'>
-                    <div>
-                      <p className='text-xs font-medium text-gray-700 mb-1'>Bitcoin (BTC):</p>
-                      <button onClick={() => navigator.clipboard.writeText('3G3PrtfP5LxNe83T7GRFhLPSLURz4jBdYk').then(() => alert('Bitcoin address copied!'))} className='text-xs text-gray-600 hover:text-gray-800 break-all'>3G3PrtfP5LxNe83T7GRFhLPSLURz4jBdYk</button>
-                    </div>
-                    <div>
-                      <p className='text-xs font-medium text-gray-700 mb-1'>Ethereum (ETH):</p>
-                      <button onClick={() => navigator.clipboard.writeText('0xA59Ad3199E6fdd0046d259944d3d18ee379152CB').then(() => alert('Ethereum address copied!'))} className='text-xs text-gray-600 hover:text-gray-800 break-all'>0xA59Ad3199E6fdd0046d259944d3d18ee379152CB</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <a href="https://www.paypal.biz/zoongo" target="_blank" rel="noopener noreferrer" className='flex-1 h-[40px] rounded-full px-3 py-2 text-black bg-transparent border border-white hover:bg-transparent hover:border-gray-300 transition-colors text-xs font-medium flex items-center justify-center'>Donate Online</a>
+              <CryptoSection isMobile={true} />
             </div>
           </div>
       </div>
