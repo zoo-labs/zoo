@@ -12,8 +12,8 @@ function CryptoSection({ isMobile = false }: { isMobile?: boolean }) {
   const [showCrypto, setShowCrypto] = useState(false);
   
   const buttonClasses = isMobile 
-    ? 'w-full h-[40px] rounded-full px-3 py-2 text-black bg-transparent border border-white hover:bg-transparent hover:border-gray-300 transition-colors text-xs font-medium'
-    : 'min-w-[100px] h-[44px] rounded-full px-4 py-2 text-black bg-transparent border border-white hover:bg-transparent hover:border-gray-300 transition-colors md:text-sm lg:text-md xl:text-lg font-medium';
+    ? 'w-full h-[40px] rounded-full px-3 py-2 text-white bg-transparent border border-white hover:bg-white hover:text-black transition-colors text-xs font-medium'
+    : 'min-w-[100px] h-[44px] rounded-full px-4 py-2 text-white bg-transparent border border-white hover:bg-white hover:text-black transition-colors md:text-sm lg:text-md xl:text-lg font-medium';
   
   const containerClasses = isMobile 
     ? 'mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg p-3 space-y-2'
@@ -116,18 +116,12 @@ function Header() {
             <div className='lg:flex hidden items-baseline justify-between xl:space-x-16 space-x-8'>
                 <div className='space-y-2'>
                   <div className='flex items-center border rounded-full border-white'>
-                    <input onChange={handleInputChange} value={amount} className='w-full xl:pl-[88px] outline-none bg-transparent text-white text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $' />
-                    
-                    <Switch className="border border-white rounded-full px-[2px]" offColor="#000" onColor="#000" uncheckedHandleIcon={<FaCircle size={40} className='absolute left-[1px] top-[1px]' />} checkedHandleIcon={<FaCheckCircle size={36} className='absolute left-[3px] top-[3px]' />} onChange={handleChange} height={44} width={88}  uncheckedIcon={false} checkedIcon={false} checked={checked} />
-                    
+                    <input onChange={handleInputChange} value={amount} className='w-full outline-none bg-transparent text-white text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg' placeholder='Enter $' />
                   </div>
-                  <BootstrapTooltip title="If you choose the monthly option you will make a donation every month on the same date or the nearest date to the calendar date you make today. Your payment method will be charged the amount you type in now, if you wish to change the monthly amount you or discontinue donations send an email to hello@zoo.ngo." placement="top">
-                    <p className='italic cursor-pointer text-xs leading-[0.5rem] float-right text-white pr-4'>Monthly&nbsp;&nbsp;<FaRegQuestionCircle /></p>
-                  </BootstrapTooltip>
                 </div>
                 <div className='flex space-x-4'>
-                  <button onClick={handleSubmit} className='min-w-[120px] h-[44px] rounded-full px-4 py-2 text-black bg-white border border-white hover:bg-gray-100 transition-colors md:text-sm lg:text-md xl:text-lg font-medium'>Donate Now</button>
-                  <a href="https://www.paypal.biz/zoongo" target="_blank" rel="noopener noreferrer" className='min-w-[100px] h-[44px] rounded-full px-4 py-2 text-black bg-transparent border border-white hover:bg-transparent hover:border-gray-300 transition-colors md:text-sm lg:text-md xl:text-lg font-medium flex items-center justify-center'>Donate Online</a>
+                  <button onClick={handleSubmit} className='min-w-[120px] h-[44px] rounded-full px-4 py-2 text-black bg-white border border-white hover:bg-transparent hover:text-white hover:border-white transition-colors md:text-sm lg:text-md xl:text-lg font-medium'>Donate Now</button>
+                  <a href="https://www.paypal.biz/zoongo" target="_blank" rel="noopener noreferrer" className='min-w-[100px] h-[44px] rounded-full px-4 py-2 text-white bg-transparent border border-white hover:bg-white hover:text-black transition-colors md:text-sm lg:text-md xl:text-lg font-medium flex items-center justify-center'>Donate Online</a>
                   <CryptoSection />
                 </div>
             </div>
@@ -150,19 +144,13 @@ function Header() {
           
           <div className='space-y-2'>
             <div className='flex items-center border rounded-full border-white'>
-              <input onChange={handleInputChange} value={amount} className='w-full sm:pl-[88px] outline-none bg-transparent text-white text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg max-md:text-sm' placeholder='Enter $' />
-              
-              <Switch className="border border-white rounded-full px-[2px]" offColor="#000" onColor="#000" uncheckedHandleIcon={<FaCircle size={40} className='absolute left-[1px] top-[1px]' />} checkedHandleIcon={<FaCheckCircle size={40} className='absolute left-[1px] top-[1px]' />} onChange={handleChange} height={44} width={88}  uncheckedIcon={false} checkedIcon={false} checked={checked} />
-              
+              <input onChange={handleInputChange} value={amount} className='w-full outline-none bg-transparent text-white text-center px-4 py-2 md:text-sm lg:text-md xl:text-lg max-md:text-sm' placeholder='Enter $' />
             </div>
-            <BootstrapTooltip title="If you choose the monthly option you will make a donation every month on the same date or the nearest date to the calendar date you make today. Your payment method will be charged the amount you type in now, if you wish to change the monthly amount you or discontinue donations send an email to hello@zoo.ngo." placement="top">
-            <p className='italic cursor-pointer text-xs leading-[0.5rem] float-right text-white pr-4'>Monthly&nbsp;&nbsp;<FaRegQuestionCircle /></p>
-            </BootstrapTooltip>
           </div>
           <div className='flex flex-col space-y-2 w-full'>
-            <button onClick={handleSubmit} className='w-full h-[44px] rounded-full text-black bg-white px-4 py-2 max-md:text-xs md:text-sm border border-white hover:bg-gray-100 transition-colors font-medium'>Donate Now</button>
+            <button onClick={handleSubmit} className='w-full h-[44px] rounded-full text-black bg-white px-4 py-2 max-md:text-xs md:text-sm border border-white hover:bg-transparent hover:text-white hover:border-white transition-colors font-medium'>Donate Now</button>
             <div className='flex space-x-2'>
-              <a href="https://www.paypal.biz/zoongo" target="_blank" rel="noopener noreferrer" className='flex-1 h-[40px] rounded-full px-3 py-2 text-black bg-transparent border border-white hover:bg-transparent hover:border-gray-300 transition-colors text-xs font-medium flex items-center justify-center'>Donate Online</a>
+              <a href="https://www.paypal.biz/zoongo" target="_blank" rel="noopener noreferrer" className='flex-1 h-[40px] rounded-full px-3 py-2 text-white bg-transparent border border-white hover:bg-white hover:text-black transition-colors text-xs font-medium flex items-center justify-center'>Donate Online</a>
               <CryptoSection isMobile={true} />
             </div>
           </div>
