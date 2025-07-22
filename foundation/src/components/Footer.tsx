@@ -17,12 +17,12 @@ function Footer() {
             <p className='text-sm lg:text-lg text-white'>Zoo Labs Foundation</p>
             <p className='text-sm lg:text-md text-white'>All rights reserved.© 2025 Zoo Labs Foundation Inc. EIN: 88-3538992 - Registered 501(c)(3) Charity</p>
             <div className='flex items-center space-x-2 text-white'>
-                <Link href="https://twitter.com/zoo_labs" legacyBehavior><FaTwitter /></Link>
-                <Link href="https://t.me/zooofficial" legacyBehavior><FaTelegram /></Link>
-                <Link href="https://instagram.com/zoolabs.io" legacyBehavior><FaInstagram /></Link>
-                <Link href="https://discord.gg/AqrYhChx5b" legacyBehavior><FaDiscord /></Link>
-                <Link href="https://zoolabsofficial.medium.com" legacyBehavior><BsMedium /></Link>
-                <Link href="https://youtu.be/6yYuYtMWgOU" legacyBehavior><FaYoutube /></Link>
+                <Link href="https://twitter.com/zoo_labs" className="cursor-pointer hover:text-gray-300 transition-colors"><FaTwitter /></Link>
+                <Link href="https://t.me/zooofficial" className="cursor-pointer hover:text-gray-300 transition-colors"><FaTelegram /></Link>
+                <Link href="https://instagram.com/zoolabs.io" className="cursor-pointer hover:text-gray-300 transition-colors"><FaInstagram /></Link>
+                <Link href="https://discord.gg/AqrYhChx5b" className="cursor-pointer hover:text-gray-300 transition-colors"><FaDiscord /></Link>
+                <Link href="https://zoolabsofficial.medium.com" className="cursor-pointer hover:text-gray-300 transition-colors"><BsMedium /></Link>
+                <Link href="https://youtu.be/6yYuYtMWgOU" className="cursor-pointer hover:text-gray-300 transition-colors"><FaYoutube /></Link>
             </div>
         </div>
         <div className='flex flex-col space-y-8'>
@@ -69,12 +69,12 @@ function Footer() {
             <Link href="/donation" className='text-lg text-white'>Donate</Link>
         </div>
         <div className='flex items-center space-x-2 text-white pt-10'>
-          <Link href="https://twitter.com/zoo_labs" legacyBehavior><FaTwitter /></Link>
-          <Link href="https://t.me/zooofficial" legacyBehavior><FaTelegram /></Link>
-          <Link href="https://instagram.com/zoolabs.io" legacyBehavior><FaInstagram /></Link>
-          <Link href="https://discord.gg/AqrYhChx5b" legacyBehavior><FaDiscord /></Link>
-          <Link href="https://zoolabsofficial.medium.com" legacyBehavior><BsMedium /></Link>
-          <Link href="https://youtu.be/6yYuYtMWgOU" legacyBehavior><FaYoutube /></Link>
+          <Link href="https://twitter.com/zoo_labs" className="cursor-pointer hover:text-gray-300 transition-colors"><FaTwitter /></Link>
+          <Link href="https://t.me/zooofficial" className="cursor-pointer hover:text-gray-300 transition-colors"><FaTelegram /></Link>
+          <Link href="https://instagram.com/zoolabs.io" className="cursor-pointer hover:text-gray-300 transition-colors"><FaInstagram /></Link>
+          <Link href="https://discord.gg/AqrYhChx5b" className="cursor-pointer hover:text-gray-300 transition-colors"><FaDiscord /></Link>
+          <Link href="https://zoolabsofficial.medium.com" className="cursor-pointer hover:text-gray-300 transition-colors"><BsMedium /></Link>
+          <Link href="https://youtu.be/6yYuYtMWgOU" className="cursor-pointer hover:text-gray-300 transition-colors"><FaYoutube /></Link>
         </div>
         <hr className='w-full bg-white my-4'/>
         <div className='flex items-center space-x-16'>

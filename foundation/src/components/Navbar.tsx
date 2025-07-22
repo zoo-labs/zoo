@@ -89,8 +89,7 @@ function Navbar() {
               <div className='flex items-center'>
                   <Link
                       href="/donation"
-                      className="bg-white hover:border-gray-300 border border-white px-6 py-1 rounded-full text-md font-medium md:block"
-                      style={{ color: 'black !important' }}
+                      className="bg-white hover:bg-black hover:text-white border border-white px-6 py-1 rounded-full text-md font-medium text-black transition-colors"
                   >
                       Donate
                   </Link>
@@ -126,6 +125,12 @@ function Navbar() {
                 <>
                   Get Involved
                 </>
+              </Link>
+              <Link
+                href="/donation"
+                className="bg-white hover:bg-black hover:text-white border border-white px-6 py-2 rounded-full text-base font-medium text-black transition-colors mx-3 mt-4 text-center block"
+              >
+                Donate
               </Link>
             </div>
           </div>

@@ -82,7 +82,7 @@ export default function IndexPage() {
             </Link>
           </div>
           <div className="mt-8 text-center">
-            <Link href="/experiences" className="inline-block px-6 py-3 border border-white rounded-lg text-white hover:bg-white hover:text-black transition-colors font-medium">
+            <Link href="/experiences" className="inline-block bg-white hover:bg-black hover:text-white border border-white px-6 py-3 rounded-lg text-black font-medium transition-colors">
               Browse All Experiences
             </Link>
           </div>

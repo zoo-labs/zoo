@@ -20,8 +20,8 @@ export default function ExperienceDetailPage() {
   const experience = id ? getExperienceById(id as string) : null;
 
   const handleBookNow = () => {
-    // In a real app, this would navigate to a booking page or show a form
-    alert('Booking functionality would be implemented here');
+    // Go directly to PayPal for wildlife experience booking
+    window.open('https://www.paypal.biz/zoongo', '_blank');
   };
   
   if (!experience && router.isReady) {

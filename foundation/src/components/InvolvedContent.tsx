@@ -104,7 +104,7 @@ function InvolvedContent({id,title,content1,content2,image,direction,type,index}
                 <Link
                     href="/donation"
                     rel="noopener noreferrer" target="_blank"
-                    className="text-black hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full border-white border-2 text-lg font-medium  md:block"
+                    className="bg-white hover:bg-black hover:text-white border border-white px-6 py-1 rounded-full text-lg font-medium text-black transition-colors"
                 >
                     Donate
                 </Link>

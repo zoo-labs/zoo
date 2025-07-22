@@ -10,7 +10,7 @@ function Volunteer() {
             <input className='bg-white text-black pl-4 lg:py-4 py-2 rounded-full outline-none mb-4 md:text-sm lg:text-md' placeholder='First and Last Name' />
             <input className='bg-white text-black pl-4 lg:py-4 py-2 rounded-full outline-none mb-8 md:text-sm lg:text-md' placeholder='Email' />
             <div className='flex lg:space-x-16 md:space-x-4 max-md:space-x-4 items-center'>
-                <button className='rounded-full px-12 py-2 bg-white'>Inquire</button>
+                <button className='bg-white hover:bg-black hover:text-white border border-white px-12 py-2 rounded-full font-medium text-black transition-colors'>Inquire</button>
                 <p className='text-white text-sm'>The future generations of endangered species thank you.</p>
             </div>
         </div>
