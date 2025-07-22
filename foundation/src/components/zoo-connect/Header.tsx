@@ -112,7 +112,7 @@ function Header() {
             </div>
             <div className='flex pt-6 space-x-4 2xl:space-x-16'>
               <input onChange={handleInputChange} value={amount} className='w-1/2 outline-none bg-transparent text-white text-center px-4 py-1 md:text-sm lg:text-md xl:text-lg border border-white rounded-full' placeholder='Enter $' />
-              <button onClick={handleSubmit} className='w-1/2 rounded-full  text-black bg-white px-4 py-1 md:text-sm border border-white'>Donate</button>
+              <button onClick={handleSubmit} className='w-1/2 bg-white hover:bg-black hover:text-white border border-white px-4 py-1 rounded-full text-black font-medium md:text-sm transition-colors'>Donate</button>
             </div>
           </div>
       </div>

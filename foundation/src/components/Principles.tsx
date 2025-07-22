@@ -12,7 +12,7 @@ function Principles() {
               <div className='flex items-center justify-center md:space-x-6'>
                   <Link
                       href="/donation"
-                      className="text-black hover:bg-gray-700 bg-white hover:text-white px-6 py-1 rounded-full border-white border-2 text-xl font-medium hidden md:block"
+                      className="bg-white hover:bg-black hover:text-white border border-white px-6 py-1 rounded-full text-xl font-medium text-black hidden md:block transition-colors"
                   >
                       Donate
                   </Link>

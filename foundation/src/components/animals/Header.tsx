@@ -71,7 +71,7 @@ function Header({title,content,front,back,front_m,back_m,route}: {
             <div className='flex items-center md:pt-10 space-x-8'>
                 <button
                     onClick={buyCard}
-                    className="text-black hover:bg-gray-700 bg-white hover:text-white px-12 py-1 rounded-full border-white border-2 text-lg font-medium md:block"
+                    className="bg-white hover:bg-black hover:text-white border border-white px-12 py-1 rounded-full text-lg font-medium text-black transition-colors"
                 >
                     Buy $25
                 </button>
