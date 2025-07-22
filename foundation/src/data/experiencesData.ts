@@ -3,25 +3,25 @@ import { Experience } from "../types/experiences";
 export const experiences: Experience[] = [
   {
     id: "1",
-    title: "Big Cat Conservation & Rehabilitation",
+    title: "Mountain Goat Preserve & Rehabilitation",
     location: {
-      city: "Kruger",
-      country: "South Africa",
-      continent: "Africa",
+      city: "Boise",
+      country: "USA",
+      continent: "North America",
       coordinates: {
-        lat: -24.0,
-        lng: 31.5,
+        lat: 43.6150,
+        lng: -116.2023,
       },
     },
     images: [
-      "https://images.unsplash.com/photo-1493962853295-0fd70327578a",
-      "https://images.unsplash.com/photo-1466721591366-2d5fba72006d",
+      "/images/volunteer-experiences/mountain-goat-1.jpg",
+      "/images/volunteer-experiences/mountain-goat-2.jpg",
     ],
     description:
-      "Join our dedicated team in South Africa to rehabilitate and conserve endangered big cats. Work hands-on with lions, cheetahs and leopards.",
+      "Join our dedicated team in Idaho to rehabilitate and conserve mountain goats. Work hands-on with these magnificent alpine animals in their natural habitat.",
     overview:
-      "This sanctuary focuses on the rehabilitation of big cats that have been rescued from captivity or injury. Our mission is to provide these magnificent animals with a safe environment where they can recover and, when possible, be reintroduced to the wild. You'll work alongside experienced conservationists who are passionate about protecting these endangered species.",
-    wildlifeTypes: ["Big Cats"],
+      "This sanctuary focuses on the rehabilitation of mountain goats that have been rescued from injury or human conflict. Our mission is to provide these remarkable animals with a safe environment where they can recover and, when possible, be reintroduced to the wild. You'll work alongside experienced conservationists who are passionate about protecting these iconic mountain species.",
+    wildlifeTypes: ["Mountain Goats"],
     volunteerTasks: [
       "Food Preparation",
       "Habitat Maintenance",
@@ -29,7 +29,7 @@ export const experiences: Experience[] = [
       "Conservation",
     ],
     ethicalConsiderations:
-      "We maintain a strict no-contact policy with the big cats. Our focus is on conservation rather than entertainment, ensuring these animals maintain their natural behaviors. All activities are designed with the animals' welfare as the top priority.",
+      "We maintain a strict minimal-contact policy with the mountain goats. Our focus is on conservation rather than entertainment, ensuring these animals maintain their natural behaviors. All activities are designed with the animals' welfare as the top priority.",
     requirements: [
       "Minimum age of 18",
       "Good physical fitness",
@@ -46,7 +46,7 @@ export const experiences: Experience[] = [
       maxWeeks: 12,
     },
     impact:
-      "Your contribution directly supports the rehabilitation of injured and captive big cats, contributing to the conservation of endangered species and promoting biodiversity in South Africa.",
+      "Your contribution directly supports the rehabilitation of injured mountain goats, contributing to the conservation of these remarkable alpine species and promoting biodiversity in Idaho's mountain ecosystems.",
     rating: 4.8,
     reviewsCount: 157,
     featured: true,
@@ -64,7 +64,7 @@ export const experiences: Experience[] = [
       },
     },
     images: [
-      "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac",
+      "/images/volunteer-experiences/elephant-sanctuary.jpg",
     ],
     description:
       "Help care for rescued elephants in a natural environment focused on animal welfare and education.",
@@ -112,7 +112,7 @@ export const experiences: Experience[] = [
       },
     },
     images: [
-      "https://images.unsplash.com/photo-1518877593221-1f28583780b4",
+      "/images/volunteer-experiences/marine-conservation.jpg",
     ],
     description:
       "Dive into marine conservation efforts focusing on coral reef restoration and marine wildlife research.",
@@ -160,7 +160,7 @@ export const experiences: Experience[] = [
       },
     },
     images: [
-      "https://images.unsplash.com/photo-1501286353178-1ec881214838",
+      "/images/volunteer-experiences/primate-sanctuary.jpg",
     ],
     description:
       "Work with rescued monkeys and other primates in the Amazon rainforest while supporting conservation efforts.",
@@ -209,7 +209,7 @@ export const experiences: Experience[] = [
       },
     },
     images: [
-      "https://images.unsplash.com/photo-1441057206919-63d19fac2369",
+      "/images/volunteer-experiences/bird-conservation.jpg",
     ],
     description:
       "Help rescue, rehabilitate and release native bird species affected by habitat loss and human impact.",
@@ -258,8 +258,8 @@ export const experiences: Experience[] = [
       },
     },
     images: [
-      "https://images.unsplash.com/photo-1487252665478-49b61b47f302",
-      "https://images.unsplash.com/photo-1485833077593-4278bba3f11f",
+      "/images/volunteer-experiences/wildlife-rescue-1.jpg",
+      "/images/volunteer-experiences/wildlife-rescue-2.jpg",
     ],
     description:
       "Support a diverse wildlife rescue center caring for animals affected by the illegal pet trade and habitat loss.",
