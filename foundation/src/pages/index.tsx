@@ -39,14 +39,14 @@ export default function IndexPage() {
             <Link href="/experiences/1" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
               <div className="relative aspect-video overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1493962853295-0fd70327578a" 
-                  alt="Big Cat Conservation" 
+                  src="/images/volunteer-experiences/mountain-goat-1.jpg" 
+                  alt="Mountain Goat Preserve" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bold mb-1">Big Cat Conservation</h3>
-                <p className="text-gray-400 text-sm mb-2">South Africa</p>
+                <h3 className="font-bold mb-1">Mountain Goat Preserve</h3>
+                <p className="text-gray-400 text-sm mb-2">Idaho, USA</p>
                 <p className="text-lg font-bold">$1,200 / 2 weeks</p>
               </div>
             </Link>
@@ -54,7 +54,7 @@ export default function IndexPage() {
             <Link href="/experiences/2" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
               <div className="relative aspect-video overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1465379944081-7f47de8d74ac" 
+                  src="/images/volunteer-experiences/elephant-sanctuary.jpg" 
                   alt="Elephant Sanctuary" 
                   className="w-full h-full object-cover"
                 />
@@ -69,7 +69,7 @@ export default function IndexPage() {
             <Link href="/experiences/6" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
               <div className="relative aspect-video overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1487252665478-49b61b47f302" 
+                  src="/images/volunteer-experiences/wildlife-rescue-1.jpg" 
                   alt="Wildlife Rescue & Rehabilitation" 
                   className="w-full h-full object-cover"
                 />

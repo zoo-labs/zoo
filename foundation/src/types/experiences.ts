@@ -1,6 +1,6 @@
 export type Continent = 'Africa' | 'Asia' | 'Europe' | 'North America' | 'Oceania' | 'South America';
 
-export type WildlifeType = 'Big Cats' | 'Primates' | 'Elephants' | 'Marine Life' | 'Birds' | 'General Wildlife';
+export type WildlifeType = 'Big Cats' | 'Mountain Goats' | 'Primates' | 'Elephants' | 'Marine Life' | 'Birds' | 'General Wildlife';
 
 export type VolunteerTask = 'Food Preparation' | 'Habitat Maintenance' | 'Animal Rehabilitation' | 'Research' | 'Education' | 'Conservation';
 
