@@ -28,6 +28,8 @@
     "reset": "yarn clean && rm -rf node_modules .yarn/cache .parcel-cache",
     "start": "yarn workspace @zoolabs/app start",
     "start:lab": "yarn workspace @zoolabs/lab start",
+    "start:network": "yarn workspace @zoolabs/network dev",
+    "start:fund": "yarn workspace @zoolabs/fund dev",
     "account": "yarn workspace @zoolabs/contracts account",
     "accounts": "yarn workspace @zoolabs/contracts accounts",
     "balance": "yarn workspace @zoolabs/contracts balance",
@@ -106,7 +108,9 @@
       "contracts",
       "core",
       "foundation",
+      "fund",
       "lab",
+      "network",
       "sdk",
       "ui",
       "zdk"

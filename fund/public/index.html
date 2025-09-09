@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicrobiomeDAO - Zoo Fund</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            color: #999;
+            margin-top: 0.5rem;
+        }
+
+        .launch-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .launch-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* DAO Features */
+        .dao-features {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .dao-features h2 {
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: #667eea;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .feature-desc {
+            color: #999;
+            line-height: 1.6;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: #999;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: #667eea;
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            color: #999;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .project-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .project-stat {
+            text-align: center;
+        }
+
+        .project-stat-value {
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+
+        .project-stat-label {
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 0.25rem;
+        }
+
+        .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .time-left {
+            font-size: 0.875rem;
+            color: #999;
+        }
+
+        .contribute-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a3e;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: auto;
+            padding: 2rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #999;
+            font-size: 0.875rem;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .keeper-info {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .keeper-info h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .keeper-info p {
+            color: #999;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <div class="logo">zoo.fund</div>
+                <div class="tagline">Decentralized crowdfunding powered by KEEPER governance</div>
+            </div>
+            <button class="launch-btn" onclick="openCreateModal()">Launch Project</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Projects</div>
+                <div class="stat-value">247</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Raised</div>
+                <div class="stat-value">3,842 ETH</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active DAOs</div>
+                <div class="stat-value">12</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">KEEPER Holders</div>
+                <div class="stat-value">8,423</div>
+            </div>
+        </div>
+
+        <!-- DAO Features -->
+        <div class="dao-features">
+            <h2>🏛️ DAO-Powered Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🗳️</div>
+                    <div class="feature-title">Community Governance</div>
+                    <div class="feature-desc">KEEPER token holders vote on project funding, milestone releases, and platform decisions</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏭</div>
+                    <div class="feature-title">DAO Factory</div>
+                    <div class="feature-desc">Create specialized DAOs for different verticals - DeFi, NFTs, Gaming, Infrastructure</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Milestone-Based Funding</div>
+                    <div class="feature-desc">Funds released based on community-approved milestones, ensuring accountability</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Category Allocations</div>
+                    <div class="feature-desc">Each category has dedicated funding pools and specialized governance structures</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🪂</div>
+                    <div class="feature-title">KEEPER Airdrop</div>
+                    <div class="feature-desc">Original ZOO holders (2021) can claim KEEPER tokens 1:1 for governance rights</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-title">Treasury Management</div>
+                    <div class="feature-desc">25% of KEEPER supply dedicated to DAO treasury for sustainable funding</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <button class="filter-btn active">All Projects</button>
+            <button class="filter-btn">DeFi</button>
+            <button class="filter-btn">NFT</button>
+            <button class="filter-btn">Gaming</button>
+            <button class="filter-btn">Infrastructure</button>
+            <button class="filter-btn">DAO Tooling</button>
+            <button class="filter-btn">Research</button>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="category-badge">DeFi</div>
+                    💰
+                </div>
+                <div class="project-content">
+                    <div class="project-title">DeFi Yield Aggregator</div>
+                    <div class="project-desc">Advanced yield farming strategies across multiple protocols with auto-compounding</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <div class="project-stat-value">37.5 ETH</div>
+                            <div class="project-stat-label">raised of 50 goal</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">75%</div>
+                            <div class="project-stat-label">funded</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">142</div>
+                            <div class="project-stat-label">backers</div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="time-left">12 days left</div>
+                        <button class="contribute-btn">Contribute</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="category-badge">NFT</div>
+                    🎨
+                </div>
+                <div class="project-content">
+                    <div class="project-title">NFT Marketplace V2</div>
+                    <div class="project-desc">Next-gen NFT marketplace with social features and cross-chain support</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%"></div>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <div class="project-stat-value">45 ETH</div>
+                            <div class="project-stat-label">raised of 100 goal</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">45%</div>
+                            <div class="project-stat-label">funded</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">89</div>
+                            <div class="project-stat-label">backers</div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="time-left">28 days left</div>
+                        <button class="contribute-btn">Contribute</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="category-badge">Gaming</div>
+                    🎮
+                </div>
+                <div class="project-content">
+                    <div class="project-title">Web3 Gaming Platform</div>
+                    <div class="project-desc">Play-to-earn gaming ecosystem with NFT integration and tournaments</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90%"></div>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <div class="project-stat-value">67.5 ETH</div>
+                            <div class="project-stat-label">raised of 75 goal</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">90%</div>
+                            <div class="project-stat-label">funded</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">234</div>
+                            <div class="project-stat-label">backers</div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="time-left">5 days left</div>
+                        <button class="contribute-btn">Contribute</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="category-badge">DAO Tooling</div>
+                    🛠️
+                </div>
+                <div class="project-content">
+                    <div class="project-title">DAO Management Suite</div>
+                    <div class="project-desc">Comprehensive tools for DAO governance, treasury management, and voting</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%"></div>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <div class="project-stat-value">9 ETH</div>
+                            <div class="project-stat-label">raised of 30 goal</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">30%</div>
+                            <div class="project-stat-label">funded</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">42</div>
+                            <div class="project-stat-label">backers</div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="time-left">35 days left</div>
+                        <button class="contribute-btn">Contribute</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="category-badge">Infrastructure</div>
+                    🔧
+                </div>
+                <div class="project-content">
+                    <div class="project-title">Decentralized Storage Network</div>
+                    <div class="project-desc">IPFS-based storage solution with encryption and redundancy</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <div class="project-stat-value">24 ETH</div>
+                            <div class="project-stat-label">raised of 40 goal</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">60%</div>
+                            <div class="project-stat-label">funded</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">78</div>
+                            <div class="project-stat-label">backers</div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="time-left">20 days left</div>
+                        <button class="contribute-btn">Contribute</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="category-badge">Research</div>
+                    🔬
+                </div>
+                <div class="project-content">
+                    <div class="project-title">Zero-Knowledge Research Lab</div>
+                    <div class="project-desc">Open research on ZK proofs and privacy-preserving technologies</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                    <div class="project-stats">
+                        <div class="project-stat">
+                            <div class="project-stat-value">17 ETH</div>
+                            <div class="project-stat-label">raised of 20 goal</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">85%</div>
+                            <div class="project-stat-label">funded</div>
+                        </div>
+                        <div class="project-stat">
+                            <div class="project-stat-value">56</div>
+                            <div class="project-stat-label">backers</div>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="time-left">8 days left</div>
+                        <button class="contribute-btn">Contribute</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Project Modal -->
+        <div id="createModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">Launch Your Project</div>
+                    <button class="close-btn" onclick="closeCreateModal()">×</button>
+                </div>
+
+                <div class="keeper-info">
+                    <h3>🪙 KEEPER Token Required</h3>
+                    <p>To launch a project, you need KEEPER tokens for governance. ZOO holders from 2021 can claim 1:1.</p>
+                </div>
+
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Project Name *</label>
+                        <input type="text" class="form-input" placeholder="My Amazing Project">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description *</label>
+                        <textarea class="form-textarea" placeholder="Describe your project and what makes it unique..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+                            <select class="form-select">
+                                <option>DeFi</option>
+                                <option>NFT</option>
+                                <option>Gaming</option>
+                                <option>Infrastructure</option>
+                                <option>DAO Tooling</option>
+                                <option>Research</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Funding Goal (ETH) *</label>
+                            <input type="number" class="form-input" placeholder="10">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Campaign Duration (days) *</label>
+                        <input type="number" class="form-input" placeholder="30" min="1" max="365">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Create DAO?</label>
+                        <select class="form-select">
+                            <option>No - Use standard crowdfunding</option>
+                            <option>Yes - Create project-specific DAO</option>
+                            <option>Yes - Join existing category DAO</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="launch-btn" style="width: 100%">Launch Project on zoo.fund</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCreateModal() {
+            document.getElementById('createModal').classList.add('active');
+        }
+
+        function closeCreateModal() {
+            document.getElementById('createModal').classList.remove('active');
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Close modal on outside click
+        document.getElementById('createModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCreateModal();
+            }
+        });
+    </script>
+</body>
+</html>

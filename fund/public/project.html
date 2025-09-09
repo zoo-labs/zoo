@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicrobiomeDAO - Zoo Fund</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .wallet-btn {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .wallet-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Project Hero */
+        .project-hero {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 32px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .funding-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .funding-progress {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .progress-amount {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .progress-percentage {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            width: 65%;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 24px;
+        }
+
+        .fund-button {
+            width: 100%;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .share-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Tabs */
+        .tabs-section {
+            padding: 40px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab {
+            padding: 16px 0;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .section-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        /* Market Hypothesis */
+        .hypothesis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 24px;
+        }
+
+        .hypothesis-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .hypothesis-card h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .hypothesis-card p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .member-avatar {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .member-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .member-role {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Roadmap */
+        .roadmap-list {
+            position: relative;
+            padding-left: 32px;
+            margin-top: 24px;
+        }
+
+        .roadmap-list::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding-left: 24px;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .roadmap-item.completed::before {
+            background: #4ade80;
+        }
+
+        .roadmap-quarter {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .roadmap-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .roadmap-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* Value Model */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .value-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .value-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .value-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 48px 0;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">ZOO</a>
+            <ul class="nav-links">
+                <li><a href="#ai">AI</a></li>
+                <li><a href="#coin">Coin</a></li>
+                <li><a href="#markets">Markets</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#docs">Docs</a></li>
+            </ul>
+            <button class="wallet-btn">Connect Wallet</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <h1>MicrobiomeDAO</h1>
+                        <p class="hero-subtitle">Decentralized microbiome research and therapeutic development</p>
+                        <p class="hero-description">
+                            MicrobiomeDAO is accelerating breakthrough research in human microbiome science through decentralized funding and open collaboration. Our community of scientists, patients, and supporters is working to unlock the therapeutic potential of the microbiome for treating chronic diseases, mental health conditions, and age-related decline.
+                        </p>
+                        <p class="hero-description">
+                            By democratizing access to microbiome research and creating new funding mechanisms, we're building a future where personalized microbiome therapies are accessible to everyone, not just the privileged few.
+                        </p>
+                    </div>
+                    <div class="funding-card">
+                        <div class="funding-progress">
+                            <div class="progress-header">
+                                <span class="progress-amount">$1,625,000</span>
+                                <span class="progress-percentage">65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="progress-stats">
+                                <span>Raised of $2,500,000</span>
+                                <span>23 days left</span>
+                            </div>
+                        </div>
+                        <button class="fund-button">Fund This Project</button>
+                        <div class="share-buttons">
+                            <button class="share-btn">Share on 𝕏</button>
+                            <button class="share-btn">Copy Link</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs Section -->
+        <section class="tabs-section">
+            <div class="container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="overview">Overview</div>
+                    <div class="tab" data-tab="hypothesis">Market Hypothesis</div>
+                    <div class="tab" data-tab="team">Team & Community</div>
+                    <div class="tab" data-tab="roadmap">Roadmap</div>
+                    <div class="tab" data-tab="value">Value Capture Model</div>
+                    <div class="tab" data-tab="recommended">Recommended Reads</div>
+                </div>
+
+                <!-- Overview Tab -->
+                <div class="tab-content active" id="overview">
+                    <div class="content-section">
+                        <h3 class="section-title">About MicrobiomeDAO</h3>
+                        <div class="section-content">
+                            <p>The human microbiome—the trillions of microorganisms living in and on our bodies—represents one of the most promising frontiers in medicine. Yet despite its enormous potential, microbiome research remains underfunded and fragmented across academic silos.</p>
+                            <p style="margin-top: 16px;">MicrobiomeDAO changes this by creating a decentralized research network where:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>Researchers can access funding without institutional gatekeepers</li>
+                                <li>Patients can contribute data and participate in governance</li>
+                                <li>Discoveries are open-source and benefit the entire community</li>
+                                <li>IP is tokenized and revenue flows back to contributors</li>
+                            </ul>
+                            <p>Our initial focus areas include inflammatory bowel disease, depression/anxiety, obesity, and aging—conditions where microbiome interventions show tremendous promise but lack sufficient investment from traditional pharma.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Key Initiatives</h3>
+                        <div class="hypothesis-grid">
+                            <div class="hypothesis-card">
+                                <h4>🧬 Open Microbiome Atlas</h4>
+                                <p>Building the world's largest open-access database of microbiome samples with standardized metadata and analysis pipelines.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>💊 Precision Probiotics</h4>
+                                <p>Developing personalized probiotic formulations based on individual microbiome profiles and health conditions.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>🔬 Community Labs</h4>
+                                <p>Establishing decentralized wet lab facilities where independent researchers can conduct microbiome experiments.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>📊 Patient Registry</h4>
+                                <p>Creating a global registry where patients can share microbiome data and track therapeutic outcomes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Hypothesis Tab -->
+                <div class="tab-content" id="hypothesis">
+                    <div class="content-section">
+                        <h3 class="section-title">Market Opportunity</h3>
+                        <div class="section-content">
+                            <p>The global microbiome therapeutics market is projected to reach $3.2 billion by 2030, growing at 24% CAGR. Yet current approaches are limited by:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>Centralized R&D controlled by a few large pharma companies</li>
+                                <li>Limited data sharing between research institutions</li>
+                                <li>High costs and long timelines for clinical trials</li>
+                                <li>Lack of patient involvement in research priorities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Our Thesis</h3>
+                        <div class="hypothesis-grid">
+                            <div class="hypothesis-card">
+                                <h4>Decentralized Discovery</h4>
+                                <p>Open collaboration accelerates discovery by 10x compared to siloed research. Our network enables any scientist to contribute and be rewarded.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>Patient-Driven Research</h4>
+                                <p>Patients know their conditions best. By giving them governance power, we ensure research focuses on real-world impact, not just publications.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>IP-NFT Monetization</h4>
+                                <p>Tokenizing research outputs creates liquid markets for scientific IP, enabling faster commercialization and fair value distribution.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>Network Effects</h4>
+                                <p>Each new researcher, patient, and dataset makes the network more valuable, creating a flywheel that attracts top talent and funding.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Tab -->
+                <div class="tab-content" id="team">
+                    <div class="content-section">
+                        <h3 class="section-title">Core Team</h3>
+                        <div class="team-grid">
+                            <div class="team-member">
+                                <div class="member-avatar">👨‍🔬</div>
+                                <div class="member-name">Dr. Michael Chen</div>
+                                <div class="member-role">Scientific Lead</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">👩‍💻</div>
+                                <div class="member-name">Sarah Williams</div>
+                                <div class="member-role">Protocol Architect</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">👨‍⚕️</div>
+                                <div class="member-name">Dr. James Park</div>
+                                <div class="member-role">Clinical Advisor</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">👩‍🔬</div>
+                                <div class="member-name">Maria Rodriguez</div>
+                                <div class="member-role">Data Science Lead</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">👨‍💼</div>
+                                <div class="member-name">Alex Thompson</div>
+                                <div class="member-role">Operations</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">👩‍🏫</div>
+                                <div class="member-name">Dr. Lisa Zhang</div>
+                                <div class="member-role">Research Director</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Community</h3>
+                        <div class="section-content">
+                            <p>Our community includes over 2,000 members across:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>450+ researchers from 80+ institutions</li>
+                                <li>1,200+ patients and health advocates</li>
+                                <li>300+ developers and data scientists</li>
+                                <li>150+ healthcare practitioners</li>
+                            </ul>
+                            <p style="margin-top: 16px;">Join our Discord to connect with the community, participate in research discussions, and contribute to governance decisions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roadmap Tab -->
+                <div class="tab-content" id="roadmap">
+                    <div class="content-section">
+                        <h3 class="section-title">Project Roadmap</h3>
+                        <div class="roadmap-list">
+                            <div class="roadmap-item completed">
+                                <div class="roadmap-quarter">Phase 1 - Foundation</div>
+                                <div class="roadmap-title">DAO Infrastructure & Community Building</div>
+                                <div class="roadmap-desc">Launch governance token, establish DAO structure, recruit initial research team, build community of 1000+ members</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 2 - Data Platform</div>
+                                <div class="roadmap-title">Open Microbiome Atlas Launch</div>
+                                <div class="roadmap-desc">Deploy data infrastructure, standardize analysis pipelines, onboard first 10,000 samples, launch researcher portal</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 3 - Research Network</div>
+                                <div class="roadmap-title">Decentralized Studies Begin</div>
+                                <div class="roadmap-desc">Fund first 5 research projects, establish community lab partnerships, launch patient registry with 5,000+ participants</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 4 - Therapeutic Development</div>
+                                <div class="roadmap-title">First Precision Probiotic Trials</div>
+                                <div class="roadmap-desc">Begin clinical trials for IBD treatment, launch personalized probiotic platform, establish manufacturing partnerships</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 5 - Commercialization</div>
+                                <div class="roadmap-title">Market Launch & Revenue Generation</div>
+                                <div class="roadmap-desc">First therapeutic products to market, IP-NFT licensing deals, sustainable revenue flowing to DAO treasury</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Value Capture Tab -->
+                <div class="tab-content" id="value">
+                    <div class="content-section">
+                        <h3 class="section-title">Value Capture Model</h3>
+                        <div class="value-grid">
+                            <div class="value-card">
+                                <div class="value-icon">💊</div>
+                                <div class="value-title">Therapeutic Sales</div>
+                                <div class="value-desc">Revenue from personalized probiotics and microbiome therapeutics flows back to the DAO treasury</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🔬</div>
+                                <div class="value-title">IP Licensing</div>
+                                <div class="value-desc">Patents and discoveries tokenized as IP-NFTs, with licensing fees distributed to contributors</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">📊</div>
+                                <div class="value-title">Data Monetization</div>
+                                <div class="value-desc">Anonymized microbiome data licensed to pharma companies for drug discovery</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🏥</div>
+                                <div class="value-title">Clinical Services</div>
+                                <div class="value-desc">Microbiome testing and analysis services for healthcare providers</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🎓</div>
+                                <div class="value-title">Education Platform</div>
+                                <div class="value-desc">Professional training and certification programs for microbiome practitioners</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🌐</div>
+                                <div class="value-title">Network Fees</div>
+                                <div class="value-desc">Transaction fees from the decentralized research marketplace</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Token Economics</h3>
+                        <div class="section-content">
+                            <p>The MICROBE token serves as the governance and utility token for the ecosystem:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>Governance rights over research priorities and treasury allocation</li>
+                                <li>Staking for access to premium data and analysis tools</li>
+                                <li>Rewards for contributing data, research, or peer review</li>
+                                <li>Priority access to new therapeutics and clinical trials</li>
+                            </ul>
+                            <p style="margin-top: 16px;">Token distribution: 30% community treasury, 25% research grants, 20% team (4-year vesting), 15% investors, 10% ecosystem rewards</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommended Reads Tab -->
+                <div class="tab-content" id="recommended">
+                    <div class="content-section">
+                        <h3 class="section-title">Essential Reading</h3>
+                        <div class="section-content">
+                            <ul style="padding-left: 24px; line-height: 2;">
+                                <li><a href="#" style="color: #667eea;">The Microbiome Revolution: How Bacteria Rule Our Lives</a> - Understanding the microbiome's impact on health</li>
+                                <li><a href="#" style="color: #667eea;">Decentralized Science: A New Research Paradigm</a> - Why DeSci is the future of research</li>
+                                <li><a href="#" style="color: #667eea;">IP-NFTs and Scientific Innovation</a> - Tokenizing intellectual property</li>
+                                <li><a href="#" style="color: #667eea;">Patient-Driven Drug Development</a> - The power of community in therapeutics</li>
+                                <li><a href="#" style="color: #667eea;">Microbiome Therapeutics Market Analysis 2024</a> - Industry trends and opportunities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Research Papers</h3>
+                        <div class="section-content">
+                            <ul style="padding-left: 24px; line-height: 2;">
+                                <li><a href="#" style="color: #667eea;">Gut-Brain Axis and Mental Health: Latest Findings</a> - Nature Reviews, 2024</li>
+                                <li><a href="#" style="color: #667eea;">Personalized Probiotics for IBD Treatment</a> - Cell, 2024</li>
+                                <li><a href="#" style="color: #667eea;">Microbiome Aging Clock: Predicting Biological Age</a> - Science, 2024</li>
+                                <li><a href="#" style="color: #667eea;">Network Effects in Open Science Collaboration</a> - PNAS, 2023</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">AI</a>
+                    <a href="#">Coin</a>
+                    <a href="#">Markets</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Docs</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">Twitter</a>
+                </div>
+                <div class="copyright">© 2025 Zoo Labs Foundation Inc. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                // Update active tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+
+        // Connect wallet
+        document.querySelector('.wallet-btn').addEventListener('click', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        document.querySelector('.wallet-btn').textContent = 
+                            accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
+                    }
+                } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                }
+            } else {
+                alert('Please install MetaMask or another Web3 wallet');
+            }
+        });
+    </script>
+</body>
+</html>
