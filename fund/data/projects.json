@@ -3,6 +3,7 @@
     {
       "id": "ocean-dao",
       "name": "OceanDAO",
+      "domain": "ocean.fund",
       "tagline": "Decentralized ocean DNA sequencing and marine research",
       "description": "OceanDAO is accelerating breakthrough research in ocean genomics through decentralized funding and open collaboration. Our community of marine biologists, oceanographers, and environmental scientists is working to sequence and understand marine DNA to protect ocean biodiversity, discover new species, and develop sustainable marine biotechnology.",
       "longDescription": "By democratizing access to ocean research data and creating new funding mechanisms for marine exploration, we're building a future where ocean conservation is driven by scientific understanding and community action.",
@@ -34,20 +35,6 @@
           "description": "Fund first 5 research expeditions, establish marine lab partnerships, launch citizen scientist program with 5,000+ participants",
           "status": "pending",
           "phase": "Phase 3 - Research Network"
-        },
-        {
-          "id": 4,
-          "title": "Marine Conservation Applications",
-          "description": "Deploy AI models for species identification, create endangered species tracking system, establish conservation partnerships",
-          "status": "pending",
-          "phase": "Phase 4 - Conservation Tech"
-        },
-        {
-          "id": 5,
-          "title": "Commercialization & Sustainability",
-          "description": "License discoveries for sustainable biotech, establish marine protected areas, sustainable revenue flowing to DAO treasury",
-          "status": "pending",
-          "phase": "Phase 5 - Impact & Revenue"
         }
       ],
       "team": [
@@ -62,200 +49,106 @@
           "role": "Protocol Architect",
           "bio": "Blockchain developer, conservation technologist",
           "avatar": "💻"
-        },
-        {
-          "name": "Dr. James Deep",
-          "role": "Oceanography Advisor",
-          "bio": "Deep sea explorer, genomics expert",
-          "avatar": "🤿"
-        },
-        {
-          "name": "Sarah Coral",
-          "role": "Data Science Lead",
-          "bio": "AI/ML specialist in marine biology",
-          "avatar": "🧬"
-        },
-        {
-          "name": "Captain Tom Waters",
-          "role": "Operations",
-          "bio": "Research vessel operations, logistics",
-          "avatar": "⚓"
-        },
-        {
-          "name": "Dr. Lisa Tide",
-          "role": "Research Director",
-          "bio": "Environmental DNA specialist",
-          "avatar": "🔬"
         }
-      ],
-      "initiatives": [
-        {
-          "icon": "🧬",
-          "title": "Ocean Genome Atlas",
-          "description": "Building the world's largest open-access database of marine DNA samples with standardized metadata and analysis pipelines."
-        },
-        {
-          "icon": "🐠",
-          "title": "Species Discovery AI",
-          "description": "Using machine learning to identify new marine species from environmental DNA samples collected worldwide."
-        },
-        {
-          "icon": "🔬",
-          "title": "Floating Labs Network",
-          "description": "Establishing decentralized research vessels where citizen scientists can conduct ocean DNA sampling."
-        },
-        {
-          "icon": "📊",
-          "title": "Ocean Health Monitor",
-          "description": "Creating a global network for real-time ocean health monitoring through DNA analysis."
-        }
-      ],
-      "marketHypothesis": {
-        "opportunity": "The global ocean economy is projected to reach $3 trillion by 2030. Ocean genomics represents a $50B+ opportunity in marine biotechnology, conservation, and sustainable resource management.",
-        "problems": [
-          "Less than 5% of the ocean has been explored",
-          "Marine biodiversity loss accelerating faster than terrestrial",
-          "Limited funding for ocean research compared to space exploration",
-          "Fragmented data and lack of collaboration between institutions"
-        ],
-        "thesis": [
-          {
-            "title": "Decentralized Ocean Exploration",
-            "description": "Open collaboration accelerates discovery by 10x compared to traditional marine research. Our network enables any researcher or citizen scientist to contribute."
-          },
-          {
-            "title": "Community-Driven Conservation",
-            "description": "Local communities know their waters best. By giving them tools and governance power, we ensure conservation efforts have real impact."
-          },
-          {
-            "title": "Blue Economy Innovation",
-            "description": "Tokenizing marine discoveries creates liquid markets for ocean IP, enabling faster development of sustainable ocean technologies."
-          },
-          {
-            "title": "Global Ocean Network",
-            "description": "Each new researcher, sample, and dataset makes the network more valuable, creating a flywheel for ocean conservation."
-          }
-        ]
-      },
-      "valueCaptureModel": [
-        {
-          "icon": "🌊",
-          "title": "Marine Biotech Licensing",
-          "description": "Revenue from sustainable marine biotechnology applications and biomaterials"
-        },
-        {
-          "icon": "🔬",
-          "title": "Research Services",
-          "description": "Environmental DNA analysis services for governments and conservation organizations"
-        },
-        {
-          "icon": "📊",
-          "title": "Data Monetization",
-          "description": "Anonymized ocean health data licensed to climate researchers and policy makers"
-        },
-        {
-          "icon": "🏥",
-          "title": "Marine Pharmaceuticals",
-          "description": "Discovery of novel compounds from marine organisms for medical applications"
-        },
-        {
-          "icon": "🎓",
-          "title": "Education Platform",
-          "description": "Ocean science courses and certification programs for marine conservationists"
-        },
-        {
-          "icon": "🌐",
-          "title": "Carbon Credits",
-          "description": "Blue carbon credits from protected marine ecosystems"
-        }
-      ],
-      "tokenomics": {
-        "symbol": "OCEAN",
-        "name": "Ocean Token",
-        "totalSupply": "1,000,000,000",
-        "distribution": {
-          "communityTreasury": 30,
-          "researchGrants": 25,
-          "team": 20,
-          "investors": 15,
-          "ecosystemRewards": 10
-        },
-        "utility": [
-          "Governance rights over research priorities and treasury allocation",
-          "Staking for access to premium ocean data and analysis tools",
-          "Rewards for contributing samples, research, or peer review",
-          "Priority access to research expeditions and discoveries"
-        ]
-      },
-      "recommendedReads": [
-        {
-          "title": "The Ocean Genome: Unlocking Marine Biodiversity",
-          "description": "Understanding the ocean's genetic diversity",
-          "type": "book"
-        },
-        {
-          "title": "Decentralized Science: A New Research Paradigm",
-          "description": "Why DeSci is the future of research",
-          "type": "article"
-        },
-        {
-          "title": "Environmental DNA and Ocean Conservation",
-          "description": "Using eDNA for marine protection",
-          "type": "paper"
-        },
-        {
-          "title": "Blue Economy and Sustainable Development",
-          "description": "The economics of ocean conservation",
-          "type": "report"
-        },
-        {
-          "title": "Ocean Genomics Market Analysis 2024",
-          "description": "Industry trends and opportunities",
-          "type": "report"
-        }
-      ],
-      "researchPapers": [
-        {
-          "title": "Environmental DNA Reveals Ocean Biodiversity Patterns",
-          "journal": "Nature",
-          "year": "2024"
-        },
-        {
-          "title": "Machine Learning for Marine Species Identification",
-          "journal": "Science",
-          "year": "2024"
-        },
-        {
-          "title": "Blue Carbon Sequestration Through Marine Protected Areas",
-          "journal": "Ocean Science",
-          "year": "2024"
-        },
-        {
-          "title": "Decentralized Networks in Ocean Research",
-          "journal": "Marine Policy",
-          "year": "2023"
-        }
-      ],
-      "community": {
-        "totalMembers": 3500,
-        "researchers": 650,
-        "citizenScientists": 2200,
-        "developers": 400,
-        "conservationists": 250,
-        "discord": "https://discord.gg/oceandao",
-        "twitter": "@OceanDAO",
-        "github": "ocean-dao"
-      }
+      ]
+    },
+    {
+      "id": "neuro-dao",
+      "name": "NeuroDAO",
+      "domain": "neuro.fund",
+      "tagline": "Decentralized brain research and neurological therapeutics",
+      "description": "NeuroDAO is revolutionizing neuroscience research through decentralized funding and open collaboration for brain health solutions.",
+      "fundingGoal": 3000000,
+      "fundingRaised": 1200000,
+      "percentFunded": 40,
+      "status": "active"
+    },
+    {
+      "id": "longevity-dao",
+      "name": "LongevityDAO",
+      "domain": "longevity.fund",
+      "tagline": "Extending healthy human lifespan through decentralized research",
+      "description": "LongevityDAO funds breakthrough research in aging, regenerative medicine, and life extension technologies.",
+      "fundingGoal": 5000000,
+      "fundingRaised": 3500000,
+      "percentFunded": 70,
+      "status": "active"
+    },
+    {
+      "id": "climate-dao",
+      "name": "ClimateDAO",
+      "domain": "climate.fund",
+      "tagline": "Decentralized climate solutions and carbon removal",
+      "description": "ClimateDAO accelerates climate tech innovation through community-driven funding of carbon removal and sustainable technologies.",
+      "fundingGoal": 4000000,
+      "fundingRaised": 2800000,
+      "percentFunded": 70,
+      "status": "active"
+    },
+    {
+      "id": "quantum-dao",
+      "name": "QuantumDAO",
+      "domain": "quantum.fund",
+      "tagline": "Democratizing quantum computing research",
+      "description": "QuantumDAO funds open-source quantum computing research and makes quantum technologies accessible to everyone.",
+      "fundingGoal": 6000000,
+      "fundingRaised": 1800000,
+      "percentFunded": 30,
+      "status": "active"
+    },
+    {
+      "id": "fusion-dao",
+      "name": "FusionDAO",
+      "domain": "fusion.fund",
+      "tagline": "Accelerating fusion energy development",
+      "description": "FusionDAO brings together researchers and engineers to solve fusion energy challenges through decentralized collaboration.",
+      "fundingGoal": 8000000,
+      "fundingRaised": 4200000,
+      "percentFunded": 52,
+      "status": "active"
+    },
+    {
+      "id": "space-dao",
+      "name": "SpaceDAO",
+      "domain": "space.fund",
+      "tagline": "Democratizing space exploration and research",
+      "description": "SpaceDAO funds open-source space technologies, satellite missions, and makes space accessible to all humanity.",
+      "fundingGoal": 10000000,
+      "fundingRaised": 6500000,
+      "percentFunded": 65,
+      "status": "active"
+    },
+    {
+      "id": "ai-safety-dao",
+      "name": "AI Safety DAO",
+      "domain": "aisafety.fund",
+      "tagline": "Ensuring beneficial AI through decentralized research",
+      "description": "AI Safety DAO funds critical research in AI alignment, safety, and beneficial artificial general intelligence.",
+      "fundingGoal": 7000000,
+      "fundingRaised": 4900000,
+      "percentFunded": 70,
+      "status": "active"
     }
   ],
   "categories": [
     "Research",
-    "DeFi", 
-    "NFT",
-    "Gaming",
-    "Infrastructure",
-    "DAO Tooling",
-    "Conservation",
-    "Healthcare"
+    "Climate",
+    "Health", 
+    "Space",
+    "Energy",
+    "AI",
+    "Longevity",
+    "Ocean"
+  ],
+  "domains": [
+    "zoo.fund",
+    "ocean.fund",
+    "neuro.fund",
+    "longevity.fund",
+    "climate.fund",
+    "quantum.fund",
+    "fusion.fund",
+    "space.fund",
+    "aisafety.fund"
   ]
 }
