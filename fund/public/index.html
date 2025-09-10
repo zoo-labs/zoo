@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MicrobiomeDAO - Zoo Fund</title>
+    <title>OceanDAO - Zoo Fund</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -22,220 +22,127 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 24px;
         }
 
         /* Header */
-        .header {
+        header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            height: 64px;
         }
 
         .logo {
-            font-size: 3rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
         }
 
-        .tagline {
-            color: #999;
-            margin-top: 0.5rem;
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
         }
 
-        .launch-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .wallet-btn {
+            background: #ffffff;
+            color: #000000;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .launch-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .stat-label {
-            color: #999;
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* DAO Features */
-        .dao-features {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .dao-features h2 {
-            margin-bottom: 2rem;
-            font-size: 2rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: #667eea;
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-
-        .feature-desc {
-            color: #999;
-            line-height: 1.6;
-        }
-
-        /* Filter Bar */
-        .filter-bar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1rem;
+            padding: 10px 20px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            color: #999;
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: opacity 0.2s;
         }
 
-        .filter-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-            color: #fff;
+        .wallet-btn:hover {
+            opacity: 0.9;
         }
 
-        .filter-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: transparent;
+        /* Project Hero */
+        .project-hero {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Projects Grid */
-        .projects-grid {
+        .hero-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
+            align-items: start;
         }
 
-        .project-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            overflow: hidden;
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 32px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .funding-card {
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-            cursor: pointer;
+            border-radius: 16px;
+            padding: 32px;
         }
 
-        .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border-color: #667eea;
+        .funding-progress {
+            margin-bottom: 24px;
         }
 
-        .project-image {
-            height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .progress-header {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            position: relative;
+            justify-content: space-between;
+            margin-bottom: 12px;
         }
 
-        .category-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            padding: 0.25rem 0.75rem;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.875rem;
+        .progress-amount {
+            font-size: 28px;
+            font-weight: 700;
         }
 
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-desc {
-            color: #999;
-            margin-bottom: 1rem;
-            line-height: 1.5;
+        .progress-percentage {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .progress-bar {
@@ -244,522 +151,663 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             overflow: hidden;
-            margin-bottom: 1rem;
+            margin-bottom: 8px;
         }
 
         .progress-fill {
+            width: 65%;
             height: 100%;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 4px;
-            transition: width 0.3s;
         }
 
-        .project-stats {
+        .progress-stats {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1rem;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 24px;
         }
 
-        .project-stat {
+        .fund-button {
+            width: 100%;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .share-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Tabs */
+        .tabs-section {
+            padding: 40px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab {
+            padding: 16px 0;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .section-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        /* Market Hypothesis */
+        .hypothesis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 24px;
+        }
+
+        .hypothesis-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .hypothesis-card h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .hypothesis-card p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
         }
 
-        .project-stat-value {
-            font-size: 1.125rem;
-            font-weight: bold;
-        }
-
-        .project-stat-label {
-            font-size: 0.75rem;
-            color: #999;
-            margin-top: 0.25rem;
-        }
-
-        .project-footer {
+        .member-avatar {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 auto 16px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .time-left {
-            font-size: 0.875rem;
-            color: #999;
-        }
-
-        .contribute-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            font-size: 24px;
         }
 
-        .modal.active {
-            display: flex;
+        .member-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .modal-content {
-            background: #1a1a3e;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow: auto;
-            padding: 2rem;
+        .member-role {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        .modal-header {
+        /* Roadmap */
+        .roadmap-list {
+            position: relative;
+            padding-left: 32px;
+            margin-top: 24px;
+        }
+
+        .roadmap-list::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding-left: 24px;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .roadmap-item.completed::before {
+            background: #4ade80;
+        }
+
+        .roadmap-quarter {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .roadmap-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .roadmap-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* Value Model */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .value-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .value-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .value-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 48px 0;
+            margin-top: 80px;
+        }
+
+        .footer-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
         }
 
-        .modal-title {
-            font-size: 1.75rem;
-            font-weight: bold;
+        .footer-links {
+            display: flex;
+            gap: 24px;
         }
 
-        .close-btn {
-            background: transparent;
-            border: none;
-            font-size: 1.5rem;
-            color: #999;
-            cursor: pointer;
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
+        .footer-links a:hover {
+            color: #ffffff;
         }
 
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #999;
-            font-size: 0.875rem;
-        }
-
-        .form-input, .form-textarea, .form-select {
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            font-size: 1rem;
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .keeper-info {
-            background: rgba(102, 126, 234, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .keeper-info h3 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .keeper-info p {
-            color: #999;
-            font-size: 0.875rem;
+        .copyright {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div>
-                <div class="logo">zoo.fund</div>
-                <div class="tagline">Decentralized crowdfunding powered by KEEPER governance</div>
-            </div>
-            <button class="launch-btn" onclick="openCreateModal()">Launch Project</button>
-        </div>
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">ZOO</a>
+            <ul class="nav-links">
+                <li><a href="#ai">AI</a></li>
+                <li><a href="#coin">Coin</a></li>
+                <li><a href="#markets">Markets</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#docs">Docs</a></li>
+            </ul>
+            <button class="wallet-btn">Connect Wallet</button>
+        </nav>
+    </header>
 
-        <!-- Stats -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Total Projects</div>
-                <div class="stat-value">247</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Total Raised</div>
-                <div class="stat-value">3,842 ETH</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Active DAOs</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">KEEPER Holders</div>
-                <div class="stat-value">8,423</div>
-            </div>
-        </div>
-
-        <!-- DAO Features -->
-        <div class="dao-features">
-            <h2>🏛️ DAO-Powered Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🗳️</div>
-                    <div class="feature-title">Community Governance</div>
-                    <div class="feature-desc">KEEPER token holders vote on project funding, milestone releases, and platform decisions</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏭</div>
-                    <div class="feature-title">DAO Factory</div>
-                    <div class="feature-desc">Create specialized DAOs for different verticals - DeFi, NFTs, Gaming, Infrastructure</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <div class="feature-title">Milestone-Based Funding</div>
-                    <div class="feature-desc">Funds released based on community-approved milestones, ensuring accountability</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-title">Category Allocations</div>
-                    <div class="feature-desc">Each category has dedicated funding pools and specialized governance structures</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🪂</div>
-                    <div class="feature-title">KEEPER Airdrop</div>
-                    <div class="feature-desc">Original ZOO holders (2021) can claim KEEPER tokens 1:1 for governance rights</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔐</div>
-                    <div class="feature-title">Treasury Management</div>
-                    <div class="feature-desc">25% of KEEPER supply dedicated to DAO treasury for sustainable funding</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Filter Bar -->
-        <div class="filter-bar">
-            <button class="filter-btn active">All Projects</button>
-            <button class="filter-btn">DeFi</button>
-            <button class="filter-btn">NFT</button>
-            <button class="filter-btn">Gaming</button>
-            <button class="filter-btn">Infrastructure</button>
-            <button class="filter-btn">DAO Tooling</button>
-            <button class="filter-btn">Research</button>
-        </div>
-
-        <!-- Projects Grid -->
-        <div class="projects-grid">
-            <!-- Project 1 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <div class="category-badge">DeFi</div>
-                    💰
-                </div>
-                <div class="project-content">
-                    <div class="project-title">DeFi Yield Aggregator</div>
-                    <div class="project-desc">Advanced yield farming strategies across multiple protocols with auto-compounding</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 75%"></div>
+    <main>
+        <!-- Project Hero -->
+        <section class="project-hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <h1>OceanDAO</h1>
+                        <p class="hero-subtitle">Decentralized ocean DNA sequencing and marine research</p>
+                        <p class="hero-description">
+                            OceanDAO is accelerating breakthrough research in ocean genomics through decentralized funding and open collaboration. Our community of marine biologists, oceanographers, and environmental scientists is working to sequence and understand marine DNA to protect ocean biodiversity, discover new species, and develop sustainable marine biotechnology.
+                        </p>
+                        <p class="hero-description">
+                            By democratizing access to ocean research data and creating new funding mechanisms for marine exploration, we're building a future where ocean conservation is driven by scientific understanding and community action.
+                        </p>
                     </div>
-                    <div class="project-stats">
-                        <div class="project-stat">
-                            <div class="project-stat-value">37.5 ETH</div>
-                            <div class="project-stat-label">raised of 50 goal</div>
+                    <div class="funding-card">
+                        <div class="funding-progress">
+                            <div class="progress-header">
+                                <span class="progress-amount">$1,625,000</span>
+                                <span class="progress-percentage">65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="progress-stats">
+                                <span>Raised of $2,500,000</span>
+                                <span>23 days left</span>
+                            </div>
                         </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">75%</div>
-                            <div class="project-stat-label">funded</div>
+                        <button class="fund-button">Fund This Project</button>
+                        <div class="share-buttons">
+                            <button class="share-btn">Share on 𝕏</button>
+                            <button class="share-btn">Copy Link</button>
                         </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">142</div>
-                            <div class="project-stat-label">backers</div>
-                        </div>
-                    </div>
-                    <div class="project-footer">
-                        <div class="time-left">12 days left</div>
-                        <button class="contribute-btn">Contribute</button>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Project 2 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <div class="category-badge">NFT</div>
-                    🎨
+        <!-- Tabs Section -->
+        <section class="tabs-section">
+            <div class="container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="overview">Overview</div>
+                    <div class="tab" data-tab="hypothesis">Market Hypothesis</div>
+                    <div class="tab" data-tab="team">Team & Community</div>
+                    <div class="tab" data-tab="roadmap">Roadmap</div>
+                    <div class="tab" data-tab="value">Value Capture Model</div>
+                    <div class="tab" data-tab="recommended">Recommended Reads</div>
                 </div>
-                <div class="project-content">
-                    <div class="project-title">NFT Marketplace V2</div>
-                    <div class="project-desc">Next-gen NFT marketplace with social features and cross-chain support</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 45%"></div>
-                    </div>
-                    <div class="project-stats">
-                        <div class="project-stat">
-                            <div class="project-stat-value">45 ETH</div>
-                            <div class="project-stat-label">raised of 100 goal</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">45%</div>
-                            <div class="project-stat-label">funded</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">89</div>
-                            <div class="project-stat-label">backers</div>
+
+                <!-- Overview Tab -->
+                <div class="tab-content active" id="overview">
+                    <div class="content-section">
+                        <h3 class="section-title">About OceanDAO</h3>
+                        <div class="section-content">
+                            <p>The ocean covers 71% of Earth's surface and contains 97% of the planet's water, yet less than 5% has been explored. Ocean DNA sequencing represents one of the most promising frontiers in understanding marine biodiversity, discovering new species, and developing sustainable biotechnology.</p>
+                            <p style="margin-top: 16px;">OceanDAO changes this by creating a decentralized research network where:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>Researchers can access funding without institutional gatekeepers</li>
+                                <li>Patients can contribute data and participate in governance</li>
+                                <li>Discoveries are open-source and benefit the entire community</li>
+                                <li>IP is tokenized and revenue flows back to contributors</li>
+                            </ul>
+                            <p>Our initial focus areas include marine biodiversity conservation, endangered species tracking, sustainable marine biotechnology, and ocean health monitoring—areas where genomic research shows tremendous promise but lacks sufficient funding from traditional sources.</p>
                         </div>
                     </div>
-                    <div class="project-footer">
-                        <div class="time-left">28 days left</div>
-                        <button class="contribute-btn">Contribute</button>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Key Initiatives</h3>
+                        <div class="hypothesis-grid">
+                            <div class="hypothesis-card">
+                                <h4>🧬 Ocean Genome Atlas</h4>
+                                <p>Building the world's largest open-access database of marine DNA samples with standardized metadata and analysis pipelines.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>💊 Precision Probiotics</h4>
+                                <p>Using machine learning to identify new marine species from environmental DNA samples collected worldwide.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>🔬 Community Labs</h4>
+                                <p>Establishing decentralized research vessels where citizen scientists can conduct ocean DNA sampling.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>📊 Patient Registry</h4>
+                                <p>Creating a global network for real-time ocean health monitoring through DNA analysis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Hypothesis Tab -->
+                <div class="tab-content" id="hypothesis">
+                    <div class="content-section">
+                        <h3 class="section-title">Market Opportunity</h3>
+                        <div class="section-content">
+                            <p>The global ocean economy is projected to reach $3 trillion by 2030. Ocean genomics represents a $50B+ opportunity in marine biotechnology, conservation, and sustainable resource management. Yet current approaches are limited by:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>Centralized R&D controlled by a few large pharma companies</li>
+                                <li>Limited data sharing between research institutions</li>
+                                <li>High costs and long timelines for clinical trials</li>
+                                <li>Lack of patient involvement in research priorities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Our Thesis</h3>
+                        <div class="hypothesis-grid">
+                            <div class="hypothesis-card">
+                                <h4>Decentralized Discovery</h4>
+                                <p>Open collaboration accelerates discovery by 10x compared to siloed research. Our network enables any scientist to contribute and be rewarded.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>Patient-Driven Research</h4>
+                                <p>Patients know their conditions best. By giving them governance power, we ensure research focuses on real-world impact, not just publications.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>IP-NFT Monetization</h4>
+                                <p>Tokenizing research outputs creates liquid markets for scientific IP, enabling faster commercialization and fair value distribution.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>Network Effects</h4>
+                                <p>Each new researcher, patient, and dataset makes the network more valuable, creating a flywheel that attracts top talent and funding.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Tab -->
+                <div class="tab-content" id="team">
+                    <div class="content-section">
+                        <h3 class="section-title">Core Team</h3>
+                        <div class="team-grid">
+                            <div class="team-member">
+                                <div class="member-avatar">🌊</div>
+                                <div class="member-name">Dr. Marina Chen</div>
+                                <div class="member-role">Scientific Lead</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">💻</div>
+                                <div class="member-name">Alex Reef</div>
+                                <div class="member-role">Protocol Architect</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">🤿</div>
+                                <div class="member-name">Dr. James Deep</div>
+                                <div class="member-role">Oceanography Advisor</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">🧬</div>
+                                <div class="member-name">Sarah Coral</div>
+                                <div class="member-role">Data Science Lead</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">⚓</div>
+                                <div class="member-name">Captain Tom Waters</div>
+                                <div class="member-role">Operations</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">🔬</div>
+                                <div class="member-name">Dr. Lisa Tide</div>
+                                <div class="member-role">Research Director</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Community</h3>
+                        <div class="section-content">
+                            <p>Our community includes over 2,000 members across:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>450+ researchers from 80+ institutions</li>
+                                <li>1,200+ patients and health advocates</li>
+                                <li>300+ developers and data scientists</li>
+                                <li>150+ healthcare practitioners</li>
+                            </ul>
+                            <p style="margin-top: 16px;">Join our Discord to connect with the community, participate in research discussions, and contribute to governance decisions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roadmap Tab -->
+                <div class="tab-content" id="roadmap">
+                    <div class="content-section">
+                        <h3 class="section-title">Project Roadmap</h3>
+                        <div class="roadmap-list">
+                            <div class="roadmap-item completed">
+                                <div class="roadmap-quarter">Phase 1 - Foundation</div>
+                                <div class="roadmap-title">DAO Infrastructure & Community Building</div>
+                                <div class="roadmap-desc">Launch governance token, establish DAO structure, recruit initial research team, build community of 1000+ members</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 2 - Data Platform</div>
+                                <div class="roadmap-title">Ocean DNA Database Launch</div>
+                                <div class="roadmap-desc">Deploy data infrastructure, standardize analysis pipelines, onboard first 10,000 samples, launch researcher portal</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 3 - Research Network</div>
+                                <div class="roadmap-title">Decentralized Studies Begin</div>
+                                <div class="roadmap-desc">Fund first 5 research projects, establish community lab partnerships, launch patient registry with 5,000+ participants</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 4 - Therapeutic Development</div>
+                                <div class="roadmap-title">First Precision Probiotic Trials</div>
+                                <div class="roadmap-desc">Begin clinical trials for IBD treatment, launch personalized probiotic platform, establish manufacturing partnerships</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 5 - Commercialization</div>
+                                <div class="roadmap-title">Market Launch & Revenue Generation</div>
+                                <div class="roadmap-desc">First therapeutic products to market, IP-NFT licensing deals, sustainable revenue flowing to DAO treasury</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Value Capture Tab -->
+                <div class="tab-content" id="value">
+                    <div class="content-section">
+                        <h3 class="section-title">Value Capture Model</h3>
+                        <div class="value-grid">
+                            <div class="value-card">
+                                <div class="value-icon">💊</div>
+                                <div class="value-title">Therapeutic Sales</div>
+                                <div class="value-desc">Revenue from sustainable marine biotechnology applications and biomaterials</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🔬</div>
+                                <div class="value-title">IP Licensing</div>
+                                <div class="value-desc">Patents and discoveries tokenized as IP-NFTs, with licensing fees distributed to contributors</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">📊</div>
+                                <div class="value-title">Data Monetization</div>
+                                <div class="value-desc">Anonymized ocean health data licensed to climate researchers and policy makers</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🏥</div>
+                                <div class="value-title">Clinical Services</div>
+                                <div class="value-desc">Environmental DNA analysis services for governments and conservation organizations</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🎓</div>
+                                <div class="value-title">Education Platform</div>
+                                <div class="value-desc">Ocean science courses and certification programs for marine conservationists</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🌐</div>
+                                <div class="value-title">Network Fees</div>
+                                <div class="value-desc">Transaction fees from the decentralized research marketplace</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Token Economics</h3>
+                        <div class="section-content">
+                            <p>The MICROBE token serves as the governance and utility token for the ecosystem:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>Governance rights over research priorities and treasury allocation</li>
+                                <li>Staking for access to premium data and analysis tools</li>
+                                <li>Rewards for contributing data, research, or peer review</li>
+                                <li>Priority access to new therapeutics and clinical trials</li>
+                            </ul>
+                            <p style="margin-top: 16px;">Token distribution: 30% community treasury, 25% research grants, 20% team (4-year vesting), 15% investors, 10% ecosystem rewards</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommended Reads Tab -->
+                <div class="tab-content" id="recommended">
+                    <div class="content-section">
+                        <h3 class="section-title">Essential Reading</h3>
+                        <div class="section-content">
+                            <ul style="padding-left: 24px; line-height: 2;">
+                                <li><a href="#" style="color: #667eea;">The Ocean Genome: Unlocking Marine Biodiversity</a> - Understanding the ocean's genetic diversity</li>
+                                <li><a href="#" style="color: #667eea;">Decentralized Science: A New Research Paradigm</a> - Why DeSci is the future of research</li>
+                                <li><a href="#" style="color: #667eea;">IP-NFTs and Scientific Innovation</a> - Tokenizing intellectual property</li>
+                                <li><a href="#" style="color: #667eea;">Patient-Driven Drug Development</a> - The power of community in therapeutics</li>
+                                <li><a href="#" style="color: #667eea;">Ocean Genomics Market Analysis 2024</a> - Industry trends and opportunities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Research Papers</h3>
+                        <div class="section-content">
+                            <ul style="padding-left: 24px; line-height: 2;">
+                                <li><a href="#" style="color: #667eea;">Gut-Brain Axis and Mental Health: Latest Findings</a> - Nature Reviews, 2024</li>
+                                <li><a href="#" style="color: #667eea;">Personalized Probiotics for IBD Treatment</a> - Cell, 2024</li>
+                                <li><a href="#" style="color: #667eea;">Environmental DNA Reveals Ocean Biodiversity Patterns</a> - Nature, 2024</li>
+                                <li><a href="#" style="color: #667eea;">Network Effects in Open Science Collaboration</a> - PNAS, 2023</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
+    </main>
 
-            <!-- Project 3 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <div class="category-badge">Gaming</div>
-                    🎮
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">AI</a>
+                    <a href="#">Coin</a>
+                    <a href="#">Markets</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Docs</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">Twitter</a>
                 </div>
-                <div class="project-content">
-                    <div class="project-title">Web3 Gaming Platform</div>
-                    <div class="project-desc">Play-to-earn gaming ecosystem with NFT integration and tournaments</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 90%"></div>
-                    </div>
-                    <div class="project-stats">
-                        <div class="project-stat">
-                            <div class="project-stat-value">67.5 ETH</div>
-                            <div class="project-stat-label">raised of 75 goal</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">90%</div>
-                            <div class="project-stat-label">funded</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">234</div>
-                            <div class="project-stat-label">backers</div>
-                        </div>
-                    </div>
-                    <div class="project-footer">
-                        <div class="time-left">5 days left</div>
-                        <button class="contribute-btn">Contribute</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 4 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <div class="category-badge">DAO Tooling</div>
-                    🛠️
-                </div>
-                <div class="project-content">
-                    <div class="project-title">DAO Management Suite</div>
-                    <div class="project-desc">Comprehensive tools for DAO governance, treasury management, and voting</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 30%"></div>
-                    </div>
-                    <div class="project-stats">
-                        <div class="project-stat">
-                            <div class="project-stat-value">9 ETH</div>
-                            <div class="project-stat-label">raised of 30 goal</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">30%</div>
-                            <div class="project-stat-label">funded</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">42</div>
-                            <div class="project-stat-label">backers</div>
-                        </div>
-                    </div>
-                    <div class="project-footer">
-                        <div class="time-left">35 days left</div>
-                        <button class="contribute-btn">Contribute</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <div class="category-badge">Infrastructure</div>
-                    🔧
-                </div>
-                <div class="project-content">
-                    <div class="project-title">Decentralized Storage Network</div>
-                    <div class="project-desc">IPFS-based storage solution with encryption and redundancy</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 60%"></div>
-                    </div>
-                    <div class="project-stats">
-                        <div class="project-stat">
-                            <div class="project-stat-value">24 ETH</div>
-                            <div class="project-stat-label">raised of 40 goal</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">60%</div>
-                            <div class="project-stat-label">funded</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">78</div>
-                            <div class="project-stat-label">backers</div>
-                        </div>
-                    </div>
-                    <div class="project-footer">
-                        <div class="time-left">20 days left</div>
-                        <button class="contribute-btn">Contribute</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 6 -->
-            <div class="project-card">
-                <div class="project-image">
-                    <div class="category-badge">Research</div>
-                    🔬
-                </div>
-                <div class="project-content">
-                    <div class="project-title">Zero-Knowledge Research Lab</div>
-                    <div class="project-desc">Open research on ZK proofs and privacy-preserving technologies</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 85%"></div>
-                    </div>
-                    <div class="project-stats">
-                        <div class="project-stat">
-                            <div class="project-stat-value">17 ETH</div>
-                            <div class="project-stat-label">raised of 20 goal</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">85%</div>
-                            <div class="project-stat-label">funded</div>
-                        </div>
-                        <div class="project-stat">
-                            <div class="project-stat-value">56</div>
-                            <div class="project-stat-label">backers</div>
-                        </div>
-                    </div>
-                    <div class="project-footer">
-                        <div class="time-left">8 days left</div>
-                        <button class="contribute-btn">Contribute</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Create Project Modal -->
-        <div id="createModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title">Launch Your Project</div>
-                    <button class="close-btn" onclick="closeCreateModal()">×</button>
-                </div>
-
-                <div class="keeper-info">
-                    <h3>🪙 KEEPER Token Required</h3>
-                    <p>To launch a project, you need KEEPER tokens for governance. ZOO holders from 2021 can claim 1:1.</p>
-                </div>
-
-                <form>
-                    <div class="form-group">
-                        <label class="form-label">Project Name *</label>
-                        <input type="text" class="form-input" placeholder="My Amazing Project">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Description *</label>
-                        <textarea class="form-textarea" placeholder="Describe your project and what makes it unique..."></textarea>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Category *</label>
-                            <select class="form-select">
-                                <option>DeFi</option>
-                                <option>NFT</option>
-                                <option>Gaming</option>
-                                <option>Infrastructure</option>
-                                <option>DAO Tooling</option>
-                                <option>Research</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Funding Goal (ETH) *</label>
-                            <input type="number" class="form-input" placeholder="10">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Campaign Duration (days) *</label>
-                        <input type="number" class="form-input" placeholder="30" min="1" max="365">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Create DAO?</label>
-                        <select class="form-select">
-                            <option>No - Use standard crowdfunding</option>
-                            <option>Yes - Create project-specific DAO</option>
-                            <option>Yes - Join existing category DAO</option>
-                        </select>
-                    </div>
-
-                    <button type="button" class="launch-btn" style="width: 100%">Launch Project on zoo.fund</button>
-                </form>
+                <div class="copyright">© 2025 Zoo Labs Foundation Inc. All rights reserved.</div>
             </div>
         </div>
-    </div>
+    </footer>
 
     <script>
-        function openCreateModal() {
-            document.getElementById('createModal').classList.add('active');
-        }
-
-        function closeCreateModal() {
-            document.getElementById('createModal').classList.remove('active');
-        }
-
-        // Filter functionality
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                // Update active tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabName).classList.add('active');
             });
         });
 
-        // Close modal on outside click
-        document.getElementById('createModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeCreateModal();
+        // Connect wallet
+        document.querySelector('.wallet-btn').addEventListener('click', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        document.querySelector('.wallet-btn').textContent = 
+                            accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
+                    }
+                } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                }
+            } else {
+                alert('Please install MetaMask or another Web3 wallet');
             }
         });
     </script>
