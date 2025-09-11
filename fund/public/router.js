@@ -1,11 +1,21 @@
 // Simple client-side routing for project pages
 (function() {
-  // Get current path
-  const path = window.location.pathname;
-  const urlParams = new URLSearchParams(window.location.search);
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRouter);
+  } else {
+    initRouter();
+  }
   
-  // Path to project mapping
-  const pathMap = {
+  function initRouter() {
+    console.log('Router initializing...');
+    
+    // Get current path
+    const path = window.location.pathname;
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Path to project mapping
+    const pathMap = {
     '/ocean': 'ocean-dao',
     '/neuro': 'neuro-dao',
     '/longevity': 'longevity-dao',
@@ -15,26 +25,39 @@
     '/space': 'space-dao',
     '/aisafety': 'ai-safety-dao',
     '/ai-safety': 'ai-safety-dao',
+    '/governance': 'governance-page',
     '/': null // Show all projects or default
   };
   
+  // Check for governance page first
+  if (path === '/governance') {
+    window.location.href = '/governance.html';
+    return;
+  }
+  
   // Determine which project to show
-  let projectId = pathMap[path] || urlParams.get('project') || null;
+  let projectId = path === '/' ? null : (pathMap[path] || urlParams.get('project') || null);
+  
+  console.log('Path:', path, 'ProjectId:', projectId);
   
   // Load project data
   fetch('/data/projects.json')
     .then(response => response.json())
     .then(data => {
+      console.log('Data loaded, projectId:', projectId);
       if (projectId) {
         // Show specific project
         const project = data.projects.find(p => p.id === projectId);
         if (project) {
+          console.log('Showing project:', project.name);
           showProject(project);
         } else {
+          console.log('Project not found, showing all');
           showAllProjects(data.projects);
         }
       } else {
         // Show all projects grid
+        console.log('Showing all projects');
         showAllProjects(data.projects);
       }
     })
@@ -83,24 +106,64 @@
   }
   
   function showAllProjects(projects) {
+    console.log('showAllProjects called with', projects.length, 'projects');
     document.title = 'Zoo Fund - Decentralized Science Funding';
     
     // Hide single project view, show grid
     const singleView = document.getElementById('single-project');
     const gridView = document.getElementById('projects-grid');
     
-    if (singleView) singleView.style.display = 'none';
+    console.log('Single view element:', singleView);
+    console.log('Grid view element:', gridView);
+    
+    if (singleView) {
+      singleView.style.display = 'none';
+      console.log('Hidden single view');
+    }
     
     if (gridView) {
       gridView.style.display = 'block';
+      console.log('Showing grid view');
       gridView.innerHTML = `
         <div style="max-width: 1200px; margin: 0 auto; padding: 60px 24px;">
-          <h1 style="font-size: 48px; font-weight: 900; margin-bottom: 16px; text-align: center;">
-            Decentralized Science Funding
-          </h1>
-          <p style="font-size: 20px; color: rgba(255, 255, 255, 0.7); text-align: center; margin-bottom: 60px;">
-            Fund breakthrough research through community-driven DAOs
-          </p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 48px;">
+            <div>
+              <h1 style="font-size: 48px; font-weight: 900; margin-bottom: 16px;">
+                Decentralized Science Funding
+              </h1>
+              <p style="font-size: 20px; color: rgba(255, 255, 255, 0.7);">
+                Fund breakthrough research through community-driven DAOs
+              </p>
+            </div>
+            <div style="display: flex; gap: 16px;">
+              <button onclick="window.createProject()" style="
+                background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 16px;
+                cursor: pointer;
+                transition: opacity 0.2s;
+              " onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                Create Project
+              </button>
+              <button onclick="window.submitProposal()" style="
+                background: transparent;
+                color: white;
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all 0.2s;
+              " onmouseover="this.style.borderColor='rgba(255, 255, 255, 0.4)'" onmouseout="this.style.borderColor='rgba(255, 255, 255, 0.2)'">
+                Submit Proposal
+              </button>
+            </div>
+          </div>
           
           <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 32px;">
             ${projects.map(project => `
@@ -167,27 +230,9 @@
           </div>
         </div>
       `;
+    } else {
+      console.error('Grid view element not found!');
     }
   }
-  
-  // Add navigation
-  const nav = document.querySelector('nav');
-  if (nav && !document.getElementById('project-nav')) {
-    const projectNav = document.createElement('div');
-    projectNav.id = 'project-nav';
-    projectNav.style.cssText = 'display: flex; gap: 20px; align-items: center;';
-    projectNav.innerHTML = `
-      <a href="/" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 14px; font-weight: 500;">All Projects</a>
-      <a href="/ocean" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 14px; font-weight: 500;">Ocean</a>
-      <a href="/neuro" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 14px; font-weight: 500;">Neuro</a>
-      <a href="/climate" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 14px; font-weight: 500;">Climate</a>
-      <a href="/space" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 14px; font-weight: 500;">Space</a>
-    `;
-    
-    // Insert after logo
-    const logo = nav.querySelector('a');
-    if (logo && logo.nextSibling) {
-      nav.insertBefore(projectNav, logo.nextSibling);
-    }
-  }
+  } // End of initRouter
 })();
