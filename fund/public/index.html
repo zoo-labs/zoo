@@ -14,11 +14,16 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #000000;
             color: #ffffff;
             line-height: 1.6;
+            padding-top: 64px; /* Account for fixed header */
         }
 
         .container {
@@ -32,9 +37,11 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            right: 0;
+            z-index: 1000;
         }
 
         nav {
@@ -441,18 +448,144 @@
             color: rgba(255, 255, 255, 0.4);
             font-size: 14px;
         }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 32px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #ffffff;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .form-submit:hover {
+            opacity: 0.9;
+        }
+
+        .form-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
+    <!-- Projects Grid View -->
+    <div id="projects-grid"></div>
+    
+    <!-- Single Project View -->
+    <div id="single-project" style="display: none;">
+    
     <header>
         <nav class="container">
             <a href="/" class="logo">ZOO</a>
             <ul class="nav-links">
-                <li><a href="#ai">AI</a></li>
-                <li><a href="#coin">Coin</a></li>
-                <li><a href="#markets">Markets</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#docs">Docs</a></li>
+                <li><a href="/">Projects</a></li>
+                <li><a href="/governance">Governance</a></li>
+                <li><a href="https://github.com/zoolabs" target="_blank">GitHub</a></li>
+                <li><a href="https://discord.gg/zoo" target="_blank">Discord</a></li>
+                <li><a href="https://twitter.com/zoolabs" target="_blank">Twitter</a></li>
             </ul>
             <button class="wallet-btn">Connect Wallet</button>
         </nav>
@@ -487,7 +620,7 @@
                                 <span>23 days left</span>
                             </div>
                         </div>
-                        <button class="fund-button">Fund This Project</button>
+                        <button class="fund-button" onclick="fundProject('ocean-dao', prompt('Enter funding amount in USD:'))">Fund This Project</button>
                         <div class="share-buttons">
                             <button class="share-btn">Share on 𝕏</button>
                             <button class="share-btn">Copy Link</button>
@@ -500,7 +633,7 @@
         <!-- Tabs Section -->
         <section class="tabs-section">
             <div class="container">
-                <div class="tabs">
+                <div class="tabs" id="project-nav">
                     <div class="tab active" data-tab="overview">Overview</div>
                     <div class="tab" data-tab="hypothesis">Market Hypothesis</div>
                     <div class="tab" data-tab="team">Team & Community</div>
@@ -510,7 +643,7 @@
                 </div>
 
                 <!-- Overview Tab -->
-                <div class="tab-content active" id="overview">
+                <div class="tab-content active" id="overview" data-section="overview">
                     <div class="content-section">
                         <h3 class="section-title">About OceanDAO</h3>
                         <div class="section-content">
@@ -550,7 +683,7 @@
                 </div>
 
                 <!-- Market Hypothesis Tab -->
-                <div class="tab-content" id="hypothesis">
+                <div class="tab-content" id="hypothesis" data-section="hypothesis">
                     <div class="content-section">
                         <h3 class="section-title">Market Opportunity</h3>
                         <div class="section-content">
@@ -588,7 +721,7 @@
                 </div>
 
                 <!-- Team Tab -->
-                <div class="tab-content" id="team">
+                <div class="tab-content" id="team" data-section="team">
                     <div class="content-section">
                         <h3 class="section-title">Core Team</h3>
                         <div class="team-grid">
@@ -641,7 +774,7 @@
                 </div>
 
                 <!-- Roadmap Tab -->
-                <div class="tab-content" id="roadmap">
+                <div class="tab-content" id="roadmap" data-section="roadmap">
                     <div class="content-section">
                         <h3 class="section-title">Project Roadmap</h3>
                         <div class="roadmap-list">
@@ -675,7 +808,7 @@
                 </div>
 
                 <!-- Value Capture Tab -->
-                <div class="tab-content" id="value">
+                <div class="tab-content" id="value" data-section="value">
                     <div class="content-section">
                         <h3 class="section-title">Value Capture Model</h3>
                         <div class="value-grid">
@@ -728,7 +861,7 @@
                 </div>
 
                 <!-- Recommended Reads Tab -->
-                <div class="tab-content" id="recommended">
+                <div class="tab-content" id="recommended" data-section="recommended">
                     <div class="content-section">
                         <h3 class="section-title">Essential Reading</h3>
                         <div class="section-content">
@@ -762,21 +895,179 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-links">
-                    <a href="#">AI</a>
-                    <a href="#">Coin</a>
-                    <a href="#">Markets</a>
-                    <a href="#">Blog</a>
-                    <a href="#">Docs</a>
-                    <a href="#">GitHub</a>
-                    <a href="#">Twitter</a>
+                    <a href="/">All Projects</a>
+                    <a href="/ocean">Ocean</a>
+                    <a href="/neuro">Neuro</a>
+                    <a href="/climate">Climate</a>
+                    <a href="/space">Space</a>
+                    <a href="https://github.com/zoolabs" target="_blank">GitHub</a>
+                    <a href="https://twitter.com/zoolabs" target="_blank">Twitter</a>
+                    <a href="https://discord.gg/zoo" target="_blank">Discord</a>
                 </div>
                 <div class="copyright">© 2025 Zoo Labs Foundation Inc. All rights reserved.</div>
             </div>
         </div>
+    </div> <!-- End of single-project -->
+    
     </footer>
 
+    <!-- Create Project Modal -->
+    <div id="createProjectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create New Project</h2>
+                <button class="modal-close" onclick="closeModal('createProjectModal')">&times;</button>
+            </div>
+            <form onsubmit="handleCreateProject(event)">
+                <div class="form-group">
+                    <label class="form-label">Project Name</label>
+                    <input type="text" class="form-input" placeholder="e.g., Ocean Genome Initiative" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" required>
+                        <option value="">Select a category</option>
+                        <option value="ocean">Ocean Science</option>
+                        <option value="neuro">Neuroscience</option>
+                        <option value="longevity">Longevity</option>
+                        <option value="climate">Climate</option>
+                        <option value="quantum">Quantum Computing</option>
+                        <option value="fusion">Fusion Energy</option>
+                        <option value="space">Space</option>
+                        <option value="ai-safety">AI Safety</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tagline</label>
+                    <input type="text" class="form-input" placeholder="Brief description of your project" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Funding Goal (USD)</label>
+                    <input type="number" class="form-input" placeholder="e.g., 1000000" min="1000" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Detailed description of your project, goals, and impact" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Team Members</label>
+                    <input type="text" class="form-input" placeholder="Comma-separated list of team members">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Milestones</label>
+                    <textarea class="form-textarea" placeholder="Key milestones and timeline for your project" required></textarea>
+                </div>
+                <button type="submit" class="form-submit">Create Project</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Submit Proposal Modal -->
+    <div id="submitProposalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Submit Governance Proposal</h2>
+                <button class="modal-close" onclick="closeModal('submitProposalModal')">&times;</button>
+            </div>
+            <form onsubmit="handleSubmitProposal(event)">
+                <div class="form-group">
+                    <label class="form-label">Proposal Title</label>
+                    <input type="text" class="form-input" placeholder="e.g., Allocate 10% of treasury to Ocean Research" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Proposal Type</label>
+                    <select class="form-select" required>
+                        <option value="">Select proposal type</option>
+                        <option value="funding">Funding Allocation</option>
+                        <option value="governance">Governance Change</option>
+                        <option value="technical">Technical Upgrade</option>
+                        <option value="partnership">Partnership</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Detailed description of your proposal" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Requested Amount (if applicable)</label>
+                    <input type="number" class="form-input" placeholder="Amount in USD" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Implementation Timeline</label>
+                    <input type="text" class="form-input" placeholder="e.g., 3 months" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Success Metrics</label>
+                    <textarea class="form-textarea" placeholder="How will success be measured?" required></textarea>
+                </div>
+                <button type="submit" class="form-submit">Submit Proposal</button>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Tab switching
+        // Wallet state
+        let walletConnected = false;
+        let userAddress = null;
+
+        // Modal functions
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function openModal(modalId) {
+            if (!walletConnected) {
+                alert('Please connect your wallet first');
+                return;
+            }
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        // Create project function
+        window.createProject = function() {
+            openModal('createProjectModal');
+        }
+
+        // Submit proposal function
+        window.submitProposal = function() {
+            openModal('submitProposalModal');
+        }
+
+        // Handle create project form
+        function handleCreateProject(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            // In production, this would interact with smart contracts
+            console.log('Creating project:', Object.fromEntries(formData));
+            alert('Project creation request submitted! It will be reviewed by the DAO.');
+            closeModal('createProjectModal');
+            event.target.reset();
+        }
+
+        // Handle submit proposal form
+        function handleSubmitProposal(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            // In production, this would create an on-chain proposal
+            console.log('Submitting proposal:', Object.fromEntries(formData));
+            alert('Proposal submitted! DAO members can now vote on it.');
+            closeModal('submitProposalModal');
+            event.target.reset();
+        }
+
+        // Close modals on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+
+        // Tab switching with smooth scroll
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 const tabName = tab.dataset.tab;
@@ -789,7 +1080,38 @@
                 document.querySelectorAll('.tab-content').forEach(content => {
                     content.classList.remove('active');
                 });
-                document.getElementById(tabName).classList.add('active');
+                const targetSection = document.getElementById(tabName);
+                targetSection.classList.add('active');
+                
+                // Smooth scroll to section
+                const navHeight = document.querySelector('header').offsetHeight;
+                const tabsHeight = document.querySelector('.tabs').offsetHeight;
+                const targetPosition = document.querySelector('.tabs-section').offsetTop - navHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Highlight active section on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.tab-content');
+            const tabs = document.querySelectorAll('.tab');
+            const navHeight = document.querySelector('header').offsetHeight;
+            const scrollPosition = window.scrollY + navHeight + 100;
+            
+            sections.forEach((section, index) => {
+                if (section.classList.contains('active')) {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tabs[index].classList.add('active');
+                    }
+                }
             });
         });
 
@@ -800,8 +1122,13 @@
                     await window.ethereum.request({ method: 'eth_requestAccounts' });
                     const accounts = await window.ethereum.request({ method: 'eth_accounts' });
                     if (accounts.length > 0) {
+                        walletConnected = true;
+                        userAddress = accounts[0];
                         document.querySelector('.wallet-btn').textContent = 
                             accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
+                        
+                        // Enable wallet-connected features
+                        enableWalletFeatures();
                     }
                 } catch (error) {
                     console.error('Failed to connect wallet:', error);
@@ -810,7 +1137,47 @@
                 alert('Please install MetaMask or another Web3 wallet');
             }
         });
+
+        // Enable features when wallet is connected
+        function enableWalletFeatures() {
+            // Show user dashboard elements
+            console.log('Wallet connected:', userAddress);
+            
+            // In production, this would:
+            // 1. Check user's KEEPER token balance
+            // 2. Load user's projects
+            // 3. Load user's proposals
+            // 4. Enable voting on active proposals
+        }
+
+        // Simulate funding a project
+        window.fundProject = async function(projectId, amount) {
+            if (!walletConnected) {
+                alert('Please connect your wallet first');
+                return;
+            }
+            
+            if (!amount || amount <= 0) {
+                return;
+            }
+            
+            // In production, this would interact with the smart contract
+            console.log(`Funding project ${projectId} with ${amount} USD`);
+            alert(`Transaction initiated to fund project with ${amount} USD`);
+        }
+
+        // Simulate voting on a proposal
+        window.voteOnProposal = async function(proposalId, support) {
+            if (!walletConnected) {
+                alert('Please connect your wallet first');
+                return;
+            }
+            
+            // In production, this would call the governance contract
+            console.log(`Voting ${support ? 'for' : 'against'} proposal ${proposalId}`);
+            alert(`Vote cast ${support ? 'for' : 'against'} the proposal`);
+        }
     </script>
+    <script src="/simple-router.js"></script>
 </body>
-</html><script src="/router.js"></script>
-<script src="/router.js"></script>
+</html>
