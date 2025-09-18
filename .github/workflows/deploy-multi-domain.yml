@@ -1,0 +1,138 @@
+name: Deploy Multi-Domain Sites
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Prepare multi-domain deployment
+        run: |
+          mkdir -p _site
+          
+          # Copy main fund site to root
+          cp -r fund/public/* _site/
+          cp -r fund/data _site/data
+          
+          # Create CNAME with all domains
+          cat > _site/CNAME << 'EOF'
+          zoo.fund
+          ocean.fund
+          neuro.fund
+          longevity.fund
+          climate.fund
+          quantum.fund
+          fusion.fund
+          space.fund
+          aisafety.fund
+          zoo.network
+          EOF
+          
+          # Copy network site
+          mkdir -p _site/network
+          cp -r network/public/* _site/network/
+          
+          # Create domain-specific entry points
+          # Each domain will show its specific project
+          cat > _site/ocean.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <script>window.location.href = '/?project=ocean-dao';</script>
+          </head>
+          </html>
+          EOF
+          
+          cat > _site/neuro.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <script>window.location.href = '/?project=neuro-dao';</script>
+          </head>
+          </html>
+          EOF
+          
+          cat > _site/longevity.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <script>window.location.href = '/?project=longevity-dao';</script>
+          </head>
+          </html>
+          EOF
+          
+          cat > _site/climate.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <script>window.location.href = '/?project=climate-dao';</script>
+          </head>
+          </html>
+          EOF
+          
+          cat > _site/quantum.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <script>window.location.href = '/?project=quantum-dao';</script>
+          </head>
+          </html>
+          EOF
+          
+          cat > _site/fusion.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <script>window.location.href = '/?project=fusion-dao';</script>
+          </head>
+          </html>
+          EOF
+          
+          cat > _site/space.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <script>window.location.href = '/?project=space-dao';</script>
+          </head>
+          </html>
+          EOF
+          
+          cat > _site/aisafety.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <script>window.location.href = '/?project=ai-safety-dao';</script>
+          </head>
+          </html>
+          EOF
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
