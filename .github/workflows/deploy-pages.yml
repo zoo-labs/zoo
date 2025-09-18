@@ -1,0 +1,55 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir -p _site
+          
+          # Copy fund site to root (zoo.fund)
+          cp -r fund/public/* _site/
+          
+          # Copy network site to /network subdirectory  
+          mkdir -p _site/network
+          cp -r network/public/* _site/network/
+          
+          # Copy data directory for fund
+          cp -r fund/data _site/data
+          
+          # Create CNAME file for custom domain
+          echo "zoo.fund" > _site/CNAME
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

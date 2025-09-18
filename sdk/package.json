@@ -1,0 +1,51 @@
+{
+    "name": "@zoolabs/sdk",
+    "version": "1.1.8",
+    "description": "An SDK that can be used in any javascript/typescript context to easily interact with Zoo APIs",
+    "source": "src/index.ts",
+    "main": "dist/index.js",
+    "module": "dist/index.module.js",
+    "types": "dist/index.d.ts",
+    "author": "Zoo Protocol",
+    "license": "MIT",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "clean": "rm -rf dist",
+        "test": "jest",
+        "version": "yarn version",
+        "version:package": "sh ../../scripts/package-version.sh",
+        "version:update": "yarn version ${0}; PACKAGE_VERSION=$(yarn version:package); git add -A; git commit -m \"🎉 Release client package v$PACKAGE_VERSION\"; git tag v${PACKAGE_VERSION}-SDK; git push --tags;",
+        "syncApi": "node ./sync-api.mjs",
+        "changelog": "node ../../scripts/generate-changelog.js package=sdk"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zoo-labs/zoo-kit"
+    },
+    "sideEffects": false,
+    "keywords": [
+        "nft",
+        "zoo",
+        "zoo-sdk",
+        "zookit",
+        "protocol",
+        "sdk"
+    ],
+    "dependencies": {
+        "axios": "^0.27.2"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "devDependencies": {
+        "@types/jest": "^29.5.2",
+        "jest": "^29.5.0",
+        "openapi-typescript": "^5.4.1",
+        "ts-jest": "^29.1.0"
+    },
+    "peerDependencies": {
+        "viem": "~0.3.35"
+    }
+}
