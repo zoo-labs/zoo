@@ -15,9 +15,9 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
     <Link href={`/experiences/${id}`} className="block">
       <Card className="overflow-hidden group h-full bg-black hover:border-gray-600 transition-colors">
         <div className="relative aspect-[4/3] overflow-hidden">
-          <img 
-            src={images[0]} 
-            alt={title} 
+          <img
+            src={images[0]}
+            alt={title}
             className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/60 to-transparent">

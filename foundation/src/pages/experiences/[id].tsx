@@ -102,10 +102,11 @@ export default function ExperienceDetailPage() {
               </div>
               
               <div className="aspect-w-16 aspect-h-9 mb-8 rounded-lg overflow-hidden relative h-96">
-                <img 
-                  src={experience.images[0]} 
+                <img
+                  src={experience.images[0]}
                   alt={experience.title}
-                  className="object-cover w-full h-full rounded-lg"
+                  className={`w-full h-full rounded-lg ${experience.id === 'nonprofit-signup' ? 'object-cover object-center' : 'object-cover'}`}
+                  style={experience.id === 'nonprofit-signup' ? { objectPosition: '50% 45%' } : undefined}
                 />
               </div>
               
@@ -158,8 +159,10 @@ export default function ExperienceDetailPage() {
                   <div>
                     <h3 className="font-medium mb-2">Duration</h3>
                     <p>
-                      {experience.duration.minWeeks} 
-                      {experience.duration.maxWeeks ? ` to ${experience.duration.maxWeeks}` : '+'} weeks
+                      {(experience.id === "1" || experience.id === "7" || experience.id === "8") ? "10-12 hours" :
+                        experience.id === "nonprofit-signup" ? "Ongoing Partnership" :
+                        `${experience.duration.minWeeks}${experience.duration.maxWeeks ? ` to ${experience.duration.maxWeeks}` : '+'} weeks`
+                      }
                     </p>
                   </div>
                   
@@ -176,11 +179,11 @@ export default function ExperienceDetailPage() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button 
+                  <Button
                     onClick={handleBookNow}
                     className="w-full"
                   >
-                    Book Now
+                    {experience.id === "nonprofit-signup" ? "Apply Now" : "Book Now"}
                   </Button>
                 </CardFooter>
               </Card>
