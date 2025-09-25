@@ -119,7 +119,14 @@ export default function ExperienceDetailPage() {
                 </TabsList>
                 
                 <TabsContent value="overview" className="text-gray-300 space-y-4">
-                  <p>{experience.overview}</p>
+                  {experience.overview.includes('Create Your Conservation Experience') ? (
+                    <>
+                      <h2 className="text-xl font-bold text-white mb-4">Create Your Conservation Experience</h2>
+                      <p>{experience.overview.replace('Create Your Conservation Experience\n\n', '')}</p>
+                    </>
+                  ) : (
+                    <p>{experience.overview}</p>
+                  )}
                   <p>{experience.description}</p>
                 </TabsContent>
                 
