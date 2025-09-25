@@ -39,7 +39,7 @@ export default function IndexPage() {
             <Link href="/experiences/1" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  src="/images/volunteer-experiences/sharks.jpg"
+                  src="/images/volunteer-experiences/luxury-yacht-shark-breach.jpg"
                   alt="Ultimate Luxury Great White Shark Expedition"
                   className="w-full h-full object-cover"
                 />
@@ -54,7 +54,7 @@ export default function IndexPage() {
             <Link href="/experiences/7" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  src="/images/volunteer-experiences/intimate-shark-diving.jpg"
+                  src="/images/volunteer-experiences/intimate-shark-two.jpg"
                   alt="Intimate Great White Shark Encounter"
                   className="w-full h-full object-cover"
                 />
@@ -69,7 +69,7 @@ export default function IndexPage() {
             <Link href="/experiences/8" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
               <div className="relative aspect-video overflow-hidden">
                 <img
-                  src="/images/volunteer-experiences/premium-shark-expedition.jpg"
+                  src="/images/volunteer-experiences/modular-shark-adventure.jpg"
                   alt="Premium Great White Shark Expedition"
                   className="w-full h-full object-cover"
                 />
