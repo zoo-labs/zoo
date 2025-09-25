@@ -480,6 +480,59 @@ export const experiences: Experience[] = [
     reviewsCount: 28,
     featured: true,
   },
+  {
+    id: "9",
+    title: "Farallones Sanctuary Wildlife Expedition",
+    location: {
+      city: "Farallone Islands, San Francisco",
+      country: "USA",
+      continent: "North America",
+      coordinates: {
+        lat: 37.7,
+        lng: -123.0,
+      },
+    },
+    images: [
+      "/images/volunteer-experiences/wildlife-rescue-1.jpg",
+      "/images/volunteer-experiences/marine-conservation.jpg",
+    ],
+    description:
+      "Join marine biologist David McGuire on a unique exploration into the Greater Farallones National Marine Sanctuary. As part of NOAA's White Shark Stewardship program, we collect conservation data while observing marine wildlife from seabirds to whales, and maybe even great white sharks during 'Sharktober'.",
+    overview:
+      "Visit the waters of the Devil's Teeth on this unique conservation expedition to the Greater Farallones National Marine Sanctuary. These natural history trips focus on shark conservation, marine ecosystem health, and wildlife education. Departing from Fisherman's Wharf aboard the US Coast Guard inspected vessel AMIGO, you'll explore the sanctuary waters where 36 species of marine mammals and over 250,000 seabirds thrive. While we focus on conservation education and may encounter great white sharks during their seasonal return, this is primarily a wildlife appreciation and marine education experience in one of the world's most biodiverse marine sanctuaries.",
+    wildlifeTypes: ["Marine Life", "Great White Sharks", "Whales", "Seabirds", "Elephant Seals"],
+    volunteerTasks: [
+      "🔬 Participate in NOAA White Shark Stewardship data collection",
+      "📸 Document marine wildlife sightings and behavior",
+      "🐋 Observe and record whale, dolphin, and pinniped populations",
+      "🦅 Identify seabird species in one of the world's largest colonies",
+      "🦈 Learn shark conservation and marine ecosystem protection",
+      "📝 Contribute to ongoing marine research and monitoring",
+      "🌊 Support sustainable marine wildlife education initiatives",
+    ],
+    ethicalConsiderations:
+      "This is a surface-viewing conservation trip that follows strict NOAA guidelines for marine wildlife observation. We do not use shark attractants or engage in activities that disturb natural behaviors. The expedition prioritizes ecosystem education and conservation data collection over entertainment, ensuring minimal impact on the sensitive marine sanctuary environment.",
+    requirements: [
+      "Minimum age of 8 years (youth must be accompanied by parent/guardian)",
+      "Ability to board vessel via 6-foot ladder",
+      "Good physical mobility for all-day marine conditions",
+      "Seasickness preparation recommended",
+    ],
+    pricing: {
+      amount: 263,
+      currency: "USD",
+      period: "day expedition",
+    },
+    duration: {
+      minWeeks: 0,
+      maxWeeks: 0,
+    },
+    impact:
+      "Your participation directly supports NOAA's White Shark Stewardship Program and marine sanctuary conservation efforts. Data collected during these expeditions contributes to ongoing research on great white shark behavior, marine mammal populations, and ecosystem health in the Greater Farallones National Marine Sanctuary, one of the most biodiverse marine environments in the world.",
+    rating: 4.8,
+    reviewsCount: 156,
+    featured: true,
+  },
 ];
 
 export const getExperienceById = (id: string): Experience | undefined => {
