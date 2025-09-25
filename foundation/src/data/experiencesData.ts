@@ -426,7 +426,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "nonprofit-signup",
-    title: "Create Your Conservation Experience",
+    title: "Partner w/ Us!",
     location: {
       city: "Global",
       country: "Worldwide",
@@ -443,7 +443,7 @@ export const experiences: Experience[] = [
     description:
       "Are you a non-profit working in wildlife conservation? Partner with Zoo Foundation to create and list your own conservation experience on our platform.",
     overview:
-      "Join our network of conservation partners! If you're a registered non-profit organization working to protect endangered species and ecosystems, we invite you to create your own conservation experience on our platform. We provide the technology, marketing reach, and donor network while you bring the expertise and on-ground conservation work. Together, we can amplify your impact and connect you with passionate supporters who want to make a difference. Our platform handles all donation processing, provides tax receipts, and ensures compliance with international giving standards.",
+      "Create Your Conservation Experience\n\nJoin our network of conservation partners! If you're a registered non-profit organization working to protect endangered species and ecosystems, we invite you to create your own conservation experience on our platform. We provide the technology, marketing reach, and donor network while you bring the expertise and on-ground conservation work. Together, we can amplify your impact and connect you with passionate supporters who want to make a difference. Our platform handles all donation processing, provides tax receipts, and ensures compliance with international giving standards.",
     wildlifeTypes: ["All Wildlife", "Marine Life", "Birds", "Mammals", "Reptiles"],
     volunteerTasks: [
       "✨ FREE platform listing for qualified non-profits",
