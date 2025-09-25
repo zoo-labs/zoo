@@ -3,52 +3,181 @@ import { Experience } from "../types/experiences";
 export const experiences: Experience[] = [
   {
     id: "1",
-    title: "Mountain Goat Preserve & Rehabilitation",
+    title: "Ultimate Luxury Great White Shark Expedition (20 Guests)",
     location: {
-      city: "Boise",
+      city: "Farallone Islands, San Francisco",
       country: "USA",
       continent: "North America",
       coordinates: {
-        lat: 43.6150,
-        lng: -116.2023,
+        lat: 37.7749,
+        lng: -122.4194,
       },
     },
     images: [
-      "/images/volunteer-experiences/mountain-goat-1.jpg",
-      "/images/volunteer-experiences/mountain-goat-2.jpg",
+      "/images/volunteer-experiences/luxury-yacht-shark-breach.jpg",
+      "/images/volunteer-experiences/farallon-islands.jpg",
     ],
     description:
-      "Join our dedicated team in Idaho to rehabilitate and conserve mountain goats. Work hands-on with these magnificent alpine animals in their natural habitat.",
+      "THE ULTIMATE GROUP EXPERIENCE: Charter a magnificent luxury yacht for you and 19 friends to encounter great white sharks at the Farallon Islands. This exclusive full-yacht charter includes gourmet dining, premium bar, and potential cage diving with one of the ocean's apex predators.",
     overview:
-      "This sanctuary focuses on the rehabilitation of mountain goats that have been rescued from injury or human conflict. Our mission is to provide these remarkable animals with a safe environment where they can recover and, when possible, be reintroduced to the wild. You'll work alongside experienced conservationists who are passionate about protecting these iconic mountain species.",
-    wildlifeTypes: ["Mountain Goats"],
+      "Transform your $75,000 donation into an unforgettable group adventure. You and up to 19 guests will have EXCLUSIVE use of a stunning 85-foot luxury yacht for a full day expedition to the Farallon Islands—home to one of the world's largest concentrations of great white sharks. This is not a shared tour—the entire vessel, crew, and experience are exclusively yours. Between September and November, witness hundreds of great whites hunting seals in their natural habitat. Your private expedition features multiple cage diving stations allowing your entire group to experience the thrill simultaneously. A team of world-renowned shark experts, a private chef preparing gourmet meals throughout the day, premium bar service, and professional photography/videography to capture every moment. This is how conservation meets luxury—creating memories with friends while saving a species.",
+    wildlifeTypes: ["Great White Sharks", "Marine Wildlife", "Seals & Sea Lions", "Whales", "Sea Birds"],
     volunteerTasks: [
-      "Food Preparation",
-      "Habitat Maintenance",
-      "Research",
-      "Conservation",
+      "⭐ EXCLUSIVE FULL YACHT CHARTER for you + 19 guests",
+      "🦈 Multiple cage diving stations for simultaneous group experiences",
+      "🛥️ 85-foot luxury yacht with spacious decks and indoor lounges",
+      "👨‍🍳 Private chef with customized gourmet menu throughout the day",
+      "🍾 Premium open bar with champagne, wines, and craft cocktails",
+      "📸 Professional photographer & videographer for your group",
+      "🎓 Multiple marine biologists to engage all your guests",
+      "🎁 Custom merchandise and conservation certificates for all guests",
+      "🚁 Optional helicopter arrival/departure available",
     ],
     ethicalConsiderations:
-      "We maintain a strict minimal-contact policy with the mountain goats. Our focus is on conservation rather than entertainment, ensuring these animals maintain their natural behaviors. All activities are designed with the animals' welfare as the top priority.",
+      "In Partnership with Shark Stewards: This expedition follows strict wildlife viewing protocols to ensure minimal impact on shark behavior. All cage diving activities are conducted according to international best practices for shark tourism. Our expert team from Shark Stewards Foundation ensures that every encounter is both thrilling and respectful to these apex predators. Your participation directly funds shark research, protection initiatives, and efforts to ban shark finning globally. 100% of net proceeds support critical shark conservation programs.",
     requirements: [
-      "Minimum age of 18",
-      "Good physical fitness",
-      "Passion for wildlife conservation",
-      "No specific qualifications needed",
+      "Available with a $75,000 donation",
+      "Tax-deductible portion: $40,000",
+      "Fair Market Value (FMV) of experience: $35,000",
+      "Accommodates up to 20 total guests",
+      "Peak shark season: September - November",
+      "Swimming ability required for cage diving",
+      "Participants must be 18+ for cage diving",
+      "Weather and ocean conditions dependent",
     ],
     pricing: {
-      amount: 1200,
+      amount: 75000,
       currency: "USD",
-      period: "2 weeks",
+      period: "group expedition",
     },
     duration: {
-      minWeeks: 2,
-      maxWeeks: 12,
+      minWeeks: 0,
+      maxWeeks: 0,
     },
     impact:
-      "Your contribution directly supports the rehabilitation of injured mountain goats, contributing to the conservation of these remarkable alpine species and promoting biodiversity in Idaho's mountain ecosystems.",
+      "Your expedition directly funds great white shark research and protection initiatives. These apex predators have declined by 70% globally, and the Farallon population is critical for the species' survival. Your contribution supports satellite tagging programs, anti-finning legislation, and education programs that are changing the narrative around sharks from fear to fascination and conservation.",
+    rating: 4.9,
+    reviewsCount: 43,
+    featured: true,
+  },
+  {
+    id: "7",
+    title: "Intimate Shark Encounter for Two",
+    location: {
+      city: "Farallone Islands, San Francisco",
+      country: "USA",
+      continent: "North America",
+      coordinates: {
+        lat: 37.7749,
+        lng: -122.4194,
+      },
+    },
+    images: [
+      "/images/volunteer-experiences/intimate-shark-two.jpg",
+      "/images/volunteer-experiences/farallon-sharks.jpg",
+    ],
+    description:
+      "A more intimate and relaxed shark watching experience for you and a companion. Enjoy a comfortable day at sea with expert naturalists, observing great whites in their natural habitat with gourmet food and beverages included.",
+    overview:
+      "Perfect for couples or close friends seeking a more personal shark encounter. Your $2,500 donation provides you and one guest with reserved spots on a comfortable expedition vessel to the Farallon Islands. This intimate experience focuses on observation and education, with a maximum of 12 passengers ensuring everyone has prime viewing spots. Enjoy a relaxed pace with gourmet breakfast and lunch, premium beverages, and extensive time with our expert naturalist who will share fascinating insights about great white behavior, conservation efforts, and the unique Farallon ecosystem. While this experience doesn't include cage diving, you'll witness sharks breaching, hunting, and patrolling these waters from the safety and comfort of the deck.",
+    wildlifeTypes: ["Great White Sharks", "Marine Wildlife", "Seals & Sea Lions", "Whales", "Sea Birds"],
+    volunteerTasks: [
+      "👥 Intimate experience for you and one companion",
+      "🦈 Prime shark viewing from comfortable observation deck",
+      "🥐 Gourmet breakfast and lunch prepared fresh onboard",
+      "🍷 Premium beverages including wine, beer, and non-alcoholic options",
+      "🔭 High-quality binoculars and spotting scopes provided",
+      "📚 Expert marine naturalist providing personalized education",
+      "📷 Photography tips and best viewing spot guidance",
+      "☕ Comfortable indoor cabin with refreshments all day",
+    ],
+    ethicalConsiderations:
+      "This observation-focused experience maintains respectful distances from wildlife while providing incredible viewing opportunities. In partnership with Shark Stewards Foundation, we follow strict protocols to minimize disturbance to natural behaviors. Your contribution supports vital research and conservation programs protecting these magnificent predators.",
+    requirements: [
+      "Available with a $2,500 donation for 2 guests",
+      "Tax-deductible portion: $1,500",
+      "Fair Market Value (FMV) of experience: $1,000",
+      "Peak shark season: September - November",
+      "No swimming or diving included",
+      "All ages welcome",
+      "Weather dependent",
+    ],
+    pricing: {
+      amount: 2500,
+      currency: "USD",
+      period: "for two guests",
+    },
+    duration: {
+      minWeeks: 0,
+      maxWeeks: 0,
+    },
+    impact:
+      "Your contribution directly supports Shark Stewards' research and education programs, helping protect great white sharks through science-based conservation, policy advocacy, and public education initiatives.",
+    rating: 4.7,
+    reviewsCount: 89,
+    featured: true,
+  },
+  {
+    id: "8",
+    title: "Modular Shark Adventure with Optional Cage Diving",
+    location: {
+      city: "Farallone Islands, San Francisco",
+      country: "USA",
+      continent: "North America",
+      coordinates: {
+        lat: 37.7749,
+        lng: -122.4194,
+      },
+    },
+    images: [
+      "/images/volunteer-experiences/modular-shark-adventure.jpg",
+      "/images/volunteer-experiences/farallon-expedition.jpg",
+    ],
+    description:
+      "Customize your perfect shark expedition! Start with comfortable observation and education, then add the ultimate thrill of cage diving with great whites for those seeking an adrenaline rush.",
+    overview:
+      "Design your ideal shark conservation experience with our flexible expedition options. Your base $3,500 donation includes a full day expedition to the Farallon Islands on a well-equipped vessel with experienced crew and naturalists. Enjoy shark observation from deck, educational presentations, breakfast and lunch, and all standard amenities. For the ultimate adventure, add cage diving for $2,000 per person—descend in our professional-grade shark cage to come face-to-face with 15-20 foot great whites in crystal-clear Pacific waters. This modular approach lets you choose your comfort level while supporting critical conservation work. Groups can mix and match, with some observing from deck while others cage dive.",
+    wildlifeTypes: ["Great White Sharks", "Marine Wildlife", "Seals & Sea Lions", "Whales", "Sea Birds"],
+    volunteerTasks: [
+      "🎯 BASE EXPERIENCE ($3,500 per person):",
+      "  • Full day Farallon Islands expedition",
+      "  • Shark observation from deck with expert guides",
+      "  • Breakfast, lunch, and beverages included",
+      "  • Educational presentations and conservation talks",
+      "  • Use of binoculars and viewing equipment",
+      "🦈 OPTIONAL CAGE DIVING ADD-ON (+$2,000 per person):",
+      "  • 20-30 minutes in professional shark cage",
+      "  • All diving equipment and wetsuit provided",
+      "  • Certified dive master supervision",
+      "  • Underwater GoPro footage of your dive",
+      "  • Pre-dive safety briefing and training",
+      "  • Hot drinks and warming blankets post-dive",
+    ],
+    ethicalConsiderations:
+      "Whether observing from deck or cage diving, all activities follow international wildlife protection protocols. Shark Stewards Foundation guides ensure respectful, safe encounters that don't disrupt natural behaviors. Every participant, regardless of activity choice, contributes to vital shark conservation efforts.",
+    requirements: [
+      "Base experience: $3,500 per person donation",
+      "Optional cage diving: +$2,000 per person",
+      "Tax-deductible portion: Varies by options selected",
+      "Peak shark season: September - November",
+      "Cage diving requires: 18+ age, swimming ability",
+      "Observation only: All ages welcome",
+      "Groups can mix observers and divers",
+      "Weather and conditions dependent",
+    ],
+    pricing: {
+      amount: 3500,
+      currency: "USD",
+      period: "per person (base)",
+    },
+    duration: {
+      minWeeks: 0,
+      maxWeeks: 0,
+    },
+    impact:
+      "Your flexible contribution model helps us reach more conservation supporters. Funds support shark research, satellite tagging, anti-finning campaigns, and education programs that are critical for the survival of great white sharks.",
     rating: 4.8,
-    reviewsCount: 157,
+    reviewsCount: 124,
     featured: true,
   },
   {
@@ -97,7 +226,7 @@ export const experiences: Experience[] = [
       "Your participation supports the sanctuary's ability to rescue more elephants from exploitative industries, provide them with proper medical care, and educate visitors about ethical elephant tourism.",
     rating: 4.9,
     reviewsCount: 213,
-    featured: true,
+    featured: false,
   },
   {
     id: "3",
@@ -293,6 +422,62 @@ export const experiences: Experience[] = [
       "Your support helps provide care for hundreds of animals each year and facilitates their return to the wild. The center also conducts important educational outreach to reduce future human-wildlife conflicts and combat the illegal wildlife trade.",
     rating: 4.8,
     reviewsCount: 142,
+    featured: false,
+  },
+  {
+    id: "nonprofit-signup",
+    title: "Create Your Conservation Experience",
+    location: {
+      city: "Global",
+      country: "Worldwide",
+      continent: "All Continents",
+      coordinates: {
+        lat: 0,
+        lng: 0,
+      },
+    },
+    images: [
+      "/images/volunteer-experiences/create wildlife experience.jpg",
+      "/images/volunteer-experiences/partnership.jpg",
+    ],
+    description:
+      "Are you a non-profit working in wildlife conservation? Partner with Zoo Foundation to create and list your own conservation experience on our platform.",
+    overview:
+      "Join our network of conservation partners! If you're a registered non-profit organization working to protect endangered species and ecosystems, we invite you to create your own conservation experience on our platform. We provide the technology, marketing reach, and donor network while you bring the expertise and on-ground conservation work. Together, we can amplify your impact and connect you with passionate supporters who want to make a difference. Our platform handles all donation processing, provides tax receipts, and ensures compliance with international giving standards.",
+    wildlifeTypes: ["All Wildlife", "Marine Life", "Birds", "Mammals", "Reptiles"],
+    volunteerTasks: [
+      "✨ FREE platform listing for qualified non-profits",
+      "💰 100% of donations go to your organization",
+      "🌍 Global reach to conservation-minded donors",
+      "📊 Analytics dashboard to track engagement",
+      "🎯 Marketing support and promotion",
+      "📧 Automated donor communications",
+      "🧾 Tax receipt generation for donors",
+      "🤝 Partnership with Zoo Foundation brand",
+    ],
+    ethicalConsiderations:
+      "We carefully vet all partner organizations to ensure they meet our strict ethical standards for wildlife conservation, animal welfare, and environmental protection. All experiences must prioritize conservation outcomes over tourist entertainment.",
+    requirements: [
+      "Registered 501(c)(3) or equivalent non-profit status",
+      "Proven track record in conservation (2+ years)",
+      "Commitment to ethical wildlife practices",
+      "Insurance and safety protocols in place",
+      "Regular impact reporting capability",
+      "English-language program materials",
+    ],
+    pricing: {
+      amount: 0,
+      currency: "USD",
+      period: "FREE for non-profits",
+    },
+    duration: {
+      minWeeks: 0,
+      maxWeeks: 0,
+    },
+    impact:
+      "By joining our platform, you'll expand your reach to a global audience of conservation supporters, increase your funding opportunities, and join a network of organizations working together to save endangered species worldwide.",
+    rating: 5.0,
+    reviewsCount: 28,
     featured: true,
   },
 ];

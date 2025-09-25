@@ -236,18 +236,17 @@ function Globe() {
     endLng: 128.21550477246348,
     color: ['purple','purple']
   }];
-  const globeRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    const _globe = globeRef.current;
-    if (_globe && _globe.controls) {
-      // _globe.controls().enableZoom = false;
-      // _globe.controls().maxAzimuthAngle = 0;
-      // _globe.controls().maxPolarAngle = 0;
-      _globe.controls().enableZoom = false;
-      _globe.controls().autoRotate = true;
-      _globe.controls().autoRotateSpeed = 0.7;
+  const globeRef = useRef(null);
+
+  // Use callback ref to set up controls
+  const handleGlobeReady = (globe) => {
+    if (globe && globe.controls) {
+      globe.controls().enableZoom = false;
+      globe.controls().autoRotate = true;
+      globe.controls().autoRotateSpeed = 0.7;
     }
-}, [globeRef]);
+    globeRef.current = globe;
+  };
   const size = useWindowSize();
   function useWindowSize() {
     // Initialize state with undefined width/height so server and client renders match
@@ -280,14 +279,14 @@ function Globe() {
     return windowSize;
   }
 var marker_flag = false;
-return <div className={`w-full bg-black`}>
-    
+return <div className={`w-full bg-transparent flex justify-center items-center`}>
+
     <Globe_
-    ref={globeRef}
+    ref={handleGlobeReady}
     globeImageUrl={"//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"}
     backgroundColor={"#000"}
-    width={size.width}
-    height={`${size.width < 768? size.width + 100 :size.width * 9 / 16}`}
+    width={size.width * 0.35}
+    height={`${size.width < 768? (size.width + 100) * 0.35 : size.width * 9 / 16 * 0.35}`}
     htmlElementsData={locationData}
     onGlobeClick={(e) => {
       console.log("globe click!!!",marker_flag);
@@ -308,7 +307,7 @@ return <div className={`w-full bg-black`}>
         <path fill="currentColor" d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z"></path>
         <circle fill="black" cx="14" cy="14" r="7"></circle>
       </svg>
-      <div id='info_panel_${d.index}' class='info-panel absolute top-[-5px] left-[20px] flex hidden flex-col md:min-w-[180px] max-md:min-w-[140px] bg-white rounded-lg min-h-[150px] p-2 space-y-4 max-md:space-y-2'>
+      <div id='info_panel_${d.index}' class='info-panel absolute top-[-5px] left-[20px] flex hidden flex-col md:min-w-[180px] max-md:min-w-[140px] bg-gray-900 border border-gray-700 rounded-lg min-h-[150px] p-2 space-y-4 max-md:space-y-2'>
         <div class='w-full flex items-center space-x-4 max-md:space-x-2'>
           <Image
             class='flex-1 w-1/2'
@@ -317,13 +316,13 @@ return <div className={`w-full bg-black`}>
             height='1000'
             alt=''
           />
-          <p class='flex-1 text-base max-md:text-xs text-black'>${d.name}</p>
+          <p class='flex-1 text-base max-md:text-xs text-white'>${d.name}</p>
         </div>
-        <p class='text-sm max-md:text-xs text-black'>${d.location}</p>
-        <a href='${d.link}' class='flex items-center text-black justify-between'>
+        <p class='text-sm max-md:text-xs text-gray-300'>${d.location}</p>
+        <a href='${d.link}' class='flex items-center text-white justify-between hover:text-gray-300 transition-colors'>
           <p class='text-sm max-md:text-xs'>Learn More</p>
           <svg width="8" height="9" viewBox="0 0 8 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.76727 4.33639C7.88057 4.41604 7.88057 4.58396 7.76727 4.66361L1.7141 8.91907C1.64504 8.96762 1.55294 8.96758 1.48393 8.91899L0.232426 8.03776C0.119235 7.95806 0.119297 7.79024 0.232548 7.71062L4.56676 4.66361C4.68006 4.58396 4.68006 4.41604 4.56676 4.33639L0.232555 1.28938C0.119305 1.20977 0.119241 1.04194 0.232432 0.962242L1.48393 0.0810142C1.55294 0.0324163 1.64504 0.0323817 1.7141 0.0809275L7.76727 4.33639Z" fill="black"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.76727 4.33639C7.88057 4.41604 7.88057 4.58396 7.76727 4.66361L1.7141 8.91907C1.64504 8.96762 1.55294 8.96758 1.48393 8.91899L0.232426 8.03776C0.119235 7.95806 0.119297 7.79024 0.232548 7.71062L4.56676 4.66361C4.68006 4.58396 4.68006 4.41604 4.56676 4.33639L0.232555 1.28938C0.119305 1.20977 0.119241 1.04194 0.232432 0.962242L1.48393 0.0810142C1.55294 0.0324163 1.64504 0.0323817 1.7141 0.0809275L7.76727 4.33639Z" fill="white"/>
           </svg>
         </a>
       </div>

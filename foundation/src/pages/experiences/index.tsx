@@ -9,7 +9,7 @@ import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
 import ExperienceCard from '@/components/experiences/ExperienceCard';
 import FilterPanel from '@/components/experiences/FilterPanel';
-import MapView from '@/components/experiences/MapView';
+import Globe from '@/components/WrapGlobe';
 import { experiences } from '@/data/experiencesData';
 import { FilterOptions, Experience } from '@/types/experiences';
 import { Button } from '@/components/ui/button';
@@ -24,11 +24,13 @@ enum ViewMode {
 export default function ExperiencesPage() {
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.GRID);
   const [filters, setFilters] = useState<FilterOptions>({});
-  const [filteredExperiences, setFilteredExperiences] = useState<Experience[]>(experiences);
+  // Only show featured experiences
+  const featuredExperiences = experiences.filter(exp => exp.featured);
+  const [filteredExperiences, setFilteredExperiences] = useState<Experience[]>(featuredExperiences);
 
   // Apply filters when they change
   useEffect(() => {
-    let results = [...experiences];
+    let results = [...featuredExperiences];
     
     // Filter by continent
     if (filters.continent && filters.continent.length > 0) {
@@ -82,15 +84,25 @@ export default function ExperiencesPage() {
       <Navbar />
       
       <main className="bg-black text-white">
-        <div className="container mx-auto px-4 pt-12 pb-20">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">Wildlife Volunteer Experiences</h1>
-          <p className="text-gray-400 mb-8">
-            Find your perfect wildlife volunteer opportunity from {experiences.length} programs worldwide
-          </p>
+        <div className="container mx-auto px-4 pt-8 pb-16">
+          <div className='mb-8'>
+            <div className='flex flex-col md:flex-row items-center gap-6'>
+              <div className='flex-1 text-left flex flex-col justify-center'>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+                  Wildlife Volunteer<br />
+                  Experiences
+                </h1>
+                <p className="text-gray-400 text-lg">
+                  Find your perfect wildlife volunteer opportunity from {featuredExperiences.length} programs worldwide
+                </p>
+              </div>
+              <div className='w-64 shrink-0 flex justify-end'>
+                <Globe />
+              </div>
+            </div>
+          </div>
           
-          <MapView experiences={filteredExperiences} />
-          
-          <div className="flex flex-col md:flex-row gap-8 mt-12">
+          <div className="flex flex-col md:flex-row gap-8 mt-8">
             {/* Filter sidebar */}
             <FilterPanel 
               filters={filters} 
