@@ -48,5 +48,13 @@
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3"
-  }
+  },
+  "description": "",
+  "main": "next.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
