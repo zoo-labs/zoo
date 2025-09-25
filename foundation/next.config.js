@@ -1,18 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  
   eslint: {
     dirs: ['src'],
     ignoreDuringBuilds: true,
   },
 
   reactStrictMode: true,
-
-  // Uncoment to add domain whitelist
-  // images: {
-  //   domains: [
-  //     'res.cloudinary.com',
-  //   ],
-  // },
+  
+  // Disable image optimization for static export
+  images: {
+    unoptimized: true,
+  },
 
   // SVGR
   webpack(config) {
