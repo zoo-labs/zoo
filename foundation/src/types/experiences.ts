@@ -1,8 +1,8 @@
-export type Continent = 'Africa' | 'Asia' | 'Europe' | 'North America' | 'Oceania' | 'South America';
+export type Continent = string;
 
-export type WildlifeType = 'Big Cats' | 'Mountain Goats' | 'Primates' | 'Elephants' | 'Marine Life' | 'Birds' | 'General Wildlife';
+export type WildlifeType = string;
 
-export type VolunteerTask = 'Food Preparation' | 'Habitat Maintenance' | 'Animal Rehabilitation' | 'Research' | 'Education' | 'Conservation';
+export type VolunteerTask = string;
 
 export type Experience = {
   id: string;
