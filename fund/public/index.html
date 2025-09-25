@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OceanDAO - Zoo Fund</title>
+    <title>Zoo Fund - Conservation DAOs</title>
+    <link rel="icon" type="image/png" href="https://zoo.ngo/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://zoo.ngo/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="https://zoo.ngo/favicon/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -581,7 +584,7 @@
         <nav class="container">
             <div style="display: flex; align-items: center; gap: 40px;">
                 <a href="https://zoo.ngo" style="display: flex; align-items: center; text-decoration: none;">
-                    <img src="https://zoo.ngo/zooLogo.svg" alt="Zoo" style="height: 40px; width: auto;" />
+                    <img src="https://zoo.ngo/favicon/logo.png" alt="Zoo" style="height: 40px; width: auto;" />
                 </a>
                 <ul class="nav-links" style="display: flex; gap: 24px; list-style: none; margin: 0;">
                     <li><a href="https://zoo.ngo/animals" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500;">Animals</a></li>
@@ -664,24 +667,49 @@
                     </div>
 
                     <div class="content-section">
-                        <h3 class="section-title">Key Initiatives</h3>
+                        <h3 class="section-title">DAO Treasury & Governance</h3>
                         <div class="hypothesis-grid">
                             <div class="hypothesis-card">
-                                <h4>🧬 Ocean Genome Atlas</h4>
-                                <p>Building the world's largest open-access database of marine DNA samples with standardized metadata and analysis pipelines.</p>
+                                <h4>💰 Treasury Balance</h4>
+                                <p class="treasury-balance">$325,000 USD</p>
+                                <p style="font-size: 12px; color: rgba(255,255,255,0.6);">Safe Multisig: <span style="font-family: monospace;">0x742d...8f3a</span></p>
+                                <a href="https://app.safe.global" target="_blank" style="color: #667eea; font-size: 13px;">View on Safe →</a>
                             </div>
                             <div class="hypothesis-card">
-                                <h4>💊 Precision Probiotics</h4>
-                                <p>Using machine learning to identify new marine species from environmental DNA samples collected worldwide.</p>
+                                <h4>👥 DAO Members</h4>
+                                <p><strong>342</strong> Token Holders</p>
+                                <p><strong>7</strong> Multisig Signers</p>
+                                <p style="font-size: 12px; color: rgba(255,255,255,0.6);">3/7 threshold for execution</p>
                             </div>
                             <div class="hypothesis-card">
-                                <h4>🔬 Community Labs</h4>
-                                <p>Establishing decentralized research vessels where citizen scientists can conduct ocean DNA sampling.</p>
+                                <h4>🗳️ Governance</h4>
+                                <p>DecentDAO + Zodiac</p>
+                                <p style="font-size: 12px;">Snapshot voting</p>
+                                <p style="font-size: 12px;">On-chain execution</p>
+                                <a href="https://snapshot.org/#/oceandao.eth" target="_blank" style="color: #667eea; font-size: 13px;">View Proposals →</a>
                             </div>
                             <div class="hypothesis-card">
-                                <h4>📊 Patient Registry</h4>
-                                <p>Creating a global network for real-time ocean health monitoring through DNA analysis.</p>
+                                <h4>📊 Active Proposals</h4>
+                                <p><strong>2</strong> Open for voting</p>
+                                <p><strong>18</strong> Passed proposals</p>
+                                <p><strong>$125K</strong> Distributed</p>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h3 class="section-title">Connected Members</h3>
+                        <div id="connected-members" style="display: none;">
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; margin-top: 16px;">
+                                <p style="font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 16px;">Connected Wallet: <span id="wallet-address" style="font-family: monospace;"></span></p>
+                                <div id="dao-memberships" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                                    <!-- DAO membership cards will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div id="connect-prompt" style="text-align: center; padding: 32px;">
+                            <p style="color: rgba(255,255,255,0.6); margin-bottom: 16px;">Connect your wallet to view your DAO memberships and voting power</p>
+                            <button onclick="connectWallet()" style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">Connect Wallet</button>
                         </div>
                     </div>
                 </div>
