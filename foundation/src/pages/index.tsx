@@ -38,46 +38,46 @@ export default function IndexPage() {
             {/* Featured experiences preview - 3 cards */}
             <Link href="/experiences/1" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
               <div className="relative aspect-video overflow-hidden">
-                <img 
-                  src="/images/volunteer-experiences/mountain-goat-1.jpg" 
-                  alt="Mountain Goat Preserve" 
+                <img
+                  src="/images/volunteer-experiences/sharks.jpg"
+                  alt="Ultimate Luxury Great White Shark Expedition"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bold mb-1">Mountain Goat Preserve</h3>
-                <p className="text-gray-400 text-sm mb-2">Idaho, USA</p>
-                <p className="text-lg font-bold">$1,200 / 2 weeks</p>
+                <h3 className="font-bold mb-1">Ultimate Luxury Great White Shark Expedition (20 Guests)</h3>
+                <p className="text-gray-400 text-sm mb-2">Farallone Islands, San Francisco, USA</p>
+                <p className="text-lg font-bold">$75,000 / group expedition</p>
               </div>
             </Link>
             
-            <Link href="/experiences/2" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
+            <Link href="/experiences/7" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
               <div className="relative aspect-video overflow-hidden">
-                <img 
-                  src="/images/volunteer-experiences/elephant-sanctuary.jpg" 
-                  alt="Elephant Sanctuary" 
+                <img
+                  src="/images/volunteer-experiences/intimate-shark-diving.jpg"
+                  alt="Intimate Great White Shark Encounter"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bold mb-1">Elephant Sanctuary</h3>
-                <p className="text-gray-400 text-sm mb-2">Thailand</p>
-                <p className="text-lg font-bold">$950 / 1 week</p>
+                <h3 className="font-bold mb-1">Intimate Great White Shark Encounter (2 Guests)</h3>
+                <p className="text-gray-400 text-sm mb-2">Farallone Islands, San Francisco, USA</p>
+                <p className="text-lg font-bold">$2,500 / intimate experience</p>
               </div>
             </Link>
             
-            <Link href="/experiences/6" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
+            <Link href="/experiences/8" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
               <div className="relative aspect-video overflow-hidden">
-                <img 
-                  src="/images/volunteer-experiences/wildlife-rescue-1.jpg" 
-                  alt="Wildlife Rescue & Rehabilitation" 
+                <img
+                  src="/images/volunteer-experiences/premium-shark-expedition.jpg"
+                  alt="Premium Great White Shark Expedition"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-bold mb-1">Wildlife Rescue Center</h3>
-                <p className="text-gray-400 text-sm mb-2">Costa Rica</p>
-                <p className="text-lg font-bold">$1,000 / 2 weeks</p>
+                <h3 className="font-bold mb-1">Premium Great White Shark Expedition</h3>
+                <p className="text-gray-400 text-sm mb-2">Farallone Islands, San Francisco, USA</p>
+                <p className="text-lg font-bold">$3,500 / expedition</p>
               </div>
             </Link>
           </div>
