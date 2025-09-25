@@ -519,7 +519,7 @@ export const experiences: Experience[] = [
       "Seasickness preparation recommended",
     ],
     pricing: {
-      amount: 263,
+      amount: 300,
       currency: "USD",
       period: "day expedition",
     },
