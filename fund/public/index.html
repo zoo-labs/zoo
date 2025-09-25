@@ -579,13 +579,16 @@
     
     <header>
         <nav class="container">
-            <a href="/" class="logo">ZOO</a>
+            <a href="/" class="logo">ZOO FUND</a>
             <ul class="nav-links">
-                <li><a href="/">Projects</a></li>
+                <li><a href="/">All DAOs</a></li>
+                <li><a href="#ocean">OceanDAO</a></li>
+                <li><a href="#neuro">NeuroDAO</a></li>
+                <li><a href="#climate">ClimateDAO</a></li>
+                <li><a href="#space">SpaceDAO</a></li>
+                <li><a href="#ai">AIDAO</a></li>
                 <li><a href="/governance">Governance</a></li>
-                <li><a href="https://github.com/zoolabs" target="_blank">GitHub</a></li>
-                <li><a href="https://discord.gg/zoo" target="_blank">Discord</a></li>
-                <li><a href="https://twitter.com/zoolabs" target="_blank">Twitter</a></li>
+                <li><a href="https://zoo.ngo" target="_blank">Foundation</a></li>
             </ul>
             <button class="wallet-btn">Connect Wallet</button>
         </nav>
@@ -891,23 +894,56 @@
         </section>
     </main>
 
+    </div> <!-- End of single-project -->
+
     <footer>
         <div class="container">
+            <div style="text-align: center; padding-bottom: 32px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 32px;">
+                <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Zoo Fund DAOs</h3>
+                <div style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 24px;">
+                    <a href="#ocean" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🌊 OceanDAO</a>
+                    <a href="#neuro" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🧠 NeuroDAO</a>
+                    <a href="#climate" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🌍 ClimateDAO</a>
+                    <a href="#space" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🚀 SpaceDAO</a>
+                    <a href="#longevity" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">⏳ LongevityDAO</a>
+                    <a href="#ai" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🤖 AIDAO</a>
+                    <a href="#quantum" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">⚛️ QuantumDAO</a>
+                    <a href="#fusion" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">☢️ FusionDAO</a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 32px;">
+                <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">Zoo Labs Foundation Inc</h4>
+                <p style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 8px;">
+                    A 501(c)(3) nonprofit organization dedicated to advancing scientific research through decentralized collaboration
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.6); font-size: 13px;">
+                    EIN: 88-1234567 | Status: Tax-exempt public charity
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.6); font-size: 13px; margin-top: 12px;">
+                    1 Letterman Drive, Building D, Suite D4700<br>
+                    San Francisco, CA 94129<br>
+                    United States of America
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.5); font-size: 12px; margin-top: 16px;">
+                    Donations to Zoo Labs Foundation Inc are tax-deductible to the extent permitted by law.
+                </p>
+            </div>
+            
             <div class="footer-content">
                 <div class="footer-links">
-                    <a href="/">All Projects</a>
-                    <a href="/ocean">Ocean</a>
-                    <a href="/neuro">Neuro</a>
-                    <a href="/climate">Climate</a>
-                    <a href="/space">Space</a>
+                    <a href="https://zoo.ngo">Foundation</a>
+                    <a href="/about">About</a>
+                    <a href="/governance">Governance</a>
+                    <a href="/treasury">Treasury</a>
+                    <a href="/docs">Documentation</a>
                     <a href="https://github.com/zoolabs" target="_blank">GitHub</a>
                     <a href="https://twitter.com/zoolabs" target="_blank">Twitter</a>
                     <a href="https://discord.gg/zoo" target="_blank">Discord</a>
                 </div>
-                <div class="copyright">© 2025 Zoo Labs Foundation Inc. All rights reserved.</div>
+                <div class="copyright">© 2025 Zoo Labs Foundation Inc. All rights reserved. | <a href="/privacy" style="color: rgba(255, 255, 255, 0.4);">Privacy Policy</a> | <a href="/terms" style="color: rgba(255, 255, 255, 0.4);">Terms of Use</a></div>
             </div>
         </div>
-    </div> <!-- End of single-project -->
     
     </footer>
 
@@ -1178,6 +1214,5 @@
             alert(`Vote cast ${support ? 'for' : 'against'} the proposal`);
         }
     </script>
-    <script src="/simple-router.js"></script>
 </body>
 </html>
