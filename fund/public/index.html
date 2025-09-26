@@ -632,11 +632,11 @@
                             <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$200,000 raised</p>
                         </div>
                         
-                        <!-- ExoticFelineDAO -->
-                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('feline')">
-                            <h4>🐆 ExoticFelineDAO</h4>
-                            <p>Supporting exotic cat sanctuaries in Indiana</p>
-                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$90,000 raised</p>
+                        <!-- TigerDAO -->
+                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('tiger')">
+                            <h4>🐅 TigerDAO</h4>
+                            <p>Supporting tiger conservation and exotic cat sanctuaries</p>
+                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$200,000 raised</p>
                         </div>
                         
                         <!-- ResearchDAO -->
@@ -747,7 +747,7 @@
                             <p style="margin-top: 12px;"><strong>🦈 SharkDAO:</strong> Partnership with Shark Stewards for shark conservation, offering exclusive shark diving experiences and supporting shark protection initiatives.</p>
                             <p style="margin-top: 12px;"><strong>🐋 BelugaDAO:</strong> Supporting beluga whale sanctuaries, partnering with <a href="https://frontiersnorth.com" style="color: #667eea;" target="_blank">Frontiers North</a> for Arctic wildlife experiences and beluga conservation.</p>
                             <p style="margin-top: 12px;"><strong>🏝️ KauaiDAO:</strong> Led by Gregg Winston, focusing on Hawaii marine conservation and island ecosystem protection.</p>
-                            <p style="margin-top: 12px;"><strong>🐆 ExoticFelineDAO:</strong> Supporting exotic cat sanctuaries in Indiana and nationwide, protecting endangered big cats.</p>
+                            <p style="margin-top: 12px;"><strong>🐅 TigerDAO:</strong> Supporting tiger conservation efforts globally and exotic cat sanctuaries across North America.</p>
                             <p style="margin-top: 12px;"><strong>🔬 ResearchDAO:</strong> Funding NSF grant research in AI and conservation technology, supporting Zoo's scientific initiatives.</p>
                             <p style="margin-top: 12px;"><strong>🦁 ZooDAO:</strong> The main governance DAO for Zoo Labs Foundation conservation efforts.</p>
                             <p style="margin-top: 12px;"><strong>🧘 ZenDAO:</strong> Supporting ZenLM AI development for conservation applications.</p>
@@ -1021,7 +1021,7 @@
                     <a href="#ocean" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🧬 OceanDAO</a>
                     <a href="#shark" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🦈 SharkDAO</a>
                     <a href="#kauai" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🏝️ KauaiDAO</a>
-                    <a href="#feline" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🐆 ExoticFelineDAO</a>
+                    <a href="#tiger" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🐅 TigerDAO</a>
                     <a href="#beluga" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🐋 BelugaDAO</a>
                     <a href="#research" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🔬 ResearchDAO</a>
                     <a href="#zoo" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🦁 ZooDAO</a>
@@ -1334,12 +1334,115 @@
         }
         // Show DAO details
         window.showDAO = function(daoName) {
-            // For now, just alert with DAO info
-            // In a real app, this would navigate to DAO-specific page
-            alert(`${daoName.toUpperCase()} Details\n\nVisit zoo.ngo/fund/${daoName} for more information about this DAO.`);
+            // Map DAO names to their pages
+            const daoPages = {
+                'ocean': 'ocean.html',
+                'shark': 'shark.html',
+                'beluga': 'beluga.html',
+                'kauai': 'kauai.html',
+                'tiger': 'tiger.html',
+                'research': 'research.html',
+                'zoo': 'zoo.html',
+                'zen': 'zen.html'
+            };
             
-            // Could also open in new tab
-            // window.open(`/fund/${daoName}`, '_blank');
+            // Check if page exists (ocean.html is our template)
+            if (daoName === 'ocean') {
+                window.location.href = '/fund/ocean.html';
+            } else if (daoPages[daoName]) {
+                // For now, copy ocean.html structure for other DAOs
+                // In production, each would have unique content
+                createDAOPage(daoName);
+            } else {
+                alert(`${daoName.toUpperCase()} page coming soon!`);
+            }
+        }
+        
+        // Create DAO page dynamically
+        function createDAOPage(daoName) {
+            const daoInfo = getDAOInfo(daoName);
+            if (daoInfo) {
+                // For now, show detailed alert
+                // In production, would generate full page
+                window.location.href = `/fund/ocean.html`; // Use ocean as template for now
+            }
+        }
+        
+        // Get DAO information
+        function getDAOInfo(daoName) {
+            const daos = {
+                'shark': {
+                    name: 'SharkDAO',
+                    symbol: 'SHARK',
+                    emoji: '🦈',
+                    description: 'Partnership with Shark Stewards for shark conservation',
+                    mission: 'Protect sharks worldwide through research, education, and policy advocacy',
+                    treasury: '$150,000',
+                    proposals: 5,
+                    members: 234
+                },
+                'beluga': {
+                    name: 'BelugaDAO',
+                    symbol: 'BELUGA',
+                    emoji: '🐋',
+                    description: 'Supporting beluga whale sanctuaries with Frontiers North',
+                    mission: 'Protect Arctic beluga whales through sanctuary development and research',
+                    treasury: '$75,000',
+                    proposals: 3,
+                    members: 156
+                },
+                'kauai': {
+                    name: 'KauaiDAO',
+                    symbol: 'KAUAI',
+                    emoji: '🏝️',
+                    description: 'Hawaii marine conservation led by Gregg Winston',
+                    mission: 'Preserve Hawaii\'s unique marine ecosystems and coral reefs',
+                    treasury: '$125,000',
+                    proposals: 7,
+                    members: 412
+                },
+                'tiger': {
+                    name: 'TigerDAO',
+                    symbol: 'TIGER',
+                    emoji: '🐅',
+                    description: 'Supporting tiger conservation and exotic cat sanctuaries',
+                    mission: 'Protect tigers and big cats from extinction through habitat preservation',
+                    treasury: '$200,000',
+                    proposals: 8,
+                    members: 567
+                },
+                'research': {
+                    name: 'ResearchDAO',
+                    symbol: 'RESEARCH',
+                    emoji: '🔬',
+                    description: 'NSF grant research in AI and conservation',
+                    mission: 'Develop cutting-edge AI solutions for conservation challenges',
+                    treasury: '$500,000',
+                    proposals: 12,
+                    members: 789
+                },
+                'zoo': {
+                    name: 'ZooDAO',
+                    symbol: 'ZOO',
+                    emoji: '🦁',
+                    description: 'Main governance DAO for Zoo Labs Foundation',
+                    mission: 'Coordinate global conservation efforts through decentralized governance',
+                    treasury: '$1,000,000',
+                    proposals: 24,
+                    members: 2345
+                },
+                'zen': {
+                    name: 'ZenDAO',
+                    symbol: 'ZEN',
+                    emoji: '🧘',
+                    description: 'ZenLM AI development for conservation',
+                    mission: 'Build AI tools for species identification and ecosystem monitoring',
+                    treasury: '$300,000',
+                    proposals: 9,
+                    members: 456
+                }
+            };
+            return daos[daoName];
         }
 
         // Show projects grid
