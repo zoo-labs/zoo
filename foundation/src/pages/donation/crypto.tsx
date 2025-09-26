@@ -75,9 +75,9 @@ function CryptoDonationPage() {
           {/* Crypto Options */}
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Bitcoin */}
-            <div className="bg-gray-900 rounded-2xl p-8 border border-orange-400">
+            <div className="bg-gray-900 rounded-2xl p-8 border border-gray-400">
               <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-orange-500 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gray-500 rounded-full flex items-center justify-center">
                   <span className="text-2xl font-bold text-white">₿</span>
                 </div>
                 <h2 className="text-2xl font-bold text-white mb-2">Bitcoin (BTC)</h2>
@@ -95,7 +95,7 @@ function CryptoDonationPage() {
                   <p className="text-xs text-gray-400 mb-2">Bitcoin Address:</p>
                   <button 
                     onClick={() => copyToClipboard('3G3PrtfP5LxNe83T7GRFhLPSLURz4jBdYk', 'Bitcoin')}
-                    className="text-sm text-white break-all hover:text-orange-300 transition-colors"
+                    className="text-sm text-white break-all hover:text-gray-300 transition-colors"
                   >
                     3G3PrtfP5LxNe83T7GRFhLPSLURz4jBdYk
                   </button>
@@ -103,7 +103,7 @@ function CryptoDonationPage() {
                 
                 <button 
                   onClick={() => copyToClipboard('3G3PrtfP5LxNe83T7GRFhLPSLURz4jBdYk', 'Bitcoin')}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+                  className="w-full bg-gray-500 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-colors"
                 >
                   Copy Bitcoin Address
                 </button>
@@ -111,9 +111,9 @@ function CryptoDonationPage() {
             </div>
 
             {/* Ethereum */}
-            <div className="bg-gray-900 rounded-2xl p-8 border border-indigo-500">
+            <div className="bg-gray-900 rounded-2xl p-8 border border-gray-500">
               <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-indigo-500 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gray-600 rounded-full flex items-center justify-center">
                   <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/>
                   </svg>
@@ -133,7 +133,7 @@ function CryptoDonationPage() {
                   <p className="text-xs text-gray-400 mb-2">Ethereum Address:</p>
                   <button 
                     onClick={() => copyToClipboard('0xA59Ad3199E6fdd0046d259944d3d18ee379152CB', 'Ethereum')}
-                    className="text-sm text-white break-all hover:text-indigo-400 transition-colors"
+                    className="text-sm text-white break-all hover:text-gray-400 transition-colors"
                   >
                     0xA59Ad3199E6fdd0046d259944d3d18ee379152CB
                   </button>
@@ -141,7 +141,7 @@ function CryptoDonationPage() {
                 
                 <button 
                   onClick={() => copyToClipboard('0xA59Ad3199E6fdd0046d259944d3d18ee379152CB', 'Ethereum')}
-                  className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+                  className="w-full bg-gray-600 hover:bg-gray-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
                 >
                   Copy Ethereum Address
                 </button>

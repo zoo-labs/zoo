@@ -130,9 +130,9 @@ function Navbar() {
                   )}
                   <Link
                       href="/donation"
-                      className="bg-white hover:bg-black hover:text-white border border-white px-6 py-1 rounded-full text-md font-medium text-black transition-colors"
+                      className="bg-white text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] border-2 border-white px-8 py-2 rounded-full text-md font-bold uppercase tracking-wider transition-all duration-300"
                   >
-                      Donate
+                      Donate Now
                   </Link>
               </div>
           </div>
@@ -186,9 +186,9 @@ function Navbar() {
               )}
               <Link
                 href="/donation"
-                className="bg-white hover:bg-black hover:text-white border border-white px-6 py-2 rounded-full text-base font-medium text-black transition-colors mx-3 mt-4 text-center block"
+                className="bg-white text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] border-2 border-white px-8 py-3 rounded-full text-base font-bold uppercase tracking-wider transition-all duration-300 mx-3 mt-4 text-center block"
               >
-                Donate
+                Donate Now
               </Link>
             </div>
           </div>
