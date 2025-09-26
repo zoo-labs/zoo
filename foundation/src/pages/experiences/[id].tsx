@@ -23,6 +23,7 @@ export default function ExperienceDetailPage() {
   // State for date selection and ticket quantity (for Farallones expedition)
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [ticketQuantity, setTicketQuantity] = useState(1);
+  const [optionalDonation, setOptionalDonation] = useState<number>(0);
 
   // Available dates for Farallones expedition
   const farallonesDates = [
@@ -38,8 +39,9 @@ export default function ExperienceDetailPage() {
       return;
     }
     // Go directly to PayPal for wildlife experience booking
-    const totalAmount = experience?.pricing.amount ? experience.pricing.amount * ticketQuantity : 0;
-    window.open(`https://www.paypal.biz/zoongo?amount=${totalAmount}&tickets=${ticketQuantity}&date=${selectedDate}`, '_blank');
+    const baseAmount = experience?.pricing.amount ? experience.pricing.amount * ticketQuantity : 0;
+    const totalAmount = baseAmount + optionalDonation;
+    window.open(`https://www.paypal.biz/zoongo?amount=${totalAmount}&tickets=${ticketQuantity}&date=${selectedDate}&donation=${optionalDonation}`, '_blank');
   };
 
   const incrementTickets = () => {
@@ -230,7 +232,13 @@ export default function ExperienceDetailPage() {
                         <div className="text-center">
                           <div className="text-2xl font-bold">{ticketQuantity}</div>
                           <div className="text-sm text-gray-400">
-                            Total: ${experience.pricing.amount * ticketQuantity}
+                            Tickets: ${experience.pricing.amount * ticketQuantity}
+                            {optionalDonation > 0 && (
+                              <>
+                                <br />
+                                Total: ${experience.pricing.amount * ticketQuantity + optionalDonation}
+                              </>
+                            )}
                           </div>
                         </div>
                         <button
@@ -240,6 +248,34 @@ export default function ExperienceDetailPage() {
                         >
                           <Plus className="w-4 h-4" />
                         </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {experience.id === "9" && (
+                    <div>
+                      <h3 className="font-medium mb-3">Optional Conservation Donation</h3>
+                      <div className="bg-gray-800 rounded-lg p-4">
+                        <p className="text-sm text-gray-400 mb-3">
+                          Support marine conservation efforts with an additional tax-deductible donation
+                        </p>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-lg">$</span>
+                          <input
+                            type="number"
+                            min="0"
+                            step="10"
+                            value={optionalDonation}
+                            onChange={(e) => setOptionalDonation(Math.max(0, parseInt(e.target.value) || 0))}
+                            className="w-full bg-gray-700 text-white rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-white"
+                            placeholder="0"
+                          />
+                        </div>
+                        {optionalDonation > 0 && (
+                          <p className="text-sm text-gray-300 mt-2">
+                            Thank you! Your ${optionalDonation} donation will support shark conservation.
+                          </p>
+                        )}
                       </div>
                     </div>
                   )}
@@ -275,7 +311,7 @@ export default function ExperienceDetailPage() {
                     {experience.id === "nonprofit-signup" ? "Apply Now" :
                      experience.id === "9" ?
                        selectedDate ?
-                         `Book Now - $${experience.pricing.amount * ticketQuantity}` :
+                         `Book Now - $${experience.pricing.amount * ticketQuantity + optionalDonation}` :
                          "Select Date to Continue" :
                        "Book Now"}
                   </Button>
