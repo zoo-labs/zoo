@@ -62,6 +62,13 @@ jobs:
 
           # Create CNAME file for primary domain zoo.ngo
           echo "zoo.ngo" > _site/CNAME
+          
+          # Create .nojekyll file to ensure all files are served
+          touch _site/.nojekyll
+          
+          # List fund directory contents for debugging
+          echo "Fund directory contents:"
+          ls -la _site/fund/ | head -20
 
           # Create redirect page for potential zoo.fund visitors
           # Note: zoo.fund should be configured at DNS level to redirect to zoo.ngo/fund
