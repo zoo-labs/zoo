@@ -307,3 +307,19 @@ export default function ExperienceDetailPage() {
     </Layout>
   );
 }
+
+export async function getStaticPaths() {
+  const paths = experiences.map((experience) => ({
+    params: { id: experience.id },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }: { params: { id: string } }) {
+  return {
+    props: {
+      id: params.id,
+    },
+  };
+}
