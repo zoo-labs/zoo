@@ -1334,28 +1334,30 @@
         }
         // Show DAO details
         window.showDAO = function(daoName) {
-            // Hide projects grid
-            document.getElementById('projects-grid').style.display = 'none';
-            // Show project details
-            document.getElementById('project-details').style.display = 'block';
+            // For now, just alert with DAO info
+            // In a real app, this would navigate to DAO-specific page
+            alert(`${daoName.toUpperCase()} Details\n\nVisit zoo.ngo/fund/${daoName} for more information about this DAO.`);
             
-            // In a real app, this would load specific DAO data
-            // For now, it shows the OceanDAO details as default
-            window.scrollTo(0, 0);
+            // Could also open in new tab
+            // window.open(`/fund/${daoName}`, '_blank');
         }
 
         // Show projects grid
         window.showProjects = function() {
             document.getElementById('projects-grid').style.display = 'block';
-            document.getElementById('project-details').style.display = 'none';
             window.scrollTo(0, 0);
         }
 
-        // Initialize page - show projects grid by default
+        // Initialize page - ensure projects grid is visible
         document.addEventListener('DOMContentLoaded', function() {
-            // Show projects grid on load
-            document.getElementById('projects-grid').style.display = 'block';
-            document.getElementById('project-details').style.display = 'none';
+            // Make sure projects grid is visible on load
+            const gridElement = document.getElementById('projects-grid');
+            if (gridElement) {
+                gridElement.style.display = 'block';
+                console.log('DAO grid initialized and visible');
+            } else {
+                console.error('projects-grid element not found!');
+            }
         });
 
         // Connect wallet with luxdefi.eth multisig
