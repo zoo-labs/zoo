@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { Star, MapPin, ArrowLeft, Check } from 'lucide-react';
+import { Star, MapPin, ArrowLeft, Check, Plus, Minus, Calendar } from 'lucide-react';
 
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
@@ -19,9 +20,34 @@ export default function ExperienceDetailPage() {
   const { id } = router.query;
   const experience = id ? getExperienceById(id as string) : null;
 
+  // State for date selection and ticket quantity (for Farallones expedition)
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [ticketQuantity, setTicketQuantity] = useState(1);
+
+  // Available dates for Farallones expedition
+  const farallonesDates = [
+    { date: 'Sep 28, 2025', time: '7:30 AM-4:30 PM' },
+    { date: 'Oct 5, 2025', time: '7:30 AM-4:30 PM' },
+    { date: 'Oct 19, 2025', time: '7:30 AM-4:30 PM' },
+    { date: 'Nov 2, 2025', time: '7:30 AM-4:30 PM' },
+  ];
+
   const handleBookNow = () => {
+    if (experience?.id === '9' && !selectedDate) {
+      alert('Please select a date for your expedition');
+      return;
+    }
     // Go directly to PayPal for wildlife experience booking
-    window.open('https://www.paypal.biz/zoongo', '_blank');
+    const totalAmount = experience?.pricing.amount ? experience.pricing.amount * ticketQuantity : 0;
+    window.open(`https://www.paypal.biz/zoongo?amount=${totalAmount}&tickets=${ticketQuantity}&date=${selectedDate}`, '_blank');
+  };
+
+  const incrementTickets = () => {
+    if (ticketQuantity < 20) setTicketQuantity(ticketQuantity + 1);
+  };
+
+  const decrementTickets = () => {
+    if (ticketQuantity > 1) setTicketQuantity(ticketQuantity - 1);
   };
   
   if (!experience && router.isReady) {
@@ -162,17 +188,72 @@ export default function ExperienceDetailPage() {
                     <div className="text-3xl font-bold mb-1">${experience.pricing.amount}</div>
                     <div className="text-gray-400 text-sm">per {experience.pricing.period}</div>
                   </div>
-                  
+
+                  {/* Date selection for Farallones expedition */}
+                  {experience.id === "9" && (
+                    <div>
+                      <h3 className="font-medium mb-3 flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        Select Date
+                      </h3>
+                      <div className="grid grid-cols-2 gap-2">
+                        {farallonesDates.map((dateOption) => (
+                          <button
+                            key={dateOption.date}
+                            onClick={() => setSelectedDate(dateOption.date)}
+                            className={`p-3 rounded-lg border transition-all text-left ${
+                              selectedDate === dateOption.date
+                                ? 'bg-blue-600 border-blue-600 text-white'
+                                : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-gray-600'
+                            }`}
+                          >
+                            <div className="text-sm font-medium">Sun, {dateOption.date}</div>
+                            <div className="text-xs opacity-75">{dateOption.time}</div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Ticket quantity selector for Farallones expedition */}
+                  {experience.id === "9" && (
+                    <div>
+                      <h3 className="font-medium mb-3">Number of Tickets</h3>
+                      <div className="flex items-center justify-between bg-gray-800 rounded-lg p-4">
+                        <button
+                          onClick={decrementTickets}
+                          className="w-10 h-10 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors"
+                          disabled={ticketQuantity <= 1}
+                        >
+                          <Minus className="w-4 h-4" />
+                        </button>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold">{ticketQuantity}</div>
+                          <div className="text-sm text-gray-400">
+                            Total: ${experience.pricing.amount * ticketQuantity}
+                          </div>
+                        </div>
+                        <button
+                          onClick={incrementTickets}
+                          className="w-10 h-10 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors"
+                          disabled={ticketQuantity >= 20}
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   <div>
                     <h3 className="font-medium mb-2">Duration</h3>
                     <p>
-                      {(experience.id === "1" || experience.id === "7" || experience.id === "8") ? "10-12 hours" :
+                      {(experience.id === "1" || experience.id === "7" || experience.id === "8" || experience.id === "9") ? "10-12 hours" :
                         experience.id === "nonprofit-signup" ? "Ongoing Partnership" :
                         `${experience.duration.minWeeks}${experience.duration.maxWeeks ? ` to ${experience.duration.maxWeeks}` : '+'} weeks`
                       }
                     </p>
                   </div>
-                  
+
                   <div>
                     <h3 className="font-medium mb-2">Requirements</h3>
                     <ul className="space-y-2">
@@ -190,7 +271,12 @@ export default function ExperienceDetailPage() {
                     onClick={handleBookNow}
                     className="w-full"
                   >
-                    {experience.id === "nonprofit-signup" ? "Apply Now" : "Book Now"}
+                    {experience.id === "nonprofit-signup" ? "Apply Now" :
+                     experience.id === "9" ?
+                       selectedDate ?
+                         `Book Now - $${experience.pricing.amount * ticketQuantity}` :
+                         "Select Date to Continue" :
+                       "Book Now"}
                   </Button>
                 </CardFooter>
               </Card>
