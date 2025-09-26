@@ -493,9 +493,9 @@ export const experiences: Experience[] = [
       },
     },
     images: [
+      "/images/volunteer-experiences/whale.jpg",
       "/images/volunteer-experiences/shark.jpg",
       "/images/volunteer-experiences/Great-White-Shark-1.webp",
-      "/images/volunteer-experiences/marine-conservation.jpg",
     ],
     description:
       "Visit the Waters of the Devil's Teeth! Join marine biologist David McGuire on a unique exploration into the Greater Farallones National Marine Sanctuary, observing, photographing and recording marine wildlife from seabirds to whales, and maybe even a great white shark! We lead these unique trips each 'Sharktober' when the white sharks return from their amazing migration of over 4000 miles round trip to forage in our National Marine Sanctuary. As part of NOAA's National Marine Sanctuary White Shark Stewardship program, we collect data using photographs and encourage our guests to add observations on whales, seabirds and white sharks while educating the public on the importance of white sharks and all life in the ocean.",
