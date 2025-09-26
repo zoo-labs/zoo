@@ -247,7 +247,8 @@ export default function ExperienceDetailPage() {
                   <div>
                     <h3 className="font-medium mb-2">Duration</h3>
                     <p>
-                      {(experience.id === "1" || experience.id === "7" || experience.id === "8" || experience.id === "9") ? "10-12 hours" :
+                      {(experience.id === "1" || experience.id === "7" || experience.id === "8") ? "10-12 hours" :
+                        experience.id === "9" ? "8+ hours" :
                         experience.id === "nonprofit-signup" ? "Ongoing Partnership" :
                         `${experience.duration.minWeeks}${experience.duration.maxWeeks ? ` to ${experience.duration.maxWeeks}` : '+'} weeks`
                       }
