@@ -1,13 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import "@fontsource/poppins";
+import { supabase, getCurrentUser, signOut } from '@/lib/supabase';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    // Check if user is logged in
+    getCurrentUser().then(({ user }) => {
+      setUser(user);
+    });
+
+    // Listen for auth state changes
+    const { data: subscription } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => {
+      subscription?.subscription?.unsubscribe();
+    };
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    setUser(null);
   };
 
   return (
@@ -86,7 +109,25 @@ function Navbar() {
                   {/* Add more links here */}
                   </div>
               </div>
-              <div className='flex items-center'>
+              <div className='flex items-center gap-3'>
+                  {user ? (
+                    <div className="flex items-center gap-3">
+                      <span className="text-gray-300 text-sm">{user.email}</span>
+                      <button
+                        onClick={handleSignOut}
+                        className="text-gray-300 hover:text-white px-4 py-1 rounded-full text-md font-medium border border-gray-700 hover:border-white transition-colors"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  ) : (
+                    <Link
+                      href="/signin"
+                      className="text-gray-300 hover:text-white px-6 py-1 rounded-full text-md font-medium border border-gray-700 hover:border-white transition-colors"
+                    >
+                      Login
+                    </Link>
+                  )}
                   <Link
                       href="/donation"
                       className="bg-white hover:bg-black hover:text-white border border-white px-6 py-1 rounded-full text-md font-medium text-black transition-colors"
@@ -125,6 +166,24 @@ function Navbar() {
               >
                 Mission
               </Link>
+              {user ? (
+                <>
+                  <div className="text-gray-300 px-3 py-2 text-sm">{user.email}</div>
+                  <button
+                    onClick={handleSignOut}
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/signin"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  Login
+                </Link>
+              )}
               <Link
                 href="/donation"
                 className="bg-white hover:bg-black hover:text-white border border-white px-6 py-2 rounded-full text-base font-medium text-black transition-colors mx-3 mt-4 text-center block"
