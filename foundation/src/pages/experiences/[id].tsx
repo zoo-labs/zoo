@@ -98,11 +98,11 @@ export default function ExperienceDetailPage() {
       <main className="bg-black text-white">
         <div className="container mx-auto px-4 py-12">
           <div className="mb-8">
-            <Button 
+            <Button
               variant="outline"
               size="sm"
               asChild
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400 hover:text-black"
             >
               <Link href="/experiences" className="flex items-center gap-2">
                 <ArrowLeft className="h-4 w-4" />
@@ -203,7 +203,7 @@ export default function ExperienceDetailPage() {
                             onClick={() => setSelectedDate(dateOption.date)}
                             className={`p-3 rounded-lg border transition-all text-left ${
                               selectedDate === dateOption.date
-                                ? 'bg-blue-600 border-blue-600 text-white'
+                                ? 'bg-gray-600 border-gray-600 text-white'
                                 : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-gray-600'
                             }`}
                           >

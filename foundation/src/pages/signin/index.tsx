@@ -75,12 +75,12 @@ export default function ZooConnect() {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 text-[#13B156] bg-transparent border border-white rounded"
+                    className="w-4 h-4 text-gray-400 bg-transparent border border-white rounded"
                   />
                   <label className="ml-2 text-sm font-medium text-white">Remember me</label>
               </div>
               {error && (
-                <div className="mt-4 p-3 bg-red-500/10 border border-red-500 rounded-lg text-red-500 text-sm">
+                <div className="mt-4 p-3 bg-gray-500/10 border border-gray-500 rounded-lg text-gray-400 text-sm">
                   {error}
                 </div>
               )}
@@ -92,7 +92,7 @@ export default function ZooConnect() {
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>
             </form>
-            <Link href='/forgot-password' className='hover:text-white text-[#aaa] text-center mt-4'>Forgot the password?</Link>
+            <Link href='/forgot-password' className='hover:text-white text-gray-400 text-center mt-4'>Forgot the password?</Link>
             <p className='text-white text-sm text-center mt-8'>or continue with</p>
             <div className='flex items-center justify-center space-x-12 mt-6'>
               <button>
@@ -145,7 +145,7 @@ export default function ZooConnect() {
             </div>
             <div className='flex items-center justify-center space-x-2 mt-8'>
               <p className='text-white text-sm'>Don’t have an account?</p>
-              <Link href='/signup' className='hover:text-white text-[#aaa] text-sm'>Sign Up</Link>
+              <Link href='/signup' className='hover:text-white text-gray-400 text-sm'>Sign Up</Link>
             </div>
           </div>
         </div>

@@ -105,7 +105,7 @@ function Newsletter() {
             </form>
             
             {message && (
-              <div className={`mt-4 text-sm ${message.includes('Thank you') ? 'text-green-400' : 'text-red-400'}`}>
+              <div className={`mt-4 text-sm ${message.includes('Thank you') ? 'text-gray-300' : 'text-gray-400'}`}>
                 {message}
               </div>
             )}
