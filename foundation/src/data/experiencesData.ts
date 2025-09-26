@@ -493,7 +493,8 @@ export const experiences: Experience[] = [
       },
     },
     images: [
-      "/images/volunteer-experiences/wildlife-rescue-1.jpg",
+      "/images/volunteer-experiences/shark.jpg",
+      "/images/volunteer-experiences/Great-White-Shark-1.webp",
       "/images/volunteer-experiences/marine-conservation.jpg",
     ],
     description:
