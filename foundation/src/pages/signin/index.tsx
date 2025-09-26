@@ -1,12 +1,48 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { signIn, supabase } from '@/lib/supabase';
 
 export default function ZooConnect() {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const { data, error } = await signIn(email, password);
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    } else {
+      // Redirect to home or previous page
+      router.push('/');
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/`
+      }
+    });
+    if (error) setError(error.message);
+  };
+
   return (
     <Layout>
         <Seo />
@@ -14,15 +50,48 @@ export default function ZooConnect() {
         <div className='bg-black py-32 text-white'>
           <div className='md:w-[500px] mx-auto w-full rounded-3xl px-12 md:border border-white py-8 flex flex-col'>
             <p className='text-white text-2xl text-center pb-8'>Sign in to your account</p>
-            <label className='pb-2 pl-4 text-base'>Email *</label>
-            <input className='outline-none bg-[#262934] border border-[#333] text-sm rounded-full px-4 py-2' placeholder='Email'/>
-            <label className='pb-2 pl-4 mt-6 text-base'>Password *</label>
-            <input className='outline-none bg-[#262934] border border-[#333] text-sm rounded-full px-4 py-2' type='password' placeholder='Password'/>
-            <div className="pl-4 mt-8 flex items-center">
-                <input id="link-checkbox" type="checkbox" value="" className="w-4 h-4 text-[#13B156] bg-transparent border border-white rounded" />
-                <label className="ml-2 text-sm font-medium text-white">Remember me</label>
-            </div>
-            <button className='mt-8 rounded-full py-2 px-4 text-lg text-black bg-white'>Sign In</button>
+            <form onSubmit={handleSignIn}>
+              <label className='pb-2 pl-4 text-base block'>Email *</label>
+              <input
+                className='outline-none bg-[#262934] border border-[#333] text-sm rounded-full px-4 py-2 w-full'
+                placeholder='Email'
+                type='email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <label className='pb-2 pl-4 mt-6 text-base block'>Password *</label>
+              <input
+                className='outline-none bg-[#262934] border border-[#333] text-sm rounded-full px-4 py-2 w-full'
+                type='password'
+                placeholder='Password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <div className="pl-4 mt-8 flex items-center">
+                  <input
+                    id="link-checkbox"
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="w-4 h-4 text-[#13B156] bg-transparent border border-white rounded"
+                  />
+                  <label className="ml-2 text-sm font-medium text-white">Remember me</label>
+              </div>
+              {error && (
+                <div className="mt-4 p-3 bg-red-500/10 border border-red-500 rounded-lg text-red-500 text-sm">
+                  {error}
+                </div>
+              )}
+              <button
+                type='submit'
+                disabled={loading}
+                className='mt-8 rounded-full py-2 px-4 text-lg text-black bg-white hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors w-full'
+              >
+                {loading ? 'Signing in...' : 'Sign In'}
+              </button>
+            </form>
             <Link href='/forgot-password' className='hover:text-white text-[#aaa] text-center mt-4'>Forgot the password?</Link>
             <p className='text-white text-sm text-center mt-8'>or continue with</p>
             <div className='flex items-center justify-center space-x-12 mt-6'>
@@ -41,7 +110,7 @@ export default function ZooConnect() {
                   </defs>
                 </svg>
               </button>
-              <button>
+              <button onClick={handleGoogleSignIn}>
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="1" y="0.5" width="62" height="63" rx="31" fill="#1E1F23"/>
                   <g clip-path="url(#clip0_210_8058)">
