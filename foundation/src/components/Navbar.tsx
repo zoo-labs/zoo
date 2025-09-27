@@ -87,34 +87,10 @@ function Navbar() {
                       Animals
                   </Link>
                   <Link
-                      href="/ai"
-                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
-                  >
-                      AI
-                  </Link>
-                  <Link
-                      href="/coin"
-                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
-                  >
-                      Coin
-                  </Link>
-                  <Link
-                      href="/markets"
-                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
-                  >
-                      Markets
-                  </Link>
-                  <Link
                       href="/blog"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
                   >
                       Blog
-                  </Link>
-                  <Link
-                      href="/docs"
-                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
-                  >
-                      Docs
                   </Link>
                   <Link
                       href="/about"
@@ -130,7 +106,7 @@ function Navbar() {
                       <span className="text-gray-300 text-sm">{user.email}</span>
                       <button
                         onClick={handleSignOut}
-                        className="text-gray-300 hover:text-white px-4 py-1 rounded-full text-md font-medium border border-gray-700 hover:border-white transition-colors"
+                        className="text-gray-300 hover:text-white px-6 py-2 rounded-full text-md font-medium border border-gray-700 hover:border-white transition-colors"
                       >
                         Sign Out
                       </button>
@@ -138,16 +114,16 @@ function Navbar() {
                   ) : (
                     <Link
                       href="/signin"
-                      className="text-gray-300 hover:text-white px-6 py-1 rounded-full text-md font-medium border border-gray-700 hover:border-white transition-colors"
+                      className="text-gray-300 hover:text-white px-6 py-2 rounded-full text-md font-medium border border-gray-700 hover:border-white transition-colors"
                     >
                       Login
                     </Link>
                   )}
                   <Link
                       href="/donation"
-                      className="bg-white text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] border-2 border-white px-8 py-2 rounded-full text-md font-bold uppercase tracking-wider transition-all duration-300"
+                      className="bg-white text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] border-2 border-white px-6 py-2 rounded-full text-md font-bold uppercase tracking-wider transition-all duration-300"
                   >
-                      Donate Now
+                      Donate
                   </Link>
               </div>
           </div>
@@ -162,34 +138,10 @@ function Navbar() {
                 Animals
               </Link>
               <Link
-                href="/ai"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                AI
-              </Link>
-              <Link
-                href="/coin"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Coin
-              </Link>
-              <Link
-                href="/markets"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Markets
-              </Link>
-              <Link
                 href="/blog"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Blog
-              </Link>
-              <Link
-                href="/docs"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Docs
               </Link>
               <Link
                 href="/about"
@@ -219,7 +171,7 @@ function Navbar() {
                 href="/donation"
                 className="bg-white text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] border-2 border-white px-8 py-3 rounded-full text-base font-bold uppercase tracking-wider transition-all duration-300 mx-3 mt-4 text-center block"
               >
-                Donate Now
+                Donate
               </Link>
             </div>
           </div>
