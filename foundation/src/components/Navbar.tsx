@@ -79,7 +79,7 @@ function Navbar() {
                   </div>
               </div>
               <div className="hidden md:block">
-                  <div className="mx-10 flex items-baseline xl:space-x-16 md:space-x-4 lg:space-x-8 2xl:space-x-20">
+                  <div className="mx-10 flex items-baseline xl:space-x-12 md:space-x-3 lg:space-x-6 2xl:space-x-14">
                   <Link
                       href="/animals"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
@@ -87,18 +87,34 @@ function Navbar() {
                       Animals
                   </Link>
                   <Link
-                      href="/experiences"
+                      href="/ai"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
                   >
-                      Connect
+                      AI
                   </Link>
                   <Link
-                      href="/getinvolved"
+                      href="/coin"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
                   >
-                    <>
-                      Get Involved
-                    </>
+                      Coin
+                  </Link>
+                  <Link
+                      href="/markets"
+                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
+                  >
+                      Markets
+                  </Link>
+                  <Link
+                      href="/blog"
+                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
+                  >
+                      Blog
+                  </Link>
+                  <Link
+                      href="/docs"
+                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
+                  >
+                      Docs
                   </Link>
                   <Link
                       href="/about"
@@ -106,7 +122,6 @@ function Navbar() {
                   >
                       Mission
                   </Link>
-                  {/* Add more links here */}
                   </div>
               </div>
               <div className='flex items-center gap-3'>
@@ -147,18 +162,34 @@ function Navbar() {
                 Animals
               </Link>
               <Link
-                href="/experiences"
+                href="/ai"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                Connect
+                AI
               </Link>
               <Link
-                href="/getinvolved"
+                href="/coin"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
-                <>
-                  Get Involved
-                </>
+                Coin
+              </Link>
+              <Link
+                href="/markets"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Markets
+              </Link>
+              <Link
+                href="/blog"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Blog
+              </Link>
+              <Link
+                href="/docs"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Docs
               </Link>
               <Link
                 href="/about"
