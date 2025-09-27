@@ -15,7 +15,7 @@ function Navbar() {
     });
 
     // Listen for auth state changes
-    const { data: subscription } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
       setUser(session?.user || null);
     });
 
@@ -79,24 +79,42 @@ function Navbar() {
                   </div>
               </div>
               <div className="hidden md:block">
-                  <div className="mx-10 flex items-baseline xl:space-x-12 md:space-x-3 lg:space-x-6 2xl:space-x-14">
-                  <Link
-                      href="/animals"
-                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
-                  >
-                      Animals
-                  </Link>
-                  <Link
-                      href="/blog"
-                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
-                  >
-                      Blog
-                  </Link>
+                  <div className="mx-10 flex items-baseline xl:space-x-10 md:space-x-2 lg:space-x-4 2xl:space-x-12">
                   <Link
                       href="/about"
                       className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
                   >
                       Mission
+                  </Link>
+                  <Link
+                      href="/impact"
+                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
+                  >
+                      Impact
+                  </Link>
+                  <Link
+                      href="/programs"
+                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
+                  >
+                      Programs
+                  </Link>
+                  <Link
+                      href="/research"
+                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
+                  >
+                      Research
+                  </Link>
+                  <Link
+                      href="/partners"
+                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
+                  >
+                      Partners
+                  </Link>
+                  <Link
+                      href="/transparency"
+                      className="text-gray-300  hover:text-white px-3 py-2  text-md font-medium"
+                  >
+                      Transparency
                   </Link>
                   </div>
               </div>
@@ -132,22 +150,40 @@ function Navbar() {
           <div className="md:hidden fixed z-50 h-[100vh] top-20 w-full bg-black" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link
-                href="/animals"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Animals
-              </Link>
-              <Link
-                href="/blog"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Blog
-              </Link>
-              <Link
                 href="/about"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Mission
+              </Link>
+              <Link
+                href="/impact"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Impact
+              </Link>
+              <Link
+                href="/programs"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Programs
+              </Link>
+              <Link
+                href="/research"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Research
+              </Link>
+              <Link
+                href="/partners"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Partners
+              </Link>
+              <Link
+                href="/transparency"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Transparency
               </Link>
               {user ? (
                 <>
