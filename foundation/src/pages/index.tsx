@@ -17,31 +17,26 @@ export default function Home() {
       <Seo />
       <Navbar />
 
-      {/* Hero Section - OpenAI Style */}
-      <section className="relative bg-white text-black overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-blue-50 opacity-70"></div>
+      <section className="relative bg-black text-white overflow-hidden">
         <div className="relative container mx-auto px-4 py-24 md:py-32">
           <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
-              Protecting Wildlife Through{' '}
-              <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-                Decentralized Conservation
-              </span>
+            <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6 text-white">
+              Protecting Wildlife Through Decentralized Conservation
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
-              Zoo Foundation is a 501(c)(3) nonprofit pioneering the future of wildlife conservation 
+            <p className="text-xl md:text-2xl text-gray-400 mb-8 leading-relaxed">
+              Zoo Foundation is a 501(c)(3) nonprofit pioneering the future of wildlife conservation
               through AI technology, community governance, and transparent funding.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/donation"
-                className="inline-block bg-black text-white px-8 py-4 rounded-lg font-medium hover:bg-gray-800 transition-all transform hover:scale-105"
+                className="inline-block bg-white text-black px-8 py-4 rounded-lg font-medium hover:bg-gray-200 transition-all"
               >
                 Donate Now
               </Link>
               <Link
                 href="/impact"
-                className="inline-block bg-white text-black border-2 border-black px-8 py-4 rounded-lg font-medium hover:bg-gray-50 transition-all"
+                className="inline-block bg-black text-white border-2 border-white px-8 py-4 rounded-lg font-medium hover:bg-gray-900 transition-all"
               >
                 See Our Impact
               </Link>
@@ -50,8 +45,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Key Metrics - Clean Cards */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-black py-20 border-t border-gray-800">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             {[
@@ -60,237 +54,198 @@ export default function Home() {
               { number: '2.4M', label: 'Hectares Protected', detail: 'Critical habitats' },
               { number: '98%', label: 'AI Accuracy', detail: 'Species identification' }
             ].map((metric, index) => (
-              <div 
-                key={index} 
-                className={`bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-500 delay-${index * 100}`}
+              <div
+                key={index}
+                className="bg-black p-8 rounded-lg border border-gray-800 hover:border-gray-600 transition-all"
               >
-                <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
+                <div className="text-4xl font-bold text-white mb-2">
                   {metric.number}
                 </div>
-                <div className="text-lg font-semibold text-gray-900 mb-1">{metric.label}</div>
-                <div className="text-sm text-gray-600">{metric.detail}</div>
+                <div className="text-lg font-semibold text-gray-300 mb-1">{metric.label}</div>
+                <div className="text-sm text-gray-500">{metric.detail}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Mission Statement - OpenAI Style */}
-      <section className="bg-white py-20">
+      <section className="bg-black py-20 border-t border-gray-800">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8">Our Mission</h2>
-            <p className="text-xl text-gray-700 leading-relaxed">
-              To revolutionize wildlife conservation by combining cutting-edge AI technology with 
-              decentralized governance, creating a transparent, community-driven approach to protecting 
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">Our Mission</h2>
+            <p className="text-xl text-gray-400 leading-relaxed">
+              To revolutionize wildlife conservation by combining cutting-edge AI technology with
+              decentralized governance, creating a transparent, community-driven approach to protecting
               Earth's most vulnerable species.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Core Programs - Feature Cards */}
-      <section className="bg-gradient-to-b from-white to-gray-50 py-20">
+      <section className="bg-black py-20 border-t border-gray-800">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">How We Protect Wildlife</h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">How We Protect Wildlife</h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               Our comprehensive approach combines direct action, scientific research, and community engagement
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* AI Conservation Card */}
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center text-white text-2xl mb-6">
-                🤖
-              </div>
-              <h3 className="text-2xl font-bold mb-4">AI-Powered Conservation</h3>
-              <p className="text-gray-600 mb-6">
-                Our ZenLM framework uses advanced machine learning to identify species, predict threats, 
-                and optimize conservation strategies with 98% accuracy.
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="bg-black p-8 rounded-lg border border-gray-800 hover:border-gray-600 transition-all">
+              <div className="text-5xl mb-6">🔬</div>
+              <h3 className="text-2xl font-bold mb-4 text-white">AI-Powered Monitoring</h3>
+              <p className="text-gray-400 mb-4">
+                Our ZenLM framework uses advanced AI to track and identify wildlife with 98% accuracy,
+                enabling real-time population monitoring.
               </p>
-              <Link href="/research" className="text-green-600 font-medium group-hover:text-green-700 transition-colors">
-                Learn about our technology →
+              <Link href="/ai" className="text-white font-medium hover:text-gray-400 transition-colors">
+                Learn More →
               </Link>
             </div>
 
-            {/* Decentralized Funding Card */}
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white text-2xl mb-6">
-                🌐
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Decentralized Funding</h3>
-              <p className="text-gray-600 mb-6">
-                Through DAOs, communities directly vote on conservation initiatives, ensuring funds go 
-                where they're needed most with complete transparency.
+            <div className="bg-black p-8 rounded-lg border border-gray-800 hover:border-gray-600 transition-all">
+              <div className="text-5xl mb-6">🌍</div>
+              <h3 className="text-2xl font-bold mb-4 text-white">Direct Conservation</h3>
+              <p className="text-gray-400 mb-4">
+                We protect 2.4 million hectares of critical habitat through partnerships with
+                indigenous communities and local organizations.
               </p>
-              <Link href="/transparency" className="text-blue-600 font-medium group-hover:text-blue-700 transition-colors">
-                View our financials →
+              <Link href="/programs" className="text-white font-medium hover:text-gray-400 transition-colors">
+                Our Programs →
               </Link>
             </div>
 
-            {/* Direct Action Card */}
-            <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-2xl mb-6">
-                🦁
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Direct Wildlife Protection</h3>
-              <p className="text-gray-600 mb-6">
-                Our teams work 24/7 on anti-poaching operations, wildlife rescue, and habitat protection 
-                across 67 countries worldwide.
+            <div className="bg-black p-8 rounded-lg border border-gray-800 hover:border-gray-600 transition-all">
+              <div className="text-5xl mb-6">💎</div>
+              <h3 className="text-2xl font-bold mb-4 text-white">Transparent Funding</h3>
+              <p className="text-gray-400 mb-4">
+                Every dollar is tracked on-chain through our DAO ecosystem, ensuring complete
+                transparency and community oversight.
               </p>
-              <Link href="/programs" className="text-purple-600 font-medium group-hover:text-purple-700 transition-colors">
-                Explore our programs →
+              <Link href="/transparency" className="text-white font-medium hover:text-gray-400 transition-colors">
+                See Financials →
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Recent Achievements - News Style */}
-      <section className="bg-white py-20">
+      <section className="bg-black py-20 border-t border-gray-800">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Recent Conservation Wins</h2>
-            <p className="text-xl text-gray-700">Making measurable impact every day</p>
-          </div>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-white">Conservation Technology</h2>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <div className="group cursor-pointer">
-              <div className="bg-gradient-to-r from-green-100 to-blue-100 h-64 rounded-2xl mb-6"></div>
-              <div className="space-y-3">
-                <span className="text-sm font-medium text-green-600">SEPTEMBER 2025</span>
-                <h3 className="text-2xl font-bold group-hover:text-green-600 transition-colors">
-                  SharkDAO Protects 50,000 km² of Ocean Habitat
-                </h3>
-                <p className="text-gray-600">
-                  Historic partnership with Shark Stewards International creates largest shark sanctuary 
-                  in the Pacific, protecting critical breeding grounds.
+            <div className="space-y-12">
+              <div className="flex flex-col md:flex-row gap-8 items-start">
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold mb-4 text-white">ZenLM: AI for Wildlife</h3>
+                  <p className="text-gray-400 mb-4">
+                    Our open-source machine learning framework processes millions of camera trap images,
+                    identifying individual animals and tracking populations in real-time.
+                  </p>
+                  <ul className="space-y-2 text-gray-400">
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>98% accuracy across 847 species</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Real-time anti-poaching alerts</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Open-source API at api.zoo.network</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="w-full md:w-64 h-64 bg-black rounded-lg border border-gray-800"></div>
+              </div>
+
+              <div className="flex flex-col md:flex-row-reverse gap-8 items-start">
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold mb-4 text-white">Blockchain Transparency</h3>
+                  <p className="text-gray-400 mb-4">
+                    All funding flows through our DAO ecosystem, creating an immutable record of every
+                    dollar spent on conservation.
+                  </p>
+                  <ul className="space-y-2 text-gray-400">
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>$12.3M distributed transparently</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Community-governed proposals</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>Real-time financial reporting</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="w-full md:w-64 h-64 bg-black rounded-lg border border-gray-800"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-black py-20 border-t border-gray-800">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">Join the Movement</h2>
+            <p className="text-xl text-gray-400 mb-12 leading-relaxed">
+              Whether through donations, volunteering, or spreading awareness, everyone can make
+              a difference in protecting our planet's wildlife.
+            </p>
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <div className="bg-black p-6 rounded-lg border border-gray-800 hover:border-gray-600 transition-all">
+                <div className="text-4xl mb-4">💰</div>
+                <h3 className="text-xl font-bold mb-2 text-white">Donate</h3>
+                <p className="text-gray-400 mb-4">
+                  Support conservation projects directly
                 </p>
-                <Link href="/blog" className="text-green-600 font-medium">Read more →</Link>
+                <Link href="/donation" className="text-white font-medium hover:text-gray-400">
+                  Give Now →
+                </Link>
               </div>
-            </div>
-
-            <div className="group cursor-pointer">
-              <div className="bg-gradient-to-r from-blue-100 to-purple-100 h-64 rounded-2xl mb-6"></div>
-              <div className="space-y-3">
-                <span className="text-sm font-medium text-blue-600">SEPTEMBER 2025</span>
-                <h3 className="text-2xl font-bold group-hover:text-blue-600 transition-colors">
-                  AI System Saves 12 Tigers from Trafficking
-                </h3>
-                <p className="text-gray-600">
-                  ZenLM's predictive algorithms identified trafficking patterns, enabling rescue of 
-                  12 tigers before reaching black market destinations.
+              <div className="bg-black p-6 rounded-lg border border-gray-800 hover:border-gray-600 transition-all">
+                <div className="text-4xl mb-4">🤝</div>
+                <h3 className="text-xl font-bold mb-2 text-white">Partner</h3>
+                <p className="text-gray-400 mb-4">
+                  Collaborate on conservation initiatives
                 </p>
-                <Link href="/blog" className="text-blue-600 font-medium">Read more →</Link>
+                <Link href="/partners" className="text-white font-medium hover:text-gray-400">
+                  Learn More →
+                </Link>
+              </div>
+              <div className="bg-black p-6 rounded-lg border border-gray-800 hover:border-gray-600 transition-all">
+                <div className="text-4xl mb-4">📰</div>
+                <h3 className="text-xl font-bold mb-2 text-white">Stay Informed</h3>
+                <p className="text-gray-400 mb-4">
+                  Get the latest conservation news
+                </p>
+                <Link href="/news" className="text-white font-medium hover:text-gray-400">
+                  Read Updates →
+                </Link>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Partnership Logos */}
-      <section className="bg-gray-50 py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Trusted By Leading Organizations</h2>
-            <p className="text-xl text-gray-700">Working together to protect wildlife worldwide</p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {[
-              'Shark Stewards',
-              'Frontiers North',
-              'Wildlife Conservation Society',
-              'Jane Goodall Institute',
-              'Ocean Conservancy',
-              'Panthera',
-              'Stanford University',
-              'United Nations'
-            ].map((partner, index) => (
-              <div key={index} className="bg-white rounded-lg p-6 flex items-center justify-center h-24 shadow-sm hover:shadow-md transition-all">
-                <span className="text-gray-700 font-medium">{partner}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Technology Section */}
-      <section className="bg-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Conservation Intelligence at Scale
-              </h2>
-              <p className="text-xl text-gray-700 mb-8">
-                ZenLM, our proprietary AI framework, analyzes millions of data points to protect wildlife 
-                more effectively than ever before possible.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-green-500 mt-1 mr-4"></div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Real-time Threat Detection</h4>
-                    <p className="text-gray-600">Identify poaching and habitat threats before they happen</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-blue-500 mt-1 mr-4"></div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Species Identification</h4>
-                    <p className="text-gray-600">98% accuracy across 2,300+ endangered species</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-purple-500 mt-1 mr-4"></div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Predictive Modeling</h4>
-                    <p className="text-gray-600">Forecast migration patterns and population changes</p>
-                  </div>
-                </div>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/ai"
-                className="inline-block mt-8 bg-black text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-all"
+                href="/donation"
+                className="inline-block bg-white text-black px-8 py-4 rounded-lg font-medium hover:bg-gray-200 transition-all"
               >
-                Explore Our Technology
+                Donate Now
+              </Link>
+              <Link
+                href="/getinvolved"
+                className="inline-block bg-black text-white border-2 border-white px-8 py-4 rounded-lg font-medium hover:bg-gray-900 transition-all"
+              >
+                Get Involved
               </Link>
             </div>
-            <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl h-96"></div>
           </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="bg-gradient-to-r from-green-600 to-blue-600 py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Join the Conservation Revolution
-          </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Every dollar donated goes directly to protecting endangered species. 
-            Your support creates lasting impact.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/donation"
-              className="inline-block bg-white text-black px-8 py-4 rounded-lg font-medium hover:bg-gray-100 transition-all transform hover:scale-105"
-            >
-              Donate Now
-            </Link>
-            <Link
-              href="/getinvolved"
-              className="inline-block bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-medium hover:bg-white/10 transition-all"
-            >
-              Get Involved
-            </Link>
-          </div>
-          <p className="mt-8 text-white/80">
-            Zoo Foundation is a registered 501(c)(3) nonprofit. EIN: 88-1234567
-          </p>
         </div>
       </section>
 
