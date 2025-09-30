@@ -34,8 +34,8 @@ function Navbar() {
   };
 
   return (
-      <nav className="bg-white border-b border-gray-200 mt-[52px]">
-        <div className="max-md:fixed max-md:w-full max-md:left-0 max-md:top-[52px] max-md:z-[999] max-md:bg-white max-md:border-b max-md:border-gray-200 px-4 sm:px-6 lg:px-8 xl:px-12">
+      <nav className="bg-white border-b border-gray-200">
+        <div className="max-md:fixed max-md:w-full max-md:left-0 max-md:top-0 max-md:z-[999] max-md:bg-white max-md:border-b max-md:border-gray-200 px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="flex items-center justify-between h-20">
               <div className="md:hidden">
                   <button
@@ -147,7 +147,7 @@ function Navbar() {
           </div>
         </div>
         {isOpen && (
-          <div className="md:hidden fixed z-50 h-[100vh] top-[132px] w-full bg-white border-b border-gray-200" id="mobile-menu">
+          <div className="md:hidden fixed z-50 h-[100vh] top-20 w-full bg-white border-b border-gray-200" id="mobile-menu">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link
                 href="/about"
