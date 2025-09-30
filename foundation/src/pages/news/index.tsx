@@ -138,8 +138,7 @@ export default function News() {
 
       <div className="bg-black text-white min-h-screen">
         {/* Hero Section */}
-        <div className="relative overflow-hidden py-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 to-blue-900/20" />
+        <div className="relative overflow-hidden py-20 bg-black">
           <div className="container mx-auto px-4 relative">
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
               News & Media
@@ -154,9 +153,9 @@ export default function News() {
         {/* Featured Story */}
         {featuredNews && (
           <div className="container mx-auto px-4 pb-16">
-            <div className="bg-gradient-to-r from-green-900/50 to-blue-900/50 rounded-2xl overflow-hidden">
+            <div className="bg-black border border-gray-800 rounded-2xl overflow-hidden">
               <div className="p-8 md:p-12">
-                <span className="inline-block px-3 py-1 bg-green-600 text-white rounded-full text-sm font-medium mb-4">
+                <span className="inline-block px-3 py-1 bg-white text-black rounded-full text-sm font-medium mb-4">
                   Featured Story
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -168,7 +167,7 @@ export default function News() {
                 <div className="flex items-center gap-6 text-gray-400">
                   <span>{new Date(featuredNews.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                   <span>{featuredNews.readTime}</span>
-                  <Link href={`/news/${featuredNews.id}`} className="text-green-500 hover:text-green-400 font-medium">
+                  <Link href={`/news/${featuredNews.id}`} className="text-white hover:text-gray-400 font-medium">
                     Read Full Story →
                   </Link>
                 </div>
@@ -208,7 +207,7 @@ export default function News() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === cat
-                    ? 'bg-green-600 text-white'
+                    ? 'bg-white text-black'
                     : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                 }`}
               >
@@ -224,11 +223,11 @@ export default function News() {
             {filteredNews.map(item => (
               <article key={item.id} className="bg-gray-900 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
                 {item.image && (
-                  <div className="h-48 bg-gradient-to-br from-green-900 to-blue-900" />
+                  <div className="h-48 bg-gray-900" />
                 )}
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm text-green-500 font-medium">
+                    <span className="text-sm text-white font-medium">
                       {item.category}
                     </span>
                     <span className="text-sm text-gray-400">
@@ -247,7 +246,7 @@ export default function News() {
                     </span>
                     <Link
                       href={`/news/${item.id}`}
-                      className="text-green-500 hover:text-green-400 text-sm font-medium"
+                      className="text-white hover:text-gray-400 text-sm font-medium"
                     >
                       Read More →
                     </Link>
@@ -275,7 +274,7 @@ export default function News() {
                   </div>
                   <a
                     href={release.pdf}
-                    className="text-green-500 hover:text-green-400 font-medium whitespace-nowrap"
+                    className="text-white hover:text-gray-400 font-medium whitespace-nowrap"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -286,7 +285,7 @@ export default function News() {
             </div>
             <Link
               href="/press"
-              className="inline-block mt-8 text-green-500 hover:text-green-400 font-medium"
+              className="inline-block mt-8 text-white hover:text-gray-400 font-medium"
             >
               View All Press Releases →
             </Link>
@@ -295,7 +294,7 @@ export default function News() {
 
         {/* Media Kit */}
         <div className="container mx-auto px-4 py-16">
-          <div className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 rounded-2xl p-8 md:p-12">
+          <div className="bg-black border border-gray-800 rounded-2xl p-8 md:p-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Media Kit</h2>
             <p className="text-xl text-gray-300 mb-8 max-w-3xl">
               Access our media resources including logos, brand guidelines, fact sheets, and high-resolution
@@ -339,19 +338,19 @@ export default function News() {
             <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
               <div>
                 <p className="text-gray-400 mb-2">Email</p>
-                <a href="mailto:press@zoo.foundation" className="text-green-500 hover:text-green-400 font-medium">
+                <a href="mailto:press@zoo.foundation" className="text-white hover:text-gray-400 font-medium">
                   press@zoo.foundation
                 </a>
               </div>
               <div>
                 <p className="text-gray-400 mb-2">Phone</p>
-                <a href="tel:+14155551234" className="text-green-500 hover:text-green-400 font-medium">
+                <a href="tel:+14155551234" className="text-white hover:text-gray-400 font-medium">
                   +1 (415) 555-1234
                 </a>
               </div>
               <div>
                 <p className="text-gray-400 mb-2">Press Kit</p>
-                <a href="/media-kit" className="text-green-500 hover:text-green-400 font-medium">
+                <a href="/media-kit" className="text-white hover:text-gray-400 font-medium">
                   Download Resources
                 </a>
               </div>

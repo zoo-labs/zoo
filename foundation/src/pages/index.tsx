@@ -4,6 +4,11 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Seo from '@/components/Seo';
 import Link from 'next/link';
+import Intro from '@/components/intro/Intro';
+import Comment from '@/components/Comment';
+import Principles from '@/components/Principles';
+import AnimalDetail from '@/components/animal/Detail';
+import AnimalItems from '@/components/animal/Item';
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,52 +22,36 @@ export default function Home() {
       <Seo />
       <Navbar />
 
-      <section className="relative bg-black text-white overflow-hidden">
-        <div className="relative container mx-auto px-4 py-24 md:py-32">
-          <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6 text-white">
-              Protecting Wildlife Through Decentralized Conservation
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-400 mb-8 leading-relaxed">
-              Zoo Foundation is a 501(c)(3) nonprofit pioneering the future of wildlife conservation
-              through AI technology, community governance, and transparent funding.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/donation"
-                className="inline-block bg-white text-black px-8 py-4 rounded-lg font-medium hover:bg-gray-200 transition-all"
-              >
-                Donate Now
-              </Link>
-              <Link
-                href="/impact"
-                className="inline-block bg-black text-white border-2 border-white px-8 py-4 rounded-lg font-medium hover:bg-gray-900 transition-all"
-              >
-                See Our Impact
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Intro
+        breadcrumbs="Zoo Labs Foundation"
+        title="Preserve"
+        comment=" Wildlife biodiversity through aligned charities, education, research and active conservation efforts."
+      />
+
+      <Comment />
+
+      <Principles />
+
+      <div className='bg-black pt-32'>
+        <AnimalDetail />
+      </div>
+
+      <AnimalItems />
 
       <section className="bg-black py-20 border-t border-gray-800">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
-              { number: '847', label: 'Species Protected', detail: 'Across 6 continents' },
-              { number: '$12.3M', label: 'Conservation Funding', detail: 'Distributed transparently' },
-              { number: '2.4M', label: 'Hectares Protected', detail: 'Critical habitats' },
-              { number: '98%', label: 'AI Accuracy', detail: 'Species identification' }
+              { label: 'Research Grants', detail: 'Supporting conservation science' },
+              { label: 'Educational Programs', detail: 'Wildlife awareness initiatives' },
+              { label: 'Field Partnerships', detail: 'Working with conservation organizations' }
             ].map((metric, index) => (
               <div
                 key={index}
                 className="bg-black p-8 rounded-lg border border-gray-800 hover:border-gray-600 transition-all"
               >
-                <div className="text-4xl font-bold text-white mb-2">
-                  {metric.number}
-                </div>
-                <div className="text-lg font-semibold text-gray-300 mb-1">{metric.label}</div>
-                <div className="text-sm text-gray-500">{metric.detail}</div>
+                <div className="text-lg font-semibold text-white mb-1">{metric.label}</div>
+                <div className="text-sm text-gray-400">{metric.detail}</div>
               </div>
             ))}
           </div>
@@ -74,9 +63,7 @@ export default function Home() {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">Our Mission</h2>
             <p className="text-xl text-gray-400 leading-relaxed">
-              To revolutionize wildlife conservation by combining cutting-edge AI technology with
-              decentralized governance, creating a transparent, community-driven approach to protecting
-              Earth's most vulnerable species.
+              Protecting Earth's most vulnerable species through research, education, and conservation partnerships.
             </p>
           </div>
         </div>
@@ -94,10 +81,10 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div className="bg-black p-8 rounded-lg border border-gray-800 hover:border-gray-600 transition-all">
               <div className="text-5xl mb-6">🔬</div>
-              <h3 className="text-2xl font-bold mb-4 text-white">AI-Powered Monitoring</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">Technology-Enhanced Monitoring</h3>
               <p className="text-gray-400 mb-4">
-                Our ZenLM framework uses advanced AI to track and identify wildlife with 98% accuracy,
-                enabling real-time population monitoring.
+                Our research programs use camera traps and wildlife tracking systems to monitor
+                endangered species populations and support conservation efforts.
               </p>
               <Link href="/ai" className="text-white font-medium hover:text-gray-400 transition-colors">
                 Learn More →
@@ -120,8 +107,8 @@ export default function Home() {
               <div className="text-5xl mb-6">💎</div>
               <h3 className="text-2xl font-bold mb-4 text-white">Transparent Funding</h3>
               <p className="text-gray-400 mb-4">
-                Every dollar is tracked on-chain through our DAO ecosystem, ensuring complete
-                transparency and community oversight.
+                We maintain public financial records and provide regular reports on how donations
+                are used, ensuring complete transparency and donor trust.
               </p>
               <Link href="/transparency" className="text-white font-medium hover:text-gray-400 transition-colors">
                 See Financials →
@@ -139,23 +126,23 @@ export default function Home() {
             <div className="space-y-12">
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-4 text-white">ZenLM: AI for Wildlife</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-white">Conservation Technology</h3>
                   <p className="text-gray-400 mb-4">
-                    Our open-source machine learning framework processes millions of camera trap images,
-                    identifying individual animals and tracking populations in real-time.
+                    We deploy camera traps, GPS tracking, and monitoring systems to study wildlife
+                    populations and inform conservation strategies.
                   </p>
                   <ul className="space-y-2 text-gray-400">
                     <li className="flex items-start">
                       <span className="mr-2">•</span>
-                      <span>98% accuracy across 847 species</span>
+                      <span>Monitoring programs across multiple species</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2">•</span>
-                      <span>Real-time anti-poaching alerts</span>
+                      <span>Anti-poaching support systems</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2">•</span>
-                      <span>Open-source API at api.zoo.network</span>
+                      <span>Research data available to partners</span>
                     </li>
                   </ul>
                 </div>
@@ -164,29 +151,89 @@ export default function Home() {
 
               <div className="flex flex-col md:flex-row-reverse gap-8 items-start">
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-4 text-white">Blockchain Transparency</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-white">Financial Accountability</h3>
                   <p className="text-gray-400 mb-4">
-                    All funding flows through our DAO ecosystem, creating an immutable record of every
-                    dollar spent on conservation.
+                    We maintain detailed financial records and publish annual reports showing how
+                    donations support conservation projects.
                   </p>
                   <ul className="space-y-2 text-gray-400">
                     <li className="flex items-start">
                       <span className="mr-2">•</span>
-                      <span>$12.3M distributed transparently</span>
+                      <span>Public financial reporting</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2">•</span>
-                      <span>Community-governed proposals</span>
+                      <span>Donor-advised project selection</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2">•</span>
-                      <span>Real-time financial reporting</span>
+                      <span>Quarterly impact updates</span>
                     </li>
                   </ul>
                 </div>
                 <div className="w-full md:w-64 h-64 bg-black rounded-lg border border-gray-800"></div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-black py-20 border-t border-gray-800">
+        <div className="container mx-auto px-4">
+          <h2 className="text-white text-3xl md:text-4xl font-bold mb-6 text-center">Wildlife Volunteer Experiences</h2>
+          <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
+            Get up close with wildlife conservation through our volunteer programs at animal sanctuaries worldwide. Make a real impact while experiencing unforgettable adventures.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link href="/experiences/1" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
+              <div className="relative aspect-video overflow-hidden bg-gray-900">
+                <img
+                  src="/images/volunteer-experiences/luxury-yacht-shark-breach.jpg"
+                  alt="Ultimate Luxury Great White Shark Expedition"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4 bg-black">
+                <h3 className="font-bold mb-1 text-white">Ultimate Luxury Great White Shark Expedition (20 Guests)</h3>
+                <p className="text-gray-400 text-sm mb-2">Farallone Islands, San Francisco, USA</p>
+                <p className="text-lg font-bold text-white">$75,000 / group expedition</p>
+              </div>
+            </Link>
+
+            <Link href="/experiences/7" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
+              <div className="relative aspect-video overflow-hidden bg-gray-900">
+                <img
+                  src="/images/volunteer-experiences/intimate-shark-two.jpg"
+                  alt="Intimate Great White Shark Encounter"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4 bg-black">
+                <h3 className="font-bold mb-1 text-white">Intimate Great White Shark Encounter (2 Guests)</h3>
+                <p className="text-gray-400 text-sm mb-2">Farallone Islands, San Francisco, USA</p>
+                <p className="text-lg font-bold text-white">$2,500 / intimate experience</p>
+              </div>
+            </Link>
+
+            <Link href="/experiences/8" className="border border-gray-800 rounded-lg overflow-hidden hover:border-gray-600 transition-colors">
+              <div className="relative aspect-video overflow-hidden bg-gray-900">
+                <img
+                  src="/images/volunteer-experiences/modular-shark-adventure.jpg"
+                  alt="Premium Great White Shark Expedition"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4 bg-black">
+                <h3 className="font-bold mb-1 text-white">Premium Great White Shark Expedition</h3>
+                <p className="text-gray-400 text-sm mb-2">Farallone Islands, San Francisco, USA</p>
+                <p className="text-lg font-bold text-white">$3,500 / expedition</p>
+              </div>
+            </Link>
+          </div>
+          <div className="mt-8 text-center">
+            <Link href="/experiences" className="inline-block bg-white hover:bg-gray-200 border border-white px-6 py-3 rounded-lg text-black font-medium transition-colors">
+              Browse All Experiences
+            </Link>
           </div>
         </div>
       </section>

@@ -22,16 +22,15 @@ export default function About() {
 
       <div className="bg-black text-white min-h-screen">
         {/* Hero Section with Gradient */}
-        <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-transparent to-blue-900/20" />
+        <div className="relative overflow-hidden bg-black">
           <div className="container mx-auto px-4 py-20 relative">
             <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+              <h1 className="text-5xl md:text-7xl font-bold mb-8 text-white">
                 Protecting Wildlife for Future Generations
               </h1>
               <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-                Zoo Foundation is a 501(c)(3) nonprofit organization dedicated to wildlife conservation,
-                habitat protection, and species preservation through innovative technology and community action.
+                Zoo Foundation is a 501(c)(3) nonprofit dedicated to wildlife conservation through
+                research, education, and partnerships with field organizations.
               </p>
             </div>
           </div>
@@ -43,9 +42,8 @@ export default function About() {
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-bold mb-8">Our Mission</h2>
               <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                We exist to protect Earth's biodiversity through direct conservation action, scientific research,
-                and innovative technology. By combining traditional conservation methods with cutting-edge AI and
-                blockchain solutions, we're building a future where wildlife thrives alongside human development.
+                We protect Earth's biodiversity by supporting research, educating communities,
+                and partnering with conservation organizations.
               </p>
               <div className="grid md:grid-cols-3 gap-8 mt-12">
                 <div className="text-center">
@@ -75,29 +73,27 @@ export default function About() {
         </div>
 
         {/* Our Story */}
-        <div className="py-20 bg-gradient-to-r from-gray-900/50 to-gray-800/50">
+        <div className="py-20 bg-black border-t border-gray-800">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-bold mb-8">Our Story</h2>
               <div className="space-y-6 text-lg text-gray-300">
                 <p>
                   Founded in 2020 during a time of unprecedented environmental crisis, Zoo Foundation emerged
-                  from a simple belief: that technology and innovation could revolutionize conservation efforts.
+                  from a commitment to support scientific research and field conservation through transparent,
+                  community-driven charitable giving.
                 </p>
                 <p>
-                  What started as a small team of conservationists and technologists has grown into a global
-                  movement of over 10,000 supporters, 127 partner organizations, and a network of researchers
-                  spanning 89 universities.
+                  What started as a small team has grown into a network of conservation partners,
+                  research institutions, and community supporters worldwide.
                 </p>
                 <p>
-                  Our unique approach combines AI-powered wildlife monitoring, blockchain-based transparent
-                  funding, and community-centered conservation programs. This innovative model has protected
-                  847 species across 2.4 million hectares of critical habitat.
+                  We focus on supporting field research, conservation education, and partnerships that
+                  protect endangered species and their habitats.
                 </p>
                 <p>
-                  Today, we're not just saving individual species – we're preserving entire ecosystems,
-                  supporting indigenous communities, and building sustainable models for human-wildlife coexistence
-                  that will endure for generations.
+                  We work to preserve ecosystems, support local communities, and create sustainable
+                  solutions for wildlife and people to coexist.
                 </p>
               </div>
             </div>
@@ -110,25 +106,25 @@ export default function About() {
             <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Core Values</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
               <div className="bg-gray-900 rounded-xl p-8 hover:bg-gray-800 transition-colors">
-                <h3 className="text-xl font-bold mb-4 text-green-500">Scientific Rigor</h3>
+                <h3 className="text-xl font-bold mb-4 text-white">Scientific Rigor</h3>
                 <p className="text-gray-300">
                   Every decision backed by peer-reviewed research and data-driven insights
                 </p>
               </div>
               <div className="bg-gray-900 rounded-xl p-8 hover:bg-gray-800 transition-colors">
-                <h3 className="text-xl font-bold mb-4 text-blue-500">Transparency</h3>
+                <h3 className="text-xl font-bold mb-4 text-white">Transparency</h3>
                 <p className="text-gray-300">
-                  Open-source technology, public financial reports, and on-chain governance
+                  Public financial reports, annual disclosures, and regular impact updates for all donors
                 </p>
               </div>
               <div className="bg-gray-900 rounded-xl p-8 hover:bg-gray-800 transition-colors">
-                <h3 className="text-xl font-bold mb-4 text-purple-500">Innovation</h3>
+                <h3 className="text-xl font-bold mb-4 text-white">Education</h3>
                 <p className="text-gray-300">
-                  Pioneering new technologies and methods for 21st-century conservation
+                  Supporting research and educational programs that advance conservation science
                 </p>
               </div>
               <div className="bg-gray-900 rounded-xl p-8 hover:bg-gray-800 transition-colors">
-                <h3 className="text-xl font-bold mb-4 text-pink-500">Inclusion</h3>
+                <h3 className="text-xl font-bold mb-4 text-white">Collaboration</h3>
                 <p className="text-gray-300">
                   Centering indigenous knowledge and empowering local communities
                 </p>
@@ -143,25 +139,25 @@ export default function About() {
             <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Leadership</h2>
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               <div className="text-center">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500 to-blue-500" />
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-800" />
                 <h3 className="text-xl font-bold mb-2">Dr. Sarah Chen</h3>
-                <p className="text-green-500 mb-2">Chief Executive Officer</p>
+                <p className="text-gray-400 mb-2">Chief Executive Officer</p>
                 <p className="text-gray-400 text-sm">
                   Marine biologist with 20 years in conservation technology
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-500 to-pink-500" />
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-800" />
                 <h3 className="text-xl font-bold mb-2">Michael Thompson</h3>
-                <p className="text-green-500 mb-2">Chief Conservation Officer</p>
+                <p className="text-gray-400 mb-2">Chief Conservation Officer</p>
                 <p className="text-gray-400 text-sm">
                   Former WWF director, leading field operations globally
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange-500 to-red-500" />
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-800" />
                 <h3 className="text-xl font-bold mb-2">Dr. Raj Patel</h3>
-                <p className="text-green-500 mb-2">Chief Technology Officer</p>
+                <p className="text-gray-400 mb-2">Chief Technology Officer</p>
                 <p className="text-gray-400 text-sm">
                   AI researcher pioneering wildlife monitoring systems
                 </p>
@@ -178,27 +174,20 @@ export default function About() {
           </div>
         </div>
 
-        {/* Impact Numbers */}
-        <div className="py-20 bg-gradient-to-r from-green-900 to-blue-900">
+        {/* Our Focus */}
+        <div className="py-20 bg-black">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Our Impact</h2>
-            <div className="grid md:grid-cols-4 gap-8 text-center">
-              <div>
-                <p className="text-6xl font-bold mb-2">847</p>
-                <p className="text-xl">Species Protected</p>
-              </div>
-              <div>
-                <p className="text-6xl font-bold mb-2">2.4M</p>
-                <p className="text-xl">Hectares Preserved</p>
-              </div>
-              <div>
-                <p className="text-6xl font-bold mb-2">$45M</p>
-                <p className="text-xl">Conservation Funding</p>
-              </div>
-              <div>
-                <p className="text-6xl font-bold mb-2">127</p>
-                <p className="text-xl">Partner Organizations</p>
-              </div>
+            <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Our Focus</h2>
+            <div className="max-w-4xl mx-auto space-y-8 text-center">
+              <p className="text-xl text-gray-300">
+                Protecting endangered species and their habitats.
+              </p>
+              <p className="text-xl text-gray-300">
+                Supporting conservation research and education.
+              </p>
+              <p className="text-xl text-gray-300">
+                Partnering with field organizations worldwide.
+              </p>
             </div>
           </div>
         </div>
@@ -210,38 +199,32 @@ export default function About() {
             <div className="max-w-4xl mx-auto space-y-12">
               <div className="flex flex-col md:flex-row gap-8 items-center">
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-4">Technology-Enhanced Conservation</h3>
+                  <h3 className="text-2xl font-bold mb-4">Research Support</h3>
                   <p className="text-gray-300">
-                    We deploy AI-powered camera traps, satellite monitoring, and drone surveys to track
-                    wildlife populations in real-time. Our ZenLM framework achieves 98% accuracy in species
-                    identification, enabling unprecedented monitoring capabilities.
+                    Supporting scientific research on endangered species and habitat conservation.
                   </p>
                 </div>
-                <div className="w-full md:w-64 h-64 bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-lg" />
+                <div className="w-full md:w-64 h-64 bg-gray-900 border border-gray-800 rounded-lg" />
               </div>
 
               <div className="flex flex-col md:flex-row-reverse gap-8 items-center">
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-4">Community-Centered Programs</h3>
+                  <h3 className="text-2xl font-bold mb-4">Community Partnerships</h3>
                   <p className="text-gray-300">
-                    Indigenous peoples protect 80% of the world's biodiversity. We partner with local
-                    communities as primary conservation stewards, providing resources and support while
-                    respecting traditional knowledge and governance.
+                    Working with local communities who protect and steward wildlife habitats.
                   </p>
                 </div>
-                <div className="w-full md:w-64 h-64 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg" />
+                <div className="w-full md:w-64 h-64 bg-gray-900 border border-gray-800 rounded-lg" />
               </div>
 
               <div className="flex flex-col md:flex-row gap-8 items-center">
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-4">Transparent Funding</h3>
+                  <h3 className="text-2xl font-bold mb-4">Transparent Operations</h3>
                   <p className="text-gray-300">
-                    Through blockchain technology and decentralized governance, every dollar is tracked
-                    on-chain. Our ResearchDAO has distributed $8.4M to 342 projects with complete
-                    transparency and community oversight.
+                    Publishing regular reports on how donations support conservation work.
                   </p>
                 </div>
-                <div className="w-full md:w-64 h-64 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-lg" />
+                <div className="w-full md:w-64 h-64 bg-gray-900 border border-gray-800 rounded-lg" />
               </div>
             </div>
           </div>
@@ -280,7 +263,7 @@ export default function About() {
             <div className="text-center mt-12">
               <Link
                 href="/partners"
-                className="inline-block text-green-500 hover:text-green-400 font-medium"
+                className="inline-block text-white hover:text-gray-400 font-medium"
               >
                 View All Partners →
               </Link>
@@ -289,7 +272,7 @@ export default function About() {
         </div>
 
         {/* Call to Action */}
-        <div className="py-20 bg-gradient-to-r from-green-900/50 to-blue-900/50">
+        <div className="py-20 bg-black border-t border-gray-800">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-5xl font-bold mb-6">
               Join the Conservation Movement
