@@ -99,6 +99,12 @@ function Navbar() {
                       Programs
                   </Link>
                   <Link
+                      href="/experiences"
+                      className="text-gray-600 hover:text-black px-3 py-2 text-md font-medium"
+                  >
+                      Experiences
+                  </Link>
+                  <Link
                       href="/research"
                       className="text-gray-600 hover:text-black px-3 py-2 text-md font-medium"
                   >
@@ -166,6 +172,12 @@ function Navbar() {
                 className="text-gray-600 hover:bg-gray-100 hover:text-black block px-3 py-2 rounded-md text-base font-medium"
               >
                 Programs
+              </Link>
+              <Link
+                href="/experiences"
+                className="text-gray-600 hover:bg-gray-100 hover:text-black block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Experiences
               </Link>
               <Link
                 href="/research"
