@@ -34,7 +34,7 @@ export default function Team() {
   ];
 
   // Advisory council to be announced
-  const advisors = [];
+  const advisors: { name: string; role: string }[] = [];
 
   return (
     <Layout>
