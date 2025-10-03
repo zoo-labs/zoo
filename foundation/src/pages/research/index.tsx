@@ -24,29 +24,21 @@ export default function Research() {
           </p>
         </div>
 
-        {/* Research Stats */}
-        <div className="bg-gradient-to-r from-blue-900 to-purple-900 py-16">
+        {/* Research Focus */}
+        <div className="bg-white text-black py-16">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-4 gap-8 text-center">
-              <div>
-                <p className="text-5xl font-bold mb-2">342</p>
-                <p className="text-xl">Research Projects</p>
-                <p className="text-sm text-gray-300 mt-2">Active worldwide</p>
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              <div className="border border-black p-8">
+                <p className="text-2xl font-bold mb-2">Marine Conservation</p>
+                <p className="text-gray-700">Shark and ocean ecosystem research</p>
               </div>
-              <div>
-                <p className="text-5xl font-bold mb-2">1,247</p>
-                <p className="text-xl">Scientific Papers</p>
-                <p className="text-sm text-gray-300 mt-2">Peer-reviewed publications</p>
+              <div className="border border-black p-8">
+                <p className="text-2xl font-bold mb-2">Wildlife Monitoring</p>
+                <p className="text-gray-700">Technology-enhanced species tracking</p>
               </div>
-              <div>
-                <p className="text-5xl font-bold mb-2">89</p>
-                <p className="text-xl">University Partners</p>
-                <p className="text-sm text-gray-300 mt-2">Global collaboration</p>
-              </div>
-              <div>
-                <p className="text-5xl font-bold mb-2">$8.4M</p>
-                <p className="text-xl">Research Grants</p>
-                <p className="text-sm text-gray-300 mt-2">Distributed via ResearchDAO</p>
+              <div className="border border-black p-8">
+                <p className="text-2xl font-bold mb-2">Habitat Protection</p>
+                <p className="text-gray-700">Critical ecosystem preservation</p>
               </div>
             </div>
           </div>
@@ -150,7 +142,7 @@ export default function Research() {
               <div className="bg-black rounded-lg p-8">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-2xl font-bold">Amazon Biodiversity Baseline Study</h3>
-                  <span className="bg-green-600 px-3 py-1 rounded-full text-sm">Active</span>
+                  <span className="bg-black px-3 py-1 rounded-full text-sm">Active</span>
                 </div>
                 <p className="text-gray-300 mb-4">
                   Comprehensive species inventory using environmental DNA sampling across 50,000 sq km 
@@ -172,7 +164,7 @@ export default function Research() {
               <div className="bg-black rounded-lg p-8">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-2xl font-bold">Tiger Connectivity Corridor Genetics</h3>
-                  <span className="bg-green-600 px-3 py-1 rounded-full text-sm">Active</span>
+                  <span className="bg-black px-3 py-1 rounded-full text-sm">Active</span>
                 </div>
                 <p className="text-gray-300 mb-4">
                   Using genetic analysis to identify critical corridors for tiger movement between 
@@ -194,7 +186,7 @@ export default function Research() {
               <div className="bg-black rounded-lg p-8">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-2xl font-bold">Coral Resilience to Ocean Warming</h3>
-                  <span className="bg-green-600 px-3 py-1 rounded-full text-sm">Active</span>
+                  <span className="bg-black px-3 py-1 rounded-full text-sm">Active</span>
                 </div>
                 <p className="text-gray-300 mb-4">
                   Identifying heat-resistant coral genotypes and developing assisted evolution techniques 
@@ -287,7 +279,7 @@ export default function Research() {
         </div>
 
         {/* Research Network */}
-        <div className="bg-gradient-to-r from-green-900 to-blue-900 py-16">
+        <div className="bg-black border-t border-white py-16">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Global Research Network</h2>
             <div className="grid md:grid-cols-4 gap-8 text-center">
@@ -340,7 +332,7 @@ export default function Research() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/fund/research.html"
-                className="bg-green-600 text-white px-6 py-3 rounded-full font-medium hover:bg-green-700 transition-colors text-center"
+                className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors text-center"
               >
                 Apply for Funding
               </Link>
