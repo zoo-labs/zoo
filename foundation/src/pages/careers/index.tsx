@@ -188,10 +188,10 @@ export default function Careers() {
                       {position.title}
                     </h3>
                     <div className="flex flex-wrap gap-3 text-sm">
-                      <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                      <span className="bg-gray-100 text-black px-3 py-1 rounded-full">
                         {position.department}
                       </span>
-                      <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
+                      <span className="bg-gray-200 text-black px-3 py-1 rounded-full">
                         {position.location}
                       </span>
                       <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
@@ -229,21 +229,21 @@ export default function Careers() {
               </p>
               <div className="space-y-4">
                 <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-green-500 mt-1 mr-4"></div>
+                  <div className="w-6 h-6 rounded-full bg-black mt-1 mr-4"></div>
                   <div>
                     <h4 className="font-semibold mb-1">Global & Remote-First</h4>
                     <p className="text-gray-600">Team members in 23 countries working flexibly</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-blue-500 mt-1 mr-4"></div>
+                  <div className="w-6 h-6 rounded-full bg-gray-800 mt-1 mr-4"></div>
                   <div>
                     <h4 className="font-semibold mb-1">Mission-Driven</h4>
                     <p className="text-gray-600">Every role directly impacts conservation</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-purple-500 mt-1 mr-4"></div>
+                  <div className="w-6 h-6 rounded-full bg-black border border-gray-600 mt-1 mr-4"></div>
                   <div>
                     <h4 className="font-semibold mb-1">Innovation Focused</h4>
                     <p className="text-gray-600">Pioneering new approaches to conservation</p>
@@ -251,7 +251,7 @@ export default function Careers() {
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl h-96"></div>
+            <div className="bg-gray-100 rounded-2xl h-96 border border-gray-300"></div>
           </div>
         </div>
       </section>
@@ -259,7 +259,7 @@ export default function Careers() {
       {/* Internship Program */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
-          <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl p-12 text-white">
+          <div className="bg-black border-2 border-white rounded-2xl p-12 text-white">
             <div className="max-w-3xl">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 Conservation Leadership Program

@@ -17,15 +17,15 @@ export default function FAQ() {
         },
         {
           q: 'How is Zoo Foundation different from other conservation organizations?',
-          a: 'We pioneered the use of DAOs (Decentralized Autonomous Organizations) for conservation funding, allowing communities to directly vote on where resources are allocated. Our ZenLM AI framework provides 98% accuracy in species identification, and we maintain complete transparency with 88% of funds going directly to conservation programs.'
+          a: 'We focus on transparent, community-driven conservation funding. Our approach emphasizes direct partnerships with field organizations like Shark Stewards, educational expeditions that combine wildlife experiences with conservation support, and maintaining complete financial transparency for all donors.'
         },
         {
           q: 'Is Zoo Foundation a registered nonprofit?',
-          a: 'Yes, Zoo Foundation is a registered 501(c)(3) tax-exempt nonprofit organization in the United States. Our EIN is 88-1234567. Donations are tax-deductible to the fullest extent allowed by law.'
+          a: 'Yes, Zoo Foundation is a registered 501(c)(3) tax-exempt nonprofit organization in the United States. Donations are tax-deductible to the fullest extent allowed by law.'
         },
         {
           q: 'Where does Zoo Foundation operate?',
-          a: 'We operate globally with active conservation programs in 67 countries across all continents. Our headquarters is in San Francisco, but we have field offices in Kenya, Brazil, India, and Indonesia, with team members working remotely from 23 countries.'
+          a: 'Zoo Foundation is based in San Francisco and partners with conservation organizations worldwide. Our primary focus is supporting field research and wildlife protection through partnerships and educational expeditions.'
         }
       ]
     },
@@ -34,7 +34,7 @@ export default function FAQ() {
       questions: [
         {
           q: 'How much of my donation goes directly to conservation?',
-          a: '88% of every dollar donated goes directly to conservation programs. Only 8% goes to administration and 4% to fundraising. We maintain Platinum transparency status on GuideStar and a 4-star rating from Charity Navigator.'
+          a: 'We strive to maximize the portion of donations that go directly to conservation programs. We maintain transparent financial records and provide regular reports showing how donations are used to support wildlife protection and research.'
         },
         {
           q: 'What payment methods do you accept?',
@@ -59,19 +59,19 @@ export default function FAQ() {
       questions: [
         {
           q: 'What species does Zoo Foundation protect?',
-          a: 'We protect 847 endangered and critically endangered species across all taxonomic groups - mammals, birds, reptiles, amphibians, fish, and invertebrates. Our focus is on keystone species whose protection benefits entire ecosystems.'
+          a: 'We support conservation efforts for endangered and critically endangered species across all taxonomic groups - mammals, birds, reptiles, amphibians, and marine life. Our current focus includes great white sharks through our partnership with Shark Stewards and other keystone species whose protection benefits entire ecosystems.'
         },
         {
           q: 'How does the wildlife rescue program work?',
-          a: 'Our 24/7 emergency response teams operate in high-risk areas to rescue wildlife from trafficking, habitat destruction, and human-wildlife conflict. Rescued animals receive veterinary care and rehabilitation before being released back to the wild or placed in accredited sanctuaries.'
+          a: 'We support wildlife rescue efforts through partnerships with field organizations. These partners provide emergency response, veterinary care, and rehabilitation for animals affected by human-wildlife conflict, with the goal of releasing them back to the wild when possible.'
         },
         {
           q: 'What is habitat protection?',
-          a: 'We secure critical habitats through land acquisition, legal designation as protected areas, and community conservation agreements. We\'ve protected 2.4 million hectares of habitat and created 89 wildlife corridors connecting fragmented ecosystems.'
+          a: 'We support habitat protection through partnerships and funding for conservation organizations working to secure critical habitats through legal designation as protected areas and community conservation agreements.'
         },
         {
           q: 'How do you work with local communities?',
-          a: 'We partner with 450+ indigenous communities and local villages as primary conservation stewards. We provide sustainable livelihood alternatives, education programs, and ensure communities benefit directly from conservation through revenue-sharing agreements.'
+          a: 'We believe in community-based conservation and support programs that ensure local communities benefit from wildlife protection through sustainable livelihood alternatives and education programs.'
         }
       ]
     },
@@ -79,16 +79,16 @@ export default function FAQ() {
       category: 'Technology & Innovation',
       questions: [
         {
-          q: 'What is ZenLM?',
-          a: 'ZenLM is our proprietary AI framework specifically trained for conservation applications. It can identify over 2,300 species with 98% accuracy, predict poaching threats, analyze migration patterns, and optimize resource allocation for maximum conservation impact.'
+          q: 'How does Zoo Foundation use technology for conservation?',
+          a: 'We explore innovative technologies to support conservation efforts, including wildlife monitoring systems and data collection tools. Our goal is to help conservation partners use technology effectively for research and protection.'
         },
         {
-          q: 'How do Conservation DAOs work?',
-          a: 'Conservation DAOs are decentralized organizations where token holders vote on funding proposals. Each DAO focuses on specific conservation goals (e.g., SharkDAO for shark protection). Members review proposals, vote on funding allocation, and track impact through transparent blockchain records.'
+          q: 'What is your approach to transparent funding?',
+          a: 'We believe in complete transparency for all donations. We provide detailed financial reports showing how funds are allocated to conservation programs, and we\'re exploring blockchain-based systems to make this transparency even more accessible to donors.'
         },
         {
-          q: 'What technology do you use for wildlife monitoring?',
-          a: 'We use camera traps with AI image recognition, satellite monitoring for habitat changes, drone surveillance for anti-poaching, acoustic sensors for species identification, and environmental DNA (eDNA) sampling for biodiversity assessment.'
+          q: 'What technology supports your wildlife expeditions?',
+          a: 'Our partner organizations like Shark Stewards use professional wildlife observation equipment, GPS tracking for research, and photographic documentation to support conservation science during expeditions.'
         },
         {
           q: 'Is my data secure when I donate?',
@@ -126,7 +126,7 @@ export default function FAQ() {
         },
         {
           q: 'Who oversees Zoo Foundation?',
-          a: 'We\'re governed by an independent Board of Directors with expertise in conservation, finance, technology, and nonprofit management. We undergo annual independent audits and maintain accreditation with major charity evaluators.'
+          a: 'We\'re governed by a Board of Directors including Zach Kelling, Kamron Pahlavi, and Executive Director Antje Worring. Our board provides strategic guidance and ensures accountability in our conservation mission.'
         },
         {
           q: 'How can I verify your impact claims?',
@@ -210,7 +210,7 @@ export default function FAQ() {
       {/* Contact Section */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
-          <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl p-12 text-white text-center">
+          <div className="bg-black border border-white rounded-2xl p-12 text-white text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Still Have Questions?
             </h2>

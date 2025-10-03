@@ -134,36 +134,18 @@ export default function About() {
         </div>
 
         {/* Leadership */}
-        <div className="py-20 bg-gray-900">
+        <div className="py-20 bg-black border-t border-gray-800">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Leadership</h2>
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="text-center">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-800" />
-                <h3 className="text-xl font-bold mb-2">Dr. Sarah Chen</h3>
-                <p className="text-gray-400 mb-2">Chief Executive Officer</p>
-                <p className="text-gray-400 text-sm">
-                  Marine biologist with 20 years in conservation technology
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="mb-12">
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-900 border border-gray-800" />
+                <h3 className="text-xl font-bold mb-2">Antje Worring</h3>
+                <p className="text-gray-400 mb-2">Executive Director</p>
+                <p className="text-gray-400 text-sm max-w-md mx-auto">
+                  Leading Zoo Foundation's mission to protect endangered wildlife through innovative conservation programs
                 </p>
               </div>
-              <div className="text-center">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-800" />
-                <h3 className="text-xl font-bold mb-2">Michael Thompson</h3>
-                <p className="text-gray-400 mb-2">Chief Conservation Officer</p>
-                <p className="text-gray-400 text-sm">
-                  Former WWF director, leading field operations globally
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-800" />
-                <h3 className="text-xl font-bold mb-2">Dr. Raj Patel</h3>
-                <p className="text-gray-400 mb-2">Chief Technology Officer</p>
-                <p className="text-gray-400 text-sm">
-                  AI researcher pioneering wildlife monitoring systems
-                </p>
-              </div>
-            </div>
-            <div className="text-center mt-12">
               <Link
                 href="/team"
                 className="inline-block bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition-colors"
@@ -231,41 +213,36 @@ export default function About() {
         </div>
 
         {/* Partners Section */}
-        <div className="py-20 bg-gray-900">
+        <div className="py-20 bg-black border-t border-gray-800">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Working Together</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center">Our Partners</h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto text-center mb-12">
-              Conservation at scale requires collaboration. We work with leading organizations,
-              research institutions, and technology partners to maximize our impact.
+              We collaborate with field conservation organizations to support research and protect endangered species.
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
-              {[
-                'Wildlife Conservation Society',
-                'Jane Goodall Institute',
-                'Shark Stewards',
-                'Ocean Conservancy',
-                'Stanford University',
-                'MIT',
-                'Oxford University',
-                'Planet Labs',
-                'NVIDIA',
-                'Microsoft Azure',
-                'IUCN',
-                'UN Environment'
-              ].map((partner, i) => (
-                <div key={i} className="text-center">
-                  <div className="h-20 bg-gray-800 rounded-lg flex items-center justify-center">
-                    <span className="text-sm text-gray-400">{partner}</span>
-                  </div>
-                </div>
-              ))}
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-black border border-gray-800 rounded-lg p-8 text-center">
+                <h3 className="text-2xl font-bold mb-4">Shark Stewards</h3>
+                <p className="text-gray-400 mb-6">
+                  Our primary partner for marine conservation, specializing in shark protection and ocean ecosystem research.
+                  Together, we operate the Farallones Sanctuary expeditions and support critical marine research.
+                </p>
+                <Link
+                  href="/experiences"
+                  className="inline-block text-white hover:text-gray-400 font-medium"
+                >
+                  View Shark Stewards Expeditions →
+                </Link>
+              </div>
             </div>
             <div className="text-center mt-12">
+              <p className="text-gray-400 mb-4">
+                Interested in partnering with us?
+              </p>
               <Link
                 href="/partners"
-                className="inline-block text-white hover:text-gray-400 font-medium"
+                className="inline-block bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-gray-200 transition-colors"
               >
-                View All Partners →
+                Become a Partner
               </Link>
             </div>
           </div>

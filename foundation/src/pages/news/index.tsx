@@ -20,19 +20,19 @@ const newsItems: NewsItem[] = [
   {
     id: '1',
     date: '2025-01-27',
-    category: 'Conservation Victory',
-    title: 'Historic Agreement Protects 50,000 Square Kilometers of Amazon Rainforest',
-    excerpt: 'In partnership with indigenous communities and the Brazilian government, Zoo Foundation secures permanent protection for critical biodiversity hotspot housing over 10,000 species.',
+    category: 'Partnership',
+    title: 'Zoo Foundation Partners with Shark Stewards for Marine Conservation',
+    excerpt: 'Strategic partnership enhances our marine conservation efforts, bringing expert-led expeditions to the Farallone Islands and supporting critical shark research.',
     featured: true,
     readTime: '5 min read',
-    image: '/images/amazon-protection.jpg'
+    image: '/images/shark-conservation.jpg'
   },
   {
     id: '2',
     date: '2025-01-25',
-    category: 'Research Breakthrough',
-    title: 'AI Model Achieves 99.2% Accuracy in Identifying Endangered Species',
-    excerpt: 'Our latest ZenLM update can now identify and track individual animals across 847 endangered species, revolutionizing population monitoring efforts worldwide.',
+    category: 'Expedition',
+    title: 'October 5th Farallones Expedition Now Open for Registration',
+    excerpt: 'Join marine biologist David McGuire for a unique exploration into the Greater Farallones National Marine Sanctuary. Limited spots available for this special Sharktober expedition.',
     readTime: '4 min read'
   },
   {
@@ -46,41 +46,41 @@ const newsItems: NewsItem[] = [
   {
     id: '4',
     date: '2025-01-20',
-    category: 'Funding',
-    title: 'ResearchDAO Awards $2.3 Million to Amazon Biodiversity Study',
-    excerpt: 'Largest single research grant will fund comprehensive environmental DNA sampling across the Amazon basin to establish biodiversity baselines.',
+    category: 'Education',
+    title: 'Conservation Education Program Launches for Bay Area Schools',
+    excerpt: 'New educational initiative brings marine conservation awareness to local schools, featuring virtual tours of the Farallone Islands ecosystem.',
     readTime: '6 min read'
   },
   {
     id: '5',
     date: '2025-01-18',
-    category: 'Wildlife Rescue',
-    title: '1,000th Endangered Animal Successfully Rehabilitated and Released',
-    excerpt: 'Milestone achievement as our wildlife rescue centers celebrate the successful rehabilitation and release of a juvenile Sumatran tiger.',
+    category: 'Research',
+    title: 'Supporting Great White Shark Research in the Pacific',
+    excerpt: 'Zoo Foundation announces support for ongoing research tracking great white shark migration patterns in collaboration with marine scientists.',
     readTime: '4 min read'
   },
   {
     id: '6',
     date: '2025-01-15',
-    category: 'Technology',
-    title: 'Blockchain-Based Wildlife Tracking System Goes Live in Africa',
-    excerpt: 'Immutable tracking data for 234 endangered species now secured on-chain, preventing poaching through real-time alerts.',
+    category: 'Community',
+    title: 'Volunteer Opportunities Available for Conservation Programs',
+    excerpt: 'Zoo Foundation seeks passionate volunteers to support our conservation initiatives and educational outreach programs.',
     readTime: '5 min read'
   },
   {
     id: '7',
     date: '2025-01-12',
-    category: 'Climate Action',
-    title: 'Coral Restoration Project Shows 78% Survival Rate After One Year',
-    excerpt: 'Heat-resistant coral varieties developed by our research team demonstrate remarkable resilience in warming ocean conditions.',
+    category: 'Partnership',
+    title: 'Collaborating with Field Organizations for Greater Impact',
+    excerpt: 'Strategic partnerships with field conservation organizations amplify our ability to protect endangered species worldwide.',
     readTime: '7 min read'
   },
   {
     id: '8',
     date: '2025-01-10',
-    category: 'Community',
-    title: 'Indigenous-Led Conservation Program Expands to 30 Nations',
-    excerpt: 'Amazon Sacred Headwaters Initiative receives additional $3.2 million in direct support for traditional land management.',
+    category: 'Announcement',
+    title: 'Board Welcomes New Leadership for 2025',
+    excerpt: 'Zoo Foundation announces board composition with Zach Kelling, Kamron Pahlavi, and Executive Director Antje Worring leading conservation efforts.',
     readTime: '4 min read'
   }
 ];
@@ -88,17 +88,17 @@ const newsItems: NewsItem[] = [
 const pressReleases = [
   {
     date: '2025-01-26',
-    title: 'Zoo Foundation Announces $45 Million Conservation Fund',
-    pdf: '/press/2025-01-conservation-fund.pdf'
+    title: 'Zoo Foundation Announces Partnership with Shark Stewards',
+    pdf: '/press/2025-01-shark-stewards.pdf'
   },
   {
     date: '2025-01-20',
-    title: 'Annual Impact Report Shows 847 Species Protected',
+    title: 'Annual Report: Supporting Conservation Through Education',
     pdf: '/press/2025-impact-report.pdf'
   },
   {
     date: '2025-01-15',
-    title: 'New Board Members Bring Conservation Expertise',
+    title: 'Board of Directors Announcement',
     pdf: '/press/2025-board-announcement.pdf'
   }
 ];
