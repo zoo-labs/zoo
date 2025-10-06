@@ -1,0 +1,22 @@
+# Model files
+*.bin
+*.safetensors
+*.gguf
+*.pt
+*.pth
+models/
+checkpoints/
+zoo-*-checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Cache
+.cache/
+*.incomplete
+
+# OS
+.DS_Store
