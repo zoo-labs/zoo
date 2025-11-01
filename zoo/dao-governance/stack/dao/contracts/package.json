@@ -1,0 +1,67 @@
+{
+  "name": "@luxdao/contracts",
+  "version": "2.0.0",
+  "files": [
+    "publish",
+    "contracts",
+    "!contracts/mocks"
+  ],
+  "main": "publish/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luxdao/contracts.git"
+  },
+  "scripts": {
+    "lint": "eslint . --ext .ts --fix",
+    "lint:check": "eslint . --ext .ts",
+    "pretty": "prettier . --write",
+    "pretty:check": "prettier . --check",
+    "solhint": "solhint 'contracts/**/*.sol' --fix --noPrompt",
+    "solhint:check": "solhint 'contracts/**/*.sol'",
+    "clean": "hardhat clean",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "prepublishOnly": "./scripts/prepublish.sh"
+  },
+  "description": "A Safe Zodiac Module framework",
+  "homepage": "https://github.com/luxdao/contracts/blob/develop/README.md",
+  "author": "lux-contributors",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/luxdao/contracts/issues"
+  },
+  "dependencies": {
+    "@account-abstraction/contracts": "^0.7.0",
+    "@gnosis-guild/zodiac": "^4.0.3",
+    "@openzeppelin/contracts": "^5.3.0",
+    "@openzeppelin/contracts-upgradeable": "^5.3.0",
+    "@prb/math": "^4.0.3",
+    "ethers": "^5.8.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
+    "@nomicfoundation/hardhat-ethers": "4.0.0-next.26",
+    "@nomicfoundation/hardhat-ignition-ethers": "3.0.0-next.26",
+    "@nomicfoundation/hardhat-network-helpers": "3.0.0-next.26",
+    "@nomicfoundation/hardhat-verify": "3.0.0-next.26",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "chai": "^4.2.0",
+    "dotenv": "^17.2.1",
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "hardhat": "3.0.0-next.26",
+    "hardhat-gas-reporter": "^2.3.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-solidity": "^2.0.0",
+    "solhint": "^5.2.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "ethers": "^6.14.0"
+    }
+  },
+  "type": "module"
+}

@@ -1,0 +1,3 @@
+contracts/mocks/
+contracts/interfaces/*
+!contracts/interfaces/dao/

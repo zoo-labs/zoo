@@ -1,0 +1,525 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "@fontsource/dm-sans/index.css";
+@import "react-virtualized/styles.css";
+@import "rc-slider/assets/index.css";
+
+@import "./variables.css";
+
+@import "./react-morphing-modal.css";
+
+@layer components {
+  .player__button {
+    @apply absolute inset-x-[50%] top-[40%] z-999;
+  }
+}
+
+.font-made-outer-sans {
+  font-family: "Made Outer Sans";
+}
+
+.slick-dots li.slick-active button:before {
+  color: #14f195 !important;
+}
+
+.slick-dots li button:before {
+  color: white !important;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+  touch-action: manipulation;
+  font-feature-settings: "case" 1, "rlig" 1, "calt" 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #111;
+  color: var(--text-primary);
+}
+
+/* Remove arrow from number input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove arrow from number input mozilla */
+input[type="number"]::-moz-inner-spin-button,
+input[type="number"]::-moz-outer-spin-button {
+  -moz-appearance: none;
+  margin: 0;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+button:focus {
+  outline: none;
+}
+
+input:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.striped-background {
+  background: repeating-linear-gradient(
+    45deg,
+    #161522,
+    #161522 10px,
+    #0d0415 10px,
+    #0d0415 20px
+  );
+}
+
+/* model viewer */
+model-viewer {
+  width: inherit;
+  height: inherit;
+  background-color: transparent;
+  --poster-color: transparent;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+/* canvas highlight stop */
+
+canvas {
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  /* mobile webkit */
+}
+
+/* *::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track-piece:start {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAQAAAAD+Fb1AAAADklEQVR42mNkgAJG3AwAAH4ABWjFc8IAAAAASUVORK5CYII=) repeat-y !important;
+}
+
+::-webkit-scrollbar-track-piece:end {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAQAAAAD+Fb1AAAADklEQVR42mNkgAJG3AwAAH4ABWjFc8IAAAAASUVORK5CYII=) repeat-y !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 3px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: #BFBFBF;
+} */
+
+.logo,
+.lux-font {
+  font-family: "Inter", sans-serif, Arial, Helvetica;
+  font-weight: 900;
+  font-size: 1.75em;
+}
+
+video {
+  height: auto !important;
+  z-index: 1 !important;
+}
+.video-overlay {
+  z-index: 2 !important;
+}
+
+.Asset__token-id,
+.AssetModal__token-id {
+  position: relative;
+  bottom: 2px;
+  font-weight: bold;
+  font-family: "Inter", sans-serif, Arial, Helvetica;
+}
+
+.AssetList__heading {
+  position: relative;
+  bottom: 16px;
+  display: table;
+  margin: 0 auto;
+  background-color: black;
+  padding: 0 10px;
+}
+
+.z-10001 {
+  z-index: 10;
+}
+.from-btn1.to-btn2 {
+  --tw-gradient-from: #2517ff -61.88%;
+  --tw-gradient-stops: #2517ff -61.88%,
+    var(--tw-gradient-to, rgba(59, 130, 246, 0));
+}
+.from-btn1 {
+  --tw-gradient-to: #15f195 131.19%;
+}
+.bg-dark-900 {
+  background-color: #222;
+}
+.bg-dark-800 {
+  background-color: #333;
+}
+.bg-light-800 {
+  background-color: #a6a6a6;
+}
+.bg-light-100 {
+  background-color: #f6f6f6;
+}
+.bg-black100 {
+  background-color: #111;
+}
+
+.text-secondary {
+  color: #777;
+}
+.hover\:text-black:hover {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.text-4xl {
+  letter-spacing: -0.05em;
+}
+.text-2xl {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.text-3xl {
+  letter-spacing: -0.025em;
+}
+
+.from-blue {
+  --tw-gradient-from: #2517ff;
+  --tw-gradient-stops: #27b0e6;
+}
+
+.to-green {
+  --tw-gradient-to: #15f195;
+}
+.text-base {
+  letter-spacing: -0.03em;
+}
+
+.dao-bg {
+  background: url("/images/bg/dao.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  /* background-attachment: fixed; */
+  /* height: 100vh; */
+  /* overflow-y: auto; */
+}
+
+.bg-product-view {
+  background: url("/images/bg/product-view-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-zoo {
+  /* background: url("/images/bg/zoo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; */
+}
+
+.bg-giraffes {
+  background: url("/images/bg/giraffes.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.bg-drop {
+  background: url("/images/bg/drop-bg-1.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.bg-dropnft {
+  background: url("/images/bg/nft-bg.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.bg-drop-tree {
+  background: url("/images/bg/drop-grad.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.intials-backdrop {
+  filter: drop-shadow(1.94946px 1.94946px 19.4946px #ff592c);
+}
+
+.animals-backdrop{
+  filter: drop-shadow(0px 2px 20px rgba(255, 255, 255, 0.3));
+}
+
+.intials-backdrop-e {
+  filter: drop-shadow(1.86323px 1.86323px 18.6323px #979797);
+}
+
+.bg-drop-nft {
+  /* background-image: linear-gradient(
+      268.95deg,
+      #2517ff 0.43%,
+      #1d84ca 49.76%,
+      #1fdd8e 99.1%
+    ),
+    url("/images/nft.png"); */
+  background-image: url("/images/nft.png");
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.text-new-clip {
+  background: linear-gradient(
+    268.95deg,
+    #2517ff 0.43%,
+    #1d84ca 49.76%,
+    #1fdd8e 99.1%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.item-animate-up {
+  position: relative;
+  animation-name: itemAnimateUp;
+  animation-duration: 3s;
+  animation-fill-mode: both;
+}
+
+.item-animate-down {
+  position: relative;
+  animation-name: itemAnimateDown;
+  animation-duration: 3s;
+  animation-fill-mode: both;
+}
+
+.animate-rotate-y {
+  position: relative;
+  animation: itemAnimateRotateY 2s linear infinite;
+}
+
+@keyframes itemAnimateRotateY {
+  0% {
+    transform: rotate3d(0, 0, 0, 0);
+  }
+  50% {
+    transform: rotate3d(0, 1, 0, 180deg);
+  }
+  100% {
+    transform: rotate3d(0, 0, 0, 0);
+  }
+}
+
+@keyframes itemAnimateDown {
+  from {
+    top: -100px;
+  }
+  to {
+    top: 0px;
+  }
+}
+@keyframes itemAnimateUp {
+  from {
+    top: 100px;
+  }
+  to {
+    top: 0px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .bg-zoo {
+    background-position: 0 0;
+    background: url("/images/bg/zoo.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .MarketPlace {
+    background-position: center right;
+    background-size: 30%;
+  }
+}
+
+/* Animation */
+.bg-image {
+  background: url("https://res.cloudinary.com/diu8hjwwe/image/upload/v1644331347/zoo/images/bg-leaves_icwizm.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+.big-circle {
+  width: 200px;
+  max-width: 200px;
+  height: 200px;
+  border: 10px solid #2517ff;
+  border-radius: 50%;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.animal-content {
+  max-width: 130px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  position: absolute;
+  top: 60px;
+  left: 30px;
+  font-size: 12px;
+}
+
+.animate-animal {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+}
+
+.incubate {
+  position: absolute;
+  top: -50px;
+  left: 60px;
+}
+
+.feed {
+  position: absolute;
+  top: 30px;
+  left: 140px;
+}
+
+.breed {
+  position: absolute;
+  top: 140px;
+  left: 60px;
+}
+
+.grow {
+  position: absolute;
+  top: 30px;
+  left: -50px;
+}
+/*
+@media only screen and (min-width: 601px) {
+  .big-circle {
+    width: 400px;
+    max-width: 400px;
+    height: 400px;
+  }
+} */
+
+@media only screen and (min-width: 601px) {
+  .big-circle {
+    width: 300px;
+    max-width: 300px;
+    height: 300px;
+    margin-left: 30px;
+  }
+
+  .animal-content {
+    max-width: 150px;
+    top: 110px;
+    left: 70px;
+    font-size: 16px;
+  }
+
+  .animate-animal {
+    width: 150px;
+    height: 150px;
+  }
+
+  .incubate {
+    position: absolute;
+    top: -80px;
+    left: 70px;
+  }
+
+  .feed {
+    position: absolute;
+    top: 80px;
+    left: 200px;
+  }
+
+  .breed {
+    position: absolute;
+    top: 200px;
+    left: 80px;
+  }
+
+  .grow {
+    position: absolute;
+    top: 80px;
+    left: -80px;
+  }
+}
+
+.react-calendar {
+  background: #1f2030 !important;
+}
+
+.react-calendar--selectRange .react-calendar__tile--hover {
+  background-color: #15f195 !important;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #15f195 !important;
+  color: black;
+}
+
+.react-calendar__tile--now {
+  background: transparent;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #15f195;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #15f195 !important;
+  color: black;
+}

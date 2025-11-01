@@ -1,0 +1,22 @@
+
+> @zoolabs/foundation@0.1.0 dev /Users/z/work/zoo/zoo/foundation
+> next dev
+
+   ▲ Next.js 15.3.0
+   - Local:        http://localhost:3002
+   - Network:      http://192.168.68.79:3002
+
+ ✓ Starting...
+ ✓ Ready in 1684ms
+ ○ Compiling / ...
+ ✓ Compiled / in 953ms (566 modules)
+Invalid DOM property `fill-rule`. Did you mean `fillRule`?
+Invalid DOM property `clip-rule`. Did you mean `clipRule`?
+ GET / 200 in 1488ms
+ GET / 200 in 241ms
+ ○ Compiling /donation ...
+ ✓ Compiled /donation in 1607ms (585 modules)
+ GET /donation/ 200 in 387ms
+ ○ Compiling /animals/[animal] ...
+ ✓ Compiled /animals/[animal] in 1916ms (697 modules)
+ GET /animals/red_wolf/ 200 in 605ms

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <g fill="#FFFFFF">
+    <!-- techstars text -->
+    <text x="5" y="32" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5">techstars</text>
+    <!-- Correct underscore aligned with text -->
+    <rect x="5" y="38" width="185" height="3" fill="#00C9FF"/>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+
+> @zoolabs/app@2.0.0 dev /Users/z/work/zoo/zoo/app
+> next dev -p 3000
+
+   ▲ Next.js 14.1.0
+   - Local:        http://localhost:3000
+
+ ✓ Ready in 1791ms
+ ○ Compiling / ...
+ ✓ Compiled / in 917ms (560 modules)
+ ✓ Compiled in 113ms (560 modules)

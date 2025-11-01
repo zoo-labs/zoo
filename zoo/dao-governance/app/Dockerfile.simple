@@ -1,0 +1,16 @@
+# Simple Dockerfile for pre-built frontend
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install serve to run the built app
+RUN npm install -g serve
+
+# Copy pre-built dist folder
+COPY dist ./dist
+
+# Expose port
+EXPOSE 3000
+
+# Serve the built application
+CMD ["serve", "-s", "dist", "-l", "3000"]

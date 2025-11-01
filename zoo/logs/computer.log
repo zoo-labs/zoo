@@ -1,0 +1,10 @@
+
+> hanzo-computer@0.0.0 dev /Users/z/work/zoo/zoo/computer
+> vite
+
+5:21:30 PM [vite] (client) Re-optimizing dependencies because lockfile has changed
+
+  VITE v6.4.1  ready in 171 ms
+
+  ➜  Local:   http://localhost:3690/
+  ➜  Network: http://192.168.68.79:3690/

@@ -1,0 +1,4 @@
+Error HH801: Plugin hardhat-deploy requires the following dependencies to be installed: @ethersproject/hardware-wallets.
+Please run: npm install --save-dev "@ethersproject/hardware-wallets@^5.0.14"
+
+For more info go to https://hardhat.org/HH801 or run Hardhat with --show-stack-traces
