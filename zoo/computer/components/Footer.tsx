@@ -3,14 +3,40 @@ import React from 'react';
 
 const Logo: React.FC = () => (
     <div className="flex items-center gap-2">
-      <svg viewBox="0 0 67 67" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white">
-          <path d="M22.21 67V44.6369H0V67H22.21Z" fill="currentColor"></path>
-          <path d="M0 44.6369L22.21 46.8285V44.6369H0Z" fill="currentColor" opacity="0.7"></path>
-          <path d="M66.7038 22.3184H22.2534L0.0878906 44.6367H44.4634L66.7038 22.3184Z" fill="currentColor"></path>
-          <path d="M22.21 0H0V22.3184H22.21V0Z" fill="currentColor"></path>
-          <path d="M66.7198 0H44.5098V22.3184H66.7198V0Z" fill="currentColor"></path>
-          <path d="M66.6753 22.3185L44.5098 20.0822V22.3185H66.6753Z" fill="currentColor" opacity="0.7"></path>
-          <path d="M66.7198 67V44.6369H44.5098V67H66.7198Z" fill="currentColor"></path>
+      <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8">
+          <defs>
+              <clipPath id="outerCircleColorFooter">
+                  <circle cx="512" cy="511" r="270"/>
+              </clipPath>
+              <clipPath id="greenClipFooter">
+                  <circle cx="513" cy="369" r="234"/>
+              </clipPath>
+              <clipPath id="redClipFooter">
+                  <circle cx="365" cy="595" r="234"/>
+              </clipPath>
+              <clipPath id="blueClipFooter">
+                  <circle cx="643" cy="595" r="234"/>
+              </clipPath>
+          </defs>
+          <g clipPath="url(#outerCircleColorFooter)">
+              <circle cx="513" cy="369" r="234" fill="#00A652"/>
+              <circle cx="365" cy="595" r="234" fill="#ED1C24"/>
+              <circle cx="643" cy="595" r="234" fill="#2E3192"/>
+              <g clipPath="url(#greenClipFooter)">
+                  <circle cx="365" cy="595" r="234" fill="#FCF006"/>
+              </g>
+              <g clipPath="url(#greenClipFooter)">
+                  <circle cx="643" cy="595" r="234" fill="#01ACF1"/>
+              </g>
+              <g clipPath="url(#redClipFooter)">
+                  <circle cx="643" cy="595" r="234" fill="#EA018E"/>
+              </g>
+              <g clipPath="url(#greenClipFooter)">
+                  <g clipPath="url(#redClipFooter)">
+                      <circle cx="643" cy="595" r="234" fill="#FFFFFF"/>
+                  </g>
+              </g>
+          </g>
       </svg>
       <div className="text-xl font-bold tracking-wider">
           <span className="text-white">Zoo</span>
