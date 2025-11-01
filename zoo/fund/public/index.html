@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoo Fund - Conservation DAOs</title>
+    <link rel="icon" type="image/png" href="https://zoo.ngo/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://zoo.ngo/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="https://zoo.ngo/favicon/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            padding-top: 64px; /* Account for fixed header */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .wallet-btn {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .wallet-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Project Hero */
+        .project-hero {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 32px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .funding-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .funding-progress {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .progress-amount {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .progress-percentage {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            width: 65%;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 24px;
+        }
+
+        .fund-button {
+            width: 100%;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .share-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Tabs */
+        .tabs-section {
+            padding: 40px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab {
+            padding: 16px 0;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .section-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        /* Market Hypothesis */
+        .hypothesis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 24px;
+        }
+
+        .hypothesis-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .hypothesis-card h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .hypothesis-card p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .member-avatar {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .member-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .member-role {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Roadmap */
+        .roadmap-list {
+            position: relative;
+            padding-left: 32px;
+            margin-top: 24px;
+        }
+
+        .roadmap-list::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding-left: 24px;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .roadmap-item.completed::before {
+            background: #4ade80;
+        }
+
+        .roadmap-quarter {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .roadmap-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .roadmap-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* Value Model */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .value-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .value-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .value-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 48px 0;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 32px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #ffffff;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .form-submit:hover {
+            opacity: 0.9;
+        }
+
+        .form-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <!-- Projects Grid View -->
+    <div id="projects-grid">
+        <header>
+            <nav class="container">
+                <div style="display: flex; align-items: center; gap: 40px;">
+                    <a href="https://zoo.ngo" style="display: flex; align-items: center; text-decoration: none;">
+                        <img src="https://zoo.ngo/favicon/logo.png" alt="Zoo" style="height: 40px; width: auto;" />
+                    </a>
+                    <ul class="nav-links" style="display: flex; gap: 24px; list-style: none; margin: 0;">
+                        <li><a href="https://zoo.ngo/animals" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500;">Animals</a></li>
+                        <li><a href="https://zoo.ngo/experiences" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500;">Connect</a></li>
+                        <li><a href="https://zoo.ngo/getinvolved" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500;">Get Involved</a></li>
+                        <li><a href="https://zoo.ngo/about" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500;">Mission</a></li>
+                        <li><a href="/fund" style="color: #667eea; text-decoration: none; font-weight: 600;">Fund</a></li>
+                    </ul>
+                </div>
+                <button class="wallet-btn" onclick="connectWallet()">Connect Wallet</button>
+            </nav>
+        </header>
+
+        <main>
+            <section class="project-hero">
+                <div class="container">
+                    <h1 style="font-size: 48px; font-weight: 900; margin-bottom: 24px; text-align: center;">Zoo Fund</h1>
+                    <p style="font-size: 24px; color: rgba(255, 255, 255, 0.8); text-align: center; max-width: 800px; margin: 0 auto 48px;">
+                        Decentralized funding for wildlife conservation through specialized DAOs
+                    </p>
+                    
+                    <!-- DAO Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px;">
+                        <!-- OceanDAO -->
+                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('ocean')">
+                            <h4>🧬 OceanDAO</h4>
+                            <p>Ocean DNA sequencing and marine biodiversity research</p>
+                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$325,000 raised</p>
+                        </div>
+                        
+                        <!-- SharkDAO -->
+                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('shark')">
+                            <h4>🦈 SharkDAO</h4>
+                            <p>Partnership with Shark Stewards for shark conservation</p>
+                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$150,000 raised</p>
+                        </div>
+                        
+                        <!-- BelugaDAO -->
+                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('beluga')">
+                            <h4>🐋 BelugaDAO</h4>
+                            <p>Supporting beluga sanctuaries with Frontiers North</p>
+                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$75,000 raised</p>
+                        </div>
+                        
+                        <!-- KauaiDAO -->
+                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('kauai')">
+                            <h4>🏝️ KauaiDAO</h4>
+                            <p>Hawaii marine conservation led by Gregg Winston</p>
+                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$200,000 raised</p>
+                        </div>
+                        
+                        <!-- TigerDAO -->
+                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('tiger')">
+                            <h4>🐅 TigerDAO</h4>
+                            <p>Supporting tiger conservation and exotic cat sanctuaries</p>
+                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$200,000 raised</p>
+                        </div>
+                        
+                        <!-- ResearchDAO -->
+                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('research')">
+                            <h4>🔬 ResearchDAO</h4>
+                            <p>NSF grant research in AI and conservation</p>
+                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$500,000 raised</p>
+                        </div>
+                        
+                        <!-- ZooDAO -->
+                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('zoo')">
+                            <h4>🦁 ZooDAO</h4>
+                            <p>Main governance for Zoo Labs Foundation</p>
+                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$1,200,000 raised</p>
+                        </div>
+                        
+                        <!-- ZenDAO -->
+                        <div class="hypothesis-card" style="cursor: pointer;" onclick="showDAO('zen')">
+                            <h4>🧘 ZenDAO</h4>
+                            <p>ZenLM AI development for conservation</p>
+                            <p style="margin-top: 12px; font-size: 14px; color: #667eea;">$180,000 raised</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Single Project View -->
+    <div id="single-project" style="display: none;">
+    
+    <header>
+        <nav class="container">
+            <div style="display: flex; align-items: center; gap: 40px;">
+                <a href="https://zoo.ngo" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="https://zoo.ngo/favicon/logo.png" alt="Zoo" style="height: 40px; width: auto;" />
+                </a>
+                <ul class="nav-links" style="display: flex; gap: 24px; list-style: none; margin: 0;">
+                    <li><a href="https://zoo.ngo/animals" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500;">Animals</a></li>
+                    <li><a href="https://zoo.ngo/experiences" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500;">Connect</a></li>
+                    <li><a href="https://zoo.ngo/getinvolved" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500;">Get Involved</a></li>
+                    <li><a href="https://zoo.ngo/about" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; font-weight: 500;">Mission</a></li>
+                    <li><a href="/fund" style="color: #667eea; text-decoration: none; font-weight: 600;">Fund</a></li>
+                </ul>
+            </div>
+            <button class="wallet-btn">Connect Wallet</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Project Hero -->
+        <section class="project-hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <h1 id="dao-title">OceanDAO</h1>
+                        <p class="hero-subtitle" id="dao-subtitle">Ocean DNA sequencing and marine biodiversity research</p>
+                        <p class="hero-description" id="dao-description">
+                            OceanDAO pioneers ocean DNA sequencing to catalog and protect marine biodiversity. Through partnerships with marine research institutions, we're building comprehensive genetic databases of ocean life, enabling better conservation strategies and sustainable ocean management.
+                        </p>
+                        <p class="hero-description" id="dao-partners">
+                            <strong>Partner Organizations:</strong> Marine research labs, ocean conservation groups, and universities worldwide working on environmental DNA (eDNA) sampling and genomic analysis of marine species.
+                        </p>
+                    </div>
+                    <div class="funding-card">
+                        <div class="funding-progress">
+                            <div class="progress-header">
+                                <span class="progress-amount">$1,625,000</span>
+                                <span class="progress-percentage">65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="progress-stats">
+                                <span>Raised of $2,500,000</span>
+                                <span>23 days left</span>
+                            </div>
+                        </div>
+                        <button class="fund-button" onclick="fundProject('ocean-dao', prompt('Enter funding amount in USD:'))">Fund This Project</button>
+                        <div class="share-buttons">
+                            <button class="share-btn">Share on 𝕏</button>
+                            <button class="share-btn">Copy Link</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs Section -->
+        <section class="tabs-section">
+            <div class="container">
+                <div class="tabs" id="project-nav">
+                    <div class="tab active" data-tab="overview">Overview</div>
+                    <div class="tab" data-tab="hypothesis">Market Hypothesis</div>
+                    <div class="tab" data-tab="team">Team & Community</div>
+                    <div class="tab" data-tab="roadmap">Roadmap</div>
+                    <div class="tab" data-tab="value">Value Capture Model</div>
+                    <div class="tab" data-tab="recommended">Recommended Reads</div>
+                </div>
+
+                <!-- Overview Tab -->
+                <div class="tab-content active" id="overview" data-section="overview">
+                    <div class="content-section">
+                        <h3 class="section-title">About OceanDAO</h3>
+                        <div class="section-content">
+                            <p>Zoo Fund operates multiple specialized DAOs, each focused on specific conservation and research initiatives:</p>
+                            <p style="margin-top: 16px;"><strong>🧬 OceanDAO:</strong> Ocean DNA sequencing and marine biodiversity research, cataloging genetic data from marine species.</p>
+                            <p style="margin-top: 12px;"><strong>🦈 SharkDAO:</strong> Partnership with Shark Stewards for shark conservation, offering exclusive shark diving experiences and supporting shark protection initiatives.</p>
+                            <p style="margin-top: 12px;"><strong>🐋 BelugaDAO:</strong> Supporting beluga whale sanctuaries, partnering with <a href="https://frontiersnorth.com" style="color: #667eea;" target="_blank">Frontiers North</a> for Arctic wildlife experiences and beluga conservation.</p>
+                            <p style="margin-top: 12px;"><strong>🏝️ KauaiDAO:</strong> Led by Gregg Winston, focusing on Hawaii marine conservation and island ecosystem protection.</p>
+                            <p style="margin-top: 12px;"><strong>🐅 TigerDAO:</strong> Supporting tiger conservation efforts globally and exotic cat sanctuaries across North America.</p>
+                            <p style="margin-top: 12px;"><strong>🔬 ResearchDAO:</strong> Funding NSF grant research in AI and conservation technology, supporting Zoo's scientific initiatives.</p>
+                            <p style="margin-top: 12px;"><strong>🦁 ZooDAO:</strong> The main governance DAO for Zoo Labs Foundation conservation efforts.</p>
+                            <p style="margin-top: 12px;"><strong>🧘 ZenDAO:</strong> Supporting ZenLM AI development for conservation applications.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">DAO Treasury & Governance</h3>
+                        <div class="hypothesis-grid">
+                            <div class="hypothesis-card">
+                                <h4>💰 Treasury Balance</h4>
+                                <p class="treasury-balance">$325,000 USD</p>
+                                <p style="font-size: 12px; color: rgba(255,255,255,0.6);">Safe Multisig: <span style="font-family: monospace;">0x742d...8f3a</span></p>
+                                <a href="https://app.safe.global" target="_blank" style="color: #667eea; font-size: 13px;">View on Safe →</a>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>👥 DAO Members</h4>
+                                <p><strong>342</strong> Token Holders</p>
+                                <p><strong>7</strong> Multisig Signers</p>
+                                <p style="font-size: 12px; color: rgba(255,255,255,0.6);">3/7 threshold for execution</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>🗳️ Governance</h4>
+                                <p>DecentDAO + Zodiac</p>
+                                <p style="font-size: 12px;">Snapshot voting</p>
+                                <p style="font-size: 12px;">On-chain execution</p>
+                                <a href="https://snapshot.org/#/oceandao.eth" target="_blank" style="color: #667eea; font-size: 13px;">View Proposals →</a>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>📊 Active Proposals</h4>
+                                <p><strong>2</strong> Open for voting</p>
+                                <p><strong>18</strong> Passed proposals</p>
+                                <p><strong>$125K</strong> Distributed</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h3 class="section-title">Connected Members</h3>
+                        <div id="connected-members" style="display: none;">
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; margin-top: 16px;">
+                                <p style="font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 16px;">Connected Wallet: <span id="wallet-address" style="font-family: monospace;"></span></p>
+                                <div id="dao-memberships" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                                    <!-- DAO membership cards will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div id="connect-prompt" style="text-align: center; padding: 32px;">
+                            <p style="color: rgba(255,255,255,0.6); margin-bottom: 16px;">Connect your wallet to view your DAO memberships and voting power</p>
+                            <button onclick="connectWallet()" style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">Connect Wallet</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Hypothesis Tab -->
+                <div class="tab-content" id="hypothesis" data-section="hypothesis">
+                    <div class="content-section">
+                        <h3 class="section-title">Market Opportunity</h3>
+                        <div class="section-content">
+                            <p>The global ocean economy is projected to reach $3 trillion by 2030. Ocean genomics represents a $50B+ opportunity in marine biotechnology, conservation, and sustainable resource management. Yet current approaches are limited by:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>Centralized R&D controlled by a few large pharma companies</li>
+                                <li>Limited data sharing between research institutions</li>
+                                <li>High costs and long timelines for clinical trials</li>
+                                <li>Lack of patient involvement in research priorities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Our Thesis</h3>
+                        <div class="hypothesis-grid">
+                            <div class="hypothesis-card">
+                                <h4>Decentralized Discovery</h4>
+                                <p>Open collaboration accelerates discovery by 10x compared to siloed research. Our network enables any scientist to contribute and be rewarded.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>Patient-Driven Research</h4>
+                                <p>Patients know their conditions best. By giving them governance power, we ensure research focuses on real-world impact, not just publications.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>IP-NFT Monetization</h4>
+                                <p>Tokenizing research outputs creates liquid markets for scientific IP, enabling faster commercialization and fair value distribution.</p>
+                            </div>
+                            <div class="hypothesis-card">
+                                <h4>Network Effects</h4>
+                                <p>Each new researcher, patient, and dataset makes the network more valuable, creating a flywheel that attracts top talent and funding.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Tab -->
+                <div class="tab-content" id="team" data-section="team">
+                    <div class="content-section">
+                        <h3 class="section-title">Core Team</h3>
+                        <div class="team-grid">
+                            <div class="team-member">
+                                <div class="member-avatar">🌊</div>
+                                <div class="member-name">Dr. Marina Chen</div>
+                                <div class="member-role">Scientific Lead</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">💻</div>
+                                <div class="member-name">Alex Reef</div>
+                                <div class="member-role">Protocol Architect</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">🤿</div>
+                                <div class="member-name">Dr. James Deep</div>
+                                <div class="member-role">Oceanography Advisor</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">🧬</div>
+                                <div class="member-name">Sarah Coral</div>
+                                <div class="member-role">Data Science Lead</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">⚓</div>
+                                <div class="member-name">Captain Tom Waters</div>
+                                <div class="member-role">Operations</div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-avatar">🔬</div>
+                                <div class="member-name">Dr. Lisa Tide</div>
+                                <div class="member-role">Research Director</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Community</h3>
+                        <div class="section-content">
+                            <p>Our community includes over 2,000 members across:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>450+ researchers from 80+ institutions</li>
+                                <li>1,200+ patients and health advocates</li>
+                                <li>300+ developers and data scientists</li>
+                                <li>150+ healthcare practitioners</li>
+                            </ul>
+                            <p style="margin-top: 16px;">Join our Discord to connect with the community, participate in research discussions, and contribute to governance decisions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roadmap Tab -->
+                <div class="tab-content" id="roadmap" data-section="roadmap">
+                    <div class="content-section">
+                        <h3 class="section-title">Project Roadmap</h3>
+                        <div class="roadmap-list">
+                            <div class="roadmap-item completed">
+                                <div class="roadmap-quarter">Phase 1 - Foundation</div>
+                                <div class="roadmap-title">DAO Infrastructure & Community Building</div>
+                                <div class="roadmap-desc">Launch governance token, establish DAO structure, recruit initial research team, build community of 1000+ members</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 2 - Data Platform</div>
+                                <div class="roadmap-title">Ocean DNA Database Launch</div>
+                                <div class="roadmap-desc">Deploy data infrastructure, standardize analysis pipelines, onboard first 10,000 samples, launch researcher portal</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 3 - Research Network</div>
+                                <div class="roadmap-title">Decentralized Studies Begin</div>
+                                <div class="roadmap-desc">Fund first 5 research projects, establish community lab partnerships, launch patient registry with 5,000+ participants</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 4 - Therapeutic Development</div>
+                                <div class="roadmap-title">First Precision Probiotic Trials</div>
+                                <div class="roadmap-desc">Begin clinical trials for IBD treatment, launch personalized probiotic platform, establish manufacturing partnerships</div>
+                            </div>
+                            <div class="roadmap-item">
+                                <div class="roadmap-quarter">Phase 5 - Commercialization</div>
+                                <div class="roadmap-title">Market Launch & Revenue Generation</div>
+                                <div class="roadmap-desc">First therapeutic products to market, IP-NFT licensing deals, sustainable revenue flowing to DAO treasury</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Value Capture Tab -->
+                <div class="tab-content" id="value" data-section="value">
+                    <div class="content-section">
+                        <h3 class="section-title">Value Capture Model</h3>
+                        <div class="value-grid">
+                            <div class="value-card">
+                                <div class="value-icon">💊</div>
+                                <div class="value-title">Therapeutic Sales</div>
+                                <div class="value-desc">Revenue from sustainable marine biotechnology applications and biomaterials</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🔬</div>
+                                <div class="value-title">IP Licensing</div>
+                                <div class="value-desc">Patents and discoveries tokenized as IP-NFTs, with licensing fees distributed to contributors</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">📊</div>
+                                <div class="value-title">Data Monetization</div>
+                                <div class="value-desc">Anonymized ocean health data licensed to climate researchers and policy makers</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🏥</div>
+                                <div class="value-title">Clinical Services</div>
+                                <div class="value-desc">Environmental DNA analysis services for governments and conservation organizations</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🎓</div>
+                                <div class="value-title">Education Platform</div>
+                                <div class="value-desc">Ocean science courses and certification programs for marine conservationists</div>
+                            </div>
+                            <div class="value-card">
+                                <div class="value-icon">🌐</div>
+                                <div class="value-title">Network Fees</div>
+                                <div class="value-desc">Transaction fees from the decentralized research marketplace</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Token Economics</h3>
+                        <div class="section-content">
+                            <p>The MICROBE token serves as the governance and utility token for the ecosystem:</p>
+                            <ul style="margin: 16px 0; padding-left: 24px;">
+                                <li>Governance rights over research priorities and treasury allocation</li>
+                                <li>Staking for access to premium data and analysis tools</li>
+                                <li>Rewards for contributing data, research, or peer review</li>
+                                <li>Priority access to new therapeutics and clinical trials</li>
+                            </ul>
+                            <p style="margin-top: 16px;">Token distribution: 30% community treasury, 25% research grants, 20% team (4-year vesting), 15% investors, 10% ecosystem rewards</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommended Reads Tab -->
+                <div class="tab-content" id="recommended" data-section="recommended">
+                    <div class="content-section">
+                        <h3 class="section-title">Essential Reading</h3>
+                        <div class="section-content">
+                            <ul style="padding-left: 24px; line-height: 2;">
+                                <li><a href="#" style="color: #667eea;">The Ocean Genome: Unlocking Marine Biodiversity</a> - Understanding the ocean's genetic diversity</li>
+                                <li><a href="#" style="color: #667eea;">Decentralized Science: A New Research Paradigm</a> - Why DeSci is the future of research</li>
+                                <li><a href="#" style="color: #667eea;">IP-NFTs and Scientific Innovation</a> - Tokenizing intellectual property</li>
+                                <li><a href="#" style="color: #667eea;">Patient-Driven Drug Development</a> - The power of community in therapeutics</li>
+                                <li><a href="#" style="color: #667eea;">Ocean Genomics Market Analysis 2024</a> - Industry trends and opportunities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h3 class="section-title">Research Papers</h3>
+                        <div class="section-content">
+                            <ul style="padding-left: 24px; line-height: 2;">
+                                <li><a href="#" style="color: #667eea;">Gut-Brain Axis and Mental Health: Latest Findings</a> - Nature Reviews, 2024</li>
+                                <li><a href="#" style="color: #667eea;">Personalized Probiotics for IBD Treatment</a> - Cell, 2024</li>
+                                <li><a href="#" style="color: #667eea;">Environmental DNA Reveals Ocean Biodiversity Patterns</a> - Nature, 2024</li>
+                                <li><a href="#" style="color: #667eea;">Network Effects in Open Science Collaboration</a> - PNAS, 2023</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    </div> <!-- End of single-project -->
+
+    <footer>
+        <div class="container">
+            <div style="text-align: center; padding-bottom: 32px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 32px;">
+                <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Zoo Fund DAOs</h3>
+                <div style="display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; margin-bottom: 24px;">
+                    <a href="#ocean" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🧬 OceanDAO</a>
+                    <a href="#shark" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🦈 SharkDAO</a>
+                    <a href="#kauai" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🏝️ KauaiDAO</a>
+                    <a href="#tiger" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🐅 TigerDAO</a>
+                    <a href="#beluga" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🐋 BelugaDAO</a>
+                    <a href="#research" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🔬 ResearchDAO</a>
+                    <a href="#zoo" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🦁 ZooDAO</a>
+                    <a href="#zen" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; font-size: 16px;">🧘 ZenDAO</a>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 32px;">
+                <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">Zoo Labs Foundation Inc</h4>
+                <p style="color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-bottom: 8px;">
+                    A 501(c)(3) nonprofit organization dedicated to advancing scientific research through decentralized collaboration
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.6); font-size: 13px;">
+                    EIN: 88-3538992 | Status: Tax-exempt public charity
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.6); font-size: 13px; margin-top: 12px;">
+                    995 Market St<br>
+                    San Francisco, CA 94103<br>
+                    United States of America
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.5); font-size: 12px; margin-top: 16px;">
+                    Donations to Zoo Labs Foundation Inc are tax-deductible to the extent permitted by law.
+                </p>
+            </div>
+            
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="https://zoo.ngo">Foundation Home</a>
+                    <a href="https://zoo.ngo/about">About</a>
+                    <a href="https://zoo.ngo/animals">Animals</a>
+                    <a href="https://zoo.ngo/experiences">Wildlife Experiences</a>
+                    <a href="https://zoo.ngo/donation">Donate</a>
+                    <a href="/governance">DAO Governance</a>
+                    <a href="/treasury">Treasury</a>
+                    <a href="https://github.com/zoo-labs" target="_blank">GitHub</a>
+                    <a href="https://twitter.com/zoo_labs" target="_blank">Twitter</a>
+                    <a href="https://discord.gg/AqrYhChx5b" target="_blank">Discord</a>
+                </div>
+                <div class="copyright">© 2025 Zoo Labs Foundation Inc. EIN: 88-3538992 - Registered 501(c)(3) Charity | <a href="https://zoo.ngo/terms" style="color: rgba(255, 255, 255, 0.4);">Terms of Use</a> | <a href="https://zoo.ngo/terms-refund" style="color: rgba(255, 255, 255, 0.4);">Terms of Refund</a></div>
+            </div>
+        </div>
+    
+    </footer>
+
+    <!-- Create Project Modal -->
+    <div id="createProjectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create New Project</h2>
+                <button class="modal-close" onclick="closeModal('createProjectModal')">&times;</button>
+            </div>
+            <form onsubmit="handleCreateProject(event)">
+                <div class="form-group">
+                    <label class="form-label">Project Name</label>
+                    <input type="text" class="form-input" placeholder="e.g., Ocean Genome Initiative" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" required>
+                        <option value="">Select a category</option>
+                        <option value="ocean">Ocean Science</option>
+                        <option value="neuro">Neuroscience</option>
+                        <option value="longevity">Longevity</option>
+                        <option value="climate">Climate</option>
+                        <option value="quantum">Quantum Computing</option>
+                        <option value="fusion">Fusion Energy</option>
+                        <option value="space">Space</option>
+                        <option value="ai-safety">AI Safety</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tagline</label>
+                    <input type="text" class="form-input" placeholder="Brief description of your project" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Funding Goal (USD)</label>
+                    <input type="number" class="form-input" placeholder="e.g., 1000000" min="1000" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Detailed description of your project, goals, and impact" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Team Members</label>
+                    <input type="text" class="form-input" placeholder="Comma-separated list of team members">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Milestones</label>
+                    <textarea class="form-textarea" placeholder="Key milestones and timeline for your project" required></textarea>
+                </div>
+                <button type="submit" class="form-submit">Create Project</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Submit Proposal Modal -->
+    <div id="submitProposalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Submit Governance Proposal</h2>
+                <button class="modal-close" onclick="closeModal('submitProposalModal')">&times;</button>
+            </div>
+            <form onsubmit="handleSubmitProposal(event)">
+                <div class="form-group">
+                    <label class="form-label">Proposal Title</label>
+                    <input type="text" class="form-input" placeholder="e.g., Allocate 10% of treasury to Ocean Research" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Proposal Type</label>
+                    <select class="form-select" required>
+                        <option value="">Select proposal type</option>
+                        <option value="funding">Funding Allocation</option>
+                        <option value="governance">Governance Change</option>
+                        <option value="technical">Technical Upgrade</option>
+                        <option value="partnership">Partnership</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Detailed description of your proposal" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Requested Amount (if applicable)</label>
+                    <input type="number" class="form-input" placeholder="Amount in USD" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Implementation Timeline</label>
+                    <input type="text" class="form-input" placeholder="e.g., 3 months" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Success Metrics</label>
+                    <textarea class="form-textarea" placeholder="How will success be measured?" required></textarea>
+                </div>
+                <button type="submit" class="form-submit">Submit Proposal</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Wallet state
+        let walletConnected = false;
+        let userAddress = null;
+
+        // Modal functions
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function openModal(modalId) {
+            if (!walletConnected) {
+                alert('Please connect your wallet first');
+                return;
+            }
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        // Create project function
+        window.createProject = function() {
+            openModal('createProjectModal');
+        }
+
+        // Submit proposal function
+        window.submitProposal = function() {
+            openModal('submitProposalModal');
+        }
+
+        // Handle create project form
+        function handleCreateProject(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            // In production, this would interact with smart contracts
+            console.log('Creating project:', Object.fromEntries(formData));
+            alert('Project creation request submitted! It will be reviewed by the DAO.');
+            closeModal('createProjectModal');
+            event.target.reset();
+        }
+
+        // Handle submit proposal form
+        function handleSubmitProposal(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            // In production, this would create an on-chain proposal
+            console.log('Submitting proposal:', Object.fromEntries(formData));
+            alert('Proposal submitted! DAO members can now vote on it.');
+            closeModal('submitProposalModal');
+            event.target.reset();
+        }
+
+        // Close modals on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+
+        // Tab switching with smooth scroll
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                // Update active tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                const targetSection = document.getElementById(tabName);
+                targetSection.classList.add('active');
+                
+                // Smooth scroll to section
+                const navHeight = document.querySelector('header').offsetHeight;
+                const tabsHeight = document.querySelector('.tabs').offsetHeight;
+                const targetPosition = document.querySelector('.tabs-section').offsetTop - navHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Highlight active section on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.tab-content');
+            const tabs = document.querySelectorAll('.tab');
+            const navHeight = document.querySelector('header').offsetHeight;
+            const scrollPosition = window.scrollY + navHeight + 100;
+            
+            sections.forEach((section, index) => {
+                if (section.classList.contains('active')) {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tabs[index].classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Connect wallet
+        document.querySelector('.wallet-btn').addEventListener('click', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        walletConnected = true;
+                        userAddress = accounts[0];
+                        document.querySelector('.wallet-btn').textContent = 
+                            accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
+                        
+                        // Enable wallet-connected features
+                        enableWalletFeatures();
+                    }
+                } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                }
+            } else {
+                alert('Please install MetaMask or another Web3 wallet');
+            }
+        });
+
+        // Enable features when wallet is connected
+        function enableWalletFeatures() {
+            // Show user dashboard elements
+            console.log('Wallet connected:', userAddress);
+            
+            // In production, this would:
+            // 1. Check user's KEEPER token balance
+            // 2. Load user's projects
+            // 3. Load user's proposals
+            // 4. Enable voting on active proposals
+        }
+
+        // Simulate funding a project
+        window.fundProject = async function(projectId, amount) {
+            if (!walletConnected) {
+                alert('Please connect your wallet first');
+                return;
+            }
+            
+            if (!amount || amount <= 0) {
+                return;
+            }
+            
+            // In production, this would interact with the smart contract
+            console.log(`Funding project ${projectId} with ${amount} USD`);
+            alert(`Transaction initiated to fund project with ${amount} USD`);
+        }
+
+        // Simulate voting on a proposal
+        window.voteOnProposal = async function(proposalId, support) {
+            if (!walletConnected) {
+                alert('Please connect your wallet first');
+                return;
+            }
+            
+            // In production, this would call the governance contract
+            console.log(`Voting ${support ? 'for' : 'against'} proposal ${proposalId}`);
+            alert(`Vote cast ${support ? 'for' : 'against'} the proposal`);
+        }
+        // Show DAO details
+        window.showDAO = function(daoName) {
+            // Map DAO names to their pages
+            const daoPages = {
+                'ocean': 'ocean.html',
+                'shark': 'shark.html',
+                'beluga': 'beluga.html',
+                'kauai': 'kauai.html',
+                'tiger': 'tiger.html',
+                'research': 'research.html',
+                'zoo': 'zoo.html',
+                'zen': 'zen.html'
+            };
+            
+            // Check if page exists (ocean.html is our template)
+            if (daoName === 'ocean') {
+                window.location.href = '/fund/ocean.html';
+            } else if (daoPages[daoName]) {
+                // For now, copy ocean.html structure for other DAOs
+                // In production, each would have unique content
+                createDAOPage(daoName);
+            } else {
+                alert(`${daoName.toUpperCase()} page coming soon!`);
+            }
+        }
+        
+        // Create DAO page dynamically
+        function createDAOPage(daoName) {
+            const daoInfo = getDAOInfo(daoName);
+            if (daoInfo) {
+                // For now, show detailed alert
+                // In production, would generate full page
+                window.location.href = `/fund/ocean.html`; // Use ocean as template for now
+            }
+        }
+        
+        // Get DAO information
+        function getDAOInfo(daoName) {
+            const daos = {
+                'shark': {
+                    name: 'SharkDAO',
+                    symbol: 'SHARK',
+                    emoji: '🦈',
+                    description: 'Partnership with Shark Stewards for shark conservation',
+                    mission: 'Protect sharks worldwide through research, education, and policy advocacy',
+                    treasury: '$150,000',
+                    proposals: 5,
+                    members: 234
+                },
+                'beluga': {
+                    name: 'BelugaDAO',
+                    symbol: 'BELUGA',
+                    emoji: '🐋',
+                    description: 'Supporting beluga whale sanctuaries with Frontiers North',
+                    mission: 'Protect Arctic beluga whales through sanctuary development and research',
+                    treasury: '$75,000',
+                    proposals: 3,
+                    members: 156
+                },
+                'kauai': {
+                    name: 'KauaiDAO',
+                    symbol: 'KAUAI',
+                    emoji: '🏝️',
+                    description: 'Hawaii marine conservation led by Gregg Winston',
+                    mission: 'Preserve Hawaii\'s unique marine ecosystems and coral reefs',
+                    treasury: '$125,000',
+                    proposals: 7,
+                    members: 412
+                },
+                'tiger': {
+                    name: 'TigerDAO',
+                    symbol: 'TIGER',
+                    emoji: '🐅',
+                    description: 'Supporting tiger conservation and exotic cat sanctuaries',
+                    mission: 'Protect tigers and big cats from extinction through habitat preservation',
+                    treasury: '$200,000',
+                    proposals: 8,
+                    members: 567
+                },
+                'research': {
+                    name: 'ResearchDAO',
+                    symbol: 'RESEARCH',
+                    emoji: '🔬',
+                    description: 'NSF grant research in AI and conservation',
+                    mission: 'Develop cutting-edge AI solutions for conservation challenges',
+                    treasury: '$500,000',
+                    proposals: 12,
+                    members: 789
+                },
+                'zoo': {
+                    name: 'ZooDAO',
+                    symbol: 'ZOO',
+                    emoji: '🦁',
+                    description: 'Main governance DAO for Zoo Labs Foundation',
+                    mission: 'Coordinate global conservation efforts through decentralized governance',
+                    treasury: '$1,000,000',
+                    proposals: 24,
+                    members: 2345
+                },
+                'zen': {
+                    name: 'ZenDAO',
+                    symbol: 'ZEN',
+                    emoji: '🧘',
+                    description: 'ZenLM AI development for conservation',
+                    mission: 'Build AI tools for species identification and ecosystem monitoring',
+                    treasury: '$300,000',
+                    proposals: 9,
+                    members: 456
+                }
+            };
+            return daos[daoName];
+        }
+
+        // Show projects grid
+        window.showProjects = function() {
+            document.getElementById('projects-grid').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize page - ensure projects grid is visible
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make sure projects grid is visible on load
+            const gridElement = document.getElementById('projects-grid');
+            if (gridElement) {
+                gridElement.style.display = 'block';
+                console.log('DAO grid initialized and visible');
+            } else {
+                console.error('projects-grid element not found!');
+            }
+        });
+
+        // Connect wallet with luxdefi.eth multisig
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        walletConnected = true;
+                        userAddress = accounts[0];
+                        document.querySelectorAll('.wallet-btn').forEach(btn => {
+                            btn.textContent = accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
+                        });
+                        
+                        // Enable wallet-connected features
+                        enableWalletFeatures();
+                    }
+                } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                }
+            } else {
+                alert('Please install MetaMask or another Web3 wallet');
+            }
+        }
+
+        // Fund DAO with luxdefi.eth multisig
+        window.fundDAO = async function(daoName, amount) {
+            if (!walletConnected && !userEmail) {
+                alert('Please connect your wallet or sign in with email first');
+                return;
+            }
+            
+            if (!amount || amount <= 0) {
+                return;
+            }
+            
+            // All DAOs use luxdefi.eth multisig for now
+            const multisigAddress = 'luxdefi.eth';
+            
+            try {
+                let txHash = null;
+                let donorIdentifier = userEmail || userAddress;
+                
+                // If wallet connected, send transaction
+                if (walletConnected) {
+                    const transactionParams = {
+                        to: multisigAddress,
+                        from: userAddress,
+                        value: '0x' + (amount * 1e18).toString(16), // Convert to wei
+                        data: '0x' // Could encode DAO identifier here
+                    };
+                    
+                    txHash = await window.ethereum.request({
+                        method: 'eth_sendTransaction',
+                        params: [transactionParams],
+                    });
+                }
+                
+                // Save donation record for NGO compliance (501(c)(3) requirements)
+                const donationRecord = {
+                    donor: donorIdentifier,
+                    donorType: userEmail ? 'email' : 'wallet',
+                    walletAddress: userAddress || null,
+                    email: userEmail || null,
+                    daoName: daoName,
+                    amount: amount,
+                    currency: 'ETH',
+                    multisigAddress: multisigAddress,
+                    transactionHash: txHash,
+                    timestamp: new Date().toISOString(),
+                    taxDeductible: true,
+                    ein: '88-3538992', // Zoo Foundation EIN
+                    designation: `${daoName} - Wildlife Conservation`,
+                    receiptSent: false
+                };
+                
+                // Store donation record (in production, this would save to Supabase)
+                console.log('Donation Record for NGO:', donationRecord);
+                localStorage.setItem(`donation_${Date.now()}`, JSON.stringify(donationRecord));
+                
+                // Save to Supabase if authenticated
+                if (window.zooAuth && window.zooAuth.isAuthenticated()) {
+                    await saveDonationToSupabase(donationRecord);
+                }
+                
+                // Show confirmation with tax receipt info
+                alert(`Thank you for your tax-deductible donation to ${daoName}!\n\nAmount: ${amount} ETH\nEIN: 88-3538992\n\nA receipt will be sent to: ${donorIdentifier}\n\nYour donation supports wildlife conservation efforts.`);
+                
+                console.log(`Funding ${daoName} via ${multisigAddress} with ${amount} ETH from ${donorIdentifier}`);
+            } catch (error) {
+                console.error('Transaction failed:', error);
+                alert('Transaction failed. Please try again.');
+            }
+        }
+        
+        // Save donation to Supabase for NGO records
+        async function saveDonationToSupabase(record) {
+            if (typeof supabase === 'undefined') return;
+            
+            try {
+                const { data, error } = await supabase
+                    .from('donations')
+                    .insert({
+                        donor_id: window.zooAuth.getAuthState().user?.id,
+                        donor_email: record.email,
+                        donor_wallet: record.walletAddress,
+                        dao_name: record.daoName,
+                        amount: record.amount,
+                        currency: record.currency,
+                        transaction_hash: record.transactionHash,
+                        designation: record.designation,
+                        tax_deductible: record.taxDeductible,
+                        receipt_sent: record.receiptSent,
+                        metadata: {
+                            multisig: record.multisigAddress,
+                            ein: record.ein,
+                            timestamp: record.timestamp
+                        }
+                    });
+                    
+                if (error) throw error;
+                console.log('Donation saved to database:', data);
+            } catch (error) {
+                console.error('Failed to save donation record:', error);
+                // Still continue - donation went through even if record didn't save
+            }
+        }
+        
+        // Track user email for non-wallet donations
+        let userEmail = null;
+        
+        // Sign in with email for donations
+        window.signInWithEmail = async function() {
+            const email = prompt('Enter your email for donation receipt:');
+            if (email && email.includes('@')) {
+                userEmail = email;
+                localStorage.setItem('donorEmail', email);
+                
+                // Update UI to show email
+                document.querySelectorAll('.wallet-btn').forEach(btn => {
+                    btn.textContent = email;
+                });
+                
+                console.log('Donor email set:', email);
+                alert(`Email set for tax receipt: ${email}`);
+            }
+        }
+    </script>
+</body>
+</html>

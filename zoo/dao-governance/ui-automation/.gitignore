@@ -1,0 +1,7 @@
+# Ignore compiled JS and test-results
+*.js
+*.js.map
+test-results/
+node_modules/
+.DS_Store
+Thumbs.db

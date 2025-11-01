@@ -1,0 +1,38 @@
+{
+  "name": "@luxdao/stack",
+  "version": "1.0.0",
+  "description": "Complete DAO infrastructure for the Lux Protocol ecosystem",
+  "private": true,
+  "scripts": {
+    "postinstall": "echo 'Dependencies installed. Run make install-dao to install DAO dependencies'",
+    "start": "make up",
+    "dev": "make dev",
+    "test": "make test",
+    "test:e2e": "playwright test",
+    "test:unit": "make test-unit",
+    "build": "make build",
+    "deploy": "make deploy-local",
+    "clean": "make clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luxdao/stack.git"
+  },
+  "keywords": [
+    "dao",
+    "governance",
+    "blockchain",
+    "lux",
+    "ethereum",
+    "web3"
+  ],
+  "author": "Lux Protocol",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luxdao/stack/issues"
+  },
+  "homepage": "https://github.com/luxdao/stack#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "home": "Inicio",
+  "proposals": "Propuestas",
+  "nodes": "Organización",
+  "roles": "Funciones",
+  "treasury": "Tesoro",
+  "staking": "Estacas",
+  "proposalTemplates": "Plantillas",
+  "faq": "PREGUNTAS FRECUENTES",
+  "chat": "Warpcast",
+  "documentation": "Documentación",
+  "ariaLabelFractalBrand": "Navegar por DAO Home",
+  "navigationExternalTelegram": "Ir a telegrama",
+  "navigationExternalX": "Ir a X",
+  "navigationExternalWarpcast": "Ir a Warpcast",
+  "navigationExternalDiscordmade": "Ir a Discordia"
+}

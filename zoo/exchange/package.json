@@ -1,0 +1,12 @@
+{
+  "name": "@zoo/exchange",
+  "version": "1.0.0",
+  "description": "Zoo Exchange - Decentralized trading platform for Zoo ecosystem tokens",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node server.js"
+  },
+  "keywords": ["zoo", "dex", "exchange", "uniswap"],
+  "author": "Zoo Network",
+  "license": "MIT"
+}

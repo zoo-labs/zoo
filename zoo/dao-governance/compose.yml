@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  hardhat-node:
+    build:
+      context: ./contracts
+      dockerfile: Dockerfile
+    ports:
+      - "8545:8545"
+    volumes:
+      - ./contracts:/usr/src/app
+
+  api:
+    build:
+      context: ./api/packages/offchain
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - hardhat-node
+    volumes:
+      - ./api:/usr/src/app
+
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    volumes:
+      - ./app:/usr/src/app
+
+  ipfs:
+    image: ipfs/go-ipfs:latest
+    ports:
+      - "5001:5001"
+      - "8080:8080"
+
+  postgres:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: graph-node
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: graph-node
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  graph-node:
+    image: graphprotocol/graph-node:latest
+    ports:
+      - "8000:8000" # GraphQL HTTP
+      - "8020:8020" # Admin RPC
+      - "8030:8030" # Indexer service
+      - "8040:8040" # JSON-RPC
+    depends_on:
+      - postgres
+      - hardhat-node
+      - ipfs
+    environment:
+      postgres_host: postgres
+      postgres_user: graph-node
+      postgres_pass: password
+      postgres_db: graph-node
+      ipfs: "http://ipfs:5001"
+      ethereum: "mainnet:http://hardhat-node:8545"
+
+volumes:
+  postgres-data:

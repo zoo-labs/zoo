@@ -1,0 +1,23 @@
+{
+  "name": "ponder",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "ponder dev --schema=onchain-dev",
+    "start": "ponder start --schema=${RAILWAY_DEPLOYMENT_ID%%-*} --views-schema=onchain",
+    "ponder:list": "ponder db list",
+    "lint": "eslint ./**/*.ts ./**/*.*.ts"
+  },
+  "dependencies": {
+    "@fractal-framework/fractal-contracts": "^1.4.2",
+    "hono": "^4.8.5",
+    "ponder": "^0.11.27",
+    "viem": "^2.32.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.5",
+    "eslint": "^8.53.0",
+    "eslint-config-ponder": "^0.11.27"
+  }
+}

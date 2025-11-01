@@ -1,0 +1,35 @@
+ WARN  Unsupported engine: wanted: {"node":">=24.0.0"} (current: {"node":"v20.14.0","pnpm":"10.12.4"})
+
+> zoo-vote@1.0.0 dev /Users/z/work/zoo/zoo/dao-governance/app
+> VITE_APP_GIT_HASH=$(git rev-parse --short HEAD) vite --port 3004
+
+Using vars defined in .env
+Using vars defined in .env.local
+Your Worker has access to the following bindings:
+Binding                                                                        Resource                  Mode
+env.balances (680ec75643924ba4b5d0692aa999c3a1)                                KV Namespace              local
+env.VITE_APP_NAME ("(hidden)")                                                 Environment Variable      local
+env.VITE_APP_ALCHEMY_API_KEY ("(hidden)")                                      Environment Variable      local
+env.VITE_APP_INFURA_IPFS_API_KEY ("(hidden)")                                  Environment Variable      local
+env.VITE_APP_INFURA_IPFS_API_SECRET ("(hidden)")                               Environment Variable      local
+env.VITE_APP_SITE_URL ("(hidden)")                                             Environment Variable      local
+env.VITE_APP_THEGRAPH_API_KEY ("(hidden)")                                     Environment Variable      local
+env.VITE_APP_WALLET_CONNECT_PROJECT_ID ("(hidden)")                            Environment Variable      local
+env.VITE_APP_FLAG_DEV ("(hidden)")                                             Environment Variable      local
+env.VITE_APP_ETHERSCAN_MAINNET_API_KEY ("(hidden)")                            Environment Variable      local
+env.VITE_APP_AMPLITUDE_API_KEY ("(hidden)")                                    Environment Variable      local
+env.VITE_APP_SENTRY_DSN_URL ("(hidden)")                                       Environment Variable      local
+
+
+  VITE v5.4.19  ready in 893 ms
+
+  ➜  Local:   http://localhost:3004/
+  ➜  Network: use --host to expose
+⎔ Starting local server...
+[wrangler:info] Ready on http://127.0.0.1:55554
+Assets in public directory cannot be imported from JavaScript.
+If you intend to import that asset, put the file in the src directory, and use /src/images/warning-yellow.svg instead of /public/images/warning-yellow.svg.
+If you intend to use the URL of that asset, use /images/warning-yellow.svg?url.
+Assets in public directory cannot be imported from JavaScript.
+If you intend to import that asset, put the file in the src directory, and use /src/images/warning-yellow.svg instead of /public/images/warning-yellow.svg.
+If you intend to use the URL of that asset, use /images/warning-yellow.svg?url.

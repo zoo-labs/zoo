@@ -1,0 +1,19 @@
+{
+  "createNewDAO": "Neue DAO erstellen",
+  "createSubDAO": "SubDAO erstellen",
+  "headerTitle": "{{daoName}} {{subject}}",
+  "proposals": "Alle Vorschläge",
+  "proposalNew": "Vorschlag erstellen",
+  "nodes": "Organisation",
+  "staking": "Abstecken",
+  "roles": "Rollen",
+  "treasury": "Schatzamt",
+  "proposal": "#{{proposalId}} {{proposalTitle}}",
+  "proposalTemplates": "Vorlagen für Vorschläge",
+  "proposalTemplate": "{{proposalTemplateTitle}}",
+  "proposalTemplateNew": "Vorschlagsvorlage erstellen",
+  "deployToken": "Token bereitstellen",
+  "editDAO": "DAO bearbeiten",
+  "parentLink": "Übergeordnete DAO",
+  "settings": "Einstellungen"
+}

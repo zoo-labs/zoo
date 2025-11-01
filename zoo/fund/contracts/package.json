@@ -1,0 +1,18 @@
+{
+  "name": "zoo-fund-governance-contracts",
+  "version": "1.0.0",
+  "description": "Zoo Fund DAO Governance Smart Contracts",
+  "scripts": {
+    "compile": "hardhat compile",
+    "chain": "hardhat node",
+    "deploy": "hardhat run scripts/deploy-governance.ts --network localhost",
+    "test": "hardhat test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.4"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.5"
+  }
+}

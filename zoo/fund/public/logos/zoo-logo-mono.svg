@@ -1,0 +1,13 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <clipPath id="outerCircleMono">
+                <circle cx="508" cy="511" r="270"/>
+            </clipPath>
+        </defs>
+        <g clip-path="url(#outerCircleMono)">
+            <circle cx="513" cy="369" r="234" fill="none" stroke="black" stroke-width="33"/>
+            <circle cx="365" cy="595" r="234" fill="none" stroke="black" stroke-width="33"/>
+            <circle cx="643" cy="595" r="234" fill="none" stroke="black" stroke-width="33"/>
+            <circle cx="508" cy="511" r="252" fill="none" stroke="black" stroke-width="36"/>
+        </g>
+    </svg>

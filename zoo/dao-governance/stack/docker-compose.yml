@@ -1,0 +1,192 @@
+version: '3.8'
+
+services:
+  # Anvil - Local Ethereum blockchain
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:latest
+    container_name: luxdao-anvil
+    command: ["anvil", "--host", "0.0.0.0", "--chain-id", "1337", "--accounts", "10", "--block-time", "3"]
+    ports:
+      - "8545:8545"
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD", "cast", "block-number", "--rpc-url", "http://localhost:8545"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: luxdao-postgres
+    environment:
+      POSTGRES_USER: luxdao
+      POSTGRES_PASSWORD: luxdao123
+      POSTGRES_DB: luxdao
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U luxdao"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: luxdao-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # IPFS Node
+  ipfs:
+    image: ipfs/kubo:latest
+    container_name: luxdao-ipfs
+    environment:
+      IPFS_PROFILE: server
+    ports:
+      - "5001:5001" # API
+      - "8080:8080" # Gateway
+      - "4001:4001" # P2P
+    volumes:
+      - ipfs_data:/data/ipfs
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD-SHELL", "ipfs id"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Contract Deployment
+  contracts:
+    build:
+      context: ./dao/contracts
+      dockerfile: Dockerfile
+    container_name: luxdao-contracts
+    depends_on:
+      anvil:
+        condition: service_healthy
+    environment:
+      RPC_URL: http://anvil:8545
+      PRIVATE_KEY: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+    volumes:
+      - ./dao/contracts:/app
+    networks:
+      - luxdao
+    command: ["npm", "run", "deploy:docker"]
+
+  # API Backend
+  api:
+    build:
+      context: ./dao/api
+      dockerfile: Dockerfile
+    container_name: luxdao-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      contracts:
+        condition: service_completed_successfully
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://luxdao:luxdao123@postgres:5432/luxdao
+      REDIS_URL: redis://redis:6379
+      RPC_URL: http://anvil:8545
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./dao/api:/app
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ./dao/app
+      dockerfile: Dockerfile
+    container_name: luxdao-frontend
+    depends_on:
+      api:
+        condition: service_healthy
+      contracts:
+        condition: service_completed_successfully
+    environment:
+      VITE_APP_CHAIN_ID: 1337
+      VITE_APP_RPC_URL: http://localhost:8545
+      VITE_APP_API_URL: http://localhost:4000
+      VITE_APP_IPFS_GATEWAY: http://localhost:8080
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./dao/app:/app
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Grafana Monitoring (Optional)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: luxdao-grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_INSTALL_PLUGINS: redis-datasource
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - luxdao
+    profiles:
+      - monitoring
+
+  # Prometheus (Optional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: luxdao-prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - luxdao
+    profiles:
+      - monitoring
+
+networks:
+  luxdao:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  ipfs_data:
+  grafana_data:
+  prometheus_data:

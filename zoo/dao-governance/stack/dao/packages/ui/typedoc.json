@@ -1,0 +1,20 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "out": "docs/api",
+  "tsconfig": "./tsconfig.json",
+  "plugin": ["typedoc-plugin-markdown"],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "readme": "README.md",
+  "name": "@luxdao/ui",
+  "includeVersion": true,
+  "categorizeByGroup": true,
+  "gitRevision": "main",
+  "hideGenerator": true,
+  "theme": "default",
+  "navigationLinks": {
+    "GitHub": "https://github.com/luxdao/dao",
+    "Storybook": "/storybook"
+  }
+}
