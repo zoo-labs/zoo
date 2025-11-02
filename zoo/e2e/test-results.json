@@ -1,0 +1,630 @@
+{
+  "config": {
+    "configFile": "/Users/z/work/zoo/zoo/e2e/playwright.config.ts",
+    "rootDir": "/Users/z/work/zoo/zoo/e2e/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/z/work/zoo/zoo/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup",
+        "name": "setup",
+        "testDir": "/Users/z/work/zoo/zoo/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/00-setup\\/.*.spec.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/z/work/zoo/zoo/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "infrastructure",
+        "name": "infrastructure",
+        "testDir": "/Users/z/work/zoo/zoo/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/01-infrastructure\\/.*.spec.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/z/work/zoo/zoo/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "contracts",
+        "name": "contracts",
+        "testDir": "/Users/z/work/zoo/zoo/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/02-contracts\\/.*.spec.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/z/work/zoo/zoo/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dapps-chromium",
+        "name": "dapps-chromium",
+        "testDir": "/Users/z/work/zoo/zoo/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/03-dapps\\/.*.spec.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/z/work/zoo/zoo/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dapps-firefox",
+        "name": "dapps-firefox",
+        "testDir": "/Users/z/work/zoo/zoo/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/03-dapps\\/.*.spec.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/z/work/zoo/zoo/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dapps-webkit",
+        "name": "dapps-webkit",
+        "testDir": "/Users/z/work/zoo/zoo/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/03-dapps\\/.*.spec.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/z/work/zoo/zoo/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dapps-mobile-chrome",
+        "name": "dapps-mobile-chrome",
+        "testDir": "/Users/z/work/zoo/zoo/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/03-dapps\\/.*.spec.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/z/work/zoo/zoo/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dapps-mobile-safari",
+        "name": "dapps-mobile-safari",
+        "testDir": "/Users/z/work/zoo/zoo/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/03-dapps\\/.*.spec.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/z/work/zoo/zoo/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "integration",
+        "name": "integration",
+        "testDir": "/Users/z/work/zoo/zoo/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/04-integration\\/.*.spec.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "00-setup/verify.spec.ts",
+      "file": "00-setup/verify.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "E2E Setup Verification",
+          "file": "00-setup/verify.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should have Node.js >= 20.x",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.094Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-0b7e02160524a1ecd164",
+              "file": "00-setup/verify.spec.ts",
+              "line": 15,
+              "column": 3
+            },
+            {
+              "title": "should have npm installed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 116,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.110Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-5638fb8cf29a6494d195",
+              "file": "00-setup/verify.spec.ts",
+              "line": 21,
+              "column": 3
+            },
+            {
+              "title": "should have Playwright installed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.233Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-c40604e68511d19ed3ea",
+              "file": "00-setup/verify.spec.ts",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "should have ethers.js installed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.242Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-96ab0f952eb184a2da9e",
+              "file": "00-setup/verify.spec.ts",
+              "line": 50,
+              "column": 3
+            },
+            {
+              "title": "should have all test directories",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.248Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-c05516b5e6d274482669",
+              "file": "00-setup/verify.spec.ts",
+              "line": 55,
+              "column": 3
+            },
+            {
+              "title": "should have all fixtures",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.256Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-4839d353607b4b6b9c4e",
+              "file": "00-setup/verify.spec.ts",
+              "line": 69,
+              "column": 3
+            },
+            {
+              "title": "should have helper utilities",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.264Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-7ea9d1218511afc080d9",
+              "file": "00-setup/verify.spec.ts",
+              "line": 78,
+              "column": 3
+            },
+            {
+              "title": "should have Hardhat contracts directory",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.269Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-fa07c1ce8bc2e40c4530",
+              "file": "00-setup/verify.spec.ts",
+              "line": 87,
+              "column": 3
+            },
+            {
+              "title": "should have Zoo dApp directories",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.275Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-e8d24854c6e386886289",
+              "file": "00-setup/verify.spec.ts",
+              "line": 92,
+              "column": 3
+            },
+            {
+              "title": "should be able to import test fixtures",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 81,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.281Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-f61c4473dbed69519db4",
+              "file": "00-setup/verify.spec.ts",
+              "line": 108,
+              "column": 3
+            },
+            {
+              "title": "should be able to import helper utilities",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.367Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-37fae52cb6a5cf15b6ff",
+              "file": "00-setup/verify.spec.ts",
+              "line": 125,
+              "column": 3
+            },
+            {
+              "title": "should be able to import ethers.js",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "setup",
+                  "projectName": "setup",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-11-02T17:36:46.379Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2c949b26e2f5c3d34bc5-f98f6aee3ae23eac688b",
+              "file": "00-setup/verify.spec.ts",
+              "line": 136,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-11-02T17:36:45.758Z",
+    "duration": 635.592,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
