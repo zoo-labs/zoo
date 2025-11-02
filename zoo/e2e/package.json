@@ -1,0 +1,42 @@
+{
+  "name": "@zoo/e2e-tests",
+  "version": "1.0.0",
+  "description": "End-to-end tests for Zoo ecosystem (blockchain, contracts, dApps)",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:infrastructure": "playwright test --project=infrastructure",
+    "test:contracts": "playwright test --project=contracts",
+    "test:dapps": "playwright test --project=dapps-chromium",
+    "test:integration": "playwright test --project=integration",
+    "test:all": "playwright test --project=infrastructure --project=contracts --project=dapps-chromium --project=integration",
+    "report": "playwright show-report",
+    "clean": "rm -rf test-results playwright-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^20.0.0",
+    "@types/node-fetch": "^2.6.13",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "node-fetch": "^2.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "zoo",
+    "blockchain",
+    "e2e",
+    "playwright",
+    "ethereum",
+    "hardhat"
+  ],
+  "author": "Zoo Labs",
+  "license": "Apache-2.0"
+}
