@@ -53,11 +53,15 @@ jobs:
           # Copy foundation site (zoo.ngo) to root - THIS IS THE MAIN SITE
           cp -r foundation/out/* _site/
 
-          # Copy fund site to /fund subdirectory (accessible at zoo.ngo/fund)
-          mkdir -p _site/fund
-          cp -r fund/public/* _site/fund/
-          if [ -d "fund/data" ]; then
-            cp -r fund/data _site/fund/data
+          # Copy fund site to /fund subdirectory if it exists (accessible at zoo.ngo/fund)
+          if [ -d "fund" ]; then
+            mkdir -p _site/fund
+            if [ -d "fund/public" ]; then
+              cp -r fund/public/* _site/fund/
+            fi
+            if [ -d "fund/data" ]; then
+              cp -r fund/data _site/fund/data
+            fi
           fi
 
           # Create CNAME file for primary domain zoo.ngo
@@ -65,10 +69,14 @@ jobs:
           
           # Create .nojekyll file to ensure all files are served
           touch _site/.nojekyll
-          
-          # List fund directory contents for debugging
-          echo "Fund directory contents:"
-          ls -la _site/fund/ | head -20
+
+          # List fund directory contents for debugging (if exists)
+          if [ -d "_site/fund" ]; then
+            echo "Fund directory contents:"
+            ls -la _site/fund/ | head -20
+          else
+            echo "Fund directory not included in this deployment"
+          fi
 
           # Create redirect page for potential zoo.fund visitors
           # Note: zoo.fund should be configured at DNS level to redirect to zoo.ngo/fund
