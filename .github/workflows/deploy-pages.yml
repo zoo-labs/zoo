@@ -1,0 +1,99 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies for foundation
+        run: pnpm install --frozen-lockfile
+        working-directory: ./foundation
+
+      - name: Build foundation site (zoo.ngo)
+        run: pnpm run build
+        working-directory: ./foundation
+        env:
+          NODE_ENV: production
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir -p _site
+
+          # Copy foundation site (zoo.ngo) to root - THIS IS THE MAIN SITE
+          cp -r foundation/out/* _site/
+
+          # Copy fund site to /fund subdirectory (accessible at zoo.ngo/fund)
+          mkdir -p _site/fund
+          cp -r fund/public/* _site/fund/
+          if [ -d "fund/data" ]; then
+            cp -r fund/data _site/fund/data
+          fi
+
+          # Create CNAME file for primary domain zoo.ngo
+          echo "zoo.ngo" > _site/CNAME
+          
+          # Create .nojekyll file to ensure all files are served
+          touch _site/.nojekyll
+          
+          # List fund directory contents for debugging
+          echo "Fund directory contents:"
+          ls -la _site/fund/ | head -20
+
+          # Create redirect page for potential zoo.fund visitors
+          # Note: zoo.fund should be configured at DNS level to redirect to zoo.ngo/fund
+          cat > _site/zoo-fund-redirect.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <meta http-equiv="refresh" content="0; url=/fund/">
+              <title>Zoo Fund - Redirecting</title>
+              <style>
+                  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; text-align: center; padding: 50px; }
+              </style>
+          </head>
+          <body>
+              <h2>Redirecting to Zoo Fund...</h2>
+              <p>If you are not redirected, <a href="/fund/">click here</a>.</p>
+          </body>
+          </html>
+          EOF
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
