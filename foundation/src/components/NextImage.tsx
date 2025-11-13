@@ -9,8 +9,8 @@ type CustomImageProps = {
   blurClassName?: string;
   alt: string;
   src: string | any;
-  width?: string | number;
-  height?: string | number;
+  width?: number | `${number}`;
+  height?: number | `${number}`;
   className?: string;
   layout?: string;
   onLoadingComplete?: () => void;
