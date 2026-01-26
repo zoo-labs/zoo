@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --zoo-primary: #10B981;
+  --zoo-secondary: #059669;
+  --zoo-dark: #064E3B;
+}
+
+body {
+  background: #0a0a0f;
+  color: white;
+}
+
+.text-gradient-zoo {
+  background: linear-gradient(135deg, #10B981 0%, #34D399 50%, #6EE7B7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-zoo {
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
+}
