@@ -5,6 +5,7 @@ import { useState } from 'react'
 const DID_NETWORKS = [
   { method: 'zoo', name: 'Zoo Network', chainId: 200200, color: '#10B981', site: 'zoo.id' },
   { method: 'pars', name: 'Pars Network', chainId: 494949, color: '#E6B800', site: 'pars.network/id' },
+  { method: 'sparkle', name: 'Sparkle Pony', chainId: 36911, color: '#FF69B4', site: 'sparklepony.xyz/id' },
   { method: 'ai', name: 'Hanzo Network', chainId: 36963, color: '#8B5CF6', site: 'hanzo.id' },
   { method: 'lux', name: 'Lux Network', chainId: 96369, color: '#3B82F6', site: 'lux.id' },
 ]
