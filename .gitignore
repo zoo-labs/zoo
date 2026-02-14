@@ -92,3 +92,11 @@ lokalise.yaml
 
 *.sedbak
 .parcel-cache/
+
+
+
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+GROK.md
+QWEN.md

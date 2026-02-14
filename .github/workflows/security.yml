@@ -1,0 +1,400 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'contracts/src/**'
+      - '.github/workflows/security.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'contracts/src/**'
+  workflow_dispatch:
+  schedule:
+    # Run weekly on Sunday at midnight
+    - cron: '0 0 * * 0'
+
+env:
+  FOUNDRY_PROFILE: ci
+
+defaults:
+  run:
+    working-directory: contracts
+
+jobs:
+  # ═══════════════════════════════════════════════════════════════════════════
+  # SLITHER - Static Analysis
+  # ═══════════════════════════════════════════════════════════════════════════
+  slither:
+    name: Slither Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: contracts
+
+      - name: Run Slither
+        uses: crytic/slither-action@v0.4.0
+        id: slither
+        with:
+          target: 'contracts/'
+          slither-args: '--exclude-dependencies --exclude-informational --sarif results.sarif'
+          fail-on: none
+          sarif: results.sarif
+        continue-on-error: true
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
+        if: always()
+
+      - name: Create Slither Report
+        if: always()
+        run: |
+          pip install slither-analyzer
+          slither . --exclude-dependencies --json slither-report.json || true
+          echo "## Slither Analysis Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f slither-report.json ]; then
+            echo "See artifacts for detailed report" >> $GITHUB_STEP_SUMMARY
+          fi
+        continue-on-error: true
+
+      - name: Upload Slither Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: slither-report
+          path: |
+            contracts/slither-report.json
+            results.sarif
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ECHIDNA - Fuzzing
+  # ═══════════════════════════════════════════════════════════════════════════
+  echidna:
+    name: Echidna Fuzzing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: contracts
+
+      - name: Compile contracts
+        run: npx hardhat compile
+        working-directory: contracts
+
+      - name: Install Echidna
+        run: |
+          wget https://github.com/crytic/echidna/releases/download/v2.2.5/echidna-2.2.5-x86_64-linux.tar.gz
+          tar -xzf echidna-2.2.5-x86_64-linux.tar.gz
+          sudo mv echidna /usr/local/bin/
+        working-directory: .
+
+      - name: Run Echidna on critical contracts
+        run: |
+          echo "## Echidna Fuzzing Results" >> $GITHUB_STEP_SUMMARY
+
+          # Run Echidna on contracts with invariant tests
+          for contract in test/fuzz/*.sol; do
+            if [ -f "$contract" ]; then
+              name=$(basename "$contract" .sol)
+              echo "Running Echidna on $name..." >> $GITHUB_STEP_SUMMARY
+              echidna . --contract "$name" --config echidna.yaml --test-mode assertion || true
+            fi
+          done
+        continue-on-error: true
+
+      - name: Upload Echidna corpus
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: echidna-corpus
+          path: contracts/crytic-export/
+          if-no-files-found: ignore
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # MEDUSA - Fast Parallel Fuzzing (Trail of Bits)
+  # ═══════════════════════════════════════════════════════════════════════════
+  medusa:
+    name: Medusa Fuzzing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: contracts
+
+      - name: Compile contracts
+        run: npx hardhat compile
+        working-directory: contracts
+
+      - name: Install Medusa
+        run: |
+          # Install Go
+          wget https://go.dev/dl/go1.22.0.linux-amd64.tar.gz
+          sudo tar -C /usr/local -xzf go1.22.0.linux-amd64.tar.gz
+          export PATH=$PATH:/usr/local/go/bin
+
+          # Install Medusa
+          go install github.com/crytic/medusa@latest
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+        working-directory: .
+
+      - name: Run Medusa fuzzing
+        run: |
+          export PATH=$PATH:$HOME/go/bin
+          echo "## Medusa Fuzzing Results" >> $GITHUB_STEP_SUMMARY
+
+          # Initialize medusa config if not exists
+          if [ ! -f medusa.json ]; then
+            medusa init || true
+          fi
+
+          # Run Medusa with timeout
+          timeout 600 medusa fuzz --config medusa.json || true
+
+          echo "Medusa fuzzing completed" >> $GITHUB_STEP_SUMMARY
+        continue-on-error: true
+
+      - name: Upload Medusa corpus
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: medusa-corpus
+          path: |
+            contracts/medusa-corpus/
+            contracts/crytic-export/
+          if-no-files-found: ignore
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # SEMGREP - SAST
+  # ═══════════════════════════════════════════════════════════════════════════
+  semgrep:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Run Semgrep
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: >-
+            p/solidity
+            p/smart-contracts
+            p/security-audit
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+        continue-on-error: true
+
+      - name: Run Semgrep (local rules)
+        run: |
+          pip install semgrep
+          echo "## Semgrep Analysis Results" >> $GITHUB_STEP_SUMMARY
+
+          # Run with Solidity-specific rules
+          semgrep scan --config p/solidity --config p/smart-contracts \
+            --sarif --output semgrep-results.sarif \
+            src/ || true
+
+          echo "Semgrep scan completed" >> $GITHUB_STEP_SUMMARY
+        continue-on-error: true
+
+      - name: Upload Semgrep SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: contracts/semgrep-results.sarif
+        if: always()
+        continue-on-error: true
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # CODEQL - Deep Analysis
+  # ═══════════════════════════════════════════════════════════════════════════
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript, typescript
+          queries: +security-extended
+
+      - name: Build for CodeQL
+        run: |
+          # CodeQL doesn't directly support Solidity, but we can analyze JS/TS
+          # deployment scripts and any hardhat config files
+          echo "Building for CodeQL analysis..."
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ADERYN - Rust-based Solidity Analyzer
+  # ═══════════════════════════════════════════════════════════════════════════
+  aderyn:
+    name: Aderyn Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: contracts
+
+      - name: Compile contracts
+        run: npx hardhat compile
+        working-directory: contracts
+
+      - name: Install Aderyn
+        run: |
+          curl -L https://raw.githubusercontent.com/Cyfrin/aderyn/main/cyfrinup/install | bash
+          source ~/.bashrc
+          ~/.cyfrin/bin/cyfrinup || true
+          echo "$HOME/.cyfrin/bin" >> $GITHUB_PATH
+        continue-on-error: true
+        working-directory: .
+
+      - name: Run Aderyn
+        run: |
+          export PATH=$PATH:$HOME/.cyfrin/bin
+          echo "## Aderyn Analysis Results" >> $GITHUB_STEP_SUMMARY
+
+          aderyn . --output aderyn-report.md || true
+
+          if [ -f aderyn-report.md ]; then
+            cat aderyn-report.md >> $GITHUB_STEP_SUMMARY
+          fi
+        continue-on-error: true
+
+      - name: Upload Aderyn Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: aderyn-report
+          path: contracts/aderyn-report.md
+          if-no-files-found: ignore
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # HARDHAT TESTS - Native Testing
+  # ═══════════════════════════════════════════════════════════════════════════
+  hardhat-tests:
+    name: Hardhat Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: contracts
+
+      - name: Run Hardhat tests
+        run: |
+          echo "## Hardhat Test Results" >> $GITHUB_STEP_SUMMARY
+          npx hardhat test 2>&1 | tee test-results.txt || true
+
+          # Extract summary
+          tail -30 test-results.txt >> $GITHUB_STEP_SUMMARY
+        working-directory: contracts
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hardhat-test-results
+          path: contracts/test-results.txt
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # SECURITY SUMMARY
+  # ═══════════════════════════════════════════════════════════════════════════
+  security-summary:
+    name: Security Summary
+    needs: [slither, echidna, medusa, semgrep, codeql, aderyn, hardhat-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: security-reports/
+
+      - name: Generate Summary
+        run: |
+          echo "# Security Analysis Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Tool | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Slither | ${{ needs.slither.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Echidna | ${{ needs.echidna.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Medusa | ${{ needs.medusa.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Semgrep | ${{ needs.semgrep.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| CodeQL | ${{ needs.codeql.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Aderyn | ${{ needs.aderyn.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Hardhat Tests | ${{ needs.hardhat-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "See individual job logs and artifacts for detailed results." >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Combined Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports-combined
+          path: security-reports/

@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>t</title>
-    <g id="t" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="Inter" font-size="12" font-weight="bold">
-        <text id="ZOO" fill="#FFFFFF">
-            <tspan x="1.24" y="15">ZOO</tspan>
-        </text>
-    </g>
-</svg>
+<svg height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg"><text fill="#fff" fill-rule="evenodd" font-family="Inter" font-size="12" font-weight="bold"><tspan x="1.24" y="15">ZOO</tspan></text></svg>
