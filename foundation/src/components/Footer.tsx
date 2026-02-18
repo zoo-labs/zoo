@@ -30,6 +30,7 @@ function Footer() {
             <Link href="/getinvolved" className='text-sm lg:text-lg text-white'>Get Involved</Link>
             <Link href="/donation" className='text-sm lg:text-lg text-white'>Donate</Link>
             <Link href="/getinvolved#volunteer" className='text-sm lg:text-lg text-white'>Volunteer</Link>
+            <Link href="/healing-farm" className='text-sm lg:text-lg text-white'>Healing Farm</Link>
             <Link href="/getinvolved#volunteer" className='text-sm lg:text-lg text-white'>Initiatives</Link>
         </div>
         <div className='flex flex-col space-y-8'>
@@ -50,6 +51,7 @@ function Footer() {
             <Link href="/terms" className='text-sm lg:text-lg text-white'>Terms of Use</Link>
             <Link href="/terms-refund" className='text-sm lg:text-lg text-white'>Terms of Refund</Link>
             <Link href="https://zoolabs.io" className='text-lg lg:text-md text-white'>Zoo Labs</Link>
+            <Link href="https://zoo.fund" className='text-sm lg:text-lg text-white'>Zoo Fund</Link>
             <p className='text-sm lg:text-lg text-white'>hello@zoo.ngo</p>
         </div>
       </div>
@@ -67,6 +69,10 @@ function Footer() {
             <Link href="/getinvolved" className='text-lg text-white'>Get Involved</Link>
             <Link href="/animals" className='text-lg text-white'>Animals</Link>
             <Link href="/donation" className='text-lg text-white'>Donate</Link>
+        </div>
+        <div className='flex items-center pt-6 space-x-8'>
+            <Link href="/healing-farm" className='text-lg text-white'>Healing Farm</Link>
+            <Link href="https://zoo.fund" className='text-lg text-white'>Zoo Fund</Link>
         </div>
         <div className='flex items-center space-x-2 text-white pt-10'>
           <Link href="https://twitter.com/zoo_labs" className="cursor-pointer hover:text-gray-300 transition-colors"><FaTwitter /></Link>
