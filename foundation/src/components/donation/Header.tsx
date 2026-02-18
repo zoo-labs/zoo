@@ -26,16 +26,32 @@ function Header() {
             <p className='lg:text-lg md:text-md text-white pb-8 leading-relaxed'>&quot;It is our driving purpose to deepen the connection humans have with animals by creating sustainable animal sanctuaries for endangered species. Share the Zoo Sanctuary with local visitors, educators, host fundraisers/events, and get the Zoo Community as involved as possible to saving endangered animals all over the world. You could save a life today w/ a monthly donation or a one-time contribution.&quot;</p>
             <div className='lg:flex hidden items-center justify-start xl:space-x-8 space-x-6'>
                 <div className='flex space-x-4'>
-                  <a 
-                    href="https://www.paypal.biz/zoongo" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <a
+                    href="https://www.paypal.biz/zoongo"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className='min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wider flex items-center justify-center whitespace-nowrap'
                   >
                     💵 Donate Cash
                   </a>
                   <CryptoSection />
+                  <a
+                    href="/donation/farm"
+                    className='min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wider flex items-center justify-center whitespace-nowrap'
+                  >
+                    🌿 Healing Farm
+                  </a>
                 </div>
+            </div>
+            <div className='lg:flex hidden items-center justify-start pt-4'>
+                <a
+                  href="https://zoo.fund"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className='text-gray-400 hover:text-white md:text-sm lg:text-base transition-colors duration-300 underline underline-offset-4'
+                >
+                  Crowdfund via DAO →
+                </a>
             </div>
         </div>
         <div className='md:w-1/2 xl:pr-32 pr-4 max-md:w-full'>
@@ -55,16 +71,30 @@ function Header() {
       <div className='md:flex max-md:flex max-md:px-4 lg:hidden w-full items-center justify-start md:pl-16 md:pb-32'>
           <div className='flex flex-col space-y-3 w-full max-w-md'>
             <div className='flex space-x-3'>
-              <a 
-                href="https://www.paypal.biz/zoongo" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="https://www.paypal.biz/zoongo"
+                target="_blank"
+                rel="noopener noreferrer"
                 className='flex-1 h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold uppercase tracking-wide flex items-center justify-center whitespace-nowrap'
               >
                 💵 Donate Cash
               </a>
               <CryptoSection isMobile={true} />
             </div>
+            <a
+              href="/donation/farm"
+              className='h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold uppercase tracking-wide flex items-center justify-center whitespace-nowrap'
+            >
+              🌿 Healing Farm
+            </a>
+            <a
+              href="https://zoo.fund"
+              target="_blank"
+              rel="noopener noreferrer"
+              className='text-gray-400 hover:text-white text-sm transition-colors duration-300 underline underline-offset-4 text-center pt-1'
+            >
+              Crowdfund via DAO →
+            </a>
           </div>
       </div>
     </div>
