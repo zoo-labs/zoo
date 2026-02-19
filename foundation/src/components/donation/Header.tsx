@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 
 function CryptoSection({ isMobile = false }: { isMobile?: boolean }) {
@@ -7,12 +8,12 @@ function CryptoSection({ isMobile = false }: { isMobile?: boolean }) {
     : 'min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wider whitespace-nowrap';
   
   return (
-    <a 
-      href="/donation/crypto" 
+    <Link
+      href="/donation/crypto"
       className={buttonClasses}
     >
       ₿ Donate Crypto
-    </a>
+    </Link>
   );
 }
 
@@ -35,12 +36,12 @@ function Header() {
                     💵 Donate Cash
                   </a>
                   <CryptoSection />
-                  <a
+                  <Link
                     href="/donation/farm"
                     className='min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wider flex items-center justify-center whitespace-nowrap'
                   >
                     🌿 Healing Farm
-                  </a>
+                  </Link>
                 </div>
             </div>
             <div className='lg:flex hidden items-center justify-start pt-4'>
@@ -81,12 +82,12 @@ function Header() {
               </a>
               <CryptoSection isMobile={true} />
             </div>
-            <a
+            <Link
               href="/donation/farm"
               className='h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold uppercase tracking-wide flex items-center justify-center whitespace-nowrap'
             >
               🌿 Healing Farm
-            </a>
+            </Link>
             <a
               href="https://zoo.fund"
               target="_blank"
