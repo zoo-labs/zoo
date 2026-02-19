@@ -30,6 +30,7 @@ export default function DonateFarm() {
       toast.warning('Donation cancelled. No charge was made. You can try again anytime.');
       router.replace('/donation/farm', undefined, { shallow: true });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.isReady]);
 
   const handlePresetClick = (value: number) => {
