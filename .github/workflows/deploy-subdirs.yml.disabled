@@ -1,0 +1,63 @@
+name: Deploy Zoo Fund with Subdirectories
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Prepare deployment with subdirectories
+        run: |
+          mkdir -p _site
+          
+          # Copy main fund site to root
+          cp -r fund/public/* _site/
+          cp -r fund/data _site/data
+          
+          # Create subdirectories for each project
+          for project in ocean neuro longevity climate quantum fusion space aisafety; do
+            mkdir -p _site/${project}
+            cp fund/public/index.html _site/${project}/index.html
+            # Each subdirectory will use the same assets from root
+          done
+          
+          # Copy network site to /network
+          mkdir -p _site/network
+          cp -r network/public/* _site/network/
+          
+          # Create CNAME for main domains
+          cat > _site/CNAME << 'EOF'
+          zoo.fund
+          zoo.network
+          EOF
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
