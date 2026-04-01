@@ -1,0 +1,81 @@
+{
+  "name": "sdk",
+  "version": "0.1.9",
+  "description": "SDK for the DAO API",
+  "main": "./dist/cjs/core/index.js",
+  "module": "./dist/esm/core/index.js",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
+    "build": "rm -rf dist && bun build.ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "DAODAO",
+  "devDependencies": {
+    "@eslint/js": "^9.24.0",
+    "@stylistic/eslint-plugin": "^4.2.0",
+    "@tanstack/react-query": "^5.74.4",
+    "@types/bun": "^1.2.10",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.24.0",
+    "globals": "^16.0.0",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.29.1"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": ">=5.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/esm/core/index.d.ts",
+      "import": "./dist/esm/core/index.js",
+      "require": "./dist/cjs/core/index.js",
+      "default": "./dist/esm/core/index.js"
+    },
+    "./react": {
+      "types": "./dist/esm/react/index.d.ts",
+      "import": "./dist/esm/react/index.js",
+      "require": "./dist/cjs/react/index.js",
+      "default": "./dist/esm/react/index.js"
+    }
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "@tanstack/react-query": {
+      "optional": true
+    }
+  },
+  "sideEffects": false,
+  "types": "./dist/esm/core/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "react": [
+        "./dist/esm/react/index.d.ts"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luxdao/sdk.git"
+  },
+  "homepage": "https://luxdao.org",
+  "license": "MIT",
+  "keywords": [
+    "dao",
+    "luxdao"
+  ]
+}

@@ -1,0 +1,57 @@
+name: UI Automation
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  e2e-automation:
+    name: E2E Selenium Automation
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Kill any leftover Chrome processes
+        run: pkill chrome || true
+
+      - name: Run Selenium tests
+        run: |
+          npm test
+        continue-on-error: true
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-test-results
+          path: test-results/
+
+      - name: Install node-fetch for PR lookup
+        run: npm install node-fetch@2
+
+      - name: Find Pull Request by commit SHA
+        id: find_pr
+        run: |
+          npx ts-node .github/scripts/find-pr-by-sha.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+
+      - name: Prepend artifact link to summary
+        run: |
+          echo "[⬇️ Download Selenium Test Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" | cat - test-results/test-results-summary.md > test-results/test-results-summary.with-link.md
+
+      - name: Comment results on PR
+        if: steps.find_pr.outputs.number != ''
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          number: ${{ steps.find_pr.outputs.number }}
+          path: test-results/test-results-summary.with-link.md

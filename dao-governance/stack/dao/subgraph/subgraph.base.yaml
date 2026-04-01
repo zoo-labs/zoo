@@ -1,0 +1,86 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: FractalRegistry
+    network: base
+    source:
+      abi: FractalRegistry
+      address: '0x023bdaefeddddd5b43af125caa8007a99a886fd3'
+      startBlock: 12996617
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DAO
+      abis:
+        - name: FractalRegistry
+          file: ./abis/FractalRegistry.json
+      eventHandlers:
+        - event: FractalNameUpdated(indexed address,string)
+          handler: handleFractalNameUpdated
+        - event: FractalSubDAODeclared(indexed address,indexed address)
+          handler: handleFractalSubDAODeclared
+      file: ./src/fractal-registry.ts
+  - kind: ethereum
+    name: KeyValuePairs
+    network: base
+    source:
+      abi: KeyValuePairs
+      address: '0x535b64f9ef529ac8b34ac7273033bbe67b34f131'
+      startBlock: 12996645
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DAO
+      abis:
+        - name: KeyValuePairs
+          file: ./abis/KeyValuePairs.json
+      eventHandlers:
+        - event: ValueUpdated(indexed address,string,string)
+          handler: handleValueUpdated
+      file: ./src/key-value-pairs.ts
+  - kind: ethereum
+    name: GnosisSafeProxyFactory130Canonical
+    network: base
+    source:
+      abi: GnosisSafeProxyFactory130
+      address: '0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2'
+      startBlock: 2156359
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Safe
+      abis:
+        - name: GnosisSafeProxyFactory130
+          file: ./abis/GnosisSafeProxyFactory130.json
+      eventHandlers:
+        - event: ProxyCreation(address,address)
+          handler: handleSafeProxy130Created
+      file: ./src/safe-proxy-factory.ts
+  - kind: ethereum
+    name: GnosisSafeProxyFactory130EIP155
+    network: base
+    source:
+      abi: GnosisSafeProxyFactory130
+      address: '0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC'
+      startBlock: 595181
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Safe
+      abis:
+        - name: GnosisSafeProxyFactory130
+          file: ./abis/GnosisSafeProxyFactory130.json
+      eventHandlers:
+        - event: ProxyCreation(address,address)
+          handler: handleSafeProxy130Created
+      file: ./src/safe-proxy-factory.ts

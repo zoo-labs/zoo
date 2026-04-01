@@ -1,0 +1,103 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Documentation/Introduction" />
+
+# Lux DAO UI Library
+
+Welcome to the Lux DAO UI component library - a collection of reusable React components built with Chakra UI for the Lux DAO ecosystem.
+
+## 🎯 Purpose
+
+This library provides:
+- Consistent UI components across Lux DAO applications
+- Accessibility-first component design
+- Dark theme optimized for DAO interfaces
+- TypeScript support with full type safety
+- Comprehensive documentation and examples
+
+## 🚀 Getting Started
+
+### Installation
+
+```bash
+npm install @luxdao/ui
+# or
+pnpm add @luxdao/ui
+# or
+yarn add @luxdao/ui
+```
+
+### Basic Setup
+
+```tsx
+import { ChakraProvider } from '@chakra-ui/react';
+import { luxTheme } from '@luxdao/ui';
+
+function App() {
+  return (
+    <ChakraProvider theme={luxTheme}>
+      {/* Your app components */}
+    </ChakraProvider>
+  );
+}
+```
+
+### Using Components
+
+```tsx
+import { Badge, Tooltip, Card } from '@luxdao/ui';
+
+function MyComponent() {
+  return (
+    <Card>
+      <Tooltip label="This proposal is currently active">
+        <Badge labelKey="active" size="base" />
+      </Tooltip>
+    </Card>
+  );
+}
+```
+
+## 📦 What's Included
+
+### Components
+- **Badges** - Status indicators for proposals, DAOs, and states
+- **Cards** - Container components for content organization
+- **Forms** - Specialized inputs for Web3 interactions
+- **Layout** - Page structure and navigation components
+- **Feedback** - Loaders, tooltips, and user feedback elements
+
+### Theme System
+- Custom color palette optimized for dark themes
+- Typography scale for consistent text sizing
+- Component variants for different use cases
+- Responsive design tokens
+
+### Utilities
+- Address formatting and copying
+- Transaction display helpers
+- Ethereum-specific utilities
+
+## 🎨 Design Principles
+
+1. **Accessibility First** - All components meet WCAG 2.1 AA standards
+2. **Dark Theme Optimized** - Designed for reduced eye strain
+3. **Web3 Native** - Built specifically for blockchain interfaces
+4. **Performance** - Optimized bundle size and runtime performance
+5. **Developer Experience** - Full TypeScript support and documentation
+
+## 🧪 Testing
+
+Components are tested at multiple levels:
+- Unit tests for component logic
+- Integration tests for user interactions
+- Visual regression tests via Storybook
+- Accessibility audits
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [contributing guide](https://github.com/luxdao/dao/blob/main/CONTRIBUTING.md) for details.
+
+## 📄 License
+
+MIT License - see [LICENSE](https://github.com/luxdao/dao/blob/main/packages/ui/LICENSE) for details.

@@ -1,0 +1,19 @@
+{
+  "createNewDAO": "Создать новый DAO",
+  "createSubDAO": "Создайте SubDAO",
+  "headerTitle": "{{daoName}} {{subject}}",
+  "proposals": "Все предложения",
+  "proposalNew": "Создать предложение",
+  "nodes": "Организация",
+  "staking": "Ставки",
+  "roles": "Роли",
+  "treasury": "Казначейство",
+  "proposal": "#{{proposalId}} {{proposalTitle}}",
+  "proposalTemplates": "Шаблоны предложений",
+  "proposalTemplate": "{{proposalTemplateTitle}}",
+  "proposalTemplateNew": "Создать шаблон предложения",
+  "deployToken": "Развернуть токен",
+  "editDAO": "Редактировать DAO",
+  "parentLink": "Родительский ДАО",
+  "settings": "Настройки"
+}
