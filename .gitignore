@@ -1,0 +1,111 @@
+# Model files
+*.bin
+*.safetensors
+*.gguf
+*.pt
+*.pth
+models/
+checkpoints/
+zoo-*-checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Cache
+.cache/
+*.incomplete
+
+# OS
+.DS_Store
+.playwright-mcp/
+
+# Dependencies
+node_modules/
+.pnpm-store/
+package-lock.json
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+.parcel-cache/
+
+# Cache files
+*.pack
+*.pack.old
+*.pack.gz
+
+# Logs
+logs/
+*.log
+
+# Environment files
+.env
+.env.local
+.env.production.local
+.env.development.local
+.env.test.local
+
+# IDE
+.vscode/
+
+# Testing
+coverage/
+playwright-report/
+test-results/
+
+# Merge conflict leftovers
+*_BASE_*
+*_BACKUP_*
+*_LOCAL_*
+*_REMOTE_*
+*.orig
+
+# Wrangler
+.wrangler/
+
+# Misc
+.vercel
+*.tsbuildinfo
+CLAUDE.md
+
+# Build output - never commit
+out/
+.next/
+build/
+dist/
+
+# Large media - use CDN or LFS
+*.pdf
+*.mp4
+*.webm
+*.mov
+*.avi
+*.mkv
+*.wav
+*.mp3
+
+# Package manager locks (use workspace root only)  
+**/package-lock.json
+
+# Playwright screenshots/artifacts
+.playwright-mcp/
+playwright-report/
+test-results/
+
+# Autodoc AI cache
+.autodoc/
+
+# 3D models - use CDN
+*.usdz
+*.glb
+*.gltf
+*.fbx
+*.obj
+
+# Large images - use CDN for >500KB assets
+# Keep small icons/logos in repo
