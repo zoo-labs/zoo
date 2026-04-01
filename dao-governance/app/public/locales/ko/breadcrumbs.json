@@ -1,0 +1,19 @@
+{
+  "createNewDAO": "새 DAO 만들기",
+  "createSubDAO": "SubDAO 만들기",
+  "headerTitle": "{{daoName}} {{subject}}",
+  "proposals": "모든 제안서",
+  "proposalNew": "제안서 만들기",
+  "nodes": "조직",
+  "staking": "스테이킹",
+  "roles": "역할",
+  "treasury": "재무부",
+  "proposal": "#{{proposalId}} {{proposalTitle}}",
+  "proposalTemplates": "제안서 템플릿",
+  "proposalTemplate": "{{proposalTemplateTitle}}",
+  "proposalTemplateNew": "제안서 템플릿 만들기",
+  "deployToken": "토큰 배포",
+  "editDAO": "DAO 편집",
+  "parentLink": "부모 DAO",
+  "settings": "설정"
+}

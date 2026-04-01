@@ -1,0 +1,270 @@
+version: '3.8'
+
+services:
+  # Anvil blockchain for local development
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:latest
+    container_name: dao-anvil
+    command: |
+      anvil
+      --host 0.0.0.0
+      --port 8545
+      --chain-id 1337
+      --accounts 10
+      --balance 10000
+      --gas-limit 30000000
+      --no-cors
+      --block-time 2
+    ports:
+      - "8545:8545"
+    networks:
+      - dao-network
+    healthcheck:
+      test: ["CMD", "cast", "block-number", "--rpc-url", "http://localhost:8545"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Contract deployment service
+  contracts:
+    build:
+      context: ./contracts
+      dockerfile: Dockerfile
+    container_name: dao-contracts
+    depends_on:
+      anvil:
+        condition: service_healthy
+    environment:
+      - RPC_URL=http://anvil:8545
+      - PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+      - NETWORK=localhost
+    volumes:
+      - ./contracts:/app
+      - contract-artifacts:/app/artifacts
+      - contract-deployments:/app/deployments
+    networks:
+      - dao-network
+    command: |
+      sh -c "
+        echo 'Waiting for Anvil to be ready...'
+        sleep 5
+        echo 'Compiling contracts...'
+        npx hardhat compile
+        echo 'Deploying contracts...'
+        npx hardhat run scripts/deploy-local.ts --network localhost
+        echo 'Contracts deployed!'
+        tail -f /dev/null
+      "
+
+  # PostgreSQL database for indexer
+  postgres:
+    image: postgres:16-alpine
+    container_name: dao-postgres
+    environment:
+      - POSTGRES_USER=dao
+      - POSTGRES_PASSWORD=dao123
+      - POSTGRES_DB=dao_indexer
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dao-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dao"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching and queues
+  redis:
+    image: redis:7-alpine
+    container_name: dao-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - dao-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Indexer service to index blockchain events
+  indexer:
+    build:
+      context: ./api/packages/indexer
+      dockerfile: Dockerfile
+    container_name: dao-indexer
+    depends_on:
+      anvil:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      contracts:
+        condition: service_started
+    environment:
+      - RPC_URL=http://anvil:8545
+      - DATABASE_URL=postgresql://dao:dao123@postgres:5432/dao_indexer
+      - REDIS_URL=redis://redis:6379
+      - CHAIN_ID=1337
+      - START_BLOCK=0
+      - CONFIRMATION_BLOCKS=1
+    volumes:
+      - ./api/packages/indexer:/app
+      - contract-artifacts:/contracts/artifacts:ro
+      - contract-deployments:/contracts/deployments:ro
+    networks:
+      - dao-network
+    command: npm run start:dev
+
+  # API backend server
+  api:
+    build:
+      context: ./api/packages/offchain
+      dockerfile: Dockerfile
+    container_name: dao-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      indexer:
+        condition: service_started
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - DATABASE_URL=postgresql://dao:dao123@postgres:5432/dao_indexer
+      - REDIS_URL=redis://redis:6379
+      - RPC_URL=http://anvil:8545
+      - CHAIN_ID=1337
+      - CORS_ORIGIN=http://localhost:3000
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./api/packages/offchain:/app
+      - contract-artifacts:/contracts/artifacts:ro
+      - contract-deployments:/contracts/deployments:ro
+    networks:
+      - dao-network
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Subgraph node for GraphQL queries (optional)
+  graph-node:
+    image: graphprotocol/graph-node:latest
+    container_name: dao-graph-node
+    depends_on:
+      postgres:
+        condition: service_healthy
+      anvil:
+        condition: service_healthy
+    environment:
+      postgres_host: postgres
+      postgres_user: dao
+      postgres_pass: dao123
+      postgres_db: dao_indexer
+      ipfs: 'ipfs:5001'
+      ethereum: 'localhost:http://anvil:8545'
+      GRAPH_LOG: info
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8020:8020"
+      - "8030:8030"
+      - "8040:8040"
+    networks:
+      - dao-network
+
+  # IPFS for decentralized storage
+  ipfs:
+    image: ipfs/kubo:latest
+    container_name: dao-ipfs
+    ports:
+      - "5001:5001"
+      - "8080:8080"
+    volumes:
+      - ipfs-data:/data/ipfs
+    networks:
+      - dao-network
+
+  # Frontend application
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: dao-frontend
+    depends_on:
+      api:
+        condition: service_healthy
+      contracts:
+        condition: service_started
+    environment:
+      - VITE_APP_CHAIN_ID=1337
+      - VITE_APP_RPC_URL=http://localhost:8545
+      - VITE_APP_API_URL=http://localhost:4000
+      - VITE_APP_SUBGRAPH_URL=http://localhost:8000/subgraphs/name/lux/dao
+      - VITE_APP_IPFS_GATEWAY=http://localhost:8080
+      - VITE_WALLETCONNECT_PROJECT_ID=
+      - VITE_ALCHEMY_API_KEY=
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app
+      - contract-artifacts:/app/contracts/artifacts:ro
+      - contract-deployments:/app/contracts/deployments:ro
+    networks:
+      - dao-network
+    command: npm run dev
+
+  # Monitoring with Prometheus (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: dao-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - dao-network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+  # Grafana for visualization (optional)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: dao-grafana
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - dao-network
+
+networks:
+  dao-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+  ipfs-data:
+  contract-artifacts:
+  contract-deployments:
+  prometheus-data:
+  grafana-data:

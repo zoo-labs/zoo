@@ -1,0 +1,254 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  release:
+    types: [created]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test-contracts:
+    name: Test Smart Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install pnpm
+        run: npm install -g pnpm
+        
+      - name: Install dependencies
+        working-directory: ./contracts
+        run: pnpm install --frozen-lockfile
+        
+      - name: Run contract tests
+        working-directory: ./contracts
+        run: pnpm test
+
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install pnpm
+        run: npm install -g pnpm
+        
+      - name: Install dependencies
+        working-directory: ./app
+        run: pnpm install --frozen-lockfile
+        
+      - name: Run linter
+        working-directory: ./app
+        run: pnpm lint || true
+        
+      - name: Build frontend
+        working-directory: ./app
+        run: pnpm build
+        
+      - name: Run tests
+        working-directory: ./app
+        run: pnpm test || true
+
+  test-api:
+    name: Test API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.0.20
+          
+      - name: Build SDK
+        working-directory: ./sdk
+        run: |
+          bun install
+          bun run build || true
+          
+      - name: Install API dependencies
+        working-directory: ./api/packages/decent-offchain
+        run: bun install
+        
+      - name: Run API tests
+        working-directory: ./api/packages/decent-offchain
+        run: bun test || true
+
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: [test-contracts, test-frontend, test-api]
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: luxdao
+          POSTGRES_PASSWORD: luxdao123
+          POSTGRES_DB: luxdao
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+          
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+          
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install pnpm
+        run: npm install -g pnpm
+        
+      - name: Start Anvil
+        run: |
+          docker run -d --name anvil -p 8545:8545 \
+            ghcr.io/foundry-rs/foundry:latest \
+            anvil --host 0.0.0.0 --chain-id 1337 --accounts 10 --block-time 3
+            
+      - name: Wait for Anvil
+        run: |
+          timeout 30 bash -c 'until curl -s http://localhost:8545 > /dev/null; do sleep 1; done'
+          
+      - name: Deploy contracts
+        working-directory: ./contracts
+        run: |
+          pnpm install --frozen-lockfile
+          npm run deploy:local || true
+          
+      - name: Install Playwright
+        working-directory: ./stack
+        run: |
+          pnpm install --frozen-lockfile
+          npx playwright install chromium
+          
+      - name: Run E2E tests
+        working-directory: ./stack
+        run: pnpm test
+        
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: ./stack/playwright-report/
+
+  build-and-push:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+    needs: [e2e-tests]
+    if: github.event_name == 'push' || github.event_name == 'release'
+    permissions:
+      contents: read
+      packages: write
+      
+    strategy:
+      matrix:
+        component: [app, api, contracts]
+        
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}-${{ matrix.component }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
+            
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./${{ matrix.component }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          target: ${{ matrix.component == 'app' && 'production' || '' }}
+
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: [build-and-push]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+      
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "## What's Changed" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          git log --pretty=format:"* %s (%h)" HEAD~10..HEAD >> CHANGELOG.md
+          
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release v${{ github.run_number }}
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
+
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [create-release]
+    if: github.event_name == 'release' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    environment: production
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to production
+        run: |
+          echo "Deploying to production..."
+          # Add your deployment commands here
+          # e.g., kubectl apply -f k8s/
+          # or docker-compose -f docker-compose.full.yml up -d

@@ -1,0 +1,19 @@
+{
+  "createNewDAO": "Створити нову DAO",
+  "createSubDAO": "Створити SubDAO",
+  "headerTitle": "{{daoName}} {{subject}}",
+  "proposals": "Всі пропозиції",
+  "proposalNew": "Створити пропозицію",
+  "nodes": "Організація",
+  "staking": "Ставлю кілки.",
+  "roles": "Ролі",
+  "treasury": "Казначейство",
+  "proposal": "#{{proposalId}} {{proposalTitle}}",
+  "proposalTemplates": "Шаблони заявок",
+  "proposalTemplate": "{{proposalTemplateTitle}}.",
+  "proposalTemplateNew": "Створіть шаблон пропозиції",
+  "deployToken": "Розгорнути токен",
+  "editDAO": "Редагувати DAO",
+  "parentLink": "Батьківський DAO",
+  "settings": "Налаштування"
+}

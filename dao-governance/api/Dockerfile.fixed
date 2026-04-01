@@ -1,0 +1,45 @@
+# Dockerfile for lux-dao api
+
+FROM oven/bun:1.0.20 AS base
+WORKDIR /app
+
+# Install API dependencies
+FROM base AS deps
+# Copy SDK first (as local dependency)
+COPY sdk /app/sdk
+WORKDIR /app/sdk
+RUN bun install && bun run build || true
+
+# Copy API package files
+WORKDIR /app
+COPY api/packages/decent-offchain/package.json api/packages/decent-offchain/
+
+# Update package.json to use local SDK
+WORKDIR /app/api/packages/decent-offchain
+RUN sed -i 's|"sdk": ".*"|"sdk": "file:/app/sdk"|' package.json
+RUN bun install
+
+# Build and run stage
+FROM base AS production
+COPY --from=deps /app /app
+COPY api/packages/decent-offchain /app/api/packages/decent-offchain
+
+WORKDIR /app/api/packages/decent-offchain
+
+# Create startup script
+RUN echo '#!/bin/sh' > /app/start.sh && \
+    echo 'cd /app/api/packages/decent-offchain' >> /app/start.sh && \
+    echo 'bun run push:onchain || true' >> /app/start.sh && \
+    echo 'bun run push:offchain || true' >> /app/start.sh && \
+    echo 'bun run src/api/index.ts' >> /app/start.sh && \
+    chmod +x /app/start.sh
+
+ENV NODE_ENV=production
+ENV PORT=3005
+
+EXPOSE 3005
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3005/ || exit 1
+
+CMD ["/app/start.sh"]

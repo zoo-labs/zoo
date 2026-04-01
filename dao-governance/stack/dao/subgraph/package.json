@@ -1,0 +1,40 @@
+{
+  "name": "fractal-subgraph",
+  "license": "UNLICENSED",
+  "version": "0.2.0",
+  "scripts": {
+    "codegen:base": "graph codegen subgraph.base.yaml",
+    "codegen:mainnet": "graph codegen subgraph.mainnet.yaml",
+    "codegen:polygon": "graph codegen subgraph.polygon.yaml",
+    "codegen:sepolia": "graph codegen subgraph.sepolia.yaml",
+    "codegen:optimism": "graph codegen subgraph.optimism.yaml",
+    "build:base": "graph build subgraph.base.yaml",
+    "build:mainnet": "graph build subgraph.mainnet.yaml",
+    "build:polygon": "graph build subgraph.polygon.yaml",
+    "build:sepolia": "graph build subgraph.sepolia.yaml",
+    "build:optimism": "graph build subgraph.optimism.yaml",
+    "deploy:base": "graph deploy --studio fractal-base subgraph.base.yaml",
+    "deploy:mainnet": "graph deploy --studio fractal-mainnet subgraph.mainnet.yaml",
+    "deploy:polygon": "graph deploy --studio fractal-polygon subgraph.polygon.yaml",
+    "deploy:sepolia": "graph deploy --studio fractal-sepolia subgraph.sepolia.yaml",
+    "deploy:optimism": "graph deploy --studio fractal-optimism subgraph.optimism.yaml",
+    "test": "graph test",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.69.1",
+    "@graphprotocol/graph-ts": "^0.34.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-next": "^13.2.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "matchstick-as": "0.5.0",
+    "prettier": "^2.7.1"
+  }
+}

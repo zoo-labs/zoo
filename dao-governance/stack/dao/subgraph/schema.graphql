@@ -1,0 +1,19 @@
+type DAO @entity(immutable: false) {
+  id: Bytes!
+  address: Bytes! # address
+  parentAddress: Bytes # address
+  name: String
+  hierarchy: [DAO!]!
+  proposalTemplatesHash: String # IPFS Hash
+  snapshotENS: String
+}
+
+type Safe @entity(immutable: false) {
+  id: Bytes!
+  created: String
+  creator: Bytes! # address
+  transactionHash: Bytes! # transaction hash
+  factoryAddress: Bytes! # address
+  singleton: Bytes! # address
+  setupData: Bytes! # bytes
+}

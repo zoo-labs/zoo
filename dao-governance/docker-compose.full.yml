@@ -1,0 +1,153 @@
+version: '3.8'
+
+services:
+  # Local Blockchain
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:latest
+    container_name: luxdao-anvil
+    entrypoint: ["anvil"]
+    command: ["--host", "0.0.0.0", "--chain-id", "1337", "--accounts", "10", "--block-time", "3"]
+    ports:
+      - "8545:8545"
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD", "cast", "block-number", "--rpc-url", "http://localhost:8545"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: luxdao-postgres
+    environment:
+      POSTGRES_USER: luxdao
+      POSTGRES_PASSWORD: luxdao123
+      POSTGRES_DB: luxdao
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U luxdao"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: luxdao-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # IPFS Node
+  ipfs:
+    image: ipfs/kubo:latest
+    container_name: luxdao-ipfs
+    environment:
+      IPFS_PROFILE: server
+    ports:
+      - "5001:5001"
+      - "8080:8080"
+    volumes:
+      - ipfs_data:/data/ipfs
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD", "ipfs", "id"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Smart Contract Deployment
+  contracts:
+    build:
+      context: ./contracts
+      dockerfile: Dockerfile
+    container_name: luxdao-contracts
+    depends_on:
+      anvil:
+        condition: service_healthy
+    environment:
+      RPC_URL: http://anvil:8545
+    volumes:
+      - ./contracts/deployments:/app/deployments
+    networks:
+      - luxdao
+    command: ["npm", "run", "deploy:local"]
+
+  # API Service
+  api:
+    build:
+      context: ./api/packages/decent-offchain
+      dockerfile: ../../../api/Dockerfile
+    container_name: luxdao-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      contracts:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: postgresql://luxdao:luxdao123@postgres:5432/luxdao
+      REDIS_URL: redis://redis:6379
+      PORT: 3005
+      PONDER_RPC_URL_1: http://anvil:8545
+    ports:
+      - "3005:3005"
+    networks:
+      - luxdao
+    command: ["bun", "run", "start"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3005/"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+      target: production
+    container_name: luxdao-frontend
+    depends_on:
+      api:
+        condition: service_healthy
+      contracts:
+        condition: service_completed_successfully
+    environment:
+      VITE_API_URL: http://api:3005
+      VITE_RPC_URL: http://anvil:8545
+    ports:
+      - "3000:3000"
+    networks:
+      - luxdao
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+networks:
+  luxdao:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  ipfs_data:

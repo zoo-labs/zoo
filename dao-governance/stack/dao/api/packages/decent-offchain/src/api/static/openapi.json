@@ -1,0 +1,1759 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "DAO API",
+    "description": "API for the DAO protocol",
+    "version": "0.1.0",
+    "contact": {
+      "name": "DAO DAO",
+      "url": "https://luxdao.org"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.dao.build",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:3005",
+      "description": "Localhost"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["meta"],
+        "summary": "Get API metadata",
+        "description": "Retrieve API metadata including version information",
+        "security": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Meta"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["meta"],
+        "summary": "Get API health status",
+        "description": "Check if the API is healthy",
+        "security": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Health"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chains": {
+      "get": {
+        "tags": ["meta"],
+        "summary": "Get all chains with DAOs",
+        "description": "Retrieve a list of all supported chain IDs that have DAOs",
+        "security": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats": {
+      "get": {
+        "tags": ["meta"],
+        "summary": "Get platform stats",
+        "description": "Retrieve platform statistics including DAO and proposal counts",
+        "security": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Stats"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/nonce": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Get a nonce for SIWE authentication",
+        "description": "Retrieve a nonce for Sign-In with Ethereum authentication",
+        "security": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Nonce"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/verify": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Verify a SIWE message and signature",
+        "description": "Verify a Sign-In with Ethereum message and signature",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "signature": {
+                    "type": "string"
+                  }
+                },
+                "required": ["message", "signature"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Get current user information",
+        "description": "Retrieve information about the currently authenticated user",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Log out current user",
+        "description": "Log out the currently authenticated user",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Logout"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/d": {
+      "get": {
+        "tags": ["dao"],
+        "summary": "Get all DAOs",
+        "description": "Retrieve a list of all DAOs",
+        "security": [],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Optional name filter for DAOs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Dao"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/d/{chainId}": {
+      "get": {
+        "tags": ["dao"],
+        "summary": "Get DAOs by chain",
+        "description": "Retrieve all DAOs for a specific chain",
+        "security": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Dao"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/d/{chainId}/{address}": {
+      "get": {
+        "tags": ["dao"],
+        "summary": "Get DAO by address",
+        "description": "Retrieve a specific DAO by chain ID and address",
+        "security": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Dao"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/d/{chainId}/{address}/safe-proposals": {
+      "post": {
+        "tags": ["dao"],
+        "summary": "Fetch proposals from Safe API and save to database",
+        "description": "Fetch proposals from Safe API and save to database, returns all added proposals",
+        "security": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SafeProposal"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/d/{chainId}/{address}/me": {
+      "get": {
+        "tags": ["dao"],
+        "summary": "Get user permissions for a DAO",
+        "description": "Retrieve the current user's permissions for a specific DAO",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/User"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/d/{chainId}/{address}/proposals": {
+      "get": {
+        "tags": ["proposals"],
+        "summary": "Get DAO proposals",
+        "description": "Retrieve all onchain proposals for a specific DAO",
+        "security": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Proposal"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/d/{chainId}/{address}/proposals/{id}": {
+      "get": {
+        "tags": ["proposals"],
+        "summary": "Get onchain proposal by ID",
+        "description": "Retrieve a specific onchain proposal by proposal ID",
+        "security": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Proposal ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/Proposal"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/points/proposals": {
+      "get": {
+        "tags": ["points"],
+        "summary": "Get proposal count for address",
+        "description": "Get the number of proposals that an address has submitted",
+        "security": [],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Wallet address"
+          },
+          {
+            "name": "passed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Whether to filter for passed proposals"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "proposalCount": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["success", "failed"]
+                    }
+                  },
+                  "required": ["address", "proposalCount", "status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/points/transfers": {
+      "get": {
+        "tags": ["points"],
+        "summary": "Get transfer proposal count for address",
+        "description": "Get the number of passing transfer proposals that an address has submitted",
+        "security": [],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Wallet address"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "transferCount": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["success", "failed"]
+                    }
+                  },
+                  "required": ["address", "transferCount", "status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/points/disperses": {
+      "get": {
+        "tags": ["points"],
+        "summary": "Get disperse proposal count for address",
+        "description": "Get the number of passing disperse proposals that an address has submitted",
+        "security": [],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Wallet address"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "disperseCount": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["success", "failed"]
+                    }
+                  },
+                  "required": ["address", "disperseCount", "status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/points/roles": {
+      "get": {
+        "tags": ["points"],
+        "summary": "Get role proposal count for address",
+        "description": "Get the number of passing role proposals that an address has submitted",
+        "security": [],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Wallet address"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "roleCount": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["success", "failed"]
+                    }
+                  },
+                  "required": ["address", "roleCount", "status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/points/streams": {
+      "get": {
+        "tags": ["points"],
+        "summary": "Get stream proposal count for address",
+        "description": "Get the number of passing stream proposals that an address has submitted",
+        "security": [],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Wallet address"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "streamCount": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["success", "failed"]
+                    }
+                  },
+                  "required": ["address", "streamCount", "status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet/{walletAddress}": {
+      "get": {
+        "tags": ["wallet"],
+        "summary": "DAOs associated with a specific wallet address",
+        "description": "Get all DAOs that wallet address holds tokens OR has staked tokens from",
+        "security": [],
+        "parameters": [
+          {
+            "name": "walletAddress",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Wallet address"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/ApiResponse" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/WalletDao"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {},
+          "error": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "nullable": true
+              },
+              "message": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string",
+                "nullable": true
+              },
+              "details": {
+                "nullable": true
+              }
+            },
+            "required": ["message"]
+          }
+        },
+        "required": ["success"]
+      },
+      "Meta": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "version"]
+      },
+      "Health": {
+        "type": "string",
+        "enum": ["ok"]
+      },
+      "Stats": {
+        "type": "object",
+        "properties": {
+          "daoCount": {
+            "type": "integer"
+          },
+          "proposalCount": {
+            "type": "integer"
+          }
+        },
+        "required": ["daoCount", "proposalCount"]
+      },
+      "Permissions": {
+        "type": "object",
+        "properties": {
+          "isProposer": {
+            "type": "boolean"
+          },
+          "isVoter": {
+            "type": "boolean"
+          },
+          "isSigner": {
+            "type": "boolean"
+          },
+          "isModerator": {
+            "type": "boolean"
+          }
+        },
+        "required": ["isProposer", "isVoter", "isSigner", "isModerator"]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "ensName": {
+            "type": "string",
+            "nullable": true
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions"
+          }
+        },
+        "required": ["address"]
+      },
+      "Nonce": {
+        "type": "object",
+        "properties": {
+          "nonce": {
+            "type": "string",
+            "description": "A unique random string to be included in the SIWE message for verification. This nonce should be used only once for security purposes."
+          },
+          "sessionId": {
+            "type": "string",
+            "description": "A unique identifier for the authenticated user. This sessionId should be sent as `Authorization: Bearer <sessionId>` in the header for subsequent requests that require authentication."
+          }
+        },
+        "required": ["nonce", "sessionId"]
+      },
+      "Logout": {
+        "type": "string",
+        "enum": ["ok"]
+      },
+      "VerifySiwe": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "signature": {
+            "type": "string"
+          }
+        },
+        "required": ["message", "signature"]
+      },
+      "TokenType": {
+        "type": "string",
+        "enum": ["ERC20", "ERC721", "ERC1155"]
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TokenType"
+          }
+        },
+        "required": ["address", "type"]
+      },
+      "Safe": {
+        "type": "object",
+        "properties": {
+          "owners": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "threshold": {
+            "type": "integer"
+          }
+        },
+        "required": ["owners", "threshold"]
+      },
+      "GasTank": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "required": ["enabled"]
+      },
+      "GovernanceCycle": {
+        "type": "object",
+        "properties": {
+          "firstStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "days": {
+            "type": "integer"
+          }
+        },
+        "required": ["firstStart", "days"]
+      },
+      "ProposalPermission": {
+        "type": "object",
+        "properties": {
+          "threshold": {
+            "type": "number"
+          },
+          "whitelist": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "required": ["threshold"]
+      },
+      "VotingStrategy": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer",
+            "nullable": true
+          },
+          "votingTokens": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Token"
+            }
+          }
+        },
+        "required": ["address", "votingTokens"]
+      },
+      "GovernanceModule": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "strategies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VotingStrategy"
+            }
+          }
+        },
+        "required": ["address", "strategies"]
+      },
+      "HatIdToStreamId": {
+        "type": "object",
+        "properties": {
+          "hatId": {
+            "type": "string"
+          },
+          "streamId": {
+            "type": "string"
+          }
+        },
+        "required": ["hatId", "streamId"]
+      },
+      "Dao": {
+        "type": "object",
+        "properties": {
+          "chainId": {
+            "type": "integer"
+          },
+          "address": {
+            "type": "string"
+          },
+          "safe": {
+            "$ref": "#/components/schemas/Safe",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "proposalTemplatesCID": {
+            "type": "string",
+            "nullable": true
+          },
+          "governanceModules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GovernanceModule"
+            },
+            "nullable": true
+          },
+          "hatIdToStreamIds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HatIdToStreamId"
+            },
+            "nullable": true
+          },
+          "guardAddress": {
+            "type": "string"
+          },
+          "fractalModuleAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "parent": {
+            "type": "string",
+            "nullable": true
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "gastank": {
+            "$ref": "#/components/schemas/GasTank",
+            "nullable": true
+          },
+          "snapshotENS": {
+            "type": "string",
+            "nullable": true
+          },
+          "cycle": {
+            "$ref": "#/components/schemas/GovernanceCycle",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "integer"
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        },
+        "required": ["chainId", "address", "guardAddress", "createdAt", "updatedAt"]
+      },
+      "SafeProposal": {
+        "type": "object",
+        "properties": {
+          "daoChainId": {
+            "type": "integer"
+          },
+          "daoAddress": {
+            "type": "string"
+          },
+          "proposer": {
+            "type": "string"
+          },
+          "safeNonce": {
+            "type": "integer"
+          },
+          "safeTxHash": {
+            "type": "string"
+          },
+          "transactions": {
+            "type": "object"
+          },
+          "executedTxHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "metadataCID": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "submissionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "executionDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "required": [
+          "daoChainId",
+          "daoAddress",
+          "proposer",
+          "safeNonce",
+          "safeTxHash",
+          "transactions",
+          "submissionDate"
+        ]
+      },
+      "PaymentStream": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cliff": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number"
+          },
+          "cancelable": {
+            "type": "boolean"
+          },
+          "transferable": {
+            "type": "boolean"
+          }
+        },
+        "required": ["start", "end", "amount", "cancelable", "transferable"]
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "cid": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "canPropose": {
+            "type": "boolean"
+          },
+          "term": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "payment": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentStream"
+            },
+            "nullable": true
+          }
+        },
+        "required": ["cid", "address", "canPropose"]
+      },
+      "Action": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          }
+        },
+        "required": ["address"]
+      },
+      "TransferAction": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Action" },
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": ["value"]
+          }
+        ]
+      },
+      "ContractActionParam": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "type", "value"]
+      },
+      "ContractAction": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Action" },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "abi": {
+                "type": "object"
+              },
+              "params": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContractActionParam"
+                },
+                "nullable": true
+              }
+            },
+            "required": ["name", "abi"]
+          }
+        ]
+      },
+      "ProposalTransaction": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Action"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "YesNoVoteResult": {
+        "type": "object",
+        "properties": {
+          "yes": {
+            "type": "number"
+          },
+          "no": {
+            "type": "number"
+          },
+          "abstain": {
+            "type": "number"
+          }
+        },
+        "required": ["yes", "no", "abstain"]
+      },
+      "YesNoVoteOption": {
+        "type": "string",
+        "enum": ["YES", "NO", "ABSTAIN"]
+      },
+      "Vote": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "timestamp": {
+            "type": "integer"
+          }
+        },
+        "required": ["address", "weight", "timestamp"]
+      },
+      "YesNoVote": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Vote" },
+          {
+            "type": "object",
+            "properties": {
+              "vote": {
+                "$ref": "#/components/schemas/YesNoVoteOption"
+              }
+            },
+            "required": ["vote"]
+          }
+        ]
+      },
+      "MultipleChoiceVote": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Vote" },
+          {
+            "type": "object",
+            "properties": {
+              "vote": {
+                "type": "integer"
+              }
+            },
+            "required": ["vote"]
+          }
+        ]
+      },
+      "MultipleChoiceVoteResult": {
+        "type": "object",
+        "properties": {
+          "totalWeightVoted": {
+            "type": "number"
+          },
+          "choice": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": ["totalWeightVoted", "choice"]
+      },
+      "ProposalChoice": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "tx": {
+            "$ref": "#/components/schemas/ProposalTransaction"
+          }
+        },
+        "required": ["text", "tx"]
+      },
+      "Proposal": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string"
+          },
+          "authorAddress": {
+            "type": "string"
+          },
+          "metadataCID": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "safeNonce": {
+            "type": "integer",
+            "nullable": true
+          },
+          "executedTxHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "votingStrategyAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "voteStartsAt": {
+            "type": "integer",
+            "nullable": true
+          },
+          "voteEndsAt": {
+            "type": "integer",
+            "nullable": true
+          },
+          "discussionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "version": {
+            "type": "integer"
+          },
+          "votes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Vote"
+            },
+            "nullable": true
+          },
+          "cycle": {
+            "type": "integer",
+            "nullable": true
+          },
+          "voteType": {
+            "type": "string",
+            "nullable": true
+          },
+          "voteChoices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "integer"
+          },
+          "updatedAt": {
+            "type": "integer",
+            "nullable": true
+          }
+        },
+        "required": ["slug", "status", "authorAddress", "version", "createdAt"]
+      },
+      "NewProposal": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "voteType": {
+            "type": "string"
+          },
+          "voteChoices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cycle": {
+            "type": "integer"
+          },
+          "votingStrategyAddress": {
+            "type": "string"
+          }
+        },
+        "required": ["title", "body", "voteType"]
+      },
+      "UpdateProposal": {
+        "allOf": [
+          { "$ref": "#/components/schemas/NewProposal" },
+          {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string"
+              }
+            },
+            "required": ["slug"]
+          }
+        ]
+      },
+      "YesNoProposal": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Proposal" },
+          {
+            "type": "object",
+            "properties": {
+              "thumbsUp": {
+                "type": "number"
+              },
+              "thumbsDown": {
+                "type": "number"
+              },
+              "thumbsUpWeighted": {
+                "type": "number"
+              },
+              "thumbsDownWeighted": {
+                "type": "number"
+              },
+              "tx": {
+                "$ref": "#/components/schemas/ProposalTransaction"
+              },
+              "result": {
+                "$ref": "#/components/schemas/YesNoVoteResult",
+                "nullable": true
+              }
+            },
+            "required": ["thumbsUp", "thumbsDown", "thumbsUpWeighted", "thumbsDownWeighted", "tx"]
+          }
+        ]
+      },
+      "MultipleChoiceProposal": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Proposal" },
+          {
+            "type": "object",
+            "properties": {
+              "choices": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ProposalChoice"
+                }
+              },
+              "result": {
+                "$ref": "#/components/schemas/MultipleChoiceVoteResult"
+              }
+            },
+            "required": ["choices", "result"]
+          }
+        ]
+      },
+      "WalletToken": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "balance": {
+            "type": "string"
+          },
+          "decimals": {
+            "type": "integer"
+          },
+          "price_usd": {
+            "type": "number"
+          },
+          "value_usd": {
+            "type": "number"
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": ["address", "symbol", "name", "balance", "decimals", "price_usd", "value_usd"]
+      },
+      "WalletDao": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "chainId": {
+            "type": "integer"
+          },
+          "address": {
+            "type": "string"
+          },
+          "token": {
+            "$ref": "#/components/schemas/WalletToken"
+          },
+          "stakedToken": {
+            "$ref": "#/components/schemas/WalletToken",
+            "nullable": true
+          }
+        },
+        "required": ["name", "chainId", "address", "token"]
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "meta",
+      "description": "API metadata and health endpoints"
+    },
+    {
+      "name": "auth",
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "dao",
+      "description": "DAO-related operations"
+    },
+    {
+      "name": "proposals",
+      "description": "Proposal-related operations"
+    },
+    {
+      "name": "points",
+      "description": "Points and achievement tracking endpoints"
+    },
+    {
+      "name": "wallet",
+      "description": "Wallet-related operations"
+    }
+  ]
+}

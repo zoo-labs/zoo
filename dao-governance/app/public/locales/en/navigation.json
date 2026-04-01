@@ -1,0 +1,17 @@
+{
+  "home": "Home",
+  "proposals": "Proposals",
+  "nodes": "Organization",
+  "roles": "Roles",
+  "treasury": "Treasury",
+  "staking": "Staking",
+  "proposalTemplates": "Templates",
+  "faq": "FAQ",
+  "chat": "Warpcast",
+  "documentation": "Documentation",
+  "ariaLabelFractalBrand": "Navigate DAO Home",
+  "navigationExternalTelegram": "Go to telegram",
+  "navigationExternalX": "Go to X",
+  "navigationExternalWarpcast": "Go to Warpcast",
+  "navigationExternalDiscordmade": "Go to Discord"
+}
