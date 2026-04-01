@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Governance - Zoo Fund</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            padding-top: 64px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .wallet-btn {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .wallet-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 32px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Proposals Section */
+        .proposals-section {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 16px;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-tab.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .filter-tab:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+        }
+
+        /* Proposal Cards */
+        .proposal-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: all 0.2s;
+        }
+
+        .proposal-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .proposal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .proposal-info {
+            flex: 1;
+        }
+
+        .proposal-id {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+        }
+
+        .proposal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .proposal-author {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .proposal-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .proposal-status.active {
+            background: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+        }
+
+        .proposal-status.passed {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .proposal-status.rejected {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .proposal-status.pending {
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+        }
+
+        .proposal-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .proposal-meta {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Voting Section */
+        .voting-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 24px;
+        }
+
+        .voting-progress {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .progress-for {
+            background: rgba(74, 222, 128, 0.2);
+            border-right: 2px solid #4ade80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .progress-against {
+            background: rgba(239, 68, 68, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .voting-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .vote-button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .vote-button:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .vote-button.for {
+            border-color: rgba(74, 222, 128, 0.3);
+        }
+
+        .vote-button.for:hover {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: #4ade80;
+        }
+
+        .vote-button.against {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .vote-button.against:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
+        }
+
+        .vote-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Create Proposal Button */
+        .create-proposal-btn {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .create-proposal-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">ZOO</a>
+            <ul class="nav-links">
+                <li><a href="/">Projects</a></li>
+                <li><a href="/governance">Governance</a></li>
+                <li><a href="https://github.com/zoolabs" target="_blank">GitHub</a></li>
+                <li><a href="https://discord.gg/zoo" target="_blank">Discord</a></li>
+                <li><a href="https://twitter.com/zoolabs" target="_blank">Twitter</a></li>
+            </ul>
+            <button class="wallet-btn" onclick="connectWallet()">Connect Wallet</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-header">
+                    <div>
+                        <h1>DAO Governance</h1>
+                        <p class="hero-subtitle">Vote on proposals and shape the future of decentralized science</p>
+                    </div>
+                    <button class="create-proposal-btn" onclick="window.location.href='/?proposal=new'">
+                        Create Proposal
+                    </button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">127</div>
+                        <div class="stat-label">Total Proposals</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Active Proposals</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2,341</div>
+                        <div class="stat-label">Token Holders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$4.2M</div>
+                        <div class="stat-label">Treasury Value</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proposals Section -->
+        <section class="proposals-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Proposals</h2>
+                    <div class="filter-tabs">
+                        <button class="filter-tab active">All</button>
+                        <button class="filter-tab">Active</button>
+                        <button class="filter-tab">Passed</button>
+                        <button class="filter-tab">Rejected</button>
+                    </div>
+                </div>
+
+                <!-- Active Proposal -->
+                <div class="proposal-card">
+                    <div class="proposal-header">
+                        <div class="proposal-info">
+                            <div class="proposal-id">ZOO-127</div>
+                            <h3 class="proposal-title">Allocate $500K to Ocean Genome Sequencing Initiative</h3>
+                            <div class="proposal-author">Proposed by: 0x742d...39fB</div>
+                        </div>
+                        <span class="proposal-status active">Active</span>
+                    </div>
+                    
+                    <p class="proposal-description">
+                        This proposal requests $500,000 from the DAO treasury to fund the Ocean Genome Sequencing Initiative. 
+                        The funds will be used to establish research partnerships with marine biology labs, purchase sequencing 
+                        equipment, and create a decentralized database for ocean DNA samples. This initiative will help us better 
+                        understand marine biodiversity and develop sustainable biotechnology solutions.
+                    </p>
+
+                    <div class="proposal-meta">
+                        <div class="meta-item">⏰ Ends in 2 days</div>
+                        <div class="meta-item">💰 $500,000 requested</div>
+                        <div class="meta-item">🗳️ 1,234 votes cast</div>
+                        <div class="meta-item">📊 67% participation</div>
+                    </div>
+
+                    <div class="voting-section">
+                        <div class="voting-progress">
+                            <div class="progress-header">
+                                <span>For: 72% (890 votes)</span>
+                                <span>Against: 28% (344 votes)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-for" style="width: 72%;">72%</div>
+                                <div class="progress-against" style="flex: 1;">28%</div>
+                            </div>
+                        </div>
+                        <div class="voting-buttons">
+                            <button class="vote-button for" onclick="voteOnProposal(127, true)">
+                                Vote For
+                            </button>
+                            <button class="vote-button against" onclick="voteOnProposal(127, false)">
+                                Vote Against
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Another Active Proposal -->
+                <div class="proposal-card">
+                    <div class="proposal-header">
+                        <div class="proposal-info">
+                            <div class="proposal-id">ZOO-126</div>
+                            <h3 class="proposal-title">Implement Quadratic Funding for Research Grants</h3>
+                            <div class="proposal-author">Proposed by: 0x8f3a...12cD</div>
+                        </div>
+                        <span class="proposal-status active">Active</span>
+                    </div>
+                    
+                    <p class="proposal-description">
+                        Proposal to implement quadratic funding mechanism for distributing research grants. This will allow 
+                        community members to contribute to projects they support, with matching funds from the treasury 
+                        amplifying the impact of small contributions. This democratic approach ensures funding goes to 
+                        projects with genuine community support.
+                    </p>
+
+                    <div class="proposal-meta">
+                        <div class="meta-item">⏰ Ends in 5 days</div>
+                        <div class="meta-item">🔧 Technical upgrade</div>
+                        <div class="meta-item">🗳️ 876 votes cast</div>
+                        <div class="meta-item">📊 45% participation</div>
+                    </div>
+
+                    <div class="voting-section">
+                        <div class="voting-progress">
+                            <div class="progress-header">
+                                <span>For: 85% (745 votes)</span>
+                                <span>Against: 15% (131 votes)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-for" style="width: 85%;">85%</div>
+                                <div class="progress-against" style="flex: 1;">15%</div>
+                            </div>
+                        </div>
+                        <div class="voting-buttons">
+                            <button class="vote-button for" onclick="voteOnProposal(126, true)">
+                                Vote For
+                            </button>
+                            <button class="vote-button against" onclick="voteOnProposal(126, false)">
+                                Vote Against
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Passed Proposal -->
+                <div class="proposal-card">
+                    <div class="proposal-header">
+                        <div class="proposal-info">
+                            <div class="proposal-id">ZOO-125</div>
+                            <h3 class="proposal-title">Partnership with Stanford Marine Biology Lab</h3>
+                            <div class="proposal-author">Proposed by: 0x5d9e...88aF</div>
+                        </div>
+                        <span class="proposal-status passed">Passed</span>
+                    </div>
+                    
+                    <p class="proposal-description">
+                        Establish a strategic partnership with Stanford's Marine Biology Laboratory to accelerate 
+                        ocean research initiatives. This partnership provides access to world-class research facilities, 
+                        expertise, and collaboration opportunities for DAO-funded projects.
+                    </p>
+
+                    <div class="proposal-meta">
+                        <div class="meta-item">✅ Passed 3 days ago</div>
+                        <div class="meta-item">🤝 Partnership</div>
+                        <div class="meta-item">🗳️ 1,567 votes cast</div>
+                        <div class="meta-item">📊 81% in favor</div>
+                    </div>
+                </div>
+
+                <!-- Rejected Proposal -->
+                <div class="proposal-card">
+                    <div class="proposal-header">
+                        <div class="proposal-info">
+                            <div class="proposal-id">ZOO-124</div>
+                            <h3 class="proposal-title">Increase Quorum Requirement to 75%</h3>
+                            <div class="proposal-author">Proposed by: 0x2a4f...91bC</div>
+                        </div>
+                        <span class="proposal-status rejected">Rejected</span>
+                    </div>
+                    
+                    <p class="proposal-description">
+                        Proposal to increase the quorum requirement for passing proposals from 50% to 75% of token holders. 
+                        This would ensure broader consensus but might slow down decision-making.
+                    </p>
+
+                    <div class="proposal-meta">
+                        <div class="meta-item">❌ Rejected 1 week ago</div>
+                        <div class="meta-item">⚙️ Governance change</div>
+                        <div class="meta-item">🗳️ 923 votes cast</div>
+                        <div class="meta-item">📊 31% in favor</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Wallet connection - use window scope for testing
+        window.walletConnected = false;
+        window.userAddress = null;
+
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        window.walletConnected = true;
+                        window.userAddress = accounts[0];
+                        document.querySelector('.wallet-btn').textContent = 
+                            accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
+                    }
+                } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                }
+            } else {
+                alert('Please install MetaMask or another Web3 wallet');
+            }
+        }
+
+        // Vote on proposal
+        async function voteOnProposal(proposalId, support) {
+            if (!window.walletConnected) {
+                alert('Please connect your wallet first');
+                return;
+            }
+            
+            // In production, this would call the governance contract
+            console.log(`Voting ${support ? 'for' : 'against'} proposal ${proposalId}`);
+            alert(`Vote cast ${support ? 'for' : 'against'} proposal ZOO-${proposalId}`);
+        }
+
+        // Filter proposals
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // In production, this would filter the displayed proposals
+            });
+        });
+    </script>
+</body>
+</html>
