@@ -1,0 +1,102 @@
+{
+  "projects": [
+    {
+      "id": "ocean-dao",
+      "name": "OceanDAO",
+      "tagline": "Exploring the mysteries of marine genomics",
+      "description": "OceanDAO is pioneering research into marine biodiversity through cutting-edge genomic sequencing and data analysis. Our mission is to unlock the secrets of ocean life to advance both scientific understanding and practical applications in medicine, biotechnology, and conservation.",
+      "fundingRaised": 2750000,
+      "fundingGoal": 5000000,
+      "percentFunded": 55,
+      "status": "active",
+      "category": "ocean",
+      "team": [
+        {"name": "Dr. Marina Waters", "role": "Lead Researcher", "avatar": "🔬"},
+        {"name": "Alex Chen", "role": "Bioinformatics Lead", "avatar": "💻"},
+        {"name": "Sarah Johnson", "role": "Project Manager", "avatar": "📊"}
+      ],
+      "milestones": [
+        {"phase": "Phase 1", "title": "Sample Collection", "description": "Collect samples from 50 deep-sea locations", "status": "completed"},
+        {"phase": "Phase 2", "title": "Genomic Sequencing", "description": "Sequence 1000+ marine organisms", "status": "in-progress"},
+        {"phase": "Phase 3", "title": "Data Analysis", "description": "Build comprehensive genomic database", "status": "pending"}
+      ]
+    },
+    {
+      "id": "neuro-dao",
+      "name": "NeuroDAO",
+      "tagline": "Decoding consciousness through neural mapping",
+      "description": "NeuroDAO is advancing our understanding of human consciousness through comprehensive neural mapping and artificial intelligence. We're building the most detailed map of neural connections to unlock treatments for neurological conditions.",
+      "fundingRaised": 4200000,
+      "fundingGoal": 8000000,
+      "percentFunded": 52,
+      "status": "active",
+      "category": "neuro"
+    },
+    {
+      "id": "longevity-dao",
+      "name": "LongevityDAO",
+      "tagline": "Engineering biological immortality",
+      "description": "LongevityDAO focuses on understanding and reversing the aging process through genetic engineering, cellular reprogramming, and regenerative medicine. Our goal is to extend healthy human lifespan indefinitely.",
+      "fundingRaised": 6800000,
+      "fundingGoal": 10000000,
+      "percentFunded": 68,
+      "status": "active",
+      "category": "longevity"
+    },
+    {
+      "id": "climate-dao",
+      "name": "ClimateDAO",
+      "tagline": "Atmospheric engineering for planetary survival",
+      "description": "ClimateDAO develops breakthrough technologies for carbon capture, atmospheric engineering, and climate intervention. We're creating scalable solutions to reverse climate change and restore planetary balance.",
+      "fundingRaised": 3500000,
+      "fundingGoal": 7000000,
+      "percentFunded": 50,
+      "status": "active",
+      "category": "climate"
+    },
+    {
+      "id": "quantum-dao",
+      "name": "QuantumDAO",
+      "tagline": "Harnessing quantum mechanics for computing",
+      "description": "QuantumDAO is building next-generation quantum computers and developing quantum algorithms that will revolutionize computing, cryptography, and scientific simulation.",
+      "fundingRaised": 9200000,
+      "fundingGoal": 15000000,
+      "percentFunded": 61,
+      "status": "active",
+      "category": "quantum"
+    },
+    {
+      "id": "fusion-dao",
+      "name": "FusionDAO",
+      "tagline": "Unlimited clean energy through nuclear fusion",
+      "description": "FusionDAO is developing compact fusion reactors using novel magnetic confinement techniques. Our goal is to make fusion energy commercially viable within this decade.",
+      "fundingRaised": 12500000,
+      "fundingGoal": 20000000,
+      "percentFunded": 62,
+      "status": "active",
+      "category": "fusion"
+    },
+    {
+      "id": "space-dao",
+      "name": "SpaceDAO",
+      "tagline": "Making humanity multiplanetary",
+      "description": "SpaceDAO is developing technologies for sustainable space colonization, including closed-loop life support systems, in-situ resource utilization, and interplanetary transportation.",
+      "fundingRaised": 8900000,
+      "fundingGoal": 12000000,
+      "percentFunded": 74,
+      "status": "active",
+      "category": "space"
+    },
+    {
+      "id": "ai-safety-dao",
+      "name": "AI SafetyDAO",
+      "tagline": "Ensuring beneficial artificial general intelligence",
+      "description": "AI SafetyDAO researches alignment techniques and safety measures for artificial general intelligence. We're developing frameworks to ensure AGI systems remain beneficial and aligned with human values.",
+      "fundingRaised": 5600000,
+      "fundingGoal": 9000000,
+      "percentFunded": 62,
+      "status": "active",
+      "category": "aisafety"
+    }
+  ]
+}
