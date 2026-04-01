@@ -1,0 +1,282 @@
+[
+  {
+    "route": "pygmy_hippo",
+    "name": "Pygmy Hippo",
+    "image": "/images/hippo.png",
+    "card_front": "/videos/Hippo_Card_front.webm",
+    "card_back": "/videos/Hippo_Card_Back.webm",
+    "card_front_mp4": "/videos/Hippo_Card_front.mp4",
+    "card_back_mp4": "/videos/Hippo_Card_Back.mp4",
+    "description": {
+      "head": "The pygmy hippo is a rare, nocturnal herbivore found in West African rainforests. Weighing around 400-600 lbs and standing 2.5 ft tall, they're half the height and a quarter the weight of their cousin, the common hippo.<br /><br />With webbed toes and sleek bodies, they're agile swimmers and can close their nostrils to stay submerged. They secrete a shiny, slippery substance called 'blood sweat' to keep their skin moist and protect against sunburn, earning the nickname 'water horse.'",
+      "subtitle": "The elusive pygmy hippo is so rare and secretive that it wasn't scientifically described until 1844.",
+      "desc": "Pygmy hippos are mostly solitary creatures, a stark contrast to their highly social relatives, the common hippos. Despite their small size, pygmy hippos have large, tusk-like canine teeth that can grow up to 6 inches long, serving as a formidable weapon when threatened.<br /><br />Furthermore theg greatly contribute to the health of their rainforest ecosystem by dispersing seeds through their droppings, acting as efficient gardeners for their habitat."
+    },
+    "avatars": [
+      {
+        "title": "Baby Hippo",
+        "href": "#babyhippo",
+        "usdz": "/models/Hippo/HIPPO_BABY.usdz",
+        "glb": "/models/Hippo/HIPPO_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      },
+      {
+        "title": "Teen Hippo",
+        "href": "#teenhippo",
+        "usdz": "/models/Hippo/HIPPO_TEEN.usdz",
+        "glb": "/models/Hippo/HIPPO_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      },
+      {
+        "title": "Adult Hippo",
+        "href": "#",
+        "usdz": "/models/Hippo/HIPPO_ADULT.usdz",
+        "glb": "/models/Hippo/HIPPO_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      }
+    ]
+  },
+  {
+    "route": "javan_rhino",
+    "name": "Javan Rhino",
+    "image": "/images/rhino.png",
+    "card_front": "/videos/RHINO_Card_front.webm",
+    "card_back": "/videos/RHINO_Card_back.webm",
+    "card_front_mp4": "/videos/RHINO_Card_front.mp4",
+    "card_back_mp4": "/videos/RHINO_Card_back.mp4",
+    "description": {
+      "head": "The Javan rhino (Rhinoceros sondaicus) is one of the world's rarest and most critically endangered mammals. With less than 70 individuals remaining, they inhabit Ujung Kulon National Park in Java, Indonesia.<br /><br />They're smaller than African rhinos, with a shoulder height of 4.6-5.8 ft. Distinctive for their single horn and armor-like skin, Javan rhinos are solitary, preferring dense forests near water sources. Poaching and habitat loss are their biggest threats.",
+      "subtitle": "Javan rhinos are true survivors, outlasting the dinosaurs despite being Earth's rarest rhino species!",
+      "desc": "As vegetarians with a voracious appetite consuming up to 50 kg (110 lbs) of plants daily. Unlike their African counterparts, they have a smaller, single horn, making them modest unicorns. Elusive and rarely seen, their nickname being 'the invisible rhino.'"
+    },
+    "avatars": [
+      {
+        "title": "Baby Rhino",
+        "href": "#",
+        "usdz": "/models/Rhino/RHINO_BABY.usdz",
+        "glb": "/models/Rhino/RHINO_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      },
+      {
+        "title": "Teen Rhino",
+        "href": "#",
+        "usdz": "/models/Rhino/RHINO_TEEN.usdz",
+        "glb": "/models/Rhino/RHINO_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      },
+      {
+        "title": "Adult Rhino",
+        "href": "#",
+        "usdz": "/models/Rhino/RHINO_ADULT.usdz",
+        "glb": "/models/Rhino/RHINO_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      }
+    ]
+  },
+  {
+    "route": "siberian_tiger",
+    "name": "Siberian Tiger",
+    "image": "/images/tiger.png",
+    "card_front": "/videos/TIGER_Card_front.webm",
+    "card_back": "/videos/TIGER_Card_Back.webm",
+    "card_front_mp4": "/videos/TIGER_Card_front.mp4",
+    "card_back_mp4": "/videos/TIGER_Card_Back.mp4",
+    "description": {
+      "head": "The Siberian tiger, a subspecies of tiger, is the largest cat in the world from Far East Asia. It once ranged as far as eastern Mongolia, far East Russian, and Northeast China.<br /><br />Siberian tigers are distinguishable by their striped fur and no two tigers have the same stripe pattern. The mane, in addition to their thick fur, helps keep them warm and can be significant influences in both mating displays and in disputes.",
+      "subtitle": "Siberian tigers are solitary animals, marking their scent on trees to keep other tigers away.",
+      "desc": "They stalk their prey, which include elk, boar, bears, and deer, until they are close enough to pounce. Their diet in the wild also hunt smaller animals like rabbits, pikas, and fish. They need to hunt often and may establish and roam a territory several miles wide.<br /><br />Their thick, dense fur and a layer of insulating fat enable them to thrive in the frigid climates of the Russian Far East and northeastern China, where temperatures can plummet to as low as -50°F (-45°C)."
+    },
+    "avatars": [
+      {
+        "title": "Baby Tiger",
+        "href": "#",
+        "usdz": "/models/Tiger/TIGER_BABY.usdz",
+        "glb": "/models/Tiger/TIGER_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      },
+      {
+        "title": "Teen Tiger",
+        "href": "#",
+        "usdz": "/models/Tiger/TIGER_TEEN.usdz",
+        "glb": "/models/Tiger/TIGER_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": "0m 0.5m 0m"
+      },
+      {
+        "title": "Adult Tiger",
+        "href": "#",
+        "usdz": "/models/Tiger/TIGER_ADULT.usdz",
+        "glb": "/models/Tiger/TIGER_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      }
+    ]
+  },
+  {
+    "route": "amur_leopard",
+    "name": "Amur Leopard",
+    "image": "/images/leopard.png",
+    "card_front": "/videos/Leopard_Card_Front.webm",
+    "card_back": "/videos/Leopard_Card_Back.webm",
+    "card_front_mp4": "/videos/Leopard_Card_Front.mp4",
+    "card_back_mp4": "/videos/Leopard_Card_Back.mp4",
+    "description": {
+      "head": "The Amur leopard is one of 10 subspecies of leopard, and one of the world’s rarest cats, with an estimated population of under 70 individuals left in the wild. They all live in a small area that hugs Russia’s far eastern border with China.<br /><br />Many think of leopards stalking savannas of Africa but in the Russian Far East, a rare subspecies has adapted to life in the temperate forests that make up the northern-most part of the species’ range.",
+      "subtitle": "The Amur leopard can run at speeds of up to 37 miles per hour.",
+      "desc": "This incredible animal has been reported to leap more than 19 feet horizontally and up to 10 feet vertically.<br /><br />They are solitary, nimble and strong, it carries and hides unfinished kills so that they are not taken by other predators.<br /><br />They live for 10-15 years, and in captivity up to 20 years. The Amur leopard is also known as the Far East leopard, the Manchurian leopard or the Korean leopard."
+    },
+    "avatars": [
+      {
+        "title": "Baby Leopard",
+        "href": "#",
+        "usdz": "/models/Leopard/LEOPARD_BABY.usdz",
+        "glb": "/models/Leopard/LEOPARD_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": "0m 0.02m 0m"
+      },
+      {
+        "title": "Teen Leopard",
+        "href": "#",
+        "usdz": "/models/Leopard/LEOPARD_TEEN.usdz",
+        "glb": "/models/Leopard/LEOPARD_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      },
+      {
+        "title": "Adult Leopard",
+        "href": "#",
+        "usdz": "/models/Leopard/LEOPARD_ADULT.usdz",
+        "glb": "/models/Leopard/LEOPARD_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      }
+    ]
+  },
+  {
+    "route": "red_wolf",
+    "name": "Red Wolf",
+    "image": "/images/red_wolf.png",
+    "card_front": "/videos/Redwolf_Card_front.webm",
+    "card_back": "/videos/Redwolf_Card_Back.webm",
+    "card_front_mp4": "/videos/Redwolf_Card_front.mp4",
+    "card_back_mp4": "/videos/Redwolf_Card_Back.mp4",
+    "description": {
+      "head": "The Red Wolf is the world’s most endangered member of the Canine family.Native to the United States, Red Wolves (Canis rufus) have a tawny, reddish coat, and they are intermediate in size between grey wolves and coyotes.<br /><br />Which is logical, as these two species interbred in the past to produce the red wolves’ ancestors. Nevertheless, recent research shows that red wolves are a unique species.",
+      "subtitle": "There are only an estimated 35 or fewer wild red wolves.",
+      "desc": "The only place where red wolves remain in the wild is the Alligator River National Wildlife Refuge in eastern North Carolina, and surrounding counties.<br /><br />Like other wolves, these animals were hunted and persecuted on a massive scale in the 19th and early 20th century.<br /><br />By the 1960s, only a small population remained in southwestern Louisiana and eastern Texas."
+    },
+    "avatars": [
+      {
+        "title": "Baby Wolf",
+        "href": "#",
+        "usdz": "/models/Wolf/WOLF_BABY.usdz",
+        "glb": "/models/Wolf/WOLF_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": "0m 0.05m 0m"
+      },
+      {
+        "title": "Teen Wolf",
+        "href": "#",
+        "usdz": "/models/Wolf/WOLF_TEEN.usdz",
+        "glb": "/models/Wolf/WOLF_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": "0m 0.04m 0m"
+      },
+      {
+        "title": "Adult Wolf",
+        "href": "#",
+        "usdz": "/models/Wolf/WOLF_ADULT.usdz",
+        "glb": "/models/Wolf/WOLF_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      }
+    ]
+  },
+  {
+    "route": "nubian_giraffe",
+    "name": "Nubian Giraffe",
+    "image": "/images/giraffe.png",
+    "card_front": "/videos/GIRAFFE_Card_Front.webm",
+    "card_back": "/videos/GIRAFFE_Card_Back.webm",
+    "card_front_mp4": "/videos/GIRAFFE_Card_Front.mp4",
+    "card_back_mp4": "/videos/GIRAFFE_Card_Back.mp4",
+    "description": {
+      "head": "They are considered to be the tallest land animal on the Earth, measuring up to a remarkable 6 meters, or 20 feet tall! They can also weigh approximately 2,800 pounds.<br /><br />The Nubian Giraffe is endangered with less than 2,645 individuals remaining in Ethiopia, Kenya, Uganda, South Sudan and Sudan. are one stage away from becoming extinct in the wild. Other Giraffe species typically have two horns, but the Nubian Giraffe can have up to five!",
+      "subtitle": "Their exceptional sight enables communication with other giraffes through long-distance signals.",
+      "desc": "Habitat loss through expanding agriculture, human-wildlife conflict, civil unrest, and poaching for their meat, pelts, and tails, are among the reasons for their staggering 40% population decline in the last three decades.<br /><br />Nubian giraffes are social animals and often form loose associations known as 'journeys.'<br /><br />They may gather in groups of up to 20 individuals, which can include members of different subspecies."
+    },
+    "avatars": [
+      {
+        "title": "Baby Giraffe",
+        "href": "#",
+        "usdz": "/models/Giraffe/GIRAFFE_BABY.usdz",
+        "glb": "/models/Giraffe/GIRAFFE_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": "0m 0.3m 0m"
+      },
+      {
+        "title": "Teen Giraffe",
+        "href": "#",
+        "usdz": "/models/Giraffe/GIRAFFE_TEEN.usdz",
+        "glb": "/models/Giraffe/GIRAFFE_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      },
+      {
+        "title": "Adult Giraffe",
+        "href": "#",
+        "usdz": "/models/Giraffe/GIRAFFE_ADULT.usdz",
+        "glb": "/models/Giraffe/GIRAFFE_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      }
+    ]
+  },
+  {
+    "route": "sumatran_elephant",
+    "name": "Sumatran Elephant",
+    "image": "/images/elephant.png",
+    "card_front": "/videos/elephant_card_front.webm",
+    "card_back": "/videos/elephant_card_back.webm",
+    "card_front_mp4": "/videos/Elephant_Card_Front.mp4",
+    "card_back_mp4": "/videos/Elephant_Card_Back.mp4",
+    "description": {
+      "head": "The Sumatran elephant is one of three subspecies of the Asian elephant and is native to the island of Sumatra. Classified as critically endangered by the IUCN, their population has declined by more than 80% over three generations. This decline is mainly due to habitat loss, fragmentation, and human-elephant conflict.<br /><br />Smaller than other elephants, Sumatran elephants have lighter skin and a unique dual-domed head shape.",
+      "subtitle": "They stand 7-9 feet tall at the shoulder and weigh 4,400-11,000 lbs.",
+      "desc": "As herbivores, these noble animals spend their days munching on 150kg of plants and seeds as they move through the forests. Their smaller size enables them to navigate dense rainforests.<br /><br />Sumatran elephants are highly social, forming matriarchal family groups. Habitat loss, fragmentation, and human-elephant conflict are primary threats to their survival, making conservation efforts vital."
+    },
+    "avatars": [
+      {
+        "title": "Baby Elephant",
+        "href": "#",
+        "usdz": "/models/Elephant/ELEPHANT_BABY.usdz",
+        "glb": "/models/Elephant/ELEPHANT_BABY.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      },
+      {
+        "title": "Teen Elephant",
+        "href": "#",
+        "usdz": "/models/Elephant/ELEPHANT_TEEN.usdz",
+        "glb": "/models/Elephant/ELEPHANT_TEEN.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      },
+      {
+        "title": "Adult Elephant",
+        "href": "#",
+        "usdz": "/models/Elephant/ELEPHANT_ADULT.usdz",
+        "glb": "/models/Elephant/ELEPHANT_ADULT.glb",
+        "camera_orbit": "",
+        "camera_target": ""
+      }
+    ]
+  }
+]
