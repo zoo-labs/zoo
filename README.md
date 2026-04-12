@@ -23,8 +23,6 @@ Open-source language models by **[Zoo Labs Foundation](https://zoo.dev)**
 
 **Primary:** [Zoo Labs Foundation Inc.](https://zoo.dev) - 501(c)(3) nonprofit (SF)
 
-**Partners:** [Hanzo AI](https://hanzo.ai) • [Lux Industries](https://lux.industries)
-
 ## Quick Start
 
 ```python
