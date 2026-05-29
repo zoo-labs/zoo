@@ -25,10 +25,10 @@ This release marks the completion of the LuxDAO full-stack infrastructure with a
 ## 📦 Docker Images
 
 ### Built Images (Ready for GHCR Push)
-- `ghcr.io/luxfi/dao-frontend:v1.0.0` - Frontend application (280MB)
-- `ghcr.io/luxfi/dao-frontend:latest`
-- `ghcr.io/luxfi/dao-contracts:v1.0.0` - Smart contracts deployment (2.11GB)
-- `ghcr.io/luxfi/dao-contracts:latest`
+- `ghcr.io/zooai/dao-frontend:v1.0.0` - Frontend application (280MB)
+- `ghcr.io/zooai/dao-frontend:latest`
+- `ghcr.io/zooai/dao-contracts:v1.0.0` - Smart contracts deployment (2.11GB)
+- `ghcr.io/zooai/dao-contracts:latest`
 
 ### Note
 Images are built locally and ready to push to GitHub Container Registry when network connectivity allows.
