@@ -54,7 +54,7 @@ services:
 
   # Application Services
   contracts:
-    image: ghcr.io/luxfi/dao-contracts:v1.0.0
+    image: ghcr.io/zooai/dao-contracts:v1.0.0
     depends_on:
       anvil:
         condition: service_healthy
@@ -68,7 +68,7 @@ services:
       - contracts-deployments:/app/deployments
 
   app:
-    image: ghcr.io/luxfi/dao-frontend:v1.0.0
+    image: ghcr.io/zooai/dao-frontend:v1.0.0
     ports:
       - "3000:3000"
     environment:
