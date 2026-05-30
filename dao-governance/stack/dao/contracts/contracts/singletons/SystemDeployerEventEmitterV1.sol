@@ -13,7 +13,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title SystemDeployerEventEmitterV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of event emission service for DAO deployments
  * @dev This contract implements ISystemDeployerEventEmitterV1, providing a
  * singleton event emission service for consistent deployment tracking.

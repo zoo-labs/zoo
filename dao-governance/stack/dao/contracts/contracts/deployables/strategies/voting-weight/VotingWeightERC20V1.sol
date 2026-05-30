@@ -26,7 +26,7 @@ import {
 
 /**
  * @title VotingWeightERC20V1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of voting weight calculation for ERC20 tokens
  * @dev This contract implements IVotingWeightV1 for ERC20Votes tokens.
  * It calculates voting weight based on delegated token balance at a specific timestamp.

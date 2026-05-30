@@ -20,7 +20,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title ProposerAdapterERC721V1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of proposer adapter using NFT ownership for eligibility
  * @dev This contract implements IProposerAdapterERC721V1, determining proposal creation
  * eligibility based on the number of NFTs owned from a specific collection.

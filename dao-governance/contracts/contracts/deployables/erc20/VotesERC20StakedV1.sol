@@ -32,7 +32,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title VotesERC20StakedV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of non-transferable staking token with rewards distribution
  * @dev This contract implements IVotesERC20StakedV1, providing a staking system
  * where users stake ERC20 tokens and earn multiple reward tokens.

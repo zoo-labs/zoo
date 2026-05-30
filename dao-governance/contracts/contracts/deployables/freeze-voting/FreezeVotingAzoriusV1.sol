@@ -38,7 +38,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title FreezeVotingAzoriusV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of freeze voting for Azorius-based parent DAOs
  * @dev This contract implements IFreezeVotingAzoriusV1, enabling token holders
  * of an Azorius-based parent DAO to vote to freeze a child DAO.

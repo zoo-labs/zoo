@@ -11,7 +11,7 @@ import {
 
 /**
  * @title FreezeVotingBase
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Abstract base implementation for freeze voting mechanisms
  * @dev This abstract contract implements IFreezeVotingBase, providing core freeze
  * voting functionality that concrete implementations can extend.

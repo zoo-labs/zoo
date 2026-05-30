@@ -43,7 +43,7 @@ import {
 
 /**
  * @title VotesERC20V1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of governance token with voting and transfer restrictions
  * @dev This contract implements IVotesERC20V1, providing a flexible governance
  * token with optional transfer locking and voting delegation features.

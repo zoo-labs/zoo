@@ -30,7 +30,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title StrategyV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of the core voting strategy for Azorius governance
  * @dev This contract implements IStrategyV1, providing the voting logic and rules
  * for proposals created through ModuleAzoriusV1.

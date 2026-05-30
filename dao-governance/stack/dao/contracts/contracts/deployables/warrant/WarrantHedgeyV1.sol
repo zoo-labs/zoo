@@ -25,7 +25,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title WarrantHedgeyV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Warrant implementation that creates Hedgey TokenLockupPlans upon execution
  * @dev This contract extends WarrantBase to integrate with Hedgey's vesting system.
  * When executed, it creates a vesting plan through Hedgey's TokenLockupPlans contract.

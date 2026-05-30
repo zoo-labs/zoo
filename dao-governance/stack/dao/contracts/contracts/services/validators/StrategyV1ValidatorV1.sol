@@ -17,7 +17,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title StrategyV1ValidatorV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Validator for gasless voting through ERC-4337 and Light Accounts
  * @dev This contract implements IFunctionValidator, enabling gas-sponsored voting
  * operations through the DAOPaymasterV1 and ERC-4337 infrastructure.

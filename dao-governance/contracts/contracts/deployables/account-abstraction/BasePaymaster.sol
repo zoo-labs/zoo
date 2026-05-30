@@ -23,7 +23,7 @@ import {
 
 /**
  * @title BasePaymaster
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Abstract base contract for ERC-4337 paymaster implementations
  * @dev This abstract contract provides common functionality for paymasters,
  * including entry point validation, staking, and deposit management.

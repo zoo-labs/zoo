@@ -5,7 +5,7 @@ import {Enum} from "../../mocks/safe-smart-account/common/Enum.sol";
 
 /**
  * @title IGuard
- * @author Lux Industriesn Inc (adapted from Gnosis Guard Interface)
+ * @author Zoo Labs Foundation (adapted from Gnosis Guard Interface)
  * @notice Interface for guard contracts that check transactions
  * @dev Guards can be used to restrict the actions that can be performed by modules.
  * They implement pre- and post-transaction checks to ensure transactions meet

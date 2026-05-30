@@ -7,7 +7,7 @@ import {
 
 /**
  * @title InitializerEventEmitter
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Abstract contract for emitting initialization data during contract deployment
  * @dev This abstract contract provides a standardized way to emit initialization
  * data for initializable contracts in the DAO ecosystem.

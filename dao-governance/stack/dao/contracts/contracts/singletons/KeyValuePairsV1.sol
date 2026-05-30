@@ -13,7 +13,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title KeyValuePairsV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of on-chain metadata storage via events
  * @dev This contract implements IKeyValuePairsV1, providing a stateless
  * metadata storage service through event emission.

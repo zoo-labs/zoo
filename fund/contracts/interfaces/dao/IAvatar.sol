@@ -5,7 +5,7 @@ import {Enum} from "../../mocks/safe-smart-account/common/Enum.sol";
 
 /**
  * @title IAvatar
- * @author Lux Industriesn Inc (adapted from Gnosis Guild)
+ * @author Zoo Labs Foundation (adapted from Gnosis Guild)
  * @notice Interface for avatar contracts that can execute module transactions
  * @dev This is a local implementation that removes dependency on @gnosis-guild/zodiac
  * while maintaining the same functionality. An Avatar is typically a Safe or similar

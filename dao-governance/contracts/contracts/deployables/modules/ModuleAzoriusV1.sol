@@ -26,7 +26,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title ModuleAzoriusV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of the Azorius Protocol governance module
  * @dev This contract implements IModuleAzoriusV1, providing the core governance system
  * for DAOs integrated with Gnosis Safe.

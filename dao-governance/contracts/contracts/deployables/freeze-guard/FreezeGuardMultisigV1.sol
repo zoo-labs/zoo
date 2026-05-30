@@ -27,7 +27,7 @@ import {
 
 /**
  * @title FreezeGuardMultisigV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of freeze guard for multisig Safe child DAOs with timelock
  * @dev This contract implements IFreezeGuardMultisigV1, providing both transaction
  * blocking when frozen AND timelock functionality for multisig Safes.

@@ -18,7 +18,7 @@ import {
 
 /**
  * @title WarrantBase
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Abstract base contract for warrant implementations
  * @dev This abstract contract provides the core warrant functionality that can be extended
  * by specific implementations (e.g., Hedgey, Sablier). It handles payment collection,

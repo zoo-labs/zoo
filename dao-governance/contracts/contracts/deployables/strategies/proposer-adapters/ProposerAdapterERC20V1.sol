@@ -20,7 +20,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title ProposerAdapterERC20V1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of proposer adapter using ERC20 voting power for eligibility
  * @dev This contract implements IProposerAdapterERC20V1, determining proposal creation
  * eligibility based on delegated voting power (not token balance).

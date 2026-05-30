@@ -16,7 +16,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title VoteTrackerERC721V1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of vote tracking for ERC721 tokens
  * @dev This contract implements IVoteTrackerV1 for ERC721-based voting.
  * It tracks votes by token ID, preventing reuse of specific NFTs.

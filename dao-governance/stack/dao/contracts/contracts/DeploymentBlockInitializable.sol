@@ -8,7 +8,7 @@ import {
 
 /**
  * @title DeploymentBlockInitializable
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Abstract implementation of deployment block tracking for initializable contracts
  * @dev This abstract contract implements IDeploymentBlock, providing a standard
  * way to record when initializable contracts are deployed.

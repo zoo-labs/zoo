@@ -21,7 +21,7 @@ import {
 
 /**
  * @title CountersignV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of multi-party agreement system with KYC verification
  * @dev This contract implements ICountersignV1, facilitating agreements that require
  * multiple parties to sign and execute conditional transactions.
