@@ -1,6 +1,6 @@
 # 🦁 Zoo AI Model Family
 
-Open-source language models by **[Zoo Labs Foundation](https://zoo.dev)**
+Open-source AI models by **[Zoo Labs Foundation](https://zoo.dev)**
 
 ## Complete Model Family (12 Models)
 
