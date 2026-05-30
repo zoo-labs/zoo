@@ -7,7 +7,7 @@ import {IGuard} from "../interfaces/dao/IGuard.sol";
 
 /**
  * @title GuardableModule
- * @author Lux Industriesn Inc (adapted from Gnosis Guild Zodiac)
+ * @author Zoo Labs Foundation (adapted from Gnosis Guild Zodiac)
  * @notice Base contract for modules that can execute transactions through a Safe (avatar)
  * @dev This is a local implementation that removes dependency on gnosis.pm/safe-contracts
  * and gnosis-guild/zodiac packages while maintaining the same functionality.

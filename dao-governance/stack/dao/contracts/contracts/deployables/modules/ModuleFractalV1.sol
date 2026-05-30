@@ -25,7 +25,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title ModuleFractalV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of the Fractal execution module for parent-child DAO relationships
  * @dev This contract implements IModuleFractalV1, providing direct execution capabilities
  * for parent DAOs to control child DAOs.

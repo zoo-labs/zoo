@@ -17,7 +17,7 @@ import {
 
 /**
  * @title LightAccountValidator
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Abstract contract for validating Light Account operations
  * @dev This abstract contract implements ILightAccountValidator, providing
  * validation logic for Light Accounts in ERC-4337 UserOperations.

@@ -20,7 +20,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title VotingWeightERC721V1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of voting weight calculation for ERC721 tokens
  * @dev This contract implements IVotingWeightV1 for ERC721 NFTs.
  * It calculates voting weight based on NFT ownership, validating that the

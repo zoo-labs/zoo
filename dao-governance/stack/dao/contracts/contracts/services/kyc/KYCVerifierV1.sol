@@ -19,7 +19,7 @@ import {
 
 /**
  * @title KYCVerifierV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice KYC verification service using EIP-712 signature verification
  * @dev This contract implements IKYCVerifierV1, providing KYC verification
  * through cryptographic signature verification.

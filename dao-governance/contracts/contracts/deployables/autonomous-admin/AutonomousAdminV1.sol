@@ -17,7 +17,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title AutonomousAdminV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of autonomous administration for Hats Protocol roles
  * @dev This contract implements IAutonomousAdminV1, providing automated
  * term transitions for Hats that use the HatsElectionsEligibility module.

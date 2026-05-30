@@ -26,7 +26,7 @@ import {
 
 /**
  * @title FreezeGuardAzoriusV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of freeze guard for Azorius-based child DAOs
  * @dev This contract implements IFreezeGuardAzoriusV1, providing transaction blocking
  * functionality when a child DAO is frozen by its parent DAO.

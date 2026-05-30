@@ -16,7 +16,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title VoteTrackerERC20V1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of vote tracking for ERC20 tokens
  * @dev This contract implements IVoteTrackerV1 for ERC20-based voting.
  * It tracks votes by address, allowing one vote per address per context.

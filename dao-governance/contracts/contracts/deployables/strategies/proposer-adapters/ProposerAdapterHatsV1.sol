@@ -20,7 +20,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title ProposerAdapterHatsV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of proposer adapter using Hats Protocol roles for eligibility
  * @dev This contract implements IProposerAdapterHatsV1, determining proposal creation
  * eligibility based on Hats Protocol role ownership.

@@ -36,7 +36,7 @@ import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
  * @title UtilityRolesManagementV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Unified utility for creating and managing Hats Protocol organizational structures
  * @dev This contract implements IUtilityRolesManagementV1, providing comprehensive functionality
  * for both creating new Hats trees and modifying existing ones.

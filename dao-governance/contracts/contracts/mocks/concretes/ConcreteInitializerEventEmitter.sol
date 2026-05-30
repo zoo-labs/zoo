@@ -5,7 +5,7 @@ import {InitializerEventEmitter} from "../../InitializerEventEmitter.sol";
 
 /**
  * @title ConcreteInitializerEventEmitter
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Concrete implementation of InitializerEventEmitter for testing
  * @dev This contract is used to test the InitializerEventEmitter abstract contract
  * in isolation. It provides a minimal implementation with standard test scenarios.

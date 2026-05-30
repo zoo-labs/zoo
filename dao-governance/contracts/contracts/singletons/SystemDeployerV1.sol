@@ -64,7 +64,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title SystemDeployerV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of deployment orchestration for complete DAO systems
  * @dev This contract implements ISystemDeployerV1, providing a singleton deployment
  * service that orchestrates the creation of entire DAO governance systems.

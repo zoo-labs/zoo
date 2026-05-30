@@ -6,7 +6,7 @@ import {IERC6372} from "@openzeppelin/contracts/interfaces/IERC6372.sol";
 
 /**
  * @title ClockModeLib
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Library for detecting and handling different time measurement modes
  * @dev This library provides utilities for working with ClockMode, abstracting
  * the differences between timestamp-based and block number-based timing.

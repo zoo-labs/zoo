@@ -26,7 +26,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 /**
  * @title FreezeVotingMultisigV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of freeze voting for multisig-based parent DAOs
  * @dev This contract implements IFreezeVotingMultisigV1, enabling signers of a
  * multisig parent Safe to vote to freeze a child DAO.

@@ -42,7 +42,7 @@ import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 /**
  * @title PaymasterV1
- * @author Lux Industriesn Inc
+ * @author Zoo Labs Foundation
  * @notice Implementation of ERC-4337 paymaster for gasless transactions
  * @dev This contract implements IPaymasterV1, providing gas sponsorship
  * for Light Account operations in the DAO Protocol.
