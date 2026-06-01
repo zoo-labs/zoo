@@ -25,12 +25,19 @@ Open-source language models by **[Zoo Labs Foundation](https://zoo.dev)**
 
 ## Quick Start
 
-```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
+The smallest published checkpoint is [`zooai/nano-1`](https://huggingface.co/zooai/nano-1) — Qwen3-0.6B quantized to 4-bit MLX, runs locally on Apple Silicon:
 
-model = AutoModelForCausalLM.from_pretrained("zooai/zoo-nano-0.6b")
-tokenizer = AutoTokenizer.from_pretrained("zooai/zoo-nano-0.6b")
+```python
+# pip install mlx-lm
+from mlx_lm import load, generate
+
+model, tokenizer = load("zooai/nano-1")
+print(generate(model, tokenizer, prompt="Hello, world!", max_tokens=100))
 ```
+
+Other published checkpoints (see [`ZOO_MODEL_CARD.md`](./ZOO_MODEL_CARD.md)):
+- [`zooai/eco-1`](https://huggingface.co/zooai/eco-1) — full-precision safetensors, load via 🤗 `transformers`
+- [`zooai/coder-1`](https://huggingface.co/zooai/coder-1) — GGUF, load via `llama.cpp` or `ctransformers`
 
 ## Links
 
