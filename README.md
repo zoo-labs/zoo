@@ -19,6 +19,8 @@ Open-source language models by **[Zoo Labs Foundation](https://zoo.dev)**
 | **zoo-3d** | 12B | 3D Model Generation | 3D-specialized |
 | **zoo-musician** | 6B | Music Composition | Audio Gen |
 
+See [`ZOO_MODEL_CARD.md`](./ZOO_MODEL_CARD.md) for HuggingFace endpoints, license, and quickstart snippets per model.
+
 ## Organizations
 
 **Primary:** [Zoo Labs Foundation Inc.](https://zoo.dev) - 501(c)(3) nonprofit (SF)
