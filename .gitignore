@@ -109,3 +109,6 @@ test-results/
 
 # Large images - use CDN for >500KB assets
 # Keep small icons/logos in repo
+.env.production
+.env.development
+.env.*.local
