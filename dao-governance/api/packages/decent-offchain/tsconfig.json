@@ -23,9 +23,6 @@
 
     // Show full error messages and types
     "noErrorTruncation": true,
-
-    // Path aliases
-    "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }

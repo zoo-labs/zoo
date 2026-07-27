@@ -4,7 +4,7 @@
     "target": "ESNext",
     "module": "CommonJS",
     "moduleDetection": "force",
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "./dist/cjs",
