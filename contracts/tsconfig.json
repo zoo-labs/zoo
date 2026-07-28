@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "node16",
     "strict": false,
     "lib": ["dom", "dom.iterable", "esnext", "esnext.asynciterable"],
     "typeRoots": ["./node_modules/@types", "./types"],

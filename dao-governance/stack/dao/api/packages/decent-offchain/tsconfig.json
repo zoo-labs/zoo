@@ -24,7 +24,9 @@
     // Show full error messages and types
     "noErrorTruncation": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": ["./**/*.ts"],
