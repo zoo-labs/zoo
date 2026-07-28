@@ -20,7 +20,10 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "bundler",
     "paths": {
-      "*": ["src/*", "node_modules/*"]
+      "*": [
+        "./src/*",
+        "./node_modules/*"
+      ]
     },
     "esModuleInterop": true,
     "resolveJsonModule": true

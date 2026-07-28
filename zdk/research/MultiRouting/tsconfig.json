@@ -1,8 +1,7 @@
 { 
     "compilerOptions": {
         "outDir": "./build",
-        "allowJs": true,
-        "downlevelIteration": true
+        "allowJs": true
     }, 
     "include": [ "./src/**/*", "tests**/*" ] 
 }
