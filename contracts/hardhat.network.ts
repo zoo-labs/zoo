@@ -29,7 +29,7 @@ const networks: HardhatUserConfig['networks'] = {
     },
   },
   luxlocal: {
-    url: 'http://127.0.0.1:9630/ext/bc/C/rpc',
+    url: 'http://127.0.0.1:9630/v1/bc/C/rpc',
     chainId: 43112,
     allowUnlimitedContractSize: true,
     accounts: [
@@ -75,7 +75,7 @@ const networks: HardhatUserConfig['networks'] = {
     },
   },
   'zoo-mainnet': {
-    url: 'http://127.0.0.1:9630/ext/bc/zy5VXh7KNFKWPFpvm3qfYsHauircZh9RNxALUv6cFueG2KKqE/rpc',
+    url: 'http://127.0.0.1:9630/v1/bc/zy5VXh7KNFKWPFpvm3qfYsHauircZh9RNxALUv6cFueG2KKqE/rpc',
     chainId: 200200,
     allowUnlimitedContractSize: true,
     accounts: {
@@ -85,7 +85,7 @@ const networks: HardhatUserConfig['networks'] = {
     gasPrice: 25000000000,
   },
   'lux-mainnet': {
-    url: 'http://127.0.0.1:9630/ext/bc/C/rpc',
+    url: 'http://127.0.0.1:9630/v1/bc/C/rpc',
     chainId: 96369,
     allowUnlimitedContractSize: true,
     accounts: {
