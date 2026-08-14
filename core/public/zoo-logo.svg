@@ -1,0 +1,42 @@
+<svg width="512" height="512" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Zoo brand mark: three-circle RGB additive Venn (green/red/blue with
+       yellow/cyan/magenta overlaps and a white center). Filled to the
+       viewport so it scales cleanly into 32x32 nav slots and 256x256 OG
+       cards without tiny dead margins. -->
+  <defs>
+    <clipPath id="logoClip">
+      <circle cx="512" cy="511" r="500"/>
+    </clipPath>
+    <clipPath id="logoGreen">
+      <circle cx="512" cy="250" r="430"/>
+    </clipPath>
+    <clipPath id="logoRed">
+      <circle cx="240" cy="670" r="430"/>
+    </clipPath>
+    <clipPath id="logoBlue">
+      <circle cx="784" cy="670" r="430"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#logoClip)">
+    <!-- Base primaries -->
+    <circle cx="512" cy="250" r="430" fill="#00A652"/>
+    <circle cx="240" cy="670" r="430" fill="#ED1C24"/>
+    <circle cx="784" cy="670" r="430" fill="#2E3192"/>
+    <!-- Two-way overlaps -->
+    <g clip-path="url(#logoGreen)">
+      <circle cx="240" cy="670" r="430" fill="#FCF006"/>
+    </g>
+    <g clip-path="url(#logoGreen)">
+      <circle cx="784" cy="670" r="430" fill="#01ACF1"/>
+    </g>
+    <g clip-path="url(#logoRed)">
+      <circle cx="784" cy="670" r="430" fill="#EA018E"/>
+    </g>
+    <!-- Three-way overlap = white center -->
+    <g clip-path="url(#logoGreen)">
+      <g clip-path="url(#logoRed)">
+        <circle cx="784" cy="670" r="430" fill="#FFFFFF"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -39,7 +39,7 @@ const UiSwitch = styled(Switch)(({ theme }) => ({
       top: 0,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
-      backgroundImage: `url('/zooLogo.svg')`,
+      backgroundImage: `url('/zoo-logo.svg')`,
     },
   },
   '& .MuiSwitch-track': {
