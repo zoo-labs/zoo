@@ -45,16 +45,6 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        with:
-          # zoo.ngo is published by THIS workflow — the step below copies
-          # foundation/out over it and writes the CNAME. Pages was never switched
-          # to Actions mode, so this step answered `Get Pages site failed …
-          # HttpError: Not Found` and the deploy has failed on every push since
-          # 2026-08-14 while the domain kept serving an older build. `enablement`
-          # is what the error itself names: it turns Pages on in Actions mode
-          # rather than requiring somebody to click it, so the publisher and the
-          # thing it publishes to are declared in one place.
-          enablement: true
 
       - name: Prepare deployment directory
         run: |
