@@ -1,0 +1,65 @@
+# zoo.ngo publishes to the Hanzo static plane: the foundation build's `out/` is
+# synced to an S3 prefix that the ingress `staticFiles` middleware serves directly.
+#
+# It used to deploy to GitHub Pages, which CANNOT work here: this repository is
+# private, and `POST /repos/.../pages` answers "your current plan does not support
+# GitHub Pages for this repository". So Setup Pages failed on every push from
+# 2026-08-14 onward while the domain kept serving an older build — a red deploy
+# nobody read, in front of a site nobody could update. The root CNAME and the
+# _github-pages-challenge file are leftovers from that arrangement.
+name: Deploy zoo.ngo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zoo-ngo-publish
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: ./foundation
+
+      - name: Build
+        run: pnpm run build
+        working-directory: ./foundation
+        env:
+          NODE_ENV: production
+
+      # `output: 'export'` — if that is ever removed the sync would publish
+      # nothing and the site would silently freeze, so fail loudly instead.
+      - name: The build produced a static export
+        run: test -f foundation/out/index.html
+
+      - name: Publish to the static plane
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+        run: |
+          aws --endpoint-url https://s3.hanzo.ai \
+            s3 sync foundation/out/ s3://hanzo-sites/zoo/ngo/ --delete
+
+      # The domain, not the bucket — reading the bucket is what lets a green
+      # deploy mean nothing.
+      - name: The live host serves it
+        run: |
+          curl -fsS -o /dev/null -w 'zoo.ngo %{http_code}\n' https://zoo.ngo/
