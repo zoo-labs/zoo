@@ -1,2 +1,6 @@
+allowBuilds:
+  sharp: set this to true or false
+minimumReleaseAgeExclude:
+  - '@hanzo/event@0.3.34'
 onlyBuiltDependencies:
   - sharp
