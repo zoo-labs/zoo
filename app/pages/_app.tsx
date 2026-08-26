@@ -1,16 +1,14 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Inter } from 'next/font/google'
+import { ZenSans, ZenMono } from '@hanzo/font'
 import Script from 'next/script'
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-})
+const sans = ZenSans
+const mono = ZenMono
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={`${inter.variable} dark`}>
+    <div className={`${sans.variable} ${mono.variable} dark`}>
       <Script
         id="hanzo-insights"
         strategy="afterInteractive"

@@ -22,8 +22,8 @@ const filteredDefaultComponents = Object.fromEntries(
 export const luxTheme = mergeThemeOverride({
   ...defaultTheme,
   fonts: {
-    heading: `'Inter', sans-serif`,
-    body: `'Inter', sans-serif`,
+    heading: `'Zen', sans-serif`,
+    body: `'Zen', sans-serif`,
   },
   config: {
     initialColorMode: 'dark',

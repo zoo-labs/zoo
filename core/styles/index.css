@@ -1,3 +1,6 @@
+/* Zen. The plain @font-face form, so the family resolves by name — these
+   sheets say font-family: 'Zen' rather than reading a next/font variable. */
+@import '@hanzo/font/css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -139,7 +142,7 @@ canvas {
 
 .logo,
 .lux-font {
-  font-family: "Inter", sans-serif, Arial, Helvetica;
+  font-family: "Zen", sans-serif, Arial, Helvetica;
   font-weight: 900;
   font-size: 1.75em;
 }
@@ -157,7 +160,7 @@ video {
   position: relative;
   bottom: 2px;
   font-weight: bold;
-  font-family: "Inter", sans-serif, Arial, Helvetica;
+  font-family: "Zen", sans-serif, Arial, Helvetica;
 }
 
 .AssetList__heading {

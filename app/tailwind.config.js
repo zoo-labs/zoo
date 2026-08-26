@@ -49,8 +49,8 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['var(--font-zen-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-zen-mono)', 'monospace'],
       },
       keyframes: {
         'accordion-down': {
