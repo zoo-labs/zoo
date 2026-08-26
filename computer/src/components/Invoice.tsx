@@ -16,7 +16,7 @@ import { formatCurrency, formatDate } from '../lib/invoices';
 
 // Register fonts (optional - for better typography)
 // Font.register({
-//   family: 'Inter',
+//   family: 'Zen',
 //   src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2'
 // });
 

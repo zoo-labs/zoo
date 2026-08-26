@@ -19,8 +19,8 @@ export const theme = mergeThemeOverride({
   // @note There are other properties that are not included in mergeThemeOverride
   ...defaultTheme,
   fonts: {
-    heading: `'Inter', sans-serif`,
-    body: `'Inter', sans-serif`,
+    heading: `'Zen', sans-serif`,
+    body: `'Zen', sans-serif`,
   },
   config: {
     initialColorMode: 'dark',

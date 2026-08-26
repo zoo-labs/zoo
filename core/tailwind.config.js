@@ -147,7 +147,7 @@ module.exports = {
         "48px": "48px",
       },
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Zen", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         "4.5xl": [
