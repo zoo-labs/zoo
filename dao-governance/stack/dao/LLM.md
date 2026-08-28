@@ -14,7 +14,7 @@ Lux DAO is a decentralized autonomous organization platform built for the Lux Pr
 - Flipped triangle logo to point downward as requested
 - Updated favicon and branding to Lux Protocol
 - Configured Playwright E2E tests for wallet connection
-- **Monochromatic theme applied** - Using only black/white/grays with Inter font
+- **Monochromatic theme applied** - Using only black/white/grays with Zen font
 - **Switched to Anvil** - Better performance than Hardhat for local development
 - **E2E Tests Running** - 5/7 tests passing, wallet connection working
 - **Scripts Organized** - All scripts moved to scripts/ directory, no one-off scripts
