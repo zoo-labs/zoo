@@ -269,7 +269,7 @@ export const vars = createGlobalTheme(':root', {
     '500': '500ms',
   },
   fonts: {
-    body: 'Inter, sans-serif',
+    body: 'Zen, ui-sans-serif, system-ui, sans-serif',
     heading: 'Adieu, sans-serif',
   },
 })

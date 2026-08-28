@@ -7,7 +7,7 @@ const zIndex = {
 }
 
 const fonts = {
-  fontFamily: 'Inter custom',
+  fontFamily: 'Zen, ui-sans-serif, system-ui, sans-serif',
 }
 
 export const LIGHT_THEME: Theme = {

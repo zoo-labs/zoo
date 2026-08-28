@@ -1,3 +1,4 @@
+import '@hanzo/font/css';
 import '@fontsource/space-mono';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
