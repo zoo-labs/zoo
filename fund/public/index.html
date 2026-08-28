@@ -7,10 +7,15 @@
     <link rel="icon" type="image/png" href="https://zoo.ngo/favicon/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://zoo.ngo/favicon/favicon-16x16.png" sizes="16x16">
     <link rel="apple-touch-icon" href="https://zoo.ngo/favicon/apple-touch-icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="preload" href="/fonts/zen-variable.woff2" as="font" type="font/woff2" crossorigin>
     <style>
+        @font-face {
+            font-family: 'Zen';
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+            src: url('/fonts/zen-variable.woff2') format('woff2');
+        }
         * {
             margin: 0;
             padding: 0;

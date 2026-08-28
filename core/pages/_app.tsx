@@ -203,10 +203,6 @@ function MyApp({
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
           crossOrigin="anonymous"
         />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Inter:200,300,400,500,600,700,800,900"
-        />
       </Head>
       {/*
   // @ts-ignore */}

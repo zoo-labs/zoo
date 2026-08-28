@@ -1,9 +1,9 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { ZenSans, ZenMono } from '@hanzo/font'
+import { Zen, ZenMono } from '@hanzo/font'
 import Script from 'next/script'
 
-const sans = ZenSans
+const sans = Zen
 const mono = ZenMono
 
 export default function App({ Component, pageProps }: AppProps) {
