@@ -14,7 +14,7 @@
     "stripe:trigger": "stripe trigger payment_intent.succeeded"
   },
   "dependencies": {
-    "@hanzo/font": "^1.8.12",
+    "@hanzo/font": "^1.9.1",
     "@heroicons/react": "^2.2.0",
     "@react-pdf/renderer": "^4.3.1",
     "@stripe/react-stripe-js": "^5.3.0",

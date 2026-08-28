@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import { ZenSans } from '@hanzo/font'
+import { Zen } from '@hanzo/font'
 import './globals.css'
 import { Providers } from './providers'
 import { Navigation } from '@/components/navigation'
 
-const inter = ZenSans
+const sans = Zen
 
 export const metadata: Metadata = {
   title: 'Zoo Network Explorer',
@@ -27,7 +27,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={sans.className}>
         <Providers>
           <div className="min-h-screen bg-background">
             <Navigation />

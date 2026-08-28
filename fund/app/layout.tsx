@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { ZenSans } from '@hanzo/font'
+import { Zen } from '@hanzo/font'
 import './globals.css'
 import { Providers } from './providers'
 
-const inter = ZenSans
+const sans = Zen
 
 export const metadata: Metadata = {
   title: 'Zoo Fund - Conservation DAOs',
@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={inter.className}>
+      <body className={sans.className}>
         <Providers>{children}</Providers>
       </body>
     </html>
