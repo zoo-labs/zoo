@@ -49,7 +49,7 @@ const StyledLinkOut = styled(ArrowDown)`
 const EXTERNAL_APIS = [
   {
     name: 'Auto Router',
-    description: <Trans>The app fetches the optimal trade route from a Lux Partners Limited server.</Trans>,
+    description: <Trans>The app fetches the optimal trade route from a Lux Industries Inc server.</Trans>,
   },
   {
     name: 'Infura',
@@ -129,7 +129,7 @@ function PrivacyPolicy() {
                 <AutoRow gap="4px">
                   <Info size={20} />
                   <ThemedText.DeprecatedMain fontSize={14} color="accentAction">
-                    <Trans>Lux Partners Limited Terms of Service</Trans>
+                    <Trans>Lux Industries Inc Terms of Service</Trans>
                   </ThemedText.DeprecatedMain>
                 </AutoRow>
                 <StyledLinkOut size={20} />
