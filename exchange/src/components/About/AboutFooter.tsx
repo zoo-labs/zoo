@@ -129,7 +129,7 @@ const LogoSectionContent = () => {
           <GithubIcon size={32} />
         </SocialLink>
       </SocialLinks>
-      <Copyright>© {new Date().getFullYear()} Lux Partners Limited</Copyright>
+      <Copyright>© {new Date().getFullYear()} Lux Industries Inc</Copyright>
     </>
   )
 }
