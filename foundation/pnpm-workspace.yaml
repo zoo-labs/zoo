@@ -1,6 +1,9 @@
+# sharp is next/image's encoder and has to run its install script. The value
+# has to be the boolean — `pnpm approve-builds` left the prompt's own placeholder
+# text here, which is not true, so pnpm went on refusing the build and every
+# install since has died on ERR_PNPM_IGNORED_BUILDS.
 allowBuilds:
-  sharp: set this to true or false
+  sharp: true
+
 minimumReleaseAgeExclude:
   - '@hanzo/event@0.3.34'
-onlyBuiltDependencies:
-  - sharp
