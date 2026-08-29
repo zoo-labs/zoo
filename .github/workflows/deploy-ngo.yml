@@ -29,7 +29,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          # pnpm 11 requires node:sqlite, which arrived in Node 22.5.
+          node-version: '22'
 
       # Pinned. `npm install -g pnpm` floats to whatever is newest, which is how
       # a green deploy turned red without a commit: pnpm 10 made an unapproved
