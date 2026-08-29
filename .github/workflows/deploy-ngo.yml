@@ -31,8 +31,12 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      # Pinned. `npm install -g pnpm` floats to whatever is newest, which is how
+      # a green deploy turned red without a commit: pnpm 10 made an unapproved
+      # install script a hard error, and the runner picked that up on its own.
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
