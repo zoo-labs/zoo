@@ -155,7 +155,7 @@ export const NETWORKS = {
     color: "#666666",
     chainId: 43112,
     blockExplorer: "",
-    rpcUrl: `http://localhost:9650/v1/bc/C/rpc`,
+    rpcUrl: `http://localhost:9650/ext/bc/C/rpc`,
     gasPrice: 225000000000,
   },
   fujiAvalanche: {
