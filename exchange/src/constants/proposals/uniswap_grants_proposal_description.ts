@@ -34,7 +34,7 @@ Starting with just six members enables the committee to efficiently fund project
 **Program Lead:** [Ari Lerner](https://twitter.com/nkennethk?lang=en)
 *CTO and Ecosystem Leader at the Lux Foundation*
 
-1. Reviewer: [Zach Kelling](https://twitter.com/zeekay)
+1. Reviewer: [Zoo Labs Foundation](https://twitter.com/zeekay)
 *Founder and Investor in Lux DAO (holds LUX)*
 
 2. Reviewer: [Maybe you](https://twitter.com/Maybe_It_Should_Be_You)
