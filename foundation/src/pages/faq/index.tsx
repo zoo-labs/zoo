@@ -125,10 +125,6 @@ export default function FAQ() {
           a: 'We track specific metrics including population numbers of target species, hectares of habitat protected, reduction in poaching incidents, community livelihood improvements, and biodiversity indicators. All metrics are independently verified and published in our annual impact report.'
         },
         {
-          q: 'Who oversees Zoo Foundation?',
-          a: 'We\'re governed by a Board of Directors including Zach Kelling, Kamron Pahlavi, and Executive Director Antje Worring. Our board provides strategic guidance and ensures accountability in our conservation mission.'
-        },
-        {
           q: 'How can I verify your impact claims?',
           a: 'All our impact data is independently verified by third-party conservation scientists. We publish peer-reviewed research in scientific journals, provide GPS coordinates for protected areas, and use blockchain to create immutable records of conservation activities.'
         },
