@@ -17,11 +17,6 @@ export default function Team() {
 
   const board = [
     {
-      name: 'Zach Kelling',
-      role: 'Board Member',
-      affiliation: 'Technology & Conservation'
-    },
-    {
       name: 'Kamron Pahlavi',
       role: 'Board Member',
       affiliation: 'Strategic Development'

@@ -75,14 +75,6 @@ const newsItems: NewsItem[] = [
     excerpt: 'Strategic partnerships with field conservation organizations amplify our ability to protect endangered species worldwide.',
     readTime: '7 min read'
   },
-  {
-    id: '8',
-    date: '2025-01-10',
-    category: 'Announcement',
-    title: 'Board Welcomes New Leadership for 2025',
-    excerpt: 'Zoo Foundation announces board composition with Zach Kelling, Kamron Pahlavi, and Executive Director Antje Worring leading conservation efforts.',
-    readTime: '4 min read'
-  }
 ];
 
 const pressReleases = [
