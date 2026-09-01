@@ -104,7 +104,7 @@ Send order confirmation after payment.
     "subtotal": 3600.00,
     "tax": 288.00,
     "total": 3888.00,
-    "billingAddress": "123 AI Street, San Francisco, CA 94102"
+    "billingAddress": "995 Market St, San Francisco, CA 94103"
   }
 }
 ```

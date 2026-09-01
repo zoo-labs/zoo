@@ -143,10 +143,10 @@ export default async function handler(req: Request): Promise<Response> {
           status: invoice.status,
           company: {
             name: 'Hanzo Computer',
-            address: '2100 Geng Road',
-            city: 'Palo Alto',
+            address: '995 Market St',
+            city: 'San Francisco',
             state: 'CA',
-            zip: '94303',
+            zip: '94103',
             country: 'United States',
             email: 'billing@hanzo.computer',
             phone: '+1 (650) 555-0100',

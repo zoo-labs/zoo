@@ -1,16 +1,65 @@
 # Zoo Network Explorer
 
-A modern blockchain explorer for the Zoo Network, providing real-time insights into blocks, transactions, and network statistics.
+A blockchain explorer for the Zoo Network (chain **200200**), reading the live
+C-Chain over JSON-RPC.
 
-## Features
+## Every figure is a measurement
 
-- **Real-time Network Statistics**: Monitor block height, transactions per second, active validators, and gas prices
-- **Block Explorer**: Browse blocks with detailed information about miners, gas usage, and rewards
-- **Transaction Tracking**: View all transactions with status, method calls, and value transfers
-- **Account/Wallet Viewing**: Inspect account balances and transaction history
-- **Dark/Light Theme**: Toggle between dark and light modes for optimal viewing
-- **Wallet Integration**: Connect via RainbowKit with support for multiple wallets
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
+The rule this app is built around: **a number that was not read from the chain
+must not appear.** Not as a placeholder, not as a fallback, not as a
+plausible-looking constant.
+
+It is enforced by the type, not by review. `lib/measure.ts` defines a `Measure`,
+which braids a value together with what is known about it — one of `pending`,
+`live`, `stale`, `idle`, `empty`, `unknown` or `unavailable`. The three absence
+constructors take **no value argument at all**, so there is nowhere to put a
+fallback, and `<Stat>` accepts a `Measure` rather than a string or a number. A
+figure whose read failed therefore has nothing to render but the word for why.
+
+Every `Measure` also carries a required `source` — the RPC method it came from —
+so "where did this number come from" is always answerable on the page itself.
+
+### What is measured
+
+| Figure | Source |
+| --- | --- |
+| Block height | `eth_getBlockByNumber('latest')`, controlled by `eth_blockNumber` |
+| Last block age | head block `timestamp` |
+| Block interval | mean over the timestamps of the last 10 blocks |
+| Txns in last block | head block `transactions.length` |
+| Gas price | `eth_gasPrice` |
+| Gas used | head block `gasUsed ÷ gasLimit` |
+| Chain ID | `eth_chainId` |
+| Validators | `platform.getCurrentValidators` (P-Chain) |
+| Block list / tx list | the last 10 blocks, one batched request |
+
+### What is NOT measured, and why
+
+Rendered on the page as an explicit "not shown, and why" note, each with a
+control that proves the field is unserved rather than zero — see `UNSERVED` in
+`lib/measure.ts`.
+
+- **Total transactions** and **account count** need an indexer. None is
+  deployed; `https://explore.zoo.network/api/v2/stats` returns HTTP 404.
+- **ZOO price** needs an oracle or market feed. Neither exists for this network,
+  so no price is shown at all.
+
+### Degraded states
+
+The chain not producing blocks is a normal condition and is rendered as one. A
+head outside its freshness budget can never grade `live`: `grade()` in
+`lib/chain.ts` returns `idle` when the node is caught up, and `degraded` when it
+is behind (`eth_syncing`) or when `eth_blockNumber` runs ahead of the head that
+can actually be served — blocks built but not finalized. An unreachable endpoint
+yields `unavailable` for every figure, never a last-known number.
+
+## Other features
+
+- **Block explorer**: browse blocks with miner, gas usage and transaction count
+- **Transaction list**: real hashes, addresses and ZOO values from recent blocks
+- **Dark/light theme**
+- **Wallet integration** via RainbowKit
+- **Responsive design**
 
 ## Tech Stack
 
@@ -43,35 +92,36 @@ pnpm run start
 
 ### Network Configuration
 
-The Zoo Network configuration is located in `/lib/wagmi.ts`:
+Endpoints and the chain ID live in `lib/chain.ts` and are re-used by
+`lib/wagmi.ts`, so the wallet and the explorer can never disagree about which
+chain they are on.
 
-```typescript
-export const zooMainnet = {
-  id: 200, // Zoo chain ID
-  name: 'Zoo Network',
-  nativeCurrency: {
-    name: 'ZOO',
-    symbol: 'ZOO',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: { http: ['http://localhost:8545'] }, // Update with actual RPC
-    public: { http: ['http://localhost:8545'] },
-  },
-  blockExplorers: {
-    default: { name: 'Zoo Explorer', url: 'http://localhost:3003' },
-  },
-  testnet: false,
-}
-```
+The JSON-RPC path on this estate is **`/v1/bc/C/rpc`**. It is not `/ext/bc/C/rpc`
+(HTTP 404) and the P-Chain is a different VM at `/v1/bc/P`.
 
 ### Environment Variables
 
-Create a `.env.local` file:
+All optional; the defaults point at Zoo mainnet.
 
 ```env
+NEXT_PUBLIC_ZOO_RPC_URL=https://rpc.zoo.network/v1/bc/C/rpc
+NEXT_PUBLIC_ZOO_P_RPC_URL=https://rpc.zoo.network/v1/bc/P
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
 ```
+
+## Testing
+
+```bash
+pnpm test        # node --test, no test-runner dependency
+pnpm type-check
+```
+
+`test/no-fabricated-stats.test.ts` is a guard: it fails if `Math.random()`, one
+of the literals that previously shipped, or invented trend copy is reintroduced
+into `app/`, `components/` or `lib/`, and it asserts that figures still render
+through `<Stat>`/`chainFigures`. `test/chain.test.ts` drives the client against
+recorded real responses and asserts that every degraded path yields a `Measure`
+with no value.
 
 ## Project Structure
 
@@ -90,9 +140,14 @@ NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
 │   ├── network-stats.tsx # Network statistics
 │   ├── block-list.tsx    # Block listing
 │   └── transaction-list.tsx # Transaction listing
+│   └── stat.tsx          # <Stat>/<Legend>/<Notice> — the ONE figure renderer
 ├── lib/                   # Utilities
+│   ├── measure.ts        # Measure type + UNSERVED register
+│   ├── chain.ts          # The ONE chain client (transport, probe, figures)
+│   ├── use-chain.tsx     # ChainProvider — one poll for the whole app
 │   ├── utils.ts          # Helper functions
 │   └── wagmi.ts          # Wagmi configuration
+├── test/                  # node --test suites
 └── public/               # Static assets
 ```
 
@@ -155,23 +210,19 @@ Use Tailwind CSS classes for styling:
 
 3. The explorer will be available at `http://localhost:3003`
 
-## Integration with Zoo Blockchain
-
-To connect to the actual Zoo blockchain:
-
-1. Update the RPC URL in `/lib/wagmi.ts`
-2. Configure the actual chain ID
-3. Set up proper API endpoints for fetching blockchain data
-4. Replace mock data in components with real blockchain queries
-
 ## Contributing
 
 Contributions are welcome! Please ensure:
 
 - Code follows TypeScript best practices
 - Components are properly typed
-- Tests pass before submitting PRs
+- `pnpm test` and `pnpm type-check` pass before submitting PRs
 - Documentation is updated
+
+If you are adding a figure to the page, add it to `ChainFigures` in
+`lib/chain.ts` and render it with `<Stat>`. If the value cannot be read from the
+chain, register it in `UNSERVED` with a control that proves it — do not reach
+for a placeholder.
 
 ## License
 

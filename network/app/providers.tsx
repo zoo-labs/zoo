@@ -6,6 +6,7 @@ import { ThemeProvider } from 'next-themes'
 import { WagmiProvider } from 'wagmi'
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import { config } from '@/lib/wagmi'
+import { ChainProvider } from '@/lib/use-chain'
 import '@rainbow-me/rainbowkit/styles.css'
 
 const queryClient = new QueryClient({
@@ -23,7 +24,8 @@ export function Providers({ children }: { children: ReactNode }) {
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider theme={darkTheme()}>
-            {children}
+            {/* One chain poll for the whole app — see lib/use-chain. */}
+            <ChainProvider>{children}</ChainProvider>
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
