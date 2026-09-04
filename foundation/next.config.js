@@ -5,6 +5,12 @@ const nextConfig = {
   // Required for GitHub Pages to serve dynamic routes correctly
   trailingSlash: true,
 
+  // The one declared origin, projected to the client so Seo can fall back to it
+  // when there is no live location to read (the static render).
+  env: {
+    NEXT_PUBLIC_SITE_ORIGIN: require('./site-origin'),
+  },
+
   // `@hanzo/font` ships ESM that imports `next/font/local`, and that import is
   // only meaningful once Next's font loader has rewritten it. Without this the
   // page-data pass resolves the bare directory in plain Node and dies on
