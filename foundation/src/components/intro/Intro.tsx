@@ -1,6 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { STATS, U } from '@/config/registry';
+
+/**
+ * The hero, in hanzo.industries' anatomy: eyebrow, then the claim, then one
+ * sentence of what it means, then the actions, then the numbers that back it.
+ *
+ * The featured-species card carries the animal's name as REAL TEXT under the
+ * picture rather than relying on a label baked into the artwork. A baked label
+ * only survives if the frame it was drawn for is the frame it gets, and the
+ * moment the card is asked to fill a different box the name is what gets cut.
+ * The picture is given a fixed square box and `object-contain`, so it is
+ * letterboxed rather than cropped at every width.
+ */
 function Intro({
   breadcrumbs,
   title,
@@ -11,101 +24,99 @@ function Intro({
   comment?: string;
 }) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50/40 via-white to-white py-16 md:py-24 border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <div className="flex flex-wrap items-center gap-2 mb-6">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
-                <span>🌿</span>
-                <span>Zoo Labs Foundation • 501(c)(3)</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
-                <span>🐬</span>
-                <span>ZenLM Ecological AI</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900">
-                <span>🔬</span>
-                <span>Open Science</span>
-              </span>
-            </div>
+    <section
+      style={{
+        borderBottom: '1px solid var(--border)',
+        paddingBlock: 'clamp(3rem, 8vw, 6rem)',
+      }}
+    >
+      <div className='mx-auto' style={{ maxWidth: 1280, paddingInline: 'var(--page-gutter)' }}>
+        <div className='grid items-center gap-12 lg:grid-cols-12'>
+          <div className='flex flex-col items-start lg:col-span-7'>
+            <p className='eyebrow mb-5'>{breadcrumbs}</p>
 
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-gray-950 tracking-tight leading-[1.08] mb-6">
-              {title}{' '}
-              <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-sky-600 bg-clip-text text-transparent">
-                Earth's Wildlife
-              </span>
+            <h1 className='display mb-6'>
+              {title} Earth&rsquo;s wildlife
             </h1>
 
-            <p className="text-xl sm:text-2xl text-gray-700 font-medium leading-relaxed mb-8 max-w-2xl">
+            <p className='lede mb-8' style={{ maxWidth: '38rem' }}>
               {comment ||
-                'Protecting endangered species through open-access research, bioacoustics, community field sanctuaries, and kid-friendly wildlife science.'}
+                'Protecting endangered species through open-access research, bioacoustics, community field sanctuaries and wildlife science anyone can read.'}
             </p>
 
-            <div className="flex flex-wrap gap-4 w-full sm:w-auto">
-              <Link
-                href="/animals"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-lg shadow-md hover:shadow-lg transition-all"
-              >
-                <span>🐾 Explore 3D Animals</span>
-                <span>→</span>
+            <div className='flex flex-wrap items-center gap-3'>
+              <Link href={U.animals} className='action' data-fill=''>
+                Explore the species
               </Link>
-              <Link
-                href="https://zoolabs.io"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white hover:bg-gray-50 text-gray-900 border-2 border-emerald-500 font-extrabold text-lg shadow-sm hover:shadow-md transition-all"
-              >
-                <span>🔬 Zoo Labs (zoolabs.io)</span>
-                <span className="text-emerald-600">↗</span>
+              <Link href={U.research} className='action'>
+                Read the research
               </Link>
-              <Link
-                href="/donation"
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-base transition-colors"
+              <a
+                href={U.labs}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='more ml-1'
               >
-                💚 Donate
-              </Link>
+                Zoo Labs <span aria-hidden>↗</span>
+              </a>
             </div>
 
-            <div className="grid grid-cols-3 gap-6 pt-10 mt-10 border-t border-gray-200/80 w-full max-w-xl text-left">
-              <div>
-                <p className="text-3xl font-black text-emerald-600">2.4M+</p>
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">Hectares Protected</p>
-              </div>
-              <div>
-                <p className="text-3xl font-black text-sky-600">130+</p>
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">Research Papers</p>
-              </div>
-              <div>
-                <p className="text-3xl font-black text-teal-600">100%</p>
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">Non-Profit 501(c)(3)</p>
-              </div>
-            </div>
+            <dl
+              className='mt-12 grid w-full grid-cols-2 gap-6 pt-10 sm:grid-cols-4'
+              style={{ borderTop: '1px solid var(--border)' }}
+            >
+              {STATS.map((stat) => (
+                <div key={stat.label}>
+                  <dt className='sr-only'>{stat.label}</dt>
+                  <dd className='m-0'>
+                    <span className='block text-2xl font-semibold tracking-tight'>
+                      {stat.value}
+                    </span>
+                    <span
+                      className='mt-1 block text-[13px]'
+                      style={{ color: 'var(--muted-foreground)' }}
+                    >
+                      {stat.label}
+                    </span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md lg:max-w-none">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-gradient-to-b from-sky-100 to-emerald-50 p-6">
+          <div className='lg:col-span-5'>
+            <figure className='card m-0 mx-auto max-w-md overflow-hidden p-4 lg:max-w-none'>
+              {/* The render's own ground, so picture and plate are one surface
+               * and the square is never cropped at any width. */}
+              <div
+                className='relative w-full overflow-hidden'
+                style={{
+                  aspectRatio: '1 / 1',
+                  borderRadius: 'var(--radius-lg)',
+                  background: 'var(--plate)',
+                }}
+              >
                 <Image
-                  src="/images/giraffe.png"
-                  alt="Endangered Nubian Giraffe"
-                  width={600}
-                  height={600}
-                  className="w-full h-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
+                  src='/images/giraffe.png'
+                  alt='A Nubian giraffe, one of the endangered species Zoo Labs Foundation works on'
+                  fill
+                  sizes='(min-width: 1024px) 30vw, 90vw'
+                  className='object-contain'
                   priority
                 />
-                <div className="mt-4 p-4 rounded-2xl bg-white/90 backdrop-blur-sm border border-emerald-100 shadow-sm flex items-center justify-between">
-                  <div>
-                    <p className="text-xs font-bold text-emerald-700 uppercase tracking-wide">Featured Species</p>
-                    <p className="text-base font-extrabold text-gray-900">Nubian Giraffe</p>
-                  </div>
-                  <Link
-                    href="/animals/nubian_giraffe"
-                    className="text-xs font-bold px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
-                  >
-                    View 3D Model →
-                  </Link>
-                </div>
               </div>
-            </div>
+              <figcaption className='mt-4 flex items-center justify-between gap-4'>
+                <div>
+                  <p className='text-[13px]' style={{ color: 'var(--muted-foreground)' }}>
+                    Featured species
+                  </p>
+                  <p className='text-base font-semibold'>Nubian giraffe</p>
+                </div>
+                <Link href={U.nubianGiraffe} className='more shrink-0'>
+                  View in 3D <span aria-hidden>→</span>
+                </Link>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>

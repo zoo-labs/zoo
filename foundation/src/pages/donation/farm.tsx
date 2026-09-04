@@ -97,7 +97,7 @@ export default function DonateFarm() {
             <p className="text-xs tracking-[0.5em] text-gray-400">
               ZOO LABS FOUNDATION
             </p>
-            <h1 className="text-4xl md:text-5xl tracking-[0.12em]">DONATE TO THE MISSION</h1>
+            <h1 className="text-4xl md:text-5xl">Donate to the mission</h1>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
               Your gift powers healthy, healing, and medicinal food access for underserved communities through
               The Zoolabs Foundation &mdash; a legal 501(c)(3) tax-exempt nonprofit based in San Francisco, CA.
@@ -156,7 +156,7 @@ export default function DonateFarm() {
                   ))}
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs text-gray-400 uppercase tracking-[0.2em]">Custom amount</label>
+                  <label className="text-xs text-gray-400  tracking-[0.2em]">Custom amount</label>
                   <input
                     type="number"
                     min="1"
@@ -170,7 +170,7 @@ export default function DonateFarm() {
 
               {/* Email */}
               <div className="space-y-2">
-                <label className="text-xs text-gray-400 uppercase tracking-[0.2em]">Email (optional)</label>
+                <label className="text-xs text-gray-400  tracking-[0.2em]">Email (optional)</label>
                 <input
                   type="email"
                   placeholder="you@example.com"
@@ -183,7 +183,7 @@ export default function DonateFarm() {
               {/* Submit */}
               <button
                 type="button"
-                className="w-full rounded-full bg-white text-black hover:bg-white/90 px-8 py-3 text-lg font-bold uppercase tracking-wider transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-full bg-white text-black hover:bg-white/90 px-8 py-3 text-lg font-bold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={handleDonate}
                 disabled={isLoading}
               >
@@ -206,7 +206,7 @@ export default function DonateFarm() {
                 href={IRS_LETTER_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="block w-full text-center rounded-full border border-gray-600 text-white hover:border-white px-8 py-3 text-lg font-bold uppercase tracking-wider transition-all duration-300"
+                className="block w-full text-center rounded-full border border-gray-600 text-white hover:border-white px-8 py-3 text-lg font-bold transition-all duration-300"
               >
                 View IRS 501(c)(3) approval letter
               </a>
@@ -216,7 +216,7 @@ export default function DonateFarm() {
                 <div className="space-y-3">
                   <Link
                     href="/donation"
-                    className="block w-full text-center rounded-full border border-gray-600 text-white hover:border-white px-6 py-2.5 text-sm font-bold uppercase tracking-wider transition-all duration-300"
+                    className="block w-full text-center rounded-full border border-gray-600 text-white hover:border-white px-6 py-2.5 text-sm font-bold transition-all duration-300"
                   >
                     General Donation
                   </Link>
@@ -224,7 +224,7 @@ export default function DonateFarm() {
                     href="https://zoo.fund"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full text-center rounded-full bg-amber-500/20 text-white hover:bg-amber-500/30 border border-amber-500/40 px-6 py-2.5 text-sm font-bold uppercase tracking-wider transition-all duration-300"
+                    className="block w-full text-center rounded-full bg-amber-500/20 text-white hover:bg-amber-500/30 border border-amber-500/40 px-6 py-2.5 text-sm font-bold transition-all duration-300"
                   >
                     Crowdfund via Zoo Fund
                   </a>

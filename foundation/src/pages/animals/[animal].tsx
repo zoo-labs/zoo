@@ -52,3 +52,24 @@ export default function AnimalPage() {
     </Layout>
   );
 }
+
+/**
+ * The species pages have to be named at build time.
+ *
+ * This is a static export, and a dynamic route with no `getStaticPaths` is
+ * exported as the LITERAL path — the build wrote `out/animals/[animal]/`, so
+ * every species link on the site answered 404 while the build stayed green.
+ * The routes are the ones in animals.json, which is the same file the page
+ * reads to render, so a species cannot be published without a page or listed
+ * without being published.
+ */
+export function getStaticPaths() {
+  return {
+    paths: animals.map((a) => ({ params: { animal: a.route } })),
+    fallback: false,
+  };
+}
+
+export function getStaticProps() {
+  return { props: {} };
+}

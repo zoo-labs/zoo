@@ -3,9 +3,10 @@
  * @see https://github.com/iamvishnusankar/next-sitemap#readme
  */
 module.exports = {
-  // !STARTERCONF Change the siteUrl
-  /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  siteUrl: 'https://tsnext-tw.thcl.dev',
+  // The canonical origin every generated URL is written against. It must be the
+  // site's own origin: sitemap.xml and robots.txt are published documents, so an
+  // origin that is not ours sends every crawler somewhere else.
+  siteUrl: 'https://zoo.ngo',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],

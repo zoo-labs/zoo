@@ -151,19 +151,19 @@ export default function Research() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-10 border-t border-gray-200">
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                 <p className="text-3xl lg:text-4xl font-black text-emerald-600">130+</p>
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">Research Publications</p>
+                <p className="text-xs font-semibold text-gray-600 mt-1">Research Publications</p>
               </div>
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                 <p className="text-3xl lg:text-4xl font-black text-sky-600">2.4M</p>
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">Hectares Monitored</p>
+                <p className="text-xs font-semibold text-gray-600 mt-1">Hectares Monitored</p>
               </div>
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                 <p className="text-3xl lg:text-4xl font-black text-teal-600">500+</p>
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">Bioacoustic Sensors</p>
+                <p className="text-xs font-semibold text-gray-600 mt-1">Bioacoustic Sensors</p>
               </div>
               <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                 <p className="text-3xl lg:text-4xl font-black text-amber-600">$10M+</p>
-                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider mt-1">DeSci Grants Allocated</p>
+                <p className="text-xs font-semibold text-gray-600 mt-1">DeSci Grants Allocated</p>
               </div>
             </div>
           </div>
@@ -266,7 +266,7 @@ export default function Research() {
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100">
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100">
                         {paper.category}
                       </span>
                       <span className="text-xs font-semibold text-gray-500">{paper.year}</span>

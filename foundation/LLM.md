@@ -1,52 +1,124 @@
-# Zoo Foundation Project Documentation
+# zoo.ngo — Zoo Labs Foundation site
 
-## Project Overview
-This is the "foundation" module of the Zoo Labs project, which appears to be a Next.js web application with a focus on animal conservation and education.
+Next.js **pages router**, **Tailwind v3**, static export. Deployed by
+`.github/workflows/deploy-ngo.yml` (at the MONOREPO root, one level up): it
+builds `./foundation` and syncs `foundation/out/` to `s3://hanzo-sites/zoo/ngo/`,
+which the Hanzo ingress `staticFiles` middleware serves. Not GitHub Pages — the
+root `CNAME` and the `_github-pages-challenge` file are leftovers.
 
-## Project Structure
-- Next.js frontend application (v15.1)
-- React v19.0
-- TailwindCSS v4.0 for styling
-- Uses various UI components from Radix UI
-- Contains 3D model viewers (likely for animal models)
+## Stack, actually
 
-## Key Technologies
-- **Frontend Framework**: Next.js 15.1
-- **UI Library**: React 19.0
-- **Styling**: TailwindCSS 4.0 with custom configuration
-- **UI Components**: Radix UI
-- **3D Rendering**: @google/model-viewer
-- **Payment Processing**: Stripe integration
+- `next ^15.1` (`output: 'export'`, `trailingSlash: true`, `images.unoptimized`)
+- `tailwindcss ^3.4` with the classic `tailwindcss` PostCSS plugin
+- `@hanzo/font` — the Zen type family
+- `@hanzo/event` — analytics; the ingest key is resolved from the HOST, never
+  stated here, so zoo.ngo attributes to Zoo without this repo naming a key
 
-## Configuration Notes
-- TailwindCSS v4.0 requires using @tailwindcss/postcss package as a PostCSS plugin (not directly using tailwindcss)
-- The project uses a custom Tailwind configuration with extended theme settings
-- PostCSS is used for processing CSS
+An earlier version of this file described a Tailwind **v4** migration
+(`@tailwindcss/postcss`, `@import "tailwindcss"`, `@utility`). That migration was
+reverted; none of it is true. Check `postcss.config.js` before believing a claim
+about the CSS pipeline.
 
-## Important Issues Resolved
-- **2025-04-10**: Fixed build error related to TailwindCSS v4 configuration. TailwindCSS v4 moved the PostCSS plugin to a separate package (@tailwindcss/postcss). Updated postcss.config.js to reference the correct package.
-- **2025-04-10**: Upgraded Next.js from version 14.2.28 to 15.1.0. Updated the configuration for compatibility with React 19 in Pages Router. Updated TypeScript definitions to match React 19.
-- **2025-04-10**: Fixed build errors after Next.js upgrade by removing invalid experimental flag, creating proper ESLint configuration, and correcting PostCSS configuration for TailwindCSS.
-- **2025-04-10**: Fixed type errors by removing unused imports from components and adding type declarations for Next.js modules.
-- **2025-04-10**: Updated TailwindCSS configuration for v4 compatibility with Next.js 15.3. Changed CSS import syntax from directives to '@import "tailwindcss"' and updated PostCSS configuration to use @tailwindcss/postcss package.
-- **2025-04-10**: Changed TypeScript moduleResolution from 'node16' to 'bundler' to eliminate the need for explicit file extensions in relative imports, improving code maintainability.
-- **2025-04-10**: Fixed NextImage component type errors by correctly importing and renaming ImageProps. Removed invalid swcMinify option from next.config.js, and disabled ESLint during builds to bypass linting errors.
-- **2025-04-10**: Further simplified component type declarations to avoid namespace issues with Next.js types in NextImage and UnstyledLink components.
-- **2025-04-10**: Fixed Tailwind configuration for v4 compatibility by removing fontFamily import that no longer exists and manually specifying font stacks.
-- **2025-04-10**: Updated darkMode configuration in tailwind.config.ts from array format ['class'] to string format 'class' to match Tailwind CSS v4 expectations.
-- **2025-04-10**: Fixed custom utility class error by properly defining font-primary utility with @utility directive in Tailwind CSS v4.
+## Design system — Hanzo's, inverted to light
 
-## Development Workflow
-- Use `pnpm` for package management (based on pnpm-lock.yaml presence)
-- Standard Next.js commands for development:
-  - `pnpm dev` - Start development server
-  - `pnpm build` - Build for production
-  - `pnpm start` - Start production server
-  - `pnpm lint` - Run linting
-  - `pnpm test` - Run tests
+zoo.ngo renders on the same token set as hanzo.ai, taking `@hanzo/design`'s
+already-derived `.light` values. `src/styles/globals.css` declares them at
+`:root`; `tailwind.config.ts` maps its semantic colors to `var(--token)` (NOT
+`hsl(var(--token))` — the tokens are full color values, and borders are alpha so
+one value composites on both the page and a lifted card).
 
-## Project Insights
-- Appears to be a conservation-focused application with 3D animal models
-- Has features for donations/campaigns
-- Contains user authentication (signin/signup pages)
-- Includes interactive experiences
+Three light values are deliberately **pushed, not mirrored**, because black on
+white reads fainter than white on black at equal alpha: `--border-focus`
+.22→.32, `--border-selected` .30→.42, chrome ink .45→.56.
+
+**Role classes** carry the shared shapes, the way hanzo.ai's do — `.display`,
+`.title`, `.lede`, `.eyebrow`, `.action` (+ `[data-fill]`), `.pill`, `.more`,
+`.card`. They are declared **unlayered**, so they beat Tailwind's `@layer
+utilities`; do not try to override a role's font-size with a utility, it will
+lose. Layout still comes from Tailwind.
+
+Zoo's one departure from Hanzo's strict monochrome: `--brand` is emerald, spent
+only on the primary action and the live/active state. A wildlife foundation that
+spends no colour at all reads as Hanzo rather than as itself.
+
+### House rules
+
+- **No ALL CAPS, no underlines.** `a { color: inherit; text-decoration: none }`
+  globally; underline appears only inside running prose, on hover. There is no
+  `uppercase` and no `text-decoration: underline` in the export — keep it that
+  way.
+- **One typeface.** Zen, from `@hanzo/font`. The token names the ROLE
+  (`font-sans` → `var(--font-zen-sans)`); nothing spells a family.
+- **No emoji in chrome.** Header, footer and buttons carry none.
+
+## Type
+
+Zen is bound **once**, in `src/pages/_app.tsx`:
+
+```tsx
+import { Zen } from '@hanzo/font/sans'
+import { ZenMono } from '@hanzo/font/mono'
+// …
+<div className={`${Zen.variable} ${ZenMono.variable} font-sans`}>
+```
+
+`next.config.js` must keep `transpilePackages: ['@hanzo/font']` — the package
+ships ESM that imports `next/font/local`, and without webpack processing it the
+page-data pass resolves the bare directory in plain Node and dies on
+`ERR_UNSUPPORTED_DIR_IMPORT`.
+
+next/font emits the `@font-face` **and** the preload, with the content hash.
+Never hand-write a font preload here: this file used to preload
+`/fonts/inter-var-latin.woff2`, which had not existed for months — a 404 on
+every page load. Never hand-copy a woff2 into `public/` either; that loses the
+OFL notice the licence requires to ship beside the binaries.
+
+## Navigation — one source
+
+`src/config/registry.ts` is the only place a destination is spelled: `U` (the
+URL table), `NAV`, `LABS`, `CTA`, `FOOTER_COLUMNS`, `FOOTER_BOTTOM`, `SOCIAL`,
+`STATS`. It mirrors the shape of `@hanzogui/shell`'s `hanzo-registry.ts`.
+
+`Navbar` and `Footer` both project off it, and each renders ONE tree for desktop
+and phone. Before this, the nav existed in five hand-written copies (desktop
+menu, mobile menu, desktop footer, mobile footer, a dead starter `Header.tsx`)
+which disagreed on both wording and destinations.
+
+`Navbar`/`Footer` are still imported per page rather than mounted in
+`Layout.tsx` (which is a pass-through). That is the next thing to collapse.
+
+## Traps that have already cost a day
+
+- **A dynamic route with no `getStaticPaths` exports as the LITERAL path.**
+  `/animals/[animal]` wrote `out/animals/[animal]/` and every species link 404'd
+  while the build stayed green. `getStaticPaths` now derives the routes from
+  `animals.json`, the same file the page renders from.
+- **`public/videos/` and `public/models/` do not exist** — not on disk, not in
+  git. Every animal card video (`animals.json` `card_front`/`card_back`, ~28
+  files) and every `.glb`/`.usdz` (~51) is a 404 on the live host, and the
+  deploy syncs with `--delete` so it stays that way. The still images under
+  `public/images/` do exist; the cards fall back to nothing.
+- **The live site can be built from source that was never committed.** In Sept
+  2026 zoo.ngo was serving a build with `--ink` tokens, a next-themes dark
+  script and an `inter-var-latin` preload — none of which exist in this repo, on
+  any branch. Read the remote and diff the live HTML before assuming the tree
+  you have is the tree that ships.
+
+## Known-stale, not yet fixed
+
+~13 pages still wrap themselves in `bg-black text-white` (`/about`, `/ai`,
+`/blog`, `/coin`, `/docs`, `/experiences`, `/impact`, `/markets`, `/news`,
+`/partners`, `/programs`, `/transparency`, `/experiences/[id]`) and carry ~1000
+dark utility classes. They render as dark pages between a light header and a
+light footer. A blind find-and-replace is NOT safe: `text-white` on
+`bg-emerald-600` must stay white, while `text-white` on `bg-amber-500/20` (which
+was composited over black) must flip. Convert per page, with eyes on it.
+
+## Commands
+
+```
+pnpm dev            # next dev
+pnpm build          # next build (static export) + next-sitemap
+pnpm typecheck      # tsc --noEmit  (two test files fail: no @types/jest)
+pnpm test           # jest
+```

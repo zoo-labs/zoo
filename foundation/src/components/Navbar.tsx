@@ -1,189 +1,160 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
-import "@fontsource/poppins";
-import { supabase, getCurrentUser, signOut } from '@/lib/supabase';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
+import { CTA, LABS, NAV } from '@/config/registry';
+
+/**
+ * The header, in the shape hanzo.ai's is: a sticky bar with the mark on the
+ * left, sentence-case ghost links in the middle, and exactly ONE filled
+ * control — so it is never ambiguous where the primary action is.
+ *
+ * Desktop and mobile render the same `NAV` array. They used to be two
+ * hand-written copies that had drifted apart in both wording and destinations,
+ * which is the whole reason the phone menu read as a different site.
+ */
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [open, setOpen] = useState(false);
+
+  // A resize past the breakpoint leaves the sheet mounted but its trigger
+  // hidden, so the page is left scroll-locked with no way to unlock it.
+  useEffect(() => {
+    if (!open) return;
+    const wide = window.matchMedia('(min-width: 768px)');
+    const close = () => setOpen(false);
+    wide.addEventListener('change', close);
+    return () => wide.removeEventListener('change', close);
+  }, [open]);
 
   useEffect(() => {
-    // Check if user is logged in
-    getCurrentUser().then(({ user }) => {
-      setUser(user);
-    });
-
-    // Listen for auth state changes
-    const { data: subscription } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
-      setUser(session?.user || null);
-    });
-
-    return () => {
-      subscription?.subscription?.unsubscribe();
-    };
-  }, []);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleSignOut = async () => {
-    await signOut();
-    setUser(null);
-  };
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
-      <nav className="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 transition-all shadow-sm">
-        <div className="px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="flex items-center justify-between h-20">
-              <div className="md:hidden">
-                  <button
-                  type="button"
-                  onClick={toggleMenu}
-                  className="text-gray-700 hover:text-green-600 inline-flex items-center justify-center p-2 rounded-lg"
-                  aria-controls="mobile-menu"
-                  aria-expanded={isOpen}
-                  >
-                  <span className="sr-only">Open main menu</span>
-                  {!isOpen ? (
-                      <svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M19 17.5H1V16H19V17.5ZM13 10.5H1V9H13V10.5ZM1 3.5V2H19V3.5H1Z"/>
-                      </svg>
-                  ) : (
-                      <svg
-                      className="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      >
-                      <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M6 18L18 6M6 6l12 12"
-                      />
-                      </svg>
-                  )}
-                  </button>
-              </div>
-              <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                  <Link
-                      href="/"
-                      className="flex items-center gap-3 px-2 py-1 text-gray-900 font-bold text-xl hover:opacity-90 transition-opacity">
-                      <Image alt="Zoo Labs Foundation" src="/zooLogoLight.svg" width={44} height={44} className="rounded-full shadow-sm" />
-                      <span className="hidden sm:inline font-extrabold tracking-tight text-gray-900">Zoo Labs <span className="text-green-600">Foundation</span></span>
-                  </Link>
-                  </div>
-              </div>
-              <div className="hidden md:block">
-                  <div className="mx-6 flex items-center xl:space-x-8 lg:space-x-6 md:space-x-4">
-                  <Link
-                      href="/animals"
-                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
-                  >
-                      Animals & Species
-                  </Link>
-                  <Link
-                      href="/research"
-                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
-                  >
-                      Research
-                  </Link>
-                  <Link
-                      href="/ai"
-                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
-                  >
-                      ZenLM AI
-                  </Link>
-                  <Link
-                      href="/experiences"
-                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
-                  >
-                      Experiences
-                  </Link>
-                  <Link
-                      href="/about"
-                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
-                  >
-                      About
-                  </Link>
-                  <Link
-                      href="https://zoolabs.io"
-                      className="bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1.5 transition-all hover:scale-105"
-                  >
-                      <span>🔬</span> Labs →
-                  </Link>
-                  </div>
-              </div>
-              <div className='flex items-center gap-3'>
-                  <Link
-                      href="/donation"
-                      className="bg-green-600 text-white hover:bg-green-700 hover:scale-105 shadow-md px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-200"
-                  >
-                      Donate
-                  </Link>
-              </div>
-          </div>
+    <header
+      className='sticky top-0 z-50'
+      style={{
+        background: 'var(--surface-header)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        borderBottom: '1px solid var(--border)',
+      }}
+    >
+      <div
+        className='mx-auto flex items-center gap-3'
+        style={{ height: 'var(--header)', paddingInline: 'var(--page-gutter)', maxWidth: 1280 }}
+      >
+        <Link href='/' className='flex shrink-0 items-center gap-2.5'>
+          <Image
+            alt=''
+            aria-hidden
+            src='/zooLogoLight.svg'
+            width={28}
+            height={28}
+            className='rounded-full'
+          />
+          <span className='text-[15px] font-semibold tracking-tight'>
+            Zoo <span style={{ color: 'var(--muted-foreground)' }}>Foundation</span>
+          </span>
+        </Link>
+
+        <nav aria-label='Main' className='ml-4 hidden items-center gap-1 md:flex'>
+          {NAV.map((item) => (
+            <Link key={item.id} href={item.href} className='more px-3 py-1.5'>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className='ml-auto flex items-center gap-2'>
+          <a
+            href={LABS.href}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='more hidden sm:inline-flex'
+          >
+            {LABS.label} <span aria-hidden>↗</span>
+          </a>
+          <Link
+            href={CTA.href}
+            className='action hidden sm:inline-flex'
+            data-fill=''
+            style={{ minHeight: 34, paddingInline: 16, fontSize: 13 }}
+          >
+            {CTA.label}
+          </Link>
+
+          <button
+            type='button'
+            onClick={() => setOpen(!open)}
+            aria-expanded={open}
+            aria-controls='menu'
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            className='-mr-2 inline-flex items-center justify-center rounded-lg p-2 md:hidden'
+            style={{ color: 'var(--foreground)' }}
+          >
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              aria-hidden
+            >
+              {open ? <path d='M6 18 18 6M6 6l12 12' /> : <path d='M4 7h16M4 12h16M4 17h16' />}
+            </svg>
+          </button>
         </div>
-        {isOpen && (
-          <div className="md:hidden fixed z-50 h-[100vh] top-20 w-full bg-white border-t border-gray-100 shadow-xl" id="mobile-menu">
-            <div className="px-4 pt-4 pb-6 space-y-2">
+      </div>
+
+      {open && (
+        <div
+          id='menu'
+          className='md:hidden'
+          style={{ borderTop: '1px solid var(--border)', background: 'var(--background)' }}
+        >
+          <nav
+            aria-label='Main'
+            className='flex flex-col gap-1 px-5 pb-6 pt-4'
+            style={{ paddingInline: 'var(--page-gutter)' }}
+          >
+            {NAV.map((item) => (
               <Link
-                href="/animals"
-                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
-                onClick={() => setIsOpen(false)}
+                key={item.id}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className='rounded-lg py-2.5 text-[15px] font-medium'
               >
-                Animals & Species
+                {item.label}
               </Link>
-              <Link
-                href="/research"
-                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
-                onClick={() => setIsOpen(false)}
-              >
-                Research
-              </Link>
-              <Link
-                href="/ai"
-                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
-                onClick={() => setIsOpen(false)}
-              >
-                ZenLM AI
-              </Link>
-              <Link
-                href="/experiences"
-                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
-                onClick={() => setIsOpen(false)}
-              >
-                Experiences
-              </Link>
-              <Link
-                href="/about"
-                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
-                onClick={() => setIsOpen(false)}
-              >
-                About
-              </Link>
-              <Link
-                href="https://zoolabs.io"
-                className="bg-blue-50 text-blue-700 block px-4 py-3 rounded-xl text-lg font-bold border border-blue-200"
-                onClick={() => setIsOpen(false)}
-              >
-                🔬 Zoo Labs (Ask Blue) →
-              </Link>
-              <Link
-                href="/donation"
-                className="bg-green-600 text-white text-center block px-4 py-3 rounded-xl text-lg font-bold uppercase tracking-wider"
-                onClick={() => setIsOpen(false)}
-              >
-                Donate to Wildlife
-              </Link>
-            </div>
-          </div>
-        )}
-      </nav>
+            ))}
+            <a
+              href={LABS.href}
+              target='_blank'
+              rel='noopener noreferrer'
+              onClick={() => setOpen(false)}
+              className='rounded-lg py-2.5 text-[15px] font-medium'
+              style={{ color: 'var(--muted-foreground)' }}
+            >
+              {LABS.label} <span aria-hidden>↗</span>
+            </a>
+            <Link
+              href={CTA.href}
+              onClick={() => setOpen(false)}
+              className='action mt-3'
+              data-fill=''
+            >
+              {CTA.label}
+            </Link>
+          </nav>
+        </div>
+      )}
+    </header>
   );
 }
 
