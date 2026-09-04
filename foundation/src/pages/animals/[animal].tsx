@@ -40,7 +40,12 @@ export default function AnimalPage() {
         <Elements stripe={stripePromise}>
         {/* <CoreHeader index={animal_index}/>
         <FutureUpgrades /> */}
-        <Header title={animal.name} content={animal.description.head} front={animal.card_front} back={animal.card_back} front_m={animal.card_front_mp4} back_m={animal.card_back_mp4} route={animal.route}/>
+        <Header
+          title={animal.name}
+          content={animal.description.head}
+          image={animal.image}
+          route={animal.route}
+        />
         </Elements>
         <Avatars list={animal.avatars} linkFlag={false}/>
         <Content title={animal.description.subtitle} content={animal.description.desc} />

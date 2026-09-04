@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 
 import Layout from '@/components/layout/Layout';
+import Section, { Band } from '@/components/Section';
 import Seo from '@/components/Seo';
 import Navbar from '@/components/Navbar';
 import Newsletter from '@/components/Newsletter';
@@ -83,26 +84,36 @@ export default function ExperiencesPage() {
       <Seo templateTitle="Wildlife Volunteer Experiences" />
       <Navbar />
       
-      <main className="bg-black text-white">
-        <div className="container mx-auto px-4 pt-8 pb-16">
-          <div className='mb-8'>
-            <div className='flex flex-col md:flex-row items-center gap-6'>
-              <div className='flex-1 text-left flex flex-col justify-center'>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                  Wildlife Volunteer<br />
-                  Experiences
+      <main>
+        <section
+          style={{
+            borderBottom: '1px solid var(--border)',
+            paddingBlock: 'clamp(2.5rem, 5vw, 4rem)',
+          }}
+        >
+          <Band>
+            <div className='grid items-center gap-8 md:grid-cols-12'>
+              <div className='md:col-span-7'>
+                <p className='eyebrow mb-4'>Field work</p>
+                <h1 className='display mb-4' style={{ maxWidth: '16ch' }}>
+                  Wildlife volunteer experiences
                 </h1>
-                <p className="text-gray-400 text-lg">
-                  Find your perfect wildlife volunteer opportunity from {featuredExperiences.length} programs worldwide
+                <p className='lede'>
+                  Find your wildlife volunteer opportunity from {featuredExperiences.length}{' '}
+                  programmes worldwide.
                 </p>
               </div>
-              <div className='w-64 shrink-0 flex justify-end'>
+              {/* The globe measures itself against this column, so it can never
+                * be wider than the column is. */}
+              <div className='md:col-span-5'>
                 <Globe />
               </div>
             </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-8 mt-8">
+          </Band>
+        </section>
+
+        <Section>
+          <div className="flex flex-col md:flex-row gap-8">
             {/* Filter sidebar */}
             <FilterPanel 
               filters={filters} 
@@ -112,9 +123,13 @@ export default function ExperiencesPage() {
             
             {/* Results area */}
             <div className="flex-1">
-              <div className="flex justify-between items-center mb-6">
-                <p className="text-gray-400">
-                  Found <span className="font-medium text-white">{filteredExperiences.length}</span> experiences
+              <div className="mb-6 flex items-center justify-between">
+                <p style={{ color: 'var(--muted-foreground)' }}>
+                  Found{' '}
+                  <span className='font-medium' style={{ color: 'var(--foreground)' }}>
+                    {filteredExperiences.length}
+                  </span>{' '}
+                  experiences
                 </p>
                 
                 <div className="flex items-center gap-2">
@@ -140,12 +155,14 @@ export default function ExperiencesPage() {
                 </div>
               </div>
               
-              <div className="border-b border-gray-800 mb-6"></div>
+              <div className="mb-6 border-b" style={{ borderColor: 'var(--border)' }} />
               
               {filteredExperiences.length === 0 ? (
                 <div className="text-center py-12">
-                  <h3 className="text-lg font-medium mb-2">No experiences match your filters</h3>
-                  <p className="text-gray-400 mb-6">Try adjusting your filters to find more options</p>
+                  <h3 className="mb-2 text-lg font-medium">No experiences match your filters</h3>
+                  <p className="mb-6" style={{ color: 'var(--muted-foreground)' }}>
+                    Try adjusting your filters to find more options
+                  </p>
                   <Button 
                     onClick={() => setFilters({})}
                   >
@@ -165,7 +182,7 @@ export default function ExperiencesPage() {
               )}
             </div>
           </div>
-        </div>
+        </Section>
       </main>
       
       <Newsletter />

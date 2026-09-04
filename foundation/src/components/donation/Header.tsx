@@ -1,104 +1,85 @@
-import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import React from 'react';
 
-function CryptoSection({ isMobile = false }: { isMobile?: boolean }) {
-  const buttonClasses = isMobile
-    ? 'flex-1 h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold whitespace-nowrap'
-    : 'min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold whitespace-nowrap';
-  
-  return (
-    <Link
-      href="/donation/crypto"
-      className={buttonClasses}
-    >
-      ₿ Donate Crypto
-    </Link>
-  );
-}
+import Photo from '@/components/Photo';
+import { Band } from '@/components/Section';
 
+/**
+ * The donation hero.
+ *
+ * The three primary controls used to be labelled with emoji — 💵 Donate Cash,
+ * ₿ Donate Crypto, 🌿 Healing Farm — and the eyebrow above them opened with 🆘.
+ * A pictograph is not a word: it renders differently on every platform, a
+ * screen reader announces it as "money with wings", and none of the four says
+ * anything the label beside it does not already say. The words are the labels.
+ */
 function Header() {
   return (
-    <div className="bg-black max-md:pt-20">
-      <div className='flex max-md:flex-col items-center justify-between pt-20'>
-        <div className='w-1/2 max-md:w-full max-md:px-8 flex flex-col 2xl:pl-52 xl:pl-36 lg:pl-28 md:pl-16 pr-8 lg:pb-32'>
-            <p className='text-xl text-white pb-8 font-semibold'>🆘 End the road to extinction</p>
-            <h1 className='text-white md:text-3xl lg:text-5xl xl:text-7xl max-md:text-3xl max-md:my-5 pb-9'>Donate to the Zoo Labs Foundation</h1>
-            <p className='lg:text-lg md:text-md text-white pb-8 leading-relaxed'>&quot;It is our driving purpose to deepen the connection humans have with animals by creating sustainable animal sanctuaries for endangered species. Share the Zoo Sanctuary with local visitors, educators, host fundraisers/events, and get the Zoo Community as involved as possible to saving endangered animals all over the world. You could save a life today w/ a monthly donation or a one-time contribution.&quot;</p>
-            <div className='lg:flex hidden items-center justify-start xl:space-x-8 space-x-6'>
-                <div className='flex space-x-4'>
-                  <a
-                    href="https://www.paypal.biz/zoongo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className='min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold flex items-center justify-center whitespace-nowrap'
-                  >
-                    💵 Donate Cash
-                  </a>
-                  <CryptoSection />
-                  <Link
-                    href="/donation/farm"
-                    className='min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold flex items-center justify-center whitespace-nowrap'
-                  >
-                    🌿 Healing Farm
-                  </Link>
-                </div>
-            </div>
-            <div className='lg:flex hidden items-center justify-start pt-4'>
-                <a
-                  href="https://zoo.fund"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className='text-gray-400 hover:text-white md:text-sm lg:text-base transition-colors duration-300'
-                >
-                  Crowdfund via DAO →
-                </a>
-            </div>
-        </div>
-        <div className='md:w-1/2 xl:pr-32 pr-4 max-md:w-full'>
-        
-            {/* <Image
-                className='intro-bg float-right'
-                src='/images/donation_header.png'
-                width='1000'
-                height='1000'
-                alt=''
-            /> */}
-            <video  autoPlay loop muted playsInline className="w-full float-right">
-              <source src="/videos/pygmy_flower.mp4" type="video/mp4"/>
-            </video>
-        </div>
-      </div>
-      <div className='md:flex max-md:flex max-md:px-4 lg:hidden w-full items-center justify-start md:pl-16 md:pb-32'>
-          <div className='flex flex-col space-y-3 w-full max-w-md'>
-            <div className='flex space-x-3'>
+    <section
+      style={{
+        borderBottom: '1px solid var(--border)',
+        paddingBlock: 'clamp(3rem, 8vw, 6rem)',
+      }}
+    >
+      <Band>
+        <div className='grid items-center gap-12 lg:grid-cols-12'>
+          <div className='lg:col-span-7'>
+            <p className='eyebrow mb-5'>End the road to extinction</p>
+            <h1 className='display mb-6' style={{ maxWidth: '18ch' }}>
+              Donate to the Zoo Labs Foundation
+            </h1>
+            <p className='lede mb-8' style={{ maxWidth: '40rem' }}>
+              It is our driving purpose to deepen the connection humans have with animals
+              by creating sustainable sanctuaries for endangered species — shared with
+              local visitors and educators, and open to the community. You could save a
+              life today with a monthly donation or a one-time contribution.
+            </p>
+
+            <div className='flex flex-wrap items-center gap-3'>
               <a
-                href="https://www.paypal.biz/zoongo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className='flex-1 h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold flex items-center justify-center whitespace-nowrap'
+                href='https://www.paypal.biz/zoongo'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='action'
+                data-fill=''
               >
-                💵 Donate Cash
+                Donate cash
               </a>
-              <CryptoSection isMobile={true} />
+              <Link href='/donation/crypto' className='action'>
+                Donate crypto
+              </Link>
+              <Link href='/donation/farm' className='action'>
+                Healing farm
+              </Link>
             </div>
-            <Link
-              href="/donation/farm"
-              className='h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold flex items-center justify-center whitespace-nowrap'
-            >
-              🌿 Healing Farm
-            </Link>
+
             <a
-              href="https://zoo.fund"
-              target="_blank"
-              rel="noopener noreferrer"
-              className='text-gray-400 hover:text-white text-sm transition-colors duration-300 text-center pt-1'
+              href='https://zoo.fund'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='more mt-6'
             >
-              Crowdfund via DAO →
+              Crowdfund via the DAO <span aria-hidden>↗</span>
             </a>
           </div>
-      </div>
-    </div>
+
+          <div className='lg:col-span-5'>
+            {/* `/videos/pygmy_flower.mp4` was never in the repository — there is
+              * no `public/videos` directory at all — so this column played
+              * nothing and showed a black rectangle. `donation_header.png` is
+              * the still the markup already named, in a comment, beside it. */}
+            <Photo
+              src='/images/donation_header.png'
+              alt='A pygmy hippo, one of the species the foundation supports'
+              ratio='1 / 1'
+              loading='eager'
+              plate
+              className='mx-auto max-w-md lg:max-w-none'
+            />
+          </div>
+        </div>
+      </Band>
+    </section>
   );
 }
 
