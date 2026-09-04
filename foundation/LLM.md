@@ -106,13 +106,56 @@ which disagreed on both wording and destinations.
 
 ## Known-stale, not yet fixed
 
-~13 pages still wrap themselves in `bg-black text-white` (`/about`, `/ai`,
-`/blog`, `/coin`, `/docs`, `/experiences`, `/impact`, `/markets`, `/news`,
-`/partners`, `/programs`, `/transparency`, `/experiences/[id]`) and carry ~1000
-dark utility classes. They render as dark pages between a light header and a
-light footer. A blind find-and-replace is NOT safe: `text-white` on
-`bg-emerald-600` must stay white, while `text-white` on `bg-amber-500/20` (which
-was composited over black) must flip. Convert per page, with eyes on it.
+Ten routes have been converted to the light system — `/healing-farm`, `/about`,
+`/ai`, `/experiences`, `/donation`, `/animals`, `/animals/[animal]` (all seven
+species), `/volunteer`, plus `/research`'s palette. Each is verified with
+Playwright at 1440 and 390: body stays `rgb(247,247,247)`, no full-height dark
+wrapper, `scrollWidth === innerWidth`, no `text-transform: uppercase`, no
+underlined anchor, nothing under 4.5:1.
+
+Still wrapped in `bg-black text-white`, unconverted: `/blog`, `/coin`, `/docs`,
+`/impact`, `/markets`, `/news`, `/partners`, `/programs`, `/transparency`,
+`/careers`, `/faq`, `/getinvolved`, `/signin`, `/signup`, `/forgot_password`,
+`/terms`, `/terms-refund`, `/campaign`, `/donation/crypto`, `/donation/farm`,
+`/experiences/[id]`. A blind find-and-replace is still NOT safe: `text-white` on
+`bg-emerald-600`, or on a scrim over a photograph, must STAY white.
+
+## Layout — two primitives, so a page cannot invent its own
+
+- **`components/Section.tsx`** — `Section` (vertical rhythm + optional `tone`
+  tint and `edge` hairline) wrapping `Band` (the shared measure: 1280 and
+  `--page-gutter`, the same numbers the header and footer use). Pages used to
+  spell `container mx-auto px-4`, whose padding is 16px and whose max width is
+  1400, which is why /about and /ai started their text ~100px left of the
+  wordmark. Every converted route now has its H1 at the same x as the logo
+  (138 at a 1440 viewport) — that is the check worth re-running after any
+  layout edit.
+- **`components/Photo.tsx`** — a framed `<img>` that leaves an empty plate when
+  the file 404s. The `ref` callback is load-bearing: an image in the
+  server-rendered HTML finishes failing BEFORE React attaches listeners, so an
+  `onError` handler alone never fires and the broken-image glyph stays.
+  `plate` gives the frame the `--plate` ground for species renders.
+
+## Media that is still absent
+
+No `public/videos/` and no `public/models/` directory exists, so every card
+video (~28) and every `.glb`/`.usdz` (~51) is a 404. Components no longer hold
+a frame open for them: the species hero shows the still from `animals.json`
+`image` (all seven exist), the species grid drops a tile with no render, the
+3D band links to app.zoolabs.io instead of mounting empty viewers, and the
+donation hero uses `/images/donation_header.png`. Also missing:
+`/images/newsletter.png`, `/images/involved6.png`, the seven
+`/images/*_card.png`, `/images/volunteer-experiences/create wildlife
+experience.jpg`, and `healing-farm/{lionsmane.png,photo-3-elba-farm.jpeg}`.
+
+## Verifying a conversion — the check must be able to fail
+
+An unstyled page has no dark background, no uppercase, no underline and no
+contrast failure: it passes every check while being completely broken. Running
+`next build` against a live `next dev` wipes `.next` and produces exactly that,
+and the audit reported all-green across sixteen routes before the guard caught
+it. Any audit run here must first assert the system is actually applied —
+`body` is `rgb(247,247,247)` AND a `.display` probe computes to 64px/700.
 
 ## Commands
 

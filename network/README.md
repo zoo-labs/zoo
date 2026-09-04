@@ -96,16 +96,16 @@ Endpoints and the chain ID live in `lib/chain.ts` and are re-used by
 `lib/wagmi.ts`, so the wallet and the explorer can never disagree about which
 chain they are on.
 
-The JSON-RPC path on this estate is **`/v1/bc/C/rpc`**. It is not `/ext/bc/C/rpc`
-(HTTP 404) and the P-Chain is a different VM at `/v1/bc/P`.
+The JSON-RPC path on this estate is **`/v1/chain/c`**. It is not `/v1/chain/c`
+(HTTP 404) and the P-Chain is a different VM at `/v1/chain/p`.
 
 ### Environment Variables
 
 All optional; the defaults point at Zoo mainnet.
 
 ```env
-NEXT_PUBLIC_ZOO_RPC_URL=https://rpc.zoo.network/v1/bc/C/rpc
-NEXT_PUBLIC_ZOO_P_RPC_URL=https://rpc.zoo.network/v1/bc/P
+NEXT_PUBLIC_ZOO_RPC_URL=https://rpc.zoo.network/v1/chain/zoo
+NEXT_PUBLIC_ZOO_P_RPC_URL=https://rpc.zoo.network/v1/chain/p
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
 ```
 

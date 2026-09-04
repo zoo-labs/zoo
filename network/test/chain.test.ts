@@ -118,10 +118,10 @@ test('HTTP 503 becomes an unavailable measure, not an exception', async () => {
 })
 
 test('a 404 on the wrong RPC path is reported as such', async () => {
-  // The /ext/bc/C/rpc path returns 404 on this estate. A silent empty state here
+  // The /v1/chain/c path returns 404 on this estate. A silent empty state here
   // is how a misconfigured path looks identical to a dead chain.
   globalThis.fetch = (async () => new Response('404 page not found', { status: 404 })) as unknown as typeof fetch
-  const p = await probe('https://rpc.zoo.network/ext/bc/C/rpc')
+  const p = await probe('https://rpc.zoo.network/v1/chain/zoo')
   assert.equal(p.ok, false)
   assert.match(p.ok === false ? p.reason : '', /HTTP 404/)
 })
@@ -145,7 +145,7 @@ test('a network failure is reported with its reason', async () => {
 
 test('a real head block is decoded correctly', async () => {
   stubChain()
-  const p = await probe('https://rpc.zoo.network/v1/bc/C/rpc')
+  const p = await probe('https://rpc.zoo.network/v1/chain/zoo')
   assert.equal(p.ok, true)
   if (!p.ok) return
   assert.equal(p.height, 15008)
@@ -188,7 +188,7 @@ test('blocks built but not finalized grade degraded, and the gap is disclosed', 
   const orig = Date.now
   Date.now = () => NOW_STALLED
   try {
-    const p = await probe('https://rpc.zoo.network/v1/bc/C/rpc')
+    const p = await probe('https://rpc.zoo.network/v1/chain/zoo')
     assert.equal(p.ok, true)
     if (!p.ok) return
     assert.equal(p.height, 15008, 'the servable head, not the reported one, is the height')
@@ -263,7 +263,7 @@ test('validators are read from the P-Chain validator list', async () => {
     new Response(JSON.stringify({ jsonrpc: '2.0', id: 0, result: { validators: new Array(5).fill({}) } }), {
       status: 200, headers: { 'content-type': 'application/json' },
     })) as unknown as typeof fetch
-  const vs = await readValidators('https://rpc.zoo.network/v1/bc/P')
+  const vs = await readValidators('https://rpc.zoo.network/v1/chain/P')
   assert.deepEqual(vs, { ok: true, count: 5 })
 })
 
@@ -272,7 +272,7 @@ test('a malformed validator answer is unavailable, not zero validators', async (
     new Response(JSON.stringify({ jsonrpc: '2.0', id: 0, result: {} }), {
       status: 200, headers: { 'content-type': 'application/json' },
     })) as unknown as typeof fetch
-  const vs = await readValidators('https://rpc.zoo.network/v1/bc/P')
+  const vs = await readValidators('https://rpc.zoo.network/v1/chain/P')
   assert.equal(vs.ok, false)
   const f = chainFigures(null, vs)
   assert.equal(f.validators.quality, 'unavailable')

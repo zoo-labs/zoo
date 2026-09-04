@@ -155,7 +155,7 @@ export const NETWORKS = {
     color: "#666666",
     chainId: 43112,
     blockExplorer: "",
-    rpcUrl: `http://localhost:9650/ext/bc/C/rpc`,
+    rpcUrl: `http://localhost:9650/v1/chain/c`,
     gasPrice: 225000000000,
   },
   fujiAvalanche: {
@@ -163,7 +163,7 @@ export const NETWORKS = {
     color: "#666666",
     chainId: 43113,
     blockExplorer: "https://cchain.explorer.avax-test.network/",
-    rpcUrl: `https://api.avax-test.network/ext/bc/C/rpc`,
+    rpcUrl: `https://api.avax-test.network/v1/chain/c`,
     gasPrice: 225000000000,
   },
   mainnetAvalanche: {
@@ -171,7 +171,7 @@ export const NETWORKS = {
     color: "#666666",
     chainId: 43114,
     blockExplorer: "https://cchain.explorer.avax.network/",
-    rpcUrl: `https://api.avax.network/ext/bc/C/rpc`,
+    rpcUrl: `https://api.avax.network/v1/chain/c`,
     gasPrice: 225000000000,
   },
   testnetHarmony: {

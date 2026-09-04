@@ -3,6 +3,10 @@
 # text here, which is not true, so pnpm went on refusing the build and every
 # install since has died on ERR_PNPM_IGNORED_BUILDS.
 allowBuilds:
+  # esbuild ships a platform binary its install script unpacks; without the
+  # build it is an empty shim. `scripts/gui-css.mjs` runs it to bundle the gui
+  # config before Node imports it.
+  esbuild: true
   sharp: true
 
 minimumReleaseAgeExclude:
