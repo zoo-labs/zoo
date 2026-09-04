@@ -13,7 +13,7 @@ const app = new Hono();
  * @returns {Meta} API metadata
  */
 app.get('/', c => {
-  const version = process.env.RAILWAY_GIT_COMMIT_SHA?.slice(0, 7) || 'local';
+  const version = process.env.GIT_COMMIT_SHA?.slice(0, 7) || 'local';
   const meta: Meta = {
     name: 'offchain',
     version,

@@ -74,7 +74,7 @@ bun run dev
 
 ## API
 
-see live [API docs](https://offchain.up.railway.app/docs)
+see [API docs](http://localhost:3005/docs) once the server is running
 
 ## Websocket
 
