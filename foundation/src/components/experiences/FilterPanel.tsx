@@ -67,12 +67,13 @@ const FilterPanel = ({ filters, onFilterChange, className = '' }: FilterPanelPro
   };
   
   return (
-    <div className={cn("bg-black border border-gray-800 rounded-lg p-4", className)}>
+    <div className={cn("card p-4", className)}>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-bold text-white">Filters</h2>
+        <h2 className="text-base font-semibold">Filters</h2>
         <button 
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-1 rounded hover:bg-gray-800 text-white"
+          className="rounded p-1 hover:bg-[color:var(--muted)]"
+          aria-label={isCollapsed ? 'Show filters' : 'Hide filters'}
         >
           {isCollapsed ? (
             <ChevronDown className="h-5 w-5" />
@@ -94,7 +95,7 @@ const FilterPanel = ({ filters, onFilterChange, className = '' }: FilterPanelPro
             </Button>
           </div>
           
-          <Accordion type="multiple" className="w-full text-white">
+          <Accordion type="multiple" className="w-full">
             <AccordionItem value="wildlife-types">
               <AccordionTrigger className="text-md font-medium">
                 Wildlife Types
@@ -105,7 +106,7 @@ const FilterPanel = ({ filters, onFilterChange, className = '' }: FilterPanelPro
                     <label key={type} className="flex items-center cursor-pointer">
                       <input 
                         type="checkbox"
-                        className="rounded border-gray-700 bg-gray-900 text-white focus:ring-white mr-2"
+                        className="mr-2 rounded border-[color:var(--input)] accent-[color:var(--brand)]"
                         checked={filters.wildlifeTypes?.includes(type as WildlifeType) || false}
                         onChange={() => handleCheckboxChange('wildlifeTypes', type as WildlifeType)}
                       />
@@ -126,7 +127,7 @@ const FilterPanel = ({ filters, onFilterChange, className = '' }: FilterPanelPro
                     <label key={continent} className="flex items-center cursor-pointer">
                       <input 
                         type="checkbox"
-                        className="rounded border-gray-700 bg-gray-900 text-white focus:ring-white mr-2"
+                        className="mr-2 rounded border-[color:var(--input)] accent-[color:var(--brand)]"
                         checked={filters.continent?.includes(continent as Continent) || false}
                         onChange={() => handleCheckboxChange('continent', continent as Continent)}
                       />
@@ -154,7 +155,7 @@ const FilterPanel = ({ filters, onFilterChange, className = '' }: FilterPanelPro
                     <label key={task} className="flex items-center cursor-pointer">
                       <input 
                         type="checkbox"
-                        className="rounded border-gray-700 bg-gray-900 text-white focus:ring-white mr-2"
+                        className="mr-2 rounded border-[color:var(--input)] accent-[color:var(--brand)]"
                         checked={filters.volunteerTasks?.includes(task as VolunteerTask) || false}
                         onChange={() => handleCheckboxChange('volunteerTasks', task as VolunteerTask)}
                       />
@@ -172,22 +173,22 @@ const FilterPanel = ({ filters, onFilterChange, className = '' }: FilterPanelPro
               <AccordionContent>
                 <div className="flex items-center gap-2">
                   <div>
-                    <label className="text-xs text-gray-400">Min</label>
+                    <label className="text-xs" style={{ color: 'var(--muted-foreground)' }}>Min</label>
                     <input 
                       type="number"
                       min="1"
-                      className="bg-gray-900 border border-gray-800 rounded p-1 w-full text-sm"
+                      className="w-full rounded border border-[color:var(--input)] bg-[color:var(--background)] p-1 text-sm"
                       value={filters.duration?.min ?? ''}
                       onChange={(e) => handleDurationChange('min', e.target.value)}
                     />
                   </div>
-                  <div className="text-gray-400">-</div>
+                  <div style={{ color: 'var(--muted-foreground)' }}>-</div>
                   <div>
-                    <label className="text-xs text-gray-400">Max</label>
+                    <label className="text-xs" style={{ color: 'var(--muted-foreground)' }}>Max</label>
                     <input 
                       type="number"
                       min="1"
-                      className="bg-gray-900 border border-gray-800 rounded p-1 w-full text-sm"
+                      className="w-full rounded border border-[color:var(--input)] bg-[color:var(--background)] p-1 text-sm"
                       value={filters.duration?.max ?? ''}
                       onChange={(e) => handleDurationChange('max', e.target.value)}
                     />
@@ -201,7 +202,7 @@ const FilterPanel = ({ filters, onFilterChange, className = '' }: FilterPanelPro
             <label className="flex items-center cursor-pointer">
               <input 
                 type="checkbox"
-                className="rounded border-gray-700 bg-gray-900 text-white focus:ring-white mr-2"
+                className="mr-2 rounded border-[color:var(--input)] accent-[color:var(--brand)]"
                 checked={filters.accessible || false}
                 onChange={(e) => handleBooleanChange('accessible', e.target.checked)}
               />

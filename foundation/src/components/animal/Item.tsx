@@ -39,13 +39,23 @@ function Item({
   list?: { title: string; href: string }[];
   linkFlag?: boolean;
 }) {
-  const species = list
-    ? list.map((a) => ({
-        slug: slugOf(a.href),
-        title: a.title,
-        img: IMG[slugOf(a.href)],
-      }))
-    : SPECIES.slice(0, 6);
+  const species = (
+    list
+      ? list.map((a) => ({
+          slug: slugOf(a.href),
+          title: a.title,
+          img: IMG[slugOf(a.href)],
+        }))
+      : SPECIES.slice(0, 6)
+  ).filter((a) => a.img);
+
+  /**
+   * A tile with no render is an empty black square, and the species pages pass
+   * their `avatars` list — Baby/Teen/Adult, keyed to `/models/**.glb` that are
+   * not in the repo — so every species page drew three of them under a heading.
+   * A grid with nothing to show is not a grid.
+   */
+  if (species.length === 0) return null;
 
   return (
     <section style={{ paddingBlock: 'clamp(4rem, 8vw, 6rem)' }}>

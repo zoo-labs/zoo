@@ -1,178 +1,221 @@
+import Link from 'next/link';
 import React from 'react';
+
+import Footer from '@/components/Footer';
 import Layout from '@/components/layout/Layout';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Section, { Band } from '@/components/Section';
 import Seo from '@/components/Seo';
-import Link from 'next/link';
+import { U } from '@/config/registry';
+
+const CAPABILITIES = [
+  'Species identification from camera-trap images with 98% accuracy',
+  'Predictive modelling for migration patterns and habitat change',
+  'Real-time poaching threat detection and alerting',
+  'Ecosystem health monitoring through satellite imagery analysis',
+];
+
+const METRICS = [
+  { value: '15M+', label: 'Wildlife images analysed' },
+  { value: '2,300+', label: 'Species identified and tracked' },
+  { value: '87%', label: 'Reduction in response time to threats' },
+];
+
+const AREAS = [
+  {
+    title: 'Computer vision',
+    body: 'Image recognition for species identification, behaviour analysis and population counting from drone and camera-trap footage.',
+  },
+  {
+    title: 'Predictive analytics',
+    body: 'Models that predict habitat loss, climate impact and migration change, to enable proactive conservation.',
+  },
+  {
+    title: 'Natural language processing',
+    body: 'Analysis of research papers, field reports and social media to track conservation trends and identify emerging threats.',
+  },
+  {
+    title: 'Acoustic monitoring',
+    body: 'Audio analysis that identifies species by their calls, monitors ecosystem health and detects illegal activity.',
+  },
+  {
+    title: 'Genomic analysis',
+    body: 'Machine learning applied to sequencing data to understand genetic diversity and guide breeding programmes.',
+  },
+  {
+    title: 'Ledger integration',
+    body: 'Verified wildlife data written to a public ledger, for transparent and tamper-evident conservation records.',
+  },
+];
+
+const ENDPOINTS = [
+  ['POST', '/v1/species/identify'],
+  ['POST', '/v1/habitat/analyze'],
+  ['GET', '/v1/threats/monitor'],
+  ['POST', '/v1/migration/predict'],
+  ['POST', '/v1/audio/classify'],
+];
 
 export default function AI() {
   return (
     <Layout>
       <Seo
-        templateTitle="AI for Conservation"
+        templateTitle='AI for Conservation'
         description="Zoo Foundation's AI initiatives for wildlife conservation through ZenLM and machine learning"
       />
       <Navbar />
 
-      <div className="bg-black text-white">
-        {/* Hero Section */}
-        <div className="container mx-auto px-4 py-20">
-          <h1 className="text-5xl md:text-7xl font-bold mb-8">AI for Conservation</h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl">
-            Leveraging artificial intelligence and machine learning to protect endangered species
-            through advanced monitoring, prediction, and conservation strategies.
+      <section
+        style={{
+          borderBottom: '1px solid var(--border)',
+          paddingBlock: 'clamp(3rem, 8vw, 6rem)',
+        }}
+      >
+        <Band>
+          <p className='eyebrow mb-5'>Zoo Labs · applied research</p>
+          <h1 className='display mb-6' style={{ maxWidth: '18ch' }}>
+            AI for conservation
+          </h1>
+          <p className='lede' style={{ maxWidth: '42rem' }}>
+            Machine learning applied to protecting endangered species — monitoring,
+            prediction and the conservation strategies they support.
           </p>
-        </div>
+        </Band>
+      </section>
 
-        {/* ZenLM Section */}
-        <div className="container mx-auto px-4 py-16">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">ZenLM Framework</h2>
-              <p className="text-gray-300 mb-6">
-                Our proprietary ZenLM (Zen Language Model) is specifically trained on conservation data,
-                species behavior patterns, and environmental factors to provide unprecedented insights
-                for wildlife protection.
-              </p>
-              <ul className="space-y-4 text-gray-300">
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-3">•</span>
-                  <span>Species identification from camera trap images with 98% accuracy</span>
+      {/* ZenLM */}
+      <Section tone='card' edge='block'>
+        <div className='grid gap-12 md:grid-cols-2'>
+          <div>
+            <p className='eyebrow'>Open weights</p>
+            <h2 className='title mt-3'>The ZenLM framework</h2>
+            <p className='lede mt-4'>
+              ZenLM is trained on conservation data, species behaviour and environmental
+              factors, and published with its weights so the results can be checked.
+            </p>
+            <ul className='mt-8 space-y-4'>
+              {CAPABILITIES.map((line) => (
+                <li
+                  key={line}
+                  className='pt-4 text-sm leading-relaxed'
+                  style={{
+                    borderTop: '1px solid var(--border)',
+                    color: 'var(--muted-foreground)',
+                  }}
+                >
+                  {line}
                 </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-3">•</span>
-                  <span>Predictive modeling for migration patterns and habitat changes</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-3">•</span>
-                  <span>Real-time poaching threat detection and alert systems</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-3">•</span>
-                  <span>Ecosystem health monitoring through satellite imagery analysis</span>
-                </li>
-              </ul>
-            </div>
-            <div className="bg-gray-900 rounded-lg p-8">
-              <h3 className="text-2xl font-bold mb-4">AI Impact Metrics</h3>
-              <div className="space-y-6">
-                <div>
-                  <p className="text-3xl font-bold text-green-500">15M+</p>
-                  <p className="text-gray-400">Wildlife images analyzed</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold text-green-500">2,300+</p>
-                  <p className="text-gray-400">Species identified and tracked</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold text-green-500">87%</p>
-                  <p className="text-gray-400">Reduction in response time to threats</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Research Areas */}
-        <div className="bg-gray-900 py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12">AI Research Areas</h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="border border-gray-700 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4">Computer Vision</h3>
-                <p className="text-gray-400">
-                  Advanced image recognition for species identification, behavior analysis,
-                  and population counting from drone and camera trap footage.
-                </p>
-              </div>
-              <div className="border border-gray-700 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4">Predictive Analytics</h3>
-                <p className="text-gray-400">
-                  Machine learning models that predict habitat loss, climate impact,
-                  and migration pattern changes to enable proactive conservation.
-                </p>
-              </div>
-              <div className="border border-gray-700 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4">Natural Language Processing</h3>
-                <p className="text-gray-400">
-                  Analysis of research papers, field reports, and social media to track
-                  conservation trends and identify emerging threats.
-                </p>
-              </div>
-              <div className="border border-gray-700 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4">Acoustic Monitoring</h3>
-                <p className="text-gray-400">
-                  AI-powered audio analysis to identify species by their calls,
-                  monitor ecosystem health, and detect illegal activities.
-                </p>
-              </div>
-              <div className="border border-gray-700 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4">Genomic Analysis</h3>
-                <p className="text-gray-400">
-                  Machine learning applied to DNA sequencing data to understand
-                  genetic diversity and guide breeding programs.
-                </p>
-              </div>
-              <div className="border border-gray-700 rounded-lg p-6">
-                <h3 className="text-xl font-bold mb-4">Blockchain Integration</h3>
-                <p className="text-gray-400">
-                  AI-verified wildlife data stored on blockchain for transparent,
-                  tamper-proof conservation records and tracking.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* API Access */}
-        <div className="container mx-auto px-4 py-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Conservation AI API</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Access our conservation AI models through our API at <code className="bg-gray-800 px-2 py-1 rounded">api.zoo.network</code>
-          </p>
-          <div className="bg-gray-900 rounded-lg p-8 mb-8">
-            <h3 className="text-xl font-bold mb-4">Available Endpoints</h3>
-            <ul className="space-y-3 font-mono text-sm">
-              <li><span className="text-green-500">POST</span> /api/v1/species/identify</li>
-              <li><span className="text-green-500">POST</span> /api/v1/habitat/analyze</li>
-              <li><span className="text-green-500">GET</span> /api/v1/threats/monitor</li>
-              <li><span className="text-green-500">POST</span> /api/v1/migration/predict</li>
-              <li><span className="text-green-500">POST</span> /api/v1/audio/classify</li>
+              ))}
             </ul>
           </div>
-          <Link
-            href="/docs"
-            className="inline-block bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition-colors"
-          >
-            View API Documentation
-          </Link>
-        </div>
 
-        {/* CTA Section */}
-        <div className="bg-gradient-to-r from-green-600 to-blue-600 py-16">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Join Our AI Conservation Initiative</h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
-              Partner with us to develop and deploy AI solutions that make a real difference
-              in wildlife conservation.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/getinvolved"
-                className="bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition-colors"
-              >
-                Get Involved
-              </Link>
-              <Link
-                href="https://github.com/zoo-labs"
-                className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-black transition-colors"
-              >
-                View on GitHub
-              </Link>
-            </div>
+          <div className='card h-fit p-8'>
+            <h3 className='text-lg font-semibold'>Impact metrics</h3>
+            <dl className='mt-6 space-y-6'>
+              {METRICS.map((m) => (
+                <div key={m.label}>
+                  <dt className='sr-only'>{m.label}</dt>
+                  <dd className='m-0'>
+                    <span className='block text-3xl font-semibold tracking-tight'>
+                      {m.value}
+                    </span>
+                    <span
+                      className='mt-1 block text-sm'
+                      style={{ color: 'var(--muted-foreground)' }}
+                    >
+                      {m.label}
+                    </span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
-      </div>
+      </Section>
+
+      {/* Research areas */}
+      <Section>
+        <div className='mb-12 max-w-2xl'>
+          <p className='eyebrow'>What the lab works on</p>
+          <h2 className='title mt-3'>Research areas</h2>
+        </div>
+        <div className='grid gap-6 md:grid-cols-3'>
+          {AREAS.map((area) => (
+            <div key={area.title} className='card p-6'>
+              <h3 className='text-lg font-semibold'>{area.title}</h3>
+              <p
+                className='mt-2 text-sm leading-relaxed'
+                style={{ color: 'var(--muted-foreground)' }}
+              >
+                {area.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* API */}
+      <Section tone='card' edge='block'>
+        <div className='max-w-2xl'>
+          <p className='eyebrow'>For developers</p>
+          <h2 className='title mt-3'>Conservation AI API</h2>
+          <p className='lede mt-4'>
+            The conservation models are reachable at{' '}
+            <code
+              className='rounded px-1.5 py-0.5 font-mono text-[0.9em]'
+              style={{ background: 'var(--muted)' }}
+            >
+              api.zoo.network
+            </code>
+            .
+          </p>
+        </div>
+
+        <div className='card mt-10 max-w-2xl p-8'>
+          <h3 className='text-lg font-semibold'>Endpoints</h3>
+          <ul className='mt-4 space-y-3 font-mono text-sm'>
+            {ENDPOINTS.map(([verb, path]) => (
+              <li key={path} className='flex gap-3'>
+                <span className='w-12 shrink-0 font-semibold' style={{ color: 'var(--brand)' }}>
+                  {verb}
+                </span>
+                <span style={{ color: 'var(--muted-foreground)' }}>{path}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className='mt-8'>
+          <Link href='/docs' className='action'>
+            API documentation
+          </Link>
+        </div>
+      </Section>
+
+      {/* Take part */}
+      <Section edge='top'>
+        <div className='max-w-2xl'>
+          <p className='eyebrow'>Collaborate</p>
+          <h2 className='title mt-3'>Join the AI conservation work</h2>
+          <p className='lede mt-4'>
+            Partner with us to develop and deploy models that make a measurable difference
+            in wildlife conservation.
+          </p>
+          <div className='mt-8 flex flex-wrap items-center gap-3'>
+            <Link href={U.getinvolved} className='action' data-fill=''>
+              Get involved
+            </Link>
+            <a
+              href='https://github.com/zooai'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='action'
+            >
+              View on GitHub <span aria-hidden>↗</span>
+            </a>
+          </div>
+        </div>
+      </Section>
 
       <Footer />
     </Layout>

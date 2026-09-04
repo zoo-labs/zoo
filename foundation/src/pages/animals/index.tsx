@@ -12,30 +12,38 @@ import Volunteer from '@/components/Volunteer';
 import Campaign from '@/components/Campaign';
 import Aiding from '@/components/Aiding';
 import Globe from '@/components/WrapGlobe';
+import { Band } from '@/components/Section';
 
 export default function CollectPage() {
   return (
     <Layout>
         <Seo />
         <Navbar />
-        <div className='pt-16 pb-12 px-6 md:px-12 bg-gradient-to-b from-emerald-50/50 via-white to-white relative border-b border-gray-100'>
-          <div className='flex flex-col items-center justify-center relative'>
-            <div className='relative z-10 mb-6'>
-              <Globe />
+        <section
+          style={{
+            borderBottom: '1px solid var(--border)',
+            paddingBlock: 'clamp(3rem, 8vw, 6rem)',
+          }}
+        >
+          <Band>
+            <div className='grid items-center gap-12 lg:grid-cols-12'>
+              <div className='lg:col-span-7'>
+                <p className='eyebrow mb-5'>Endangered wildlife sanctuary</p>
+                <h1 className='display mb-6' style={{ maxWidth: '16ch' }}>
+                  Our supported animals
+                </h1>
+                <p className='lede' style={{ maxWidth: '38rem' }}>
+                  The endangered species we protect through conservation science,
+                  sanctuaries and education — each with its own programme and field
+                  partners.
+                </p>
+              </div>
+              <div className='lg:col-span-5'>
+                <Globe />
+              </div>
             </div>
-            <div className='text-center relative z-20 max-w-3xl mx-auto'>
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 mb-3">
-                🐾 Endangered Wildlife Sanctuary
-              </span>
-              <h1 className='text-gray-950 text-center text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-4'>
-                Our Supported Animals
-              </h1>
-              <p className='text-gray-600 text-center text-lg md:text-xl leading-relaxed'>
-                Learn about and interact in 3D with the endangered species we&apos;re protecting through conservation science, sanctuaries, and education.
-              </p>
-            </div>
-          </div>
-        </div>
+          </Band>
+        </section>
         <Aiding />
         <Animal_Item />
         <Animals />
