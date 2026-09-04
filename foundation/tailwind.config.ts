@@ -13,19 +13,33 @@ const config = {
       },
     },
     extend: {
+      // The token names the ROLE, not the face. `--font-zen-sans` is bound by
+      // @hanzo/font in _app.tsx; nothing here spells a family.
+      // `@hanzo/font` defines --font-zen-sans on the element it wraps, and
+      // custom properties inherit DOWNWARDS only — so above that wrapper the
+      // var is undefined, `var(--font-zen-sans)` computes to nothing, and the
+      // declaration falls back to the initial value. That is how `body` came
+      // to render in Times New Roman on a page that had Zen loaded. The
+      // fallback names the loaded family, so the stack is valid everywhere.
       fontFamily: {
-        primary: ['Zen', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        sans: ["Zen", 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        primary: ['var(--font-zen-sans, Zen)', ...defaultTheme.fontFamily.sans],
+        sans: ['var(--font-zen-sans, Zen)', ...defaultTheme.fontFamily.sans],
+        mono: ['var(--font-zen-mono, ZenMono)', ...defaultTheme.fontFamily.mono],
       },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        brand: {
+          DEFAULT: "var(--brand)",
+          hover: "var(--brand-hover)",
+          foreground: "var(--brand-foreground)",
+        },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
           // Legacy colors
           50: "rgb(var(--tw-color-primary-50) / <alpha-value>)",
           100: "rgb(var(--tw-color-primary-100) / <alpha-value>)",
@@ -40,28 +54,28 @@ const config = {
           950: "rgb(var(--tw-color-primary-950) / <alpha-value>)",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
         },
         dark: '#222222',
       },

@@ -5,6 +5,12 @@ const nextConfig = {
   // Required for GitHub Pages to serve dynamic routes correctly
   trailingSlash: true,
 
+  // `@hanzo/font` ships ESM that imports `next/font/local`, and that import is
+  // only meaningful once Next's font loader has rewritten it. Without this the
+  // page-data pass resolves the bare directory in plain Node and dies on
+  // ERR_UNSUPPORTED_DIR_IMPORT.
+  transpilePackages: ['@hanzo/font'],
+
   eslint: {
     dirs: ['src'],
     ignoreDuringBuilds: true,

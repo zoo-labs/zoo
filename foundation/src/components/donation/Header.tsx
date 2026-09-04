@@ -4,8 +4,8 @@ import Image from 'next/image';
 
 function CryptoSection({ isMobile = false }: { isMobile?: boolean }) {
   const buttonClasses = isMobile
-    ? 'flex-1 h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold uppercase tracking-wide whitespace-nowrap'
-    : 'min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wider whitespace-nowrap';
+    ? 'flex-1 h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold whitespace-nowrap'
+    : 'min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold whitespace-nowrap';
   
   return (
     <Link
@@ -31,14 +31,14 @@ function Header() {
                     href="https://www.paypal.biz/zoongo"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className='min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wider flex items-center justify-center whitespace-nowrap'
+                    className='min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold flex items-center justify-center whitespace-nowrap'
                   >
                     💵 Donate Cash
                   </a>
                   <CryptoSection />
                   <Link
                     href="/donation/farm"
-                    className='min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold uppercase tracking-wider flex items-center justify-center whitespace-nowrap'
+                    className='min-w-[180px] h-[52px] rounded-full px-8 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] border-2 border-white transition-all duration-300 md:text-sm lg:text-base xl:text-lg font-bold flex items-center justify-center whitespace-nowrap'
                   >
                     🌿 Healing Farm
                   </Link>
@@ -49,7 +49,7 @@ function Header() {
                   href="https://zoo.fund"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className='text-gray-400 hover:text-white md:text-sm lg:text-base transition-colors duration-300 underline underline-offset-4'
+                  className='text-gray-400 hover:text-white md:text-sm lg:text-base transition-colors duration-300'
                 >
                   Crowdfund via DAO →
                 </a>
@@ -76,7 +76,7 @@ function Header() {
                 href="https://www.paypal.biz/zoongo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className='flex-1 h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold uppercase tracking-wide flex items-center justify-center whitespace-nowrap'
+                className='flex-1 h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold flex items-center justify-center whitespace-nowrap'
               >
                 💵 Donate Cash
               </a>
@@ -84,7 +84,7 @@ function Header() {
             </div>
             <Link
               href="/donation/farm"
-              className='h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold uppercase tracking-wide flex items-center justify-center whitespace-nowrap'
+              className='h-[48px] rounded-full px-6 py-3 text-black bg-white hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] border-2 border-white transition-all duration-300 text-sm font-bold flex items-center justify-center whitespace-nowrap'
             >
               🌿 Healing Farm
             </Link>
@@ -92,7 +92,7 @@ function Header() {
               href="https://zoo.fund"
               target="_blank"
               rel="noopener noreferrer"
-              className='text-gray-400 hover:text-white text-sm transition-colors duration-300 underline underline-offset-4 text-center pt-1'
+              className='text-gray-400 hover:text-white text-sm transition-colors duration-300 text-center pt-1'
             >
               Crowdfund via DAO →
             </a>

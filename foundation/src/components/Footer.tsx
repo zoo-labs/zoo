@@ -1,105 +1,116 @@
 import Link from 'next/link';
-import {FaTelegram, FaTwitter, FaInstagram, FaDiscord, FaYoutube} from "react-icons/fa";
-import {BsMedium} from "react-icons/bs"
-function Footer() {
-  const recipientEmail = "hello@zoo.ngo";
-  const subject = "Sending Love to ZOO NGO team";
-  const sendEmail = () => {
-    const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}`;
-    window.location.href = mailtoLink;
-  };
-  return (
-    <footer className="bg-gray-50 border-t border-gray-200 text-gray-700">
-      <div className="max-md:hidden pb-16">
-        <div className='grid md:grid-cols-5 grid-cols-1 gap-8 2xl:px-56 xl:px-42 lg:px-28 md:px-16 max-md:px-4 pt-16'>
-          <div className='flex flex-col space-y-4'>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🌿</span>
-              <span className='text-lg font-bold text-gray-900'>Zoo Labs Foundation</span>
-            </div>
-            <p className='text-sm text-gray-600 leading-relaxed'>
-              Non-profit 501(c)(3) research foundation dedicated to wildlife biodiversity, open-access conservation science, bioacoustics, and benevolent ecological AI.
-            </p>
-            <p className='text-xs text-gray-500'>
-              EIN: 88-3538992. Donations are tax-deductible to the extent allowed by law.
-            </p>
-            <div className='flex items-center space-x-3 text-gray-600 pt-2'>
-              <Link href="https://twitter.com/zoo_labs" className="cursor-pointer hover:text-emerald-600 transition-colors"><FaTwitter size={18} /></Link>
-              <Link href="https://t.me/zooofficial" className="cursor-pointer hover:text-emerald-600 transition-colors"><FaTelegram size={18} /></Link>
-              <Link href="https://instagram.com/zoolabs.io" className="cursor-pointer hover:text-emerald-600 transition-colors"><FaInstagram size={18} /></Link>
-              <Link href="https://discord.gg/AqrYhChx5b" className="cursor-pointer hover:text-emerald-600 transition-colors"><FaDiscord size={18} /></Link>
-              <Link href="https://zoolabsofficial.medium.com" className="cursor-pointer hover:text-emerald-600 transition-colors"><BsMedium size={18} /></Link>
-              <Link href="https://youtu.be/6yYuYtMWgOU" className="cursor-pointer hover:text-emerald-600 transition-colors"><FaYoutube size={18} /></Link>
-            </div>
-          </div>
-          <div className='flex flex-col space-y-3'>
-            <p className='text-sm font-semibold uppercase tracking-wider text-gray-900'>Organization</p>
-            <Link href="/about" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>About Us</Link>
-            <Link href="/research" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Research & Science</Link>
-            <Link href="/ai" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>ZenLM AI</Link>
-            <Link href="/getinvolved" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Get Involved</Link>
-            <Link href="/donation" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Donate</Link>
-            <Link href="/healing-farm" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Healing Farm</Link>
-          </div>
-          <div className='flex flex-col space-y-3'>
-            <p className='text-sm font-semibold uppercase tracking-wider text-gray-900'>Endangered Species</p>
-            <Link href="/animals" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>All Species (3D)</Link>
-            <Link href="/animals/red_wolf" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Red Wolf</Link>
-            <Link href="/animals/nubian_giraffe" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Nubian Giraffe</Link>
-            <Link href="/animals/amur_leopard" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Amur Leopard</Link>
-            <Link href="/experiences" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Wildlife Expeditions</Link>
-          </div>
-          <div className='flex flex-col space-y-3'>
-            <p className='text-sm font-semibold uppercase tracking-wider text-gray-900'>Species Focus</p>
-            <Link href="/animals/sumatran_elephant" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Sumatran Elephant</Link>
-            <Link href="/animals/javan_rhino" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Javan Rhino</Link>
-            <Link href="/animals/pygmy_hippo" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Pygmy Hippo</Link>
-            <Link href="/animals/siberian_tiger" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Siberian Tiger</Link>
-          </div>
-          <div className='flex flex-col space-y-3'>
-            <p className='text-sm font-semibold uppercase tracking-wider text-gray-900'>Ecosystem</p>
-            <Link href="https://zoolabs.io" className='text-sm font-medium text-emerald-600 hover:text-emerald-700 flex items-center gap-1 transition-colors'>
-              🔬 Zoo Labs (AI & Bioacoustics) ↗
-            </Link>
-            <Link href="https://zoo.fund" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Zoo Fund (DeSci Grants)</Link>
-            <Link href="https://hanzo.ai" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Hanzo AI (Compute & Infrastructure)</Link>
-            <Link href="/transparency" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Financial Transparency</Link>
-            <Link href="/terms" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Terms of Use</Link>
-            <Link href="/terms-refund" className='text-sm text-gray-600 hover:text-emerald-600 transition-colors'>Terms of Refund</Link>
-          </div>
-        </div>
-        <div className="mt-12 pt-8 border-t border-gray-200 2xl:px-56 xl:px-42 lg:px-28 md:px-16 flex justify-between items-center text-xs text-gray-500">
-          <p>© 2026 Zoo Labs Foundation Inc. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-gray-800">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-gray-800">Terms of Service</Link>
-            <a href="mailto:hello@zoo.ngo" className="hover:text-gray-800">Contact: hello@zoo.ngo</a>
-          </div>
-        </div>
-      </div>
+import { BsMedium } from 'react-icons/bs';
+import {
+  FaDiscord,
+  FaInstagram,
+  FaTelegram,
+  FaTwitter,
+  FaYoutube,
+} from 'react-icons/fa';
 
-      <div className='hidden max-md:block px-6 py-12'>
-        <div className='flex flex-col items-center text-center'>
-          <p className='text-xl font-bold text-gray-900'>🌿 Zoo Labs Foundation</p>
-          <p className='text-xs text-gray-600 mt-2'>Registered 501(c)(3) Charity. EIN: 88-3538992</p>
-          <div className='flex flex-wrap justify-center gap-4 pt-6 text-sm text-gray-700'>
-            <Link href="/" className='hover:text-emerald-600'>Home</Link>
-            <Link href="/about" className='hover:text-emerald-600'>About</Link>
-            <Link href="/research" className='hover:text-emerald-600'>Research</Link>
-            <Link href="/animals" className='hover:text-emerald-600'>Animals</Link>
-            <Link href="/experiences" className='hover:text-emerald-600'>Experiences</Link>
-            <Link href="/donation" className='text-emerald-600 font-semibold'>Donate</Link>
-            <Link href="https://zoolabs.io" className='text-blue-600 font-medium'>🔬 Labs ↗</Link>
+import type { ComponentType } from 'react';
+
+import {
+  FOOTER_BOTTOM,
+  FOOTER_COLUMNS,
+  SOCIAL,
+  type Link as Destination,
+} from '@/config/registry';
+
+/**
+ * The footer, in the shape hanzo.ai's is: an auto-fitting column grid over a
+ * legal bar, every link resolved from the registry.
+ *
+ * ONE tree, not two. This used to be a `max-md:hidden` desktop grid beside a
+ * `hidden max-md:block` phone block, each with its own hand-written link list —
+ * so the phone footer offered six destinations the desktop one did not, and
+ * neither agreed with the header. `auto-fit` collapses to a single column on a
+ * phone without a second copy existing to drift.
+ */
+
+const ICON: Record<string, ComponentType<{ size?: number }>> = {
+  x: FaTwitter,
+  telegram: FaTelegram,
+  instagram: FaInstagram,
+  discord: FaDiscord,
+  medium: BsMedium,
+  youtube: FaYoutube,
+};
+
+function Dest({ item }: { item: Destination }) {
+  const props = item.external
+    ? { target: '_blank', rel: 'noopener noreferrer' as const }
+    : {};
+  return (
+    <Link href={item.href} {...props} className='more'>
+      {item.label}
+      {item.external && <span aria-hidden>↗</span>}
+    </Link>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{ borderTop: '1px solid var(--border)', background: 'var(--background)' }}>
+      <div
+        className='mx-auto'
+        style={{ maxWidth: 1280, padding: '64px var(--page-gutter) 32px' }}
+      >
+        <div
+          className='grid gap-x-6 gap-y-10'
+          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))' }}
+        >
+          <div className='flex flex-col gap-4' style={{ gridColumn: '1 / -1', maxWidth: '32rem' }}>
+            <p className='text-[15px] font-semibold tracking-tight'>Zoo Labs Foundation</p>
+            <p className='text-sm' style={{ color: 'var(--muted-foreground)' }}>
+              A 501(c)(3) non-profit publishing open conservation research and open-weight
+              ecological AI. Everything we make is public.
+            </p>
+            <div className='flex items-center gap-4' style={{ color: 'var(--muted-foreground)' }}>
+              {SOCIAL.map((s) => {
+                const Icon = ICON[s.id];
+                return (
+                  <a
+                    key={s.id}
+                    href={s.href}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    aria-label={s.label}
+                    className='more'
+                  >
+                    <Icon size={18} />
+                  </a>
+                );
+              })}
+            </div>
           </div>
-          <div className='flex items-center space-x-4 text-gray-600 pt-6'>
-            <Link href="https://twitter.com/zoo_labs"><FaTwitter size={18} /></Link>
-            <Link href="https://t.me/zooofficial"><FaTelegram size={18} /></Link>
-            <Link href="https://instagram.com/zoolabs.io"><FaInstagram size={18} /></Link>
-            <Link href="https://discord.gg/AqrYhChx5b"><FaDiscord size={18} /></Link>
-            <Link href="https://youtu.be/6yYuYtMWgOU"><FaYoutube size={18} /></Link>
+
+          {FOOTER_COLUMNS.map((col) => (
+            <nav key={col.id} aria-label={col.title}>
+              <p className='mb-3.5 text-[13px] font-semibold'>{col.title}</p>
+              <ul className='m-0 flex list-none flex-col gap-2.5 p-0'>
+                {col.items.map((item) => (
+                  <li key={item.id} className='m-0 list-none p-0'>
+                    <Dest item={item} />
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
+
+        <div
+          className='mt-10 flex flex-col gap-3 pt-6 text-[13px] sm:flex-row sm:items-center sm:justify-between'
+          style={{ borderTop: '1px solid var(--border)', color: 'var(--muted-foreground)' }}
+        >
+          <p>
+            {FOOTER_BOTTOM.copyright} {FOOTER_BOTTOM.notice}
+          </p>
+          <div className='flex flex-wrap gap-5'>
+            {FOOTER_BOTTOM.links.map((item) => (
+              <Dest key={item.id} item={item} />
+            ))}
           </div>
-          <hr className='w-full border-gray-200 my-6'/>
-          <p className='text-xs text-gray-500'>© 2026 Zoo Labs Foundation Inc. Donations are tax-deductible.</p>
         </div>
       </div>
     </footer>

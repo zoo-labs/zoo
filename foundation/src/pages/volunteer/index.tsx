@@ -68,13 +68,13 @@ export default function Volunteer() {
                 href="/experiences"
                 className="inline-block bg-black text-white px-8 py-4 font-bold hover:bg-gray-800 transition-all text-center"
               >
-                VIEW ALL EXPEDITIONS
+                View all expeditions
               </Link>
               <Link
                 href="/donation"
                 className="inline-block border-2 border-black text-black px-8 py-4 font-bold hover:bg-black hover:text-white transition-all text-center"
               >
-                DONATE TO SUPPORT
+                Donate to support
               </Link>
             </div>
           </div>

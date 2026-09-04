@@ -1,102 +1,103 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import dynamic from "next/dynamic";
-const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
-  ssr: false,
-});
-function Item({list, linkFlag=true}: {
-  list?: { title: string; href: string; usdz: string; glb: string; camera_orbit: string; camera_target: string;}[];
+
+/**
+ * The species grid.
+ *
+ * It used to mount a <ModelViewer> per tile against `/models/**.glb`. Those
+ * files are not in the repo and not on the host, so every tile rendered an
+ * empty box under a heading promising "full 3D and AR" — six blank squares in
+ * the middle of the home page. The still renders under public/images DO exist,
+ * so the grid shows those and the copy claims only what is there.
+ *
+ * Each render is a square on solid black with no alpha, so the tile is given
+ * that same ground (`--plate`) and the picture and its plate read as one
+ * surface instead of a black box on a light card.
+ */
+
+const SPECIES = [
+  { slug: 'nubian_giraffe', title: 'Nubian giraffe', img: '/images/giraffe.png' },
+  { slug: 'amur_leopard', title: 'Amur leopard', img: '/images/leopard.png' },
+  { slug: 'sumatran_elephant', title: 'Sumatran elephant', img: '/images/elephant.png' },
+  { slug: 'siberian_tiger', title: 'Siberian tiger', img: '/images/tiger.png' },
+  { slug: 'pygmy_hippo', title: 'Pygmy hippo', img: '/images/hippo.png' },
+  { slug: 'javan_rhino', title: 'Javan rhino', img: '/images/rhino.png' },
+  { slug: 'red_wolf', title: 'Red wolf', img: '/images/red_wolf.png' },
+];
+
+/** The renders, keyed the way a passed-in list names them. */
+const IMG: Record<string, string> = Object.fromEntries(
+  SPECIES.map((s) => [s.slug, s.img])
+);
+
+const slugOf = (href: string) => href.split('/').filter(Boolean).pop() ?? '';
+
+function Item({
+  list,
+  linkFlag = true,
+}: {
+  list?: { title: string; href: string }[];
   linkFlag?: boolean;
 }) {
-    const animals = list != undefined ? list : [
-        {
-          title: "Nubian Giraffe",
-          href: "/animals/nubian_giraffe",
-          usdz: "/models/Giraffe/GIRAFFE_ADULT.usdz",
-          glb: "/models/Giraffe/GIRAFFE_ADULT.glb",
-          camera_orbit: "",
-          camera_target: "0m 28m 0m"
-        },
-        {
-          title: "Amur Leopard",
-          href: "/animals/amur_leopard",
-          usdz: "/models/Leopard/LEOPARD_ADULT.usdz",
-          glb: "/models/Leopard/LEOPARD_ADULT.glb",
-          camera_orbit: "",
-          camera_target: ""
-        },
-        {
-          title: "Sumatran Elephant",
-          href: "/animals/sumatran_elephant",
-          usdz: "/models/Elephant/ELEPHANT_ADULT.usdz",
-          glb: "/models/Elephant/ELEPHANT_ADULT.glb",
-          camera_orbit: "",
-          camera_target: ""
-        },
-        {
-          title: "Siberian Tiger",
-          href: "/animals/siberian_tiger",
-          usdz: "/models/Tiger/TIGER_ADULT.usdz",
-          glb: "/models/Tiger/TIGER_ADULT.glb",
-          camera_orbit: "",
-          camera_target: ""
-        },
-        {
-          title: "Pygmy Hippo",
-          href: "/animals/pygmy_hippo",
-          usdz: "/models/Hippo/HIPPO_ADULT.usdz",
-          glb: "/models/Hippo/HIPPO_ADULT.glb",
-          camera_orbit: "",
-          camera_target: ""
-        },
-        {
-          title: "Javan Rhino",
-          href: "/animals/javan_rhino",
-          usdz: "/models/Rhino/RHINO_ADULT.usdz",
-          glb: "/models/Rhino/RHINO_ADULT.glb",
-          camera_orbit: "",
-          camera_target: "0m 1m 0m"
-        }
-      ];
+  const species = list
+    ? list.map((a) => ({
+        slug: slugOf(a.href),
+        title: a.title,
+        img: IMG[slugOf(a.href)],
+      }))
+    : SPECIES.slice(0, 6);
+
   return (
-    <section className="bg-white py-16">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 mb-3">
-            🐾 Interactive 3D Sanctuary
-          </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
-            Meet the Species We Protect
-          </h2>
-          <p className="text-lg text-gray-600 mt-2 max-w-2xl mx-auto">
-            Rotate, zoom, and explore endangered wildlife in full 3D and AR directly in your browser.
+    <section style={{ paddingBlock: 'clamp(4rem, 8vw, 6rem)' }}>
+      <div className='mx-auto' style={{ maxWidth: 1280, paddingInline: 'var(--page-gutter)' }}>
+        <div className='max-w-2xl'>
+          <p className='eyebrow'>Species</p>
+          <h2 className='title mt-3'>The animals we work on</h2>
+          <p className='lede mt-4'>
+            Seven endangered species, each with its own programme, field partners and
+            published population data.
           </p>
         </div>
-        <div className='grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8'>
-        {animals.map((data, index) => (
-          <div key={index} className='bg-gray-50/70 p-6 rounded-3xl border border-gray-200 hover:border-emerald-400 hover:shadow-lg transition-all flex flex-col items-center justify-between'>
-            <div className='w-full aspect-square bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-center justify-center overflow-hidden'>
-              <ModelViewer className='w-full h-full'
-                usdz={data.usdz}
-                glb={data.glb}
-                camera_orbit={data.camera_orbit}
-                camera_target={data.camera_target}
-              ></ModelViewer>
-            </div>
-            <div className="w-full mt-6 text-center">
-              {linkFlag ? (
-                <Link
-                  href={data.href}
-                  className='inline-flex items-center justify-center gap-2 w-full py-3 px-4 bg-white hover:bg-emerald-50 text-gray-900 hover:text-emerald-700 font-bold rounded-xl border border-gray-200 transition-colors shadow-sm text-base'
+
+        <div className='mt-12 grid gap-6 sm:grid-cols-2 md:grid-cols-3'>
+          {species.map((a) => {
+            const inner = (
+              <>
+                <div
+                  className='relative w-full overflow-hidden'
+                  style={{
+                    aspectRatio: '1 / 1',
+                    borderRadius: 'var(--radius-lg)',
+                    background: 'var(--plate)',
+                  }}
                 >
-                  <span>{data.title}</span>
-                  <span>→</span>
-                </Link>
-              ) : (
-                <p className='text-gray-900 font-bold text-lg'>{data.title}</p>
-              )}
-            </div>
-          </div>
-        ))}
+                  {a.img && (
+                    <Image
+                      src={a.img}
+                      alt={a.title}
+                      fill
+                      sizes='(min-width: 768px) 30vw, 90vw'
+                      className='object-contain transition-transform duration-500 group-hover:scale-105'
+                    />
+                  )}
+                </div>
+                <p className='mt-4 flex items-center justify-between text-base font-semibold'>
+                  {a.title}
+                  {linkFlag && <span aria-hidden className='more'>→</span>}
+                </p>
+              </>
+            );
+
+            return linkFlag ? (
+              <Link key={a.slug} href={`/animals/${a.slug}`} className='card group p-4'>
+                {inner}
+              </Link>
+            ) : (
+              <div key={a.slug} className='card p-4'>
+                {inner}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

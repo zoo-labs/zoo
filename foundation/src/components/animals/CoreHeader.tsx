@@ -487,7 +487,7 @@ function CoreHeader({index}: {
                       animal?.status[0] == "E"
                         ? "bg-[#333333] intials-backdrop-e"
                         : "bg-[#FF592C] intials-backdrop "
-                    } rounded-full uppercase justify-center`}
+                    } rounded-full  justify-center`}
                   >
                     <p className="text-3xl font-bold">{animal.status[0]}</p>
                   </div>
@@ -538,7 +538,7 @@ function CoreHeader({index}: {
               className="text-lg"
               dangerouslySetInnerHTML={{ __html: animal?.description }}
             /> */}
-            <p className="pb-4 text-[24px] text-white uppercase border-white cursor-pointer mt-4">
+            <p className="pb-4 text-[24px] text-white  border-white cursor-pointer mt-4">
               Properties
             </p>
             <div className="grid grid-cols-2 md:grid-cols-2 gap-2.5 md:gap-4 mb-2.5 md:mb-4">
@@ -668,7 +668,7 @@ function CoreHeader({index}: {
         </h1>
         <p className="text-sm sm:text-base mt-4 mb-24 sm:mt-12 sm:mb-16 text-center">
           The Zoo NFTs have value and unique{" "}
-          <a className="italic underline">utility!</a>
+          <a className="italic">utility!</a>
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {utilities.map((data, index) => (

@@ -77,13 +77,13 @@ export default function HealingFarm() {
                 <div className="flex flex-wrap items-center gap-4">
                   <a
                     href="mailto:hello@zoo.ngo?subject=Partner%20with%20Zoo%20Labs%20Foundation"
-                    className="inline-flex items-center justify-center rounded-full bg-white text-black hover:bg-white/90 px-8 py-3 text-lg font-bold uppercase tracking-wider transition-all duration-300"
+                    className="inline-flex items-center justify-center rounded-full bg-white text-black hover:bg-white/90 px-8 py-3 text-lg font-bold transition-all duration-300"
                   >
                     Partner with Us
                   </a>
                   <Link
                     href="/donation/farm"
-                    className="group relative overflow-hidden inline-flex items-center justify-center rounded-full bg-black/80 text-white hover:text-black px-8 py-3 text-lg font-bold uppercase tracking-wider transition-all duration-300"
+                    className="group relative overflow-hidden inline-flex items-center justify-center rounded-full bg-black/80 text-white hover:text-black px-8 py-3 text-lg font-bold transition-all duration-300"
                   >
                     <span className="absolute inset-0 -z-10 translate-x-[-110%] bg-gradient-to-r from-amber-200 via-emerald-200 to-sky-200 transition-transform duration-200 group-hover:translate-x-0" />
                     <span className="relative">Donate</span>
@@ -352,12 +352,12 @@ export default function HealingFarm() {
                 Make a charitable donation to the Farm Project and you will be eligible for a tax&#8209;deductible donation.
               </p>
               <div className="flex flex-wrap gap-4">
-                <span className="inline-flex items-center justify-center rounded-full bg-emerald-600 text-white px-8 py-3 text-lg font-bold uppercase tracking-wider opacity-60 cursor-default">
+                <span className="inline-flex items-center justify-center rounded-full bg-emerald-600 text-white px-8 py-3 text-lg font-bold opacity-60 cursor-default">
                   Order Farm Fresh (Coming Soon)
                 </span>
                 <Link
                   href="/donation/farm"
-                  className="inline-flex items-center justify-center rounded-full bg-white text-black hover:bg-white/90 px-8 py-3 text-lg font-bold uppercase tracking-wider transition-all duration-300"
+                  className="inline-flex items-center justify-center rounded-full bg-white text-black hover:bg-white/90 px-8 py-3 text-lg font-bold transition-all duration-300"
                 >
                   Make Donation to the Farm
                 </Link>
@@ -382,7 +382,7 @@ export default function HealingFarm() {
               href="https://zoo.fund"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-amber-500/20 text-white hover:bg-amber-500/30 border border-amber-500/40 px-8 py-3 text-lg font-bold uppercase tracking-wider transition-all duration-300"
+              className="inline-flex items-center justify-center rounded-full bg-amber-500/20 text-white hover:bg-amber-500/30 border border-amber-500/40 px-8 py-3 text-lg font-bold transition-all duration-300"
             >
               Visit Zoo Fund
             </a>
@@ -446,13 +446,13 @@ export default function HealingFarm() {
               <div className="flex flex-wrap justify-center lg:justify-start gap-4">
                 <a
                   href="mailto:hello@zoo.ngo?subject=Volunteer%20opportunities"
-                  className="inline-flex items-center justify-center rounded-full bg-amber-500/20 text-white hover:bg-amber-500/30 border border-amber-500/40 px-8 py-3 text-lg font-bold uppercase tracking-wider transition-all duration-300"
+                  className="inline-flex items-center justify-center rounded-full bg-amber-500/20 text-white hover:bg-amber-500/30 border border-amber-500/40 px-8 py-3 text-lg font-bold transition-all duration-300"
                 >
                   Volunteer or Collaborate
                 </a>
                 <Link
                   href="/donation/farm"
-                  className="inline-flex items-center justify-center rounded-full border border-gray-600 text-white hover:border-white px-8 py-3 text-lg font-bold uppercase tracking-wider transition-all duration-300"
+                  className="inline-flex items-center justify-center rounded-full border border-gray-600 text-white hover:border-white px-8 py-3 text-lg font-bold transition-all duration-300"
                 >
                   Donate or Sponsor
                 </Link>

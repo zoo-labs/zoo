@@ -1,4 +1,6 @@
 import { AnalyticsProvider, usePageview } from '@hanzo/event/react';
+import { Zen } from '@hanzo/font/sans';
+import { ZenMono } from '@hanzo/font/mono';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 
@@ -50,11 +52,23 @@ function Pageview() {
  * single source in the tree, and that is how a brand's traffic ends up in
  * another brand's project.
  */
+/**
+ * Zen is bound here and only here.
+ *
+ * `@hanzo/font` is the package that owns the family: it ships the woff2 with
+ * the licence beside it and wraps `next/font/local`, so the faces are
+ * self-hosted, the `@font-face` is generated, and the preload carries the
+ * content hash. The two variables land on the tree as `--font-zen-sans` and
+ * `--font-zen-mono`, which is what `font-sans` and `font-mono` resolve to in
+ * tailwind.config.ts — so no component names a typeface.
+ */
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AnalyticsProvider config={{ product: 'site', enabled: telemetryEnabled() }}>
       <Pageview />
-      <Component {...pageProps} />
+      <div className={`${Zen.variable} ${ZenMono.variable} font-sans`}>
+        <Component {...pageProps} />
+      </div>
     </AnalyticsProvider>
   );
 }

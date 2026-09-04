@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import "@fontsource/poppins";
 function Accordion({
     header = "",
     content = "",
