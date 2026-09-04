@@ -58,47 +58,48 @@ function Item({list, linkFlag=true}: {
         }
       ];
   return (
-    <div className="bg-black lg:py-52 md:py-32 max-md:py-8">
-      <div className='grid md:grid-cols-3 grid-cols-1 gap-8 xl:px-56 lg:px-40 md:px-24 max-md:px-4'>
-      {animals.map((data, index) => (
-        <div key={index} className='flex flex-col items-center space-y-4'>
-          <div className='w-full max-md:w-full flex flex-col items-center justify-between  border rounded-xl border-white space-y-8'>
-              {/* <Image
-                  className='w-full'
-                  src={data.img}
-                  width='800'
-                  height='800'
-                  alt=''
-              /> */}
-              <ModelViewer className='aspect-square'
+    <section className="bg-white py-16">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <span className="inline-block px-4 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 mb-3">
+            🐾 Interactive 3D Sanctuary
+          </span>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+            Meet the Species We Protect
+          </h2>
+          <p className="text-lg text-gray-600 mt-2 max-w-2xl mx-auto">
+            Rotate, zoom, and explore endangered wildlife in full 3D and AR directly in your browser.
+          </p>
+        </div>
+        <div className='grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8'>
+        {animals.map((data, index) => (
+          <div key={index} className='bg-gray-50/70 p-6 rounded-3xl border border-gray-200 hover:border-emerald-400 hover:shadow-lg transition-all flex flex-col items-center justify-between'>
+            <div className='w-full aspect-square bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-center justify-center overflow-hidden'>
+              <ModelViewer className='w-full h-full'
                 usdz={data.usdz}
                 glb={data.glb}
                 camera_orbit={data.camera_orbit}
                 camera_target={data.camera_target}
               ></ModelViewer>
-              
+            </div>
+            <div className="w-full mt-6 text-center">
+              {linkFlag ? (
+                <Link
+                  href={data.href}
+                  className='inline-flex items-center justify-center gap-2 w-full py-3 px-4 bg-white hover:bg-emerald-50 text-gray-900 hover:text-emerald-700 font-bold rounded-xl border border-gray-200 transition-colors shadow-sm text-base'
+                >
+                  <span>{data.title}</span>
+                  <span>→</span>
+                </Link>
+              ) : (
+                <p className='text-gray-900 font-bold text-lg'>{data.title}</p>
+              )}
+            </div>
           </div>
-          {
-            linkFlag ? (
-              <Link
-                href={data.href}
-                className='w-full items-center flex justify-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10 '>
-                  <>
-                    <span className='pr-[15px]'>{data.title}</span>
-                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
-                    </svg>
-                  </>
-              </Link>
-            ) : (
-              <p className='text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>{data.title}</p>
-            )
-          }
-          
+        ))}
         </div>
-      ))}
       </div>
-    </div>
+    </section>
   );
 }
 

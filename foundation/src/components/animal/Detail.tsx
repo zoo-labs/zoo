@@ -6,83 +6,62 @@ const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
 });
 function Detail() {
   return (
-    <div>
-    <div className="bg-black xl:px-56 lg:px-36 px-16 max-md:hidden">
-      <div className='flex items-center justify-between py-20  lg:space-x-16 2xl:space-x-32 space-x-8'>
-        <div className='md:w-1/2 max-md:absolute max-md:w-4/5 max-md:right-0 max-md:z-0'>
-            {/* <Image
-                className='w-4/5'
-                src='/images/red_wolf.png'
-                width='800'
-                height='800'
-                alt=''
-            /> */}
-            <ModelViewer className='w-4/5 aspect-square border rounded-xl p-4'
-              usdz="/models/Wolf/WOLF_ADULT.usdz"
-              glb="/models/Wolf/WOLF-ADULT.glb"
-              camera_target="0.05m 0.05m 0m"
-            ></ModelViewer>
-        </div>
-        <div className='w-1/2 max-md:w-full max-md:z-10 max-md:pt-[280px] flex flex-col  max-md:pl-15 max-md:pr-15   lg:pr-8'>
-            <p className='text-white md:text-sm lg:text-md xl:text-xl'>ENDANGERED SPECIES WE SUPPORT</p>
-            <h1 className='text-white md:text-3xl xl:text-6xl max-md:text-2xl mt-5 mb-12'>The Red Wolf</h1>
-            <p className='text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'>Be an indispensable part of in our mission for animal preservation.</p>
-            <div className='flex items-center justify-between mt-10'>
-                <Link href='/getinvolved#volunteer' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10' >
-                  <>
-                    <span className='pr-[15px]'>Volunteer</span>
-                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
-                    </svg>
-                  </>
-                </Link>
-                <Link href='/donation' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
-                  <>
-                    <span className='pr-[15px]'>Donate</span>
-                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
-                    </svg>
-                  </>
-                </Link>
-                <Link href='/animals/red_wolf' className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10' >
-                  <>
-                    <span className='pr-[15px]'>Learn More</span>
-                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
-                    </svg>
-                  </>
-                </Link>
+    <section className="bg-white py-16">
+      <div className="max-w-7xl mx-auto px-6 max-md:hidden">
+        <div className='flex items-center justify-between py-12 lg:gap-16 gap-8 bg-gray-50/80 rounded-3xl p-10 border border-gray-200'>
+          <div className='w-1/2 flex justify-center'>
+            <div className="w-full max-w-md aspect-square bg-white rounded-2xl p-4 shadow-sm border border-gray-200">
+              <ModelViewer className='w-full h-full'
+                usdz="/models/Wolf/WOLF_ADULT.usdz"
+                glb="/models/Wolf/WOLF-ADULT.glb"
+                camera_target="0.05m 0.05m 0m"
+              ></ModelViewer>
             </div>
+          </div>
+          <div className='w-1/2 flex flex-col'>
+            <span className='inline-block px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 w-fit mb-3'>
+              CRITICALLY ENDANGERED
+            </span>
+            <h3 className='text-gray-900 text-4xl lg:text-5xl font-extrabold tracking-tight mb-4'>
+              The Red Wolf
+            </h3>
+            <p className='text-gray-600 text-base lg:text-lg leading-relaxed mb-6'>
+              Fewer than 25 red wolves remain in the wild. Our non-profit foundation deploys GPS collaring, bioacoustic sensors, and genetic tracking to support their recovery.
+            </p>
+            <div className='flex flex-wrap items-center gap-4'>
+              <Link href='/animals/red_wolf' className='bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl transition-colors shadow-sm text-sm' >
+                Explore Species & 3D →
+              </Link>
+              <Link href='/donation' className='bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 font-bold px-6 py-2.5 rounded-xl transition-colors text-sm'>
+                Support Sanctuary
+              </Link>
+              <Link href='/getinvolved#volunteer' className='text-emerald-700 hover:text-emerald-800 font-semibold text-sm'>
+                Volunteer in the Field
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div className='bg-black flex flex-col hidden max-md:block px-4'>
-        <p className='text-white text-center pb-8 max-md:text-lg'>ENDANGERED SPECIES WE SUPPORT</p>
-        <div className='max-md:w-full aspect-square relative flex flex-col items-center justify-between border rounded-xl border-white '>
-            {/* <video
-                className='w-full m-1 h-full'
-                autoPlay loop muted playsInline
-            >
-              <source src='/videos/teen_wolf.webm'  type="video/webm"/>
-                <source src='/videos/teen_wolf.mp4'  type="video/mp4"/>
-            </video> */}
-            <ModelViewer className='w-4/5 aspect-square border rounded-xl p-4'
+
+      <div className='max-md:block hidden px-6'>
+        <div className="bg-gray-50 rounded-3xl p-6 border border-gray-200 text-center">
+          <span className='inline-block px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 mb-3'>
+            CRITICALLY ENDANGERED
+          </span>
+          <h3 className='text-2xl font-bold text-gray-900 mb-4'>The Red Wolf</h3>
+          <div className='w-full aspect-square bg-white rounded-2xl p-4 shadow-sm border border-gray-200 mb-4'>
+            <ModelViewer className='w-full h-full'
               usdz="/models/Wolf/WOLF_ADULT.usdz"
               glb="/models/Wolf/WOLF-ADULT.glb"
               camera_target="0.05m 0.05m 0m"
             ></ModelViewer>
-            
+          </div>
+          <Link href='/animals/red_wolf' className='inline-block w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-center'>
+            Learn More About The Red Wolf →
+          </Link>
         </div>
-        <Link href='/animals/red_wolf' className='flex items-center justify-center pt-4 cursor-pointer text-white md:text-sm lg:text-md xl:text-lg max-md:pb-10'>
-              <>
-                <span className='pr-[15px]'>Red Wolf</span>
-                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.5L1.19924 10.5L0 9.24901L3.59962 5.5L6.08905e-06 1.751L1.19924 0.5L6 5.5Z" fill="white"/>
-                </svg>
-              </>
-            </Link>
-    </div>
-    </div>
+      </div>
+    </section>
   );
 }
 

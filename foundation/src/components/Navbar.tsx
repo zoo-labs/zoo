@@ -34,21 +34,21 @@ function Navbar() {
   };
 
   return (
-      <nav className="bg-black">
-        <div className="max-md:fixed max-md:w-full max-md:left-0 max-md:z-[999] max-md:bg-black px-4 sm:px-6 lg:px-8 xl:px-12">
+      <nav className="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 transition-all shadow-sm">
+        <div className="px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="flex items-center justify-between h-20">
               <div className="md:hidden">
                   <button
                   type="button"
                   onClick={toggleMenu}
-                  className="text-white inline-flex items-center justify-center p-2 "
+                  className="text-gray-700 hover:text-green-600 inline-flex items-center justify-center p-2 rounded-lg"
                   aria-controls="mobile-menu"
                   aria-expanded={isOpen}
                   >
                   <span className="sr-only">Open main menu</span>
                   {!isOpen ? (
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M19 17.5H1V16H19V17.5ZM13 10.5H1V9H13V10.5ZM1 3.5V2H19V3.5H1Z" fill="white"/>
+                      <svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M19 17.5H1V16H19V17.5ZM13 10.5H1V9H13V10.5ZM1 3.5V2H19V3.5H1Z"/>
                       </svg>
                   ) : (
                       <svg
@@ -68,54 +68,60 @@ function Navbar() {
                   )}
                   </button>
               </div>
-              <div className="flex items-center max-md:ml-[36px]">
+              <div className="flex items-center">
                   <div className="flex-shrink-0">
-
                   <Link
                       href="/"
-                      className="text-gray-300 hover:text-white px-3 py-2 text-md font-medium">
-                      <Image alt="ZOO" src="/zooLogo.svg" width={64} height={64} />
+                      className="flex items-center gap-3 px-2 py-1 text-gray-900 font-bold text-xl hover:opacity-90 transition-opacity">
+                      <Image alt="Zoo Labs Foundation" src="/zooLogoLight.svg" width={44} height={44} className="rounded-full shadow-sm" />
+                      <span className="hidden sm:inline font-extrabold tracking-tight text-gray-900">Zoo Labs <span className="text-green-600">Foundation</span></span>
                   </Link>
                   </div>
               </div>
               <div className="hidden md:block">
-                  <div className="mx-10 flex items-baseline xl:space-x-10 md:space-x-2 lg:space-x-4 2xl:space-x-12">
+                  <div className="mx-6 flex items-center xl:space-x-8 lg:space-x-6 md:space-x-4">
+                  <Link
+                      href="/animals"
+                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
+                  >
+                      Animals & Species
+                  </Link>
+                  <Link
+                      href="/research"
+                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
+                  >
+                      Research
+                  </Link>
+                  <Link
+                      href="/ai"
+                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
+                  >
+                      ZenLM AI
+                  </Link>
                   <Link
                       href="/experiences"
-                      className="text-gray-300 hover:text-white px-3 py-2 text-md font-medium"
+                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
                   >
                       Experiences
                   </Link>
                   <Link
                       href="/about"
-                      className="text-gray-300 hover:text-white px-3 py-2 text-md font-medium"
+                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-base font-semibold transition-colors"
                   >
                       About
                   </Link>
                   <Link
-                      href="/research"
-                      className="text-gray-300 hover:text-white px-3 py-2 text-md font-medium"
+                      href="https://zoolabs.io"
+                      className="bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1.5 transition-all hover:scale-105"
                   >
-                      Research
-                  </Link>
-                  <Link
-                      href="/volunteer"
-                      className="text-gray-300 hover:text-white px-3 py-2 text-md font-medium"
-                  >
-                      Volunteer
-                  </Link>
-                  <Link
-                      href="/healing-farm"
-                      className="text-gray-300 hover:text-white px-3 py-2 text-md font-medium"
-                  >
-                      Healing Farm
+                      <span>🔬</span> Labs →
                   </Link>
                   </div>
               </div>
               <div className='flex items-center gap-3'>
                   <Link
                       href="/donation"
-                      className="bg-white text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] border-2 border-white px-8 py-3 rounded-full text-lg font-bold uppercase tracking-wider transition-all duration-300"
+                      className="bg-green-600 text-white hover:bg-green-700 hover:scale-105 shadow-md px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-200"
                   >
                       Donate
                   </Link>
@@ -123,43 +129,56 @@ function Navbar() {
           </div>
         </div>
         {isOpen && (
-          <div className="md:hidden fixed z-50 h-[100vh] top-20 w-full bg-black" id="mobile-menu">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className="md:hidden fixed z-50 h-[100vh] top-20 w-full bg-white border-t border-gray-100 shadow-xl" id="mobile-menu">
+            <div className="px-4 pt-4 pb-6 space-y-2">
+              <Link
+                href="/animals"
+                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
+                onClick={() => setIsOpen(false)}
+              >
+                Animals & Species
+              </Link>
+              <Link
+                href="/research"
+                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
+                onClick={() => setIsOpen(false)}
+              >
+                Research
+              </Link>
+              <Link
+                href="/ai"
+                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
+                onClick={() => setIsOpen(false)}
+              >
+                ZenLM AI
+              </Link>
               <Link
                 href="/experiences"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
+                onClick={() => setIsOpen(false)}
               >
                 Experiences
               </Link>
               <Link
                 href="/about"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-gray-800 hover:bg-gray-50 hover:text-green-600 block px-3 py-2.5 rounded-lg text-lg font-semibold"
+                onClick={() => setIsOpen(false)}
               >
                 About
               </Link>
               <Link
-                href="/research"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                href="https://zoolabs.io"
+                className="bg-blue-50 text-blue-700 block px-4 py-3 rounded-xl text-lg font-bold border border-blue-200"
+                onClick={() => setIsOpen(false)}
               >
-                Research
-              </Link>
-              <Link
-                href="/volunteer"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Volunteer
-              </Link>
-              <Link
-                href="/healing-farm"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              >
-                Healing Farm
+                🔬 Zoo Labs (Ask Blue) →
               </Link>
               <Link
                 href="/donation"
-                className="bg-white text-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] border-2 border-white px-8 py-4 rounded-full text-lg font-bold uppercase tracking-wider transition-all duration-300 mx-3 mt-6 text-center block"
+                className="bg-green-600 text-white text-center block px-4 py-3 rounded-xl text-lg font-bold uppercase tracking-wider"
+                onClick={() => setIsOpen(false)}
               >
-                Donate
+                Donate to Wildlife
               </Link>
             </div>
           </div>
