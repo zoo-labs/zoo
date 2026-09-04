@@ -3,10 +3,10 @@
  * @see https://github.com/iamvishnusankar/next-sitemap#readme
  */
 module.exports = {
-  // The canonical origin every generated URL is written against. It must be the
-  // site's own origin: sitemap.xml and robots.txt are published documents, so an
-  // origin that is not ours sends every crawler somewhere else.
-  siteUrl: 'https://zoo.ngo',
+  // sitemap.xml and robots.txt are published documents: an origin that is not
+  // ours sends every crawler somewhere else. It is read from the one place the
+  // origin is declared rather than written down a second time here.
+  siteUrl: require('./site-origin'),
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],
