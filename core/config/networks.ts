@@ -265,7 +265,7 @@ export const SUPPORTED_NETWORKS: {
       symbol: "AVAX",
       decimals: 18,
     },
-    rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
+    rpcUrls: ["https://api.avax.network/v1/chain/c"],
     blockExplorerUrls: ["https://cchain.explorer.avax.network"],
   },
   [ChainId.OKEX]: {

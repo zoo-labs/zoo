@@ -115,8 +115,8 @@ test('the chain client is the only thing that talks to the network', () => {
 
 test('the RPC endpoint is the real one, on the correct path', () => {
   const chain = FILES.find((f) => f.path === 'lib/chain.ts')!
-  // /ext/bc/C/rpc returns HTTP 404 on this estate; the path is /v1/bc/C/rpc.
-  assert.ok(!/\/ext\/bc\//.test(code(chain.text)), 'the RPC path is /v1/bc/C/rpc, never /ext/')
+  // /v1/chain/c returns HTTP 404 on this estate; the path is /v1/chain/c.
+  assert.ok(!/\/ext\/bc\//.test(code(chain.text)), 'the RPC path is /v1/chain/c, never /ext/')
   assert.match(chain.text, /rpc\.zoo\.network\/v1\/bc\/C\/rpc/, 'the default C-Chain RPC must be the live endpoint')
   assert.match(chain.text, /CHAIN_ID\s*=\s*200200\b/, 'Zoo mainnet is chain 200200 (verified eth_chainId → 0x30e08)')
 
