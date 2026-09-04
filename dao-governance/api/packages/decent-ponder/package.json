@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "ponder dev --schema=onchain-dev",
-    "start": "ponder start --schema=${RAILWAY_DEPLOYMENT_ID%%-*} --views-schema=onchain",
+    "start": "ponder start --schema=${DEPLOYMENT_ID%%-*} --views-schema=onchain",
     "ponder:list": "ponder db list",
     "lint": "eslint ./**/*.ts ./**/*.*.ts"
   },
