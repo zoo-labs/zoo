@@ -29,7 +29,7 @@ const networks: HardhatUserConfig['networks'] = {
     },
   },
   luxlocal: {
-    url: 'http://127.0.0.1:9630/v1/chain/C/rpc',
+    url: 'http://127.0.0.1:9630/v1/chain/c/rpc',
     chainId: 43112,
     allowUnlimitedContractSize: true,
     accounts: [
@@ -85,7 +85,7 @@ const networks: HardhatUserConfig['networks'] = {
     gasPrice: 25000000000,
   },
   'lux-mainnet': {
-    url: 'http://127.0.0.1:9630/v1/chain/C/rpc',
+    url: 'http://127.0.0.1:9630/v1/chain/c/rpc',
     chainId: 96369,
     allowUnlimitedContractSize: true,
     accounts: {

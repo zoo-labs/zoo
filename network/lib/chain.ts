@@ -28,15 +28,15 @@ import {
 /**
  * Zoo mainnet C-Chain.
  *
- * The canonical path is `/v1/chain/C/rpc` or `/v1/chain/zoo`.
+ * The canonical path is `/v1/chain/c/rpc` or `/v1/chain/zoo`.
  * The legacy `/ext/bc` and `/v1/bc` paths are migrated.
  */
 export const RPC_URL =
-  process.env.NEXT_PUBLIC_ZOO_RPC_URL || 'https://rpc.zoo.network/v1/chain/C/rpc'
+  process.env.NEXT_PUBLIC_ZOO_RPC_URL || 'https://rpc.zoo.network/v1/chain/c/rpc'
 
 /** The P-Chain serves the validator set. */
 export const P_RPC_URL =
-  process.env.NEXT_PUBLIC_ZOO_P_RPC_URL || 'https://rpc.zoo.network/v1/chain/P'
+  process.env.NEXT_PUBLIC_ZOO_P_RPC_URL || 'https://rpc.zoo.network/v1/chain/p'
 
 /** Zoo mainnet. Verified: eth_chainId → 0x30e08. */
 export const CHAIN_ID = 200200

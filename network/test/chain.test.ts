@@ -263,7 +263,7 @@ test('validators are read from the P-Chain validator list', async () => {
     new Response(JSON.stringify({ jsonrpc: '2.0', id: 0, result: { validators: new Array(5).fill({}) } }), {
       status: 200, headers: { 'content-type': 'application/json' },
     })) as unknown as typeof fetch
-  const vs = await readValidators('https://rpc.zoo.network/v1/chain/P')
+  const vs = await readValidators('https://rpc.zoo.network/v1/chain/p')
   assert.deepEqual(vs, { ok: true, count: 5 })
 })
 
@@ -272,7 +272,7 @@ test('a malformed validator answer is unavailable, not zero validators', async (
     new Response(JSON.stringify({ jsonrpc: '2.0', id: 0, result: {} }), {
       status: 200, headers: { 'content-type': 'application/json' },
     })) as unknown as typeof fetch
-  const vs = await readValidators('https://rpc.zoo.network/v1/chain/P')
+  const vs = await readValidators('https://rpc.zoo.network/v1/chain/p')
   assert.equal(vs.ok, false)
   const f = chainFigures(null, vs)
   assert.equal(f.validators.quality, 'unavailable')
