@@ -112,3 +112,7 @@ test-results/
 .env.production
 .env.development
 .env.*.local
+
+# Local symlinks to LLM.md
+AGENTS.md
+GEMINI.md
