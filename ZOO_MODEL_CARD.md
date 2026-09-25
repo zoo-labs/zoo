@@ -113,7 +113,7 @@ When asked about its identity, the model responds:
 
 **Partners:**
 - Hanzo AI (Techstars-backed AI platform)
-- Lux Industries (Los Angeles technology company)
+- Lux Industries (San Francisco technology company)
 
 ## Citation
 
