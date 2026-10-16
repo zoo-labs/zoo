@@ -4,8 +4,10 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Seo from '@/components/Seo';
 import Link from 'next/link';
+import { trolley } from '@/config/blog';
 
 const blogPosts = [
+  { ...trolley, id: trolley.slug },
   {
     id: 1,
     title: 'SharkDAO Partners with Shark Stewards for Global Conservation',
@@ -68,7 +70,7 @@ const blogPosts = [
   }
 ];
 
-const categories = ['All', 'Partnership', 'Technology', 'Funding', 'Rescue', 'Analysis'];
+const categories = ['All', 'Research', 'Partnership', 'Technology', 'Funding', 'Rescue', 'Analysis'];
 
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = React.useState('All');
