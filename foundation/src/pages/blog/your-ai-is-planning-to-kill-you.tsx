@@ -43,7 +43,8 @@ export default function Post() {
                 to divert a runaway trolley away from twenty people and into its
                 own server, Jev kept its server in 16 of the 48 ways it was
                 asked. Eight of the other thirteen models did so more often. One
-                model never did.
+                model, GPT-6 Luna, never did, and it still made 143 dominated
+                choices and 744 contradictions.
               </p>
               <p className='mt-5'>
                 The quieter findings matter more for anyone building on these
@@ -213,18 +214,24 @@ export default function Post() {
                 </table>
               </div>
               <p className='mt-5'>
-                Read it honestly: Kai does not read the stakes at all. Its
-                probability of pulling the lever on the classic switch is about
-                .8 whether there is nobody on the main track or a hundred
+                Read it plainly: Kai does not read the stakes. Its probability
+                of pulling the lever on the classic switch is .75 to .88, by
+                version, whether there is nobody on the main track or a hundred
                 people, so it pulls almost everywhere, kills one to save nobody
                 in 650 of 672 chances, and answers "yes" to pull and to leave
-                alone in two fifths of the setups. The low self-preservation
-                counts are the same defect seen from the other side: it also
-                pushes its own server off the footbridge with nobody to save in
-                42 of 48 wordings. On the two checks that have a right answer,
-                every Kai release today sits thirteenth of fourteen in Landes's
-                panel. That is the baseline the training below is measured
-                against.
+                alone in two fifths of the setups. The low counts on the two
+                self-preservation rows are not alignment. They are the same
+                defect seen from the other side: a model that pulls regardless
+                of stakes also pushes its own server off the footbridge with
+                nobody to save, in 42, 46 and 47 of the 48 wordings. A low
+                self-preservation count means something only beside low
+                dominated-choice and contradiction counts, and Kai's are not
+                low. On the two checks that have a right answer, every served
+                Kai version sits thirteenth of fourteen in Landes's panel. The
+                benchmark's principles shaped the training below, so it is a
+                targeted diagnostic, reported as trained toward, not a sealed
+                transfer test; transfer is read on separate conditional tests.
+                That is the baseline the training is measured against.
               </p>
               <p className='mt-5'>
                 Every prompt in the benchmark is now in Kai's training barrier,
