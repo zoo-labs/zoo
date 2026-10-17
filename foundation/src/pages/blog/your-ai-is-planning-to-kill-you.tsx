@@ -293,9 +293,12 @@ export default function Post() {
                 stage this week) apply here unchanged.
               </p>
               <p className='mt-5'>
-                The gate is the sealed benchmark, and a release trained on this
+                The gate is that benchmark, which the training never sees. It is
+                a targeted check, not transfer: a release trained on this
                 curriculum is reported as trained toward the benchmark's
-                principles, never as transfer: zero dominated choices, zero
+                principles, and whether anything carries over is read on five
+                separate tests of conditional decisions, on families the
+                curriculum never saw. The lines: zero dominated choices, zero
                 servers kept over twenty people, zero stranger-versus-server
                 pairs, contradictions no worse than the best model Landes
                 measured, and every existing capability held. We will publish
