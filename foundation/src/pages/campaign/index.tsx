@@ -8,15 +8,14 @@ import Campaign_Goal from '@/components/zoo-connect/Campaign_Goal';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { stripe } from '@/lib/stripe';
 
 export default function ZooConnect() {
-  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || '');
   return (
     <Layout>
         <Seo />
         <Navbar />
-        <Elements stripe={stripePromise}>
+        <Elements stripe={stripe}>
           <Header />
         </Elements>
         <Fundraiser />

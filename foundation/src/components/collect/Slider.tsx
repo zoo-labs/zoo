@@ -67,19 +67,21 @@ function Slide() {
         arrows: true
       };
     return (
-        <Slider {...settings} className='bg-black w-full py-10 collect-slider'>
+        <Slider {...settings} className='bg-background w-full py-12'>
 
             {animals.map((data, index) => (
-            <Link key={index} href={data.url} className='flex flex-col items-center text-center space-y-4 max-sm:p-2 p-4'>
-            <div className='rounded-lg p-[4px] bg-[#3C9465]'>
-                <ModelViewer className='aspect-square  bg-[#3C9465]'
-                usdz={data.usdz}
-                glb={data.glb}
-                ar={false}
-                control = {false}
-                auto_play = {false}
-            ></ModelViewer>
-            <p className='text-[10px] text-black'>{data.name}</p>
+            <Link key={index} href={data.url} className='flex flex-col items-center text-center space-y-4 p-4'>
+            <div className='rounded-lg p-1' style={{ background: 'var(--green)' }}>
+                <div style={{ aspectRatio: '1' }}>
+                  <ModelViewer
+                  usdz={data.usdz}
+                  glb={data.glb}
+                  ar={false}
+                  control = {false}
+                  auto_play = {false}
+                ></ModelViewer>
+                </div>
+            <p className='text-xs' style={{ color: 'var(--white)' }}>{data.name}</p>
             </div>
             </Link>
         ))}

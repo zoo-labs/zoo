@@ -1,355 +1,151 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
 import Layout from '@/components/layout/Layout';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Seo from '@/components/Seo';
-import Link from 'next/link';
+import { useCorpus } from '@/config/corpus';
+
+/**
+ * What the research is, rather than what we wish it had already done.
+ *
+ * This page used to claim $12.3M in conservation funding, 15,420 animals
+ * rescued, 284,000 volunteer hours, deployment to 200+ sites, 15 million images
+ * analysed and 98% accuracy. The foundation's IRS determination is dated June
+ * 2025 and the public record carries no filing; none of those things happened,
+ * and a donor reading them was being misled about what their money had done.
+ *
+ * What did happen is the research below — every line links to the paper it
+ * describes, so the claim and its evidence are the same click.
+ */
+
+const WORK = [
+  {
+    hue: 'var(--green)',
+    title: 'Wildlife population monitoring',
+    body: 'Deep learning for counting animals and assessing habitat from survey imagery, and what the method can and cannot resolve.',
+    paper: 'zoo-conservation-ai',
+  },
+  {
+    hue: 'var(--cyan)',
+    title: 'Tracking without surveilling',
+    body: 'Movement analytics that keep the location of an endangered animal out of the hands of anyone who would use it to find one.',
+    paper: 'zoo-wildlife-tracking',
+  },
+  {
+    hue: 'var(--magenta)',
+    title: 'Recognising a species from few examples',
+    body: 'Biodiversity monitoring where most species have almost no labelled images, which is most species.',
+    paper: 'zoo-species-classification',
+  },
+  {
+    hue: 'var(--yellow)',
+    title: 'Where a species can still live',
+    body: 'Modelling how distributions shift under climate change, so protection is planned for the range an animal will have.',
+    paper: 'zoo-habitat-modeling',
+  },
+  {
+    hue: 'var(--blue)',
+    title: 'Learning across sites without pooling data',
+    body: 'Federated training so field stations improve a shared model while their own recordings stay their own.',
+    paper: 'zoo-federated-wildlife',
+  },
+  {
+    hue: 'var(--green)',
+    title: 'Watching land use from orbit',
+    body: 'Detecting change from satellite imagery — clearing, encroachment, recovery — at a cadence fieldwork cannot match.',
+    paper: 'zoo-satellite-ecology',
+  },
+  {
+    hue: 'var(--cyan)',
+    title: 'Counting with the public',
+    body: 'A citizen science platform for biodiversity collection, and the problem of keeping volunteer data usable.',
+    paper: 'zoo-citizen-science',
+  },
+  {
+    hue: 'var(--red)',
+    title: 'Carbon credits you can check',
+    body: 'Measurement and verification for nature-based credits, written against the finding that most certified offsets do not hold up.',
+    paper: 'zoo-carbon-credits',
+  },
+];
+
+const paperUrl = (id: string) => `https://github.com/zooai/papers/tree/main/${id}`;
 
 export default function Impact() {
-  const [selectedYear, setSelectedYear] = useState('2025');
-
+  const corpus = useCorpus();
   return (
     <Layout>
       <Seo
-        templateTitle="Our Impact"
-        description="Measurable conservation impact through technology, research, and community action"
+        templateTitle="Impact"
+        description="The conservation research Zoo Labs Foundation has published, with a link to every paper."
       />
       <Navbar />
 
-      <div className="bg-black text-white">
-        {/* Hero Section */}
-        <div className="container mx-auto px-4 py-20">
-          <h1 className="text-5xl md:text-7xl font-bold mb-8">Our Conservation Impact</h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl">
-            Since 2019, Zoo Foundation has pioneered decentralized conservation funding, 
-            protecting endangered species through innovative technology and community-driven action.
+      <section className="container py-24">
+        <h1 className="text-5xl md:text-7xl font-black">Impact</h1>
+        <p className="mt-6 text-lg text-secondary" style={{ maxWidth: '58ch' }}>
+          We are a research foundation, and research is what we have to show. Every claim
+          below is a paper you can read; none of it is a number we cannot source.
+        </p>
+
+        <div className="mt-8 flex flex-wrap gap-4">
+          <a href="https://papers.zoo.ngo" className="action" data-fill>
+            All {corpus.papers} papers
+          </a>
+          <Link href="/transparency" className="action">
+            Registration and filings
+          </Link>
+        </div>
+      </section>
+
+      <section className="container py-24">
+        <h2 className="text-3xl md:text-4xl font-black">Conservation research</h2>
+        <div className="mt-8 grid-cards">
+          {WORK.map((item) => (
+            <article
+              key={item.title}
+              className="card p-6"
+              style={{ borderLeft: `10px solid ${item.hue}` }}
+            >
+              <h3 className="text-xl font-bold">{item.title}</h3>
+              <p className="mt-3 text-secondary">{item.body}</p>
+              <a
+                href={paperUrl(item.paper)}
+                className="mt-4 inline-flex font-bold"
+              >
+                Read the paper →
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="container py-24">
+        <div className="card p-8" style={{ borderLeft: '10px solid var(--yellow)' }}>
+          <h2 className="text-2xl md:text-3xl font-black">What we have not done yet</h2>
+          <p className="mt-3 text-secondary" style={{ maxWidth: '62ch' }}>
+            We have not run a rescue operation, funded a sanctuary, or deployed a sensor
+            network. When we do, the count will be on this page with the evidence beside it.
+            Until then this page is short, and that is the honest length.
           </p>
         </div>
+      </section>
 
-        {/* Key Metrics */}
-        <div className="bg-gradient-to-r from-green-900 to-blue-900 py-16">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-4 gap-8 text-center">
-              <div>
-                <p className="text-5xl font-bold mb-2">847</p>
-                <p className="text-xl">Species Protected</p>
-                <p className="text-sm text-gray-300 mt-2">Across 6 continents</p>
-              </div>
-              <div>
-                <p className="text-5xl font-bold mb-2">$12.3M</p>
-                <p className="text-xl">Conservation Funding</p>
-                <p className="text-sm text-gray-300 mt-2">100% transparent allocation</p>
-              </div>
-              <div>
-                <p className="text-5xl font-bold mb-2">2.4M</p>
-                <p className="text-xl">Hectares Protected</p>
-                <p className="text-sm text-gray-300 mt-2">Critical habitat preserved</p>
-              </div>
-              <div>
-                <p className="text-5xl font-bold mb-2">15,420</p>
-                <p className="text-xl">Animals Rescued</p>
-                <p className="text-sm text-gray-300 mt-2">From trafficking & habitat loss</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Impact Timeline */}
-        <div className="container mx-auto px-4 py-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Conservation Timeline</h2>
-          
-          {/* Year Selector */}
-          <div className="flex flex-wrap gap-4 mb-12">
-            {['2025', '2024', '2023', '2022', '2021', '2020', '2019'].map((year) => (
-              <button
-                key={year}
-                onClick={() => setSelectedYear(year)}
-                className={`px-6 py-2 rounded-full font-medium transition-colors ${
-                  selectedYear === year
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                {year}
-              </button>
-            ))}
-          </div>
-
-          {/* Year-specific Impact */}
-          {selectedYear === '2025' && (
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-gray-900 rounded-lg p-8">
-                <h3 className="text-2xl font-bold mb-6">2025 Achievements</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-3">✓</span>
-                    <div>
-                      <strong>SharkDAO Partnership Launch:</strong> Protecting 50,000 sq km of shark habitats 
-                      with Shark Stewards International
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-3">✓</span>
-                    <div>
-                      <strong>AI Wildlife Monitoring:</strong> Deployed ZenLM to 200+ conservation sites, 
-                      achieving 98% species identification accuracy
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-3">✓</span>
-                    <div>
-                      <strong>Arctic Beluga Sanctuary:</strong> Expanded protected waters by 30,000 sq km 
-                      in Hudson Bay for beluga whale populations
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-3">✓</span>
-                    <div>
-                      <strong>Tiger Rescue Operations:</strong> Saved 12 tigers from illegal wildlife trade, 
-                      rehabilitated in sanctuaries
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-gray-900 rounded-lg p-8">
-                <h3 className="text-2xl font-bold mb-6">Q4 2025 Focus</h3>
-                <ul className="space-y-4">
-                  <li className="border-l-4 border-green-500 pl-4">
-                    <strong>Amazon Rainforest Initiative:</strong> 
-                    <p className="text-gray-400">Launching $2M fund for indigenous-led conservation in Brazil</p>
-                  </li>
-                  <li className="border-l-4 border-blue-500 pl-4">
-                    <strong>Coral Reef Restoration:</strong>
-                    <p className="text-gray-400">Deploying AI-guided coral planting robots in Great Barrier Reef</p>
-                  </li>
-                  <li className="border-l-4 border-purple-500 pl-4">
-                    <strong>African Elephant Corridor:</strong>
-                    <p className="text-gray-400">Creating 500km wildlife corridor connecting fragmented habitats</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          )}
-
-          {selectedYear === '2024' && (
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-gray-900 rounded-lg p-8">
-                <h3 className="text-2xl font-bold mb-6">2024 Achievements</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-3">✓</span>
-                    <div>
-                      <strong>ResearchDAO Launch:</strong> Funded 45 peer-reviewed conservation studies 
-                      with $500K in grants
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-3">✓</span>
-                    <div>
-                      <strong>Pangolin Protection Network:</strong> Established anti-poaching units 
-                      protecting 8 critical pangolin habitats
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-3">✓</span>
-                    <div>
-                      <strong>Ocean Cleanup Initiative:</strong> Removed 150 tons of plastic from 
-                      marine sanctuaries
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-gray-900 rounded-lg p-8">
-                <h3 className="text-2xl font-bold mb-6">2024 Impact Numbers</h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Species monitored</span>
-                    <span className="font-bold">1,847</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Research papers published</span>
-                    <span className="font-bold">127</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Conservation partners</span>
-                    <span className="font-bold">89</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Volunteer hours</span>
-                    <span className="font-bold">284,000</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Success Stories */}
-        <div className="bg-gray-900 py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12">Conservation Success Stories</h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-black rounded-lg overflow-hidden">
-                <div className="aspect-video bg-gray-800"></div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3">Javan Rhino Recovery</h3>
-                  <p className="text-gray-400 mb-4">
-                    Population increased by 18% through habitat restoration and anti-poaching efforts 
-                    in Ujung Kulon National Park.
-                  </p>
-                  <Link href="/blog/javan-rhino-recovery" className="text-green-500 hover:text-green-400">
-                    Read Full Story →
-                  </Link>
-                </div>
-              </div>
-              <div className="bg-black rounded-lg overflow-hidden">
-                <div className="aspect-video bg-gray-800"></div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3">Vaquita Porpoise Rescue</h3>
-                  <p className="text-gray-400 mb-4">
-                    Emergency intervention saved 8 of the remaining 10 vaquitas through 
-                    innovative gillnet removal technology.
-                  </p>
-                  <Link href="/blog/vaquita-rescue" className="text-green-500 hover:text-green-400">
-                    Read Full Story →
-                  </Link>
-                </div>
-              </div>
-              <div className="bg-black rounded-lg overflow-hidden">
-                <div className="aspect-video bg-gray-800"></div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3">Snow Leopard Comeback</h3>
-                  <p className="text-gray-400 mb-4">
-                    Community-based conservation doubled snow leopard populations in 
-                    Mongolian highlands over 5 years.
-                  </p>
-                  <Link href="/blog/snow-leopard-comeback" className="text-green-500 hover:text-green-400">
-                    Read Full Story →
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Regional Impact */}
-        <div className="container mx-auto px-4 py-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Global Conservation Reach</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="border border-gray-700 rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-4">🌍 Africa</h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>• 234 elephant families protected</li>
-                <li>• 89 rhinos saved from poaching</li>
-                <li>• 1.2M hectares preserved</li>
-                <li>• 45 ranger teams funded</li>
-              </ul>
-            </div>
-            <div className="border border-gray-700 rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-4">🌏 Asia</h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>• 67 tiger territories secured</li>
-                <li>• 234 orangutans relocated</li>
-                <li>• 450K hectares reforested</li>
-                <li>• 128 villages engaged</li>
-              </ul>
-            </div>
-            <div className="border border-gray-700 rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-4">🌎 Americas</h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>• 23 jaguar corridors created</li>
-                <li>• 567 sea turtles rehabilitated</li>
-                <li>• 340K hectares protected</li>
-                <li>• 67 indigenous partnerships</li>
-              </ul>
-            </div>
-            <div className="border border-gray-700 rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-4">🐋 Oceans</h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>• 89 whale pods monitored</li>
-                <li>• 234 coral reefs restored</li>
-                <li>• 2.3M sq km protected</li>
-                <li>• 450 tons plastic removed</li>
-              </ul>
-            </div>
-            <div className="border border-gray-700 rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-4">🐧 Antarctica</h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>• 12 penguin colonies tracked</li>
-                <li>• 34 research expeditions</li>
-                <li>• Climate data collection</li>
-                <li>• Krill population studies</li>
-              </ul>
-            </div>
-            <div className="border border-gray-700 rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-4">🦎 Australia</h3>
-              <ul className="space-y-2 text-gray-300">
-                <li>• 456 koalas rehabilitated</li>
-                <li>• 89 species reintroduced</li>
-                <li>• 234K hectares restored</li>
-                <li>• 23 wildlife hospitals</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Technology Impact */}
-        <div className="bg-gradient-to-r from-purple-900 to-pink-900 py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12">Technology-Driven Conservation</h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-5xl mb-4">🛰️</div>
-                <h3 className="text-xl font-bold mb-3">Satellite Monitoring</h3>
-                <p className="text-gray-300">
-                  Real-time deforestation alerts across 15 million hectares of critical habitat
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl mb-4">🤖</div>
-                <h3 className="text-xl font-bold mb-3">AI Species Tracking</h3>
-                <p className="text-gray-300">
-                  15 million wildlife images analyzed, identifying individual animals with 98% accuracy
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl mb-4">🔬</div>
-                <h3 className="text-xl font-bold mb-3">eDNA Sampling</h3>
-                <p className="text-gray-300">
-                  Environmental DNA analysis revealing presence of 2,300+ species in ecosystems
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Call to Action */}
-        <div className="container mx-auto px-4 py-20">
-          <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl p-12 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Your Support Creates Lasting Impact
-            </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
-              Every dollar donated goes directly to conservation efforts. Join us in protecting 
-              Earth's most vulnerable species.
+      <section className="container py-24">
+        <div className="card p-8 flex flex-wrap items-center justify-between gap-6">
+          <div style={{ maxWidth: '52ch' }}>
+            <h2 className="text-2xl md:text-3xl font-black">Fund the next paper</h2>
+            <p className="mt-3 text-secondary">
+              Donations pay for the research and the people doing it. Gifts to Zoo Labs
+              Foundation Inc. are tax-deductible to the extent the law allows.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/donation"
-                className="bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition-colors"
-              >
-                Donate Now
-              </Link>
-              <Link
-                href="/programs"
-                className="bg-transparent border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-black transition-colors"
-              >
-                View Programs
-              </Link>
-            </div>
           </div>
+          <Link href="/donation" className="action" data-fill>
+            Donate
+          </Link>
         </div>
-      </div>
+      </section>
 
       <Footer />
     </Layout>

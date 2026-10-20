@@ -1,221 +1,251 @@
-import Link from 'next/link';
 import React from 'react';
-
-import Footer from '@/components/Footer';
 import Layout from '@/components/layout/Layout';
 import Navbar from '@/components/Navbar';
-import Section, { Band } from '@/components/Section';
+import Footer from '@/components/Footer';
 import Seo from '@/components/Seo';
-import { U } from '@/config/registry';
+import Link from 'next/link';
+import { useCorpus } from '@/config/corpus';
 
-const CAPABILITIES = [
-  'Species identification from camera-trap images with 98% accuracy',
-  'Predictive modelling for migration patterns and habitat change',
-  'Real-time poaching threat detection and alerting',
-  'Ecosystem health monitoring through satellite imagery analysis',
+const models = [
+  {
+    family: 'Foundation',
+    desc: 'General purpose language models for text generation, reasoning, and instruction following.',
+    variants: [
+      { name: 'zen4-nano', params: '0.6B', context: '32K' },
+      { name: 'zen4-mini', params: '1.5B', context: '32K' },
+      { name: 'zen4-flash', params: '4B', context: '64K' },
+      { name: 'zen4-pro', params: '32B', context: '128K' },
+      { name: 'zen4-max', params: '72B', context: '128K' },
+      { name: 'zen4-ultra', params: '480B', context: '256K' },
+    ],
+    hf: 'https://huggingface.co/zenlm',
+  },
+  {
+    family: 'Code',
+    desc: 'Specialized for software engineering. 59.2% SWE-bench verified.',
+    variants: [
+      { name: 'zen4-coder-flash', params: '4B', context: '64K' },
+      { name: 'zen4-coder-pro', params: '32B', context: '128K' },
+    ],
+    hf: 'https://huggingface.co/zenlm/zen4-coder-flash',
+  },
+  {
+    family: 'Multimodal',
+    desc: 'Vision, audio, video, and 3D generation from a single architecture.',
+    variants: [
+      { name: 'zen-omni', params: '72B', context: '128K' },
+      { name: 'zen-vl', params: '32B', context: '128K' },
+      { name: 'zen-3d', params: '8B', context: '32K' },
+      { name: 'zen-director', params: '14B', context: '64K' },
+    ],
+    hf: 'https://huggingface.co/zenlm',
+  },
+  {
+    family: 'Safety',
+    desc: 'Content safety, alignment verification, and guardrails for production deployment.',
+    variants: [
+      { name: 'zen-guard', params: '1B', context: '8K' },
+      { name: 'zen-guard-pro', params: '8B', context: '32K' },
+      { name: 'zen-guard-vision', params: '4B', context: '16K' },
+    ],
+    hf: 'https://huggingface.co/zenlm',
+  },
 ];
 
-const METRICS = [
-  { value: '15M+', label: 'Wildlife images analysed' },
-  { value: '2,300+', label: 'Species identified and tracked' },
-  { value: '87%', label: 'Reduction in response time to threats' },
-];
-
-const AREAS = [
-  {
-    title: 'Computer vision',
-    body: 'Image recognition for species identification, behaviour analysis and population counting from drone and camera-trap footage.',
-  },
-  {
-    title: 'Predictive analytics',
-    body: 'Models that predict habitat loss, climate impact and migration change, to enable proactive conservation.',
-  },
-  {
-    title: 'Natural language processing',
-    body: 'Analysis of research papers, field reports and social media to track conservation trends and identify emerging threats.',
-  },
-  {
-    title: 'Acoustic monitoring',
-    body: 'Audio analysis that identifies species by their calls, monitors ecosystem health and detects illegal activity.',
-  },
-  {
-    title: 'Genomic analysis',
-    body: 'Machine learning applied to sequencing data to understand genetic diversity and guide breeding programmes.',
-  },
-  {
-    title: 'Ledger integration',
-    body: 'Verified wildlife data written to a public ledger, for transparent and tamper-evident conservation records.',
-  },
-];
-
-const ENDPOINTS = [
-  ['POST', '/v1/species/identify'],
-  ['POST', '/v1/habitat/analyze'],
-  ['GET', '/v1/threats/monitor'],
-  ['POST', '/v1/migration/predict'],
-  ['POST', '/v1/audio/classify'],
+const trainingMethods = [
+  { name: 'Training-Free GRPO', desc: '99.8% cost reduction. $18 vs $10,000+ for traditional fine-tuning.' },
+  { name: 'LoRA / QLoRA', desc: 'Parameter-efficient fine-tuning for single-GPU training.' },
+  { name: 'DPO', desc: 'Direct preference optimization without reward model overhead.' },
+  { name: 'Full Fine-Tuning', desc: 'Multi-GPU distributed training with DeepSpeed ZeRO-3.' },
+  { name: 'DSO Protocol', desc: 'Decentralized semantic optimization via experience ledger.' },
+  { name: 'RLHF', desc: 'Reinforcement learning from human feedback for alignment.' },
 ];
 
 export default function AI() {
+  const corpus = useCorpus();
   return (
     <Layout>
       <Seo
-        templateTitle='AI for Conservation'
-        description="Zoo Foundation's AI initiatives for wildlife conservation through ZenLM and machine learning"
+        templateTitle="AI Research"
+        description={`The Zen model family: ${corpus.models} open-source frontier models from 600M to 480B parameters. Zoo Gym training platform.`}
       />
       <Navbar />
 
-      <section
-        style={{
-          borderBottom: '1px solid var(--border)',
-          paddingBlock: 'clamp(3rem, 8vw, 6rem)',
-        }}
-      >
-        <Band>
-          <p className='eyebrow mb-5'>Zoo Labs · applied research</p>
-          <h1 className='display mb-6' style={{ maxWidth: '18ch' }}>
-            AI for conservation
-          </h1>
-          <p className='lede' style={{ maxWidth: '42rem' }}>
-            Machine learning applied to protecting endangered species — monitoring,
-            prediction and the conservation strategies they support.
+      <main className="text-foreground">
+        {/* Hero */}
+        <div className="container mx-auto px-4 pb-12" style={{ paddingTop: 'var(--section-y-lg)' }}>
+          <p className="text-sm text-muted-foreground tracking-wider mb-4">Zoo Labs Foundation</p>
+          <h1 className="text-5xl md:text-7xl font-bold mb-8">Zen Model Family</h1>
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl">
+            {corpus.models} open-source frontier models from 600M to 480B parameters. Open weights,
+            community-trained, formally verified. Built on Qwen3+ architecture.
           </p>
-        </Band>
-      </section>
+        </div>
 
-      {/* ZenLM */}
-      <Section tone='card' edge='block'>
-        <div className='grid gap-12 md:grid-cols-2'>
-          <div>
-            <p className='eyebrow'>Open weights</p>
-            <h2 className='title mt-3'>The ZenLM framework</h2>
-            <p className='lede mt-4'>
-              ZenLM is trained on conservation data, species behaviour and environmental
-              factors, and published with its weights so the results can be checked.
-            </p>
-            <ul className='mt-8 space-y-4'>
-              {CAPABILITIES.map((line) => (
-                <li
-                  key={line}
-                  className='pt-4 text-sm leading-relaxed'
-                  style={{
-                    borderTop: '1px solid var(--border)',
-                    color: 'var(--muted-foreground)',
-                  }}
-                >
-                  {line}
-                </li>
-              ))}
-            </ul>
+        {/* Stats */}
+        <div className="border-t border-border">
+          <div className="container mx-auto px-4 py-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div>
+                <p className="text-3xl md:text-4xl font-bold text-foreground">{corpus.models}</p>
+                <p className="text-sm text-muted-foreground mt-1">Open Models</p>
+              </div>
+              <div>
+                <p className="text-3xl md:text-4xl font-bold text-foreground">1T+</p>
+                <p className="text-sm text-muted-foreground mt-1">Max Parameters</p>
+              </div>
+              <div>
+                <p className="text-3xl md:text-4xl font-bold text-foreground">59.2%</p>
+                <p className="text-sm text-muted-foreground mt-1">SWE-bench (Code)</p>
+              </div>
+              <div>
+                <p className="text-3xl md:text-4xl font-bold text-foreground">82.7%</p>
+                <p className="text-sm text-muted-foreground mt-1">AIME24 Accuracy</p>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div className='card h-fit p-8'>
-            <h3 className='text-lg font-semibold'>Impact metrics</h3>
-            <dl className='mt-6 space-y-6'>
-              {METRICS.map((m) => (
-                <div key={m.label}>
-                  <dt className='sr-only'>{m.label}</dt>
-                  <dd className='m-0'>
-                    <span className='block text-3xl font-semibold tracking-tight'>
-                      {m.value}
-                    </span>
-                    <span
-                      className='mt-1 block text-sm'
-                      style={{ color: 'var(--muted-foreground)' }}
-                    >
-                      {m.label}
-                    </span>
-                  </dd>
+        {/* Model Families */}
+        {models.map((family) => (
+          <div key={family.family} className="border-t border-border">
+            <div className="container mx-auto px-4 py-16">
+              <div className="flex flex-col md:flex-row items-start justify-between gap-4 mb-8">
+                <div className="flex-1">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-3">{family.family}</h2>
+                  <p className="text-muted-foreground max-w-2xl">{family.desc}</p>
+                </div>
+                <a
+                  href={family.hf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn transition-colors shrink-0"
+                >
+                  HuggingFace
+                </a>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {family.variants.map((v) => (
+                  <div key={v.name} className="card p-4 transition-colors">
+                    <p className="text-sm font-mono text-foreground mb-1">{v.name}</p>
+                    <div className="flex gap-4 text-xs text-muted-foreground">
+                      <span>{v.params} params</span>
+                      <span>{v.context} context</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Zoo Gym */}
+        <div id="gym" className="border-t border-border">
+          <div className="container mx-auto px-4 py-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Zoo Gym</h2>
+            <p className="text-muted-foreground mb-12 max-w-2xl">
+              Open-source AI training platform. 100+ model support, multi-GPU distributed training,
+              8 training methods. 2.5 years of community development.
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {trainingMethods.map((method) => (
+                <div key={method.name} className="card p-4 transition-colors">
+                  <p className="text-sm font-bold text-foreground mb-1">{method.name}</p>
+                  <p className="text-xs text-muted-foreground">{method.desc}</p>
                 </div>
               ))}
-            </dl>
+            </div>
+            <div className="mt-8">
+              <a
+                href="https://github.com/zooai/gym"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn transition-colors"
+              >
+                View on GitHub
+              </a>
+            </div>
           </div>
         </div>
-      </Section>
 
-      {/* Research areas */}
-      <Section>
-        <div className='mb-12 max-w-2xl'>
-          <p className='eyebrow'>What the lab works on</p>
-          <h2 className='title mt-3'>Research areas</h2>
-        </div>
-        <div className='grid gap-6 md:grid-cols-3'>
-          {AREAS.map((area) => (
-            <div key={area.title} className='card p-6'>
-              <h3 className='text-lg font-semibold'>{area.title}</h3>
-              <p
-                className='mt-2 text-sm leading-relaxed'
-                style={{ color: 'var(--muted-foreground)' }}
-              >
-                {area.body}
-              </p>
+        {/* Desktop App */}
+        <div className="border-t border-border">
+          <div className="container mx-auto px-4 py-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Zoo AI Desktop</h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl">
+              Run Zen models locally. Free, open-source, private by default. Supports all Zen model sizes
+              that fit your hardware. Automatic model download from HuggingFace.
+            </p>
+            <div className="grid md:grid-cols-3 gap-3 mb-8">
+              <div className="card p-4">
+                <p className="text-sm font-bold text-foreground mb-1">Local Inference</p>
+                <p className="text-xs text-muted-foreground">Run models on your GPU. No data leaves your machine.</p>
+              </div>
+              <div className="card p-4">
+                <p className="text-sm font-bold text-foreground mb-1">Multi-Platform</p>
+                <p className="text-xs text-muted-foreground">macOS, Windows, Linux. Built with Tauri.</p>
+              </div>
+              <div className="card p-4">
+                <p className="text-sm font-bold text-foreground mb-1">Mine $AI</p>
+                <p className="text-xs text-muted-foreground">Contribute GPU compute to Zoo Network and earn $AI tokens.</p>
+              </div>
             </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* API */}
-      <Section tone='card' edge='block'>
-        <div className='max-w-2xl'>
-          <p className='eyebrow'>For developers</p>
-          <h2 className='title mt-3'>Conservation AI API</h2>
-          <p className='lede mt-4'>
-            The conservation models are reachable at{' '}
-            <code
-              className='rounded px-1.5 py-0.5 font-mono text-[0.9em]'
-              style={{ background: 'var(--muted)' }}
-            >
-              api.zoo.network
-            </code>
-            .
-          </p>
-        </div>
-
-        <div className='card mt-10 max-w-2xl p-8'>
-          <h3 className='text-lg font-semibold'>Endpoints</h3>
-          <ul className='mt-4 space-y-3 font-mono text-sm'>
-            {ENDPOINTS.map(([verb, path]) => (
-              <li key={path} className='flex gap-3'>
-                <span className='w-12 shrink-0 font-semibold' style={{ color: 'var(--brand)' }}>
-                  {verb}
-                </span>
-                <span style={{ color: 'var(--muted-foreground)' }}>{path}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className='mt-8'>
-          <Link href='/docs' className='action'>
-            API documentation
-          </Link>
-        </div>
-      </Section>
-
-      {/* Take part */}
-      <Section edge='top'>
-        <div className='max-w-2xl'>
-          <p className='eyebrow'>Collaborate</p>
-          <h2 className='title mt-3'>Join the AI conservation work</h2>
-          <p className='lede mt-4'>
-            Partner with us to develop and deploy models that make a measurable difference
-            in wildlife conservation.
-          </p>
-          <div className='mt-8 flex flex-wrap items-center gap-3'>
-            <Link href={U.getinvolved} className='action' data-fill=''>
-              Get involved
-            </Link>
             <a
-              href='https://github.com/zooai'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='action'
+              href="https://github.com/zooai/zoo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn transition-colors"
             >
-              View on GitHub <span aria-hidden>↗</span>
+              Download
             </a>
           </div>
         </div>
-      </Section>
+
+        {/* API */}
+        <div className="border-t border-border">
+          <div className="container mx-auto px-4 py-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">API Access</h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl">
+              Access Zen models via the Zoo API at <code className="bg-card px-2 py-1 rounded-md text-foreground font-mono">api.zoo.network</code>
+            </p>
+            <div className="card p-6 mb-8 font-mono text-sm">
+              <p className="text-muted-foreground mb-3"># Chat completions</p>
+              <p className="text-foreground">POST /v1/chat/completions</p>
+              <p className="text-muted-foreground mt-4 mb-3"># Embeddings</p>
+              <p className="text-foreground">POST /v1/embeddings</p>
+              <p className="text-muted-foreground mt-4 mb-3"># Models list</p>
+              <p className="text-foreground">GET /v1/models</p>
+            </div>
+            <Link href="/docs" className="btn transition-colors">
+              View Documentation
+            </Link>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="border-t border-border py-20">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Support Open AI Research</h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Every donation funds open-source models, research papers, and formally verified systems.
+              501(c)(3) tax-deductible.
+            </p>
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+              <Link href="/donation" className="btn btn-primary transition-colors">
+                Support Our Research
+              </Link>
+              <a
+                href="https://huggingface.co/zenlm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn transition-colors"
+              >
+                Browse Models on HuggingFace
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
 
       <Footer />
     </Layout>

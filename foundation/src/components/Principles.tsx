@@ -1,115 +1,88 @@
+import * as React from 'react';
 import Link from 'next/link';
+import { useCorpus } from '@/config/corpus';
 
-import { U } from '@/config/registry';
+/**
+ * The charter, drawn on the paper it is actually printed on.
+ *
+ * The five cards were built from inline literals for a dark page — a card at
+ * `rgba(255,255,255,0.02)` on `--paper`, a title at `#FFFFFF`, body at
+ * `#A1A1AA` — so the titles were white on near-white and the copy read 2.3:1.
+ * They are the site's `.card` now, and every colour is a role, so the whole
+ * block follows the ground it is put on rather than a ground it assumed.
+ *
+ * The blue is `--blue` (#1d4ed8), which is the accessible one: the `#3B82F6` /
+ * `#60A5FA` pair that used to be here measures under 3:1 on white.
+ */
+export default function Principles() {
+  const corpus = useCorpus();
+  const principles = [
+    { title: 'Open Science & Weights', desc: 'We train frontier reasoning models and release weights openly for global public research.' },
+    { title: 'No Paywalls', desc: `All ${corpus.papers} papers, ${corpus.proposals} proposals and every benchmark dataset are free to read.` },
+    { title: 'Formal Verification', desc: 'Critical models, consensus algorithms, and mathematical constraints are verified with Lean 4 formal proofs.' },
+    { title: 'Safe by Design', desc: 'Alignment via Training-Free GRPO and RLVR tailored for open, verifiable autonomous agent systems.' },
+    { title: '501(c)(3) Stewardship', desc: 'Tax-exempt public charity governed by scientists, researchers, and conservation leaders.' },
+  ];
 
-const PRINCIPLES = [
-  {
-    id: 'conservation',
-    title: 'Conservation in the field',
-    desc: 'Protecting endangered fauna and the wilderness they need, through hands-on field work with local partners.',
-  },
-  {
-    id: 'education',
-    title: 'Teaching with the work',
-    desc: 'Models, expeditions and research published so students and teachers can use them without asking us.',
-  },
-  {
-    id: 'sensing',
-    title: 'Ecological AI and sensors',
-    desc: 'Bioacoustic monitoring, satellite tracking and edge computer vision, deployed where poaching happens.',
-  },
-  {
-    id: 'community',
-    title: 'Community-led stewardship',
-    desc: 'Working directly with indigenous populations and the sanctuaries already doing the work.',
-  },
-  {
-    id: 'coexistence',
-    title: 'Coexistence, not exclusion',
-    desc: 'Wildlife corridors and regenerative ecosystems that people and animals share.',
-  },
-];
-
-function Principles() {
   return (
-    <section
-      style={{
-        borderBottom: '1px solid var(--border)',
-        paddingBlock: 'clamp(4rem, 8vw, 6rem)',
-      }}
-    >
-      <div className='mx-auto' style={{ maxWidth: 1280, paddingInline: 'var(--page-gutter)' }}>
-        <div className='max-w-2xl'>
-          <p className='eyebrow'>What we stand for</p>
-          <h2 className='title mt-3'>The principles that drive us</h2>
-          <p className='lede mt-4'>
-            A research foundation of animal lovers, families, scientists and AI
-            researchers — with everything it makes in public.
+    <section className='py-24 bg-background border-t'>
+      <div className='container mx-auto px-4 space-y-8'>
+        <div className='text-center space-y-3 max-w-2xl mx-auto'>
+          <span className='eyebrow'>Foundation Charter</span>
+          <h2 className='text-3xl md:text-5xl font-bold text-foreground tracking-tight'>
+            The Principles That Drive Us
+          </h2>
+          <p className='text-sm text-muted-foreground'>
+            Advancing artificial intelligence in service of the living planet through open research, formal verification, and public stewardship.
           </p>
         </div>
 
-        <div className='mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-          {PRINCIPLES.map((p) => (
-            <div key={p.id} className='card p-6'>
-              <h3 className='text-lg font-semibold'>{p.title}</h3>
-              <p
-                className='mt-2 text-sm leading-relaxed'
-                style={{ color: 'var(--muted-foreground)' }}
-              >
-                {p.desc}
-              </p>
+        <div className='grid-cards' style={{ ['--grid-card-min']: '17.5rem' } as React.CSSProperties}>
+          {principles.map((p, idx) => (
+            <div key={p.title} className='card p-6 flex flex-col gap-2'>
+              <div className='flex items-center gap-3'>
+                {/* `.disc` reads --hue for its fill, so the numeral is one rule
+                    at whatever size and colour it is asked for. */}
+                <span
+                  className='disc'
+                  style={{
+                    ['--hue']: 'var(--blue)',
+                    width: 24,
+                    height: 24,
+                    fontSize: 'var(--text-xs)',
+                    fontWeight: 'var(--weight-semibold)',
+                  } as React.CSSProperties}
+                >
+                  {idx + 1}
+                </span>
+                <h3 className='text-base font-semibold text-foreground' style={{ margin: 0 }}>
+                  {p.title}
+                </h3>
+              </div>
+              <p className='text-sm text-muted-foreground' style={{ margin: 0 }}>{p.desc}</p>
             </div>
           ))}
+        </div>
 
-          {/* The one place on the page that spends the brand colour. */}
-          <div
-            className='flex flex-col justify-between gap-6 p-6'
-            style={{
-              borderRadius: 'var(--radius-xl)',
-              background: 'var(--brand)',
-              color: 'var(--brand-foreground)',
-            }}
+        <div className='flex flex-wrap items-center justify-center gap-4 pt-4'>
+          <Link
+            href='/donation'
+            className='action'
+            data-fill
+            style={{ ['--fill']: 'var(--blue)' } as React.CSSProperties}
           >
-            <div>
-              <h3 className='text-lg font-semibold'>Join the expedition</h3>
-              <p className='mt-2 text-sm leading-relaxed' style={{ opacity: 0.85 }}>
-                Help protect wildlife with science, a donation, or your time in the field.
-              </p>
-            </div>
-            <div className='flex flex-wrap gap-3'>
-              <Link
-                href={U.donation}
-                className='action'
-                style={{
-                  minHeight: 38,
-                  paddingInline: 18,
-                  background: 'var(--brand-foreground)',
-                  color: 'var(--brand)',
-                  border: 0,
-                }}
-              >
-                Donate
-              </Link>
-              <a
-                href={U.labs}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='action'
-                style={{
-                  minHeight: 38,
-                  paddingInline: 18,
-                  color: 'var(--brand-foreground)',
-                  borderColor: 'rgb(255 255 255 / 0.4)',
-                }}
-              >
-                Zoo Labs <span aria-hidden>↗</span>
-              </a>
-            </div>
-          </div>
+            Support 501(c)(3) Research
+          </Link>
+          <a
+            href='https://zoolabs.io'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='action'
+          >
+            🐬 Open ZooLabs.io Playground &rarr;
+          </a>
         </div>
       </div>
     </section>
   );
 }
-
-export default Principles;

@@ -1,77 +1,111 @@
+import React from 'react';
 import Link from 'next/link';
+import { Boxes, Cpu, FileText, ShieldCheck } from 'lucide-react';
+import Away from '@/components/Away';
+import { useCorpus, type Counts } from '@/config/corpus';
 
-/** The case for the work, in four numbers. */
-const FACTS = [
+/**
+ * What the foundation has, in four numbers.
+ *
+ * Every colour in here was a hardcoded hex from the dark palette, written
+ * inline: `#FFFFFF` on the metric, `#E4E4E7` on the label, `#A1A1AA` on the
+ * copy, and a card of `rgba(255,255,255,0.02)`. On the light ground the metric
+ * measured 1.07:1 — the number "86" was white text on near-white paper, and it
+ * was not that it read poorly, it was that it was not there. Twenty elements on
+ * /getinvolved failed the contrast floor and twelve of them were invisible.
+ *
+ * It is `.card` with the palette's own roles now, so the ground can change
+ * again without anything in this file being touched. The model count comes from
+ * corpus.tsx rather than from a `45+` typed here for the second time.
+ */
+
+/** A custom property, typed. --hue is what a card is coloured with. */
+const hue = (value: string) => ({ ['--hue']: value }) as React.CSSProperties;
+
+const stats = (corpus: Counts) => [
   {
-    id: 'elephants',
-    value: '100',
-    body: 'African elephants are killed by poachers each day, by best estimate.',
-    label: 'Sumatran elephant',
-    href: '/animals/sumatran_elephant',
+    icon: FileText,
+    hue: 'var(--blue)',
+    metric: String(corpus.papers),
+    label: 'Papers published',
+    desc: 'Preprints and formal proofs covering TF-GRPO, ASO and post-quantum consensus.',
+    link: 'Explore the papers',
+    href: 'https://papers.zoo.ngo',
+    external: true,
   },
   {
-    id: 'trade',
-    value: '$23B',
-    body: 'Illegal wildlife trade is worth $7–23 billion a year, one of the largest illicit markets in the world.',
-    label: 'The species',
-    href: '/animals',
+    icon: Boxes,
+    hue: 'var(--green)',
+    metric: String(corpus.models),
+    label: 'Open-weight Zen models',
+    desc: 'Frontier foundation models from 600M parameters up, every one with verifiable open weights.',
+    link: 'The Zen suite',
+    href: '/ai',
+    external: false,
   },
   {
-    id: 'habitat',
-    value: '18.7M',
-    body: 'Acres of forest lost annually, affecting the habitats of 80% of terrestrial species.',
-    label: 'Get involved',
-    href: '/getinvolved',
+    icon: Cpu,
+    hue: 'var(--pink)',
+    metric: '100% open',
+    label: 'Compute and Gym',
+    desc: 'Open AI mining protocols, proof-of-useful-work, and Zoo Gym reinforcement learning.',
+    link: 'Zoo Gym',
+    href: 'https://github.com/zooai/gym',
+    external: true,
   },
   {
-    id: 'extinction',
-    value: '38,000+',
-    body: 'Species threatened with extinction — 27% of every species assessed.',
-    label: 'Donate',
+    icon: ShieldCheck,
+    hue: 'var(--blue)',
+    metric: '501(c)(3)',
+    label: 'Tax-exempt charity',
+    desc: 'Tax-deductible donations supporting frontline sanctuaries and open science.',
+    link: 'Donations and the 990',
     href: '/donation',
+    external: false,
   },
 ];
 
-function Comment() {
+export default function Comment() {
+  const corpus = useCorpus();
+  const STATS = stats(corpus);
   return (
-    <section
-      style={{
-        background: 'var(--surface-card)',
-        borderBottom: '1px solid var(--border)',
-        paddingBlock: 'clamp(4rem, 8vw, 6rem)',
-      }}
-    >
-      <div className='mx-auto' style={{ maxWidth: 1280, paddingInline: 'var(--page-gutter)' }}>
-        <div className='max-w-2xl'>
-          <p className='eyebrow'>Why it matters</p>
-          <h2 className='title mt-3'>The scale of the problem</h2>
-          <p className='lede mt-4'>
-            We work on it with field science, open grants and monitoring that anyone can
-            audit.
-          </p>
-        </div>
+    <section className='container' style={{ paddingBlock: 'var(--section-y-lg)' }}>
+      <div
+        className='grid-cards'
+        style={{ ['--grid-card-min']: '15rem' } as React.CSSProperties}
+      >
+        {STATS.map(({ icon: Icon, ...s }) => (
+          <article
+            key={s.label}
+            className='card p-6 flex flex-col'
+            style={{ ...hue(s.hue), background: '#ffffff' }}
+          >
+            <span className='disc'>
+              <Icon size={20} strokeWidth={1.75} aria-hidden />
+            </span>
+            <p className='mt-5 text-2xl md:text-3xl font-bold'>{s.metric}</p>
+            <p className='eyebrow mt-1'>{s.label}</p>
+            <p className='mt-3 text-sm text-secondary flex-1'>{s.desc}</p>
 
-        <div className='mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4'>
-          {FACTS.map((f) => (
-            <div key={f.id} className='flex flex-col justify-between gap-5'>
-              <div>
-                <p className='text-4xl font-semibold tracking-tight'>{f.value}</p>
-                <p
-                  className='mt-3 text-sm leading-relaxed'
-                  style={{ color: 'var(--muted-foreground)' }}
-                >
-                  {f.body}
-                </p>
-              </div>
-              <Link href={f.href} className='more'>
-                {f.label} <span aria-hidden>→</span>
+            {s.external ? (
+              <a
+                href={s.href}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='tint mt-6'
+                style={{ alignSelf: 'flex-start' }}
+              >
+                {s.link}
+                <Away />
+              </a>
+            ) : (
+              <Link href={s.href} className='tint mt-6' style={{ alignSelf: 'flex-start' }}>
+                {s.link}
               </Link>
-            </div>
-          ))}
-        </div>
+            )}
+          </article>
+        ))}
       </div>
     </section>
   );
 }
-
-export default Comment;

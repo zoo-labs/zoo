@@ -10,9 +10,16 @@ export default function HomePage() {
     <Layout>
         <Seo />
         <Navbar />
-        <div className='max-md:pt-36 flex flex-col bg-black space-y-12 md:px-32 max-md:px-4 md:pt-32 pt-16'>
-            <h1 className='text-white md:text-5xl xl:text-6xl max-md:text-3xl'>Refund Policy for Zoo NGO</h1>
-            <p className='text-white text-xl'>
+        <div
+          className='flex flex-col'
+          style={{
+            gap: 'var(--space-12)',
+            paddingTop: 'var(--section-y-lg)',
+            paddingInline: 'clamp(var(--space-4), 6vw, var(--space-32))',
+          }}
+        >
+            <h1 className='text-foreground md:text-5xl xl:text-6xl max-md:text-3xl'>Refund Policy for Zoo NGO</h1>
+            <p className='text-foreground text-xl'>
             1. General Policy: Donations made to Zoo NGO are generally non-refundable. Exceptions are at the organization&apos;s discretion and must meet specific criteria.<br /><br />
 
 2. Error Correction: Donors who make an error, such as the wrong amount or duplicate transactions, must contact us within 48 hours for a refund.<br /><br />

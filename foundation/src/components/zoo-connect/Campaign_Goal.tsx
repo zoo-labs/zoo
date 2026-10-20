@@ -98,12 +98,12 @@ function Campaign_Goal() {
       },
     ];
   return (
-    <div className="bg-black md:px-12 lg:px-24 xl:px-32 text-white md:py-8 lg:py-12 px-16 max-md:py-4 max-md:px-4">
+    <div className="bg-background md:px-16 lg:px-32 xl:px-32 text-foreground py-8 px-4">
       <div className='flex flex-col space-y-4'>
         <p className='text-xl'>Campaign Goal</p>
-        <p className='text-sm pt-2'>To provide an App/platform for vulnerable, ill-treated, and endangered species worldwide, by boosting the reach and influence of organizations of all sizes that are dedicated to their preservation and well-being. <span onClick={()=>setMoreFlag(false)} className={`${moreFlag ? 'inherit' : 'hidden'} cursor-pointer text-[#3C9465]`}>Read less</span></p>
-        <p onClick={()=>setMoreFlag(true)} className={`${moreFlag ? 'hidden' : 'block'} cursor-pointer text-base text-[#3C9465] md:pt-12 pt-0`}>Read More...</p>
-        <div className={`${moreFlag ? 'flex' : 'hidden'} flex-col space-y-5`}>
+        <p className='text-sm pt-2'>To provide an App/platform for vulnerable, ill-treated, and endangered species worldwide, by boosting the reach and influence of organizations of all sizes that are dedicated to their preservation and well-being. <span onClick={()=>setMoreFlag(false)} className='cursor-pointer' style={{ display: moreFlag ? 'inline' : 'none', color: 'var(--green)' }}>Read less</span></p>
+        <p onClick={()=>setMoreFlag(true)} className='cursor-pointer text-base' style={{ display: moreFlag ? 'none' : 'block', color: 'var(--green)' }}>Read More...</p>
+        <div className='flex-col space-y-6' style={{ display: moreFlag ? 'flex' : 'none' }}>
             <hr />
             <p className='text-xl'>What we know</p>
             <p className='text-sm'>The International Union for Conservation of Nature has identified over 16,000 animal species currently under threat of extinction. These staggering numbers include 41% of amphibians, 38% of sharks and rays, 27% of mammals, and 13% of birds. Much of this threat comes from human activities, including deforestation, overexploitation, and climate change.</p>
@@ -121,7 +121,7 @@ function Campaign_Goal() {
             <hr />
             <p className='text-xl'>For Patrons</p>
             <p className='text-sm'>Patrons will be able to use Zoo Connect for free (no registration required) to:</p>
-            <ul className="list-disc list-inside text-decor-dotted space-y-4 text-sm">
+            <ul className="space-y-4 text-sm">
                 <li>
                 Learn about Animals: Discover the animals living at our zoo, their natural habitats, conservation status, and any special care we provide for them.
                 </li>
@@ -147,9 +147,9 @@ function Campaign_Goal() {
         <hr />
         <div className='flex justify-between items-center'>
             <p className='text-xl'>Comments from campaign donors</p>
-            <p className='text-sm text-[#13B156]'>See all</p>
+            <p className='text-sm' style={{ color: 'var(--green)' }}>See all</p>
         </div>
-        <Slider {...settings} className='comments bg-black w-full pb-8'>
+        <Slider {...settings} className='bg-background w-full pb-12'>
             {comments.map((data, index) => (
                 <Comments key={index} name={data.name} img={data.img} date={data.date} like_text={data.like_text} like_flag={data.like_flag} content={data.content}/>
             ))}

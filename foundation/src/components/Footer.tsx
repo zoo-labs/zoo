@@ -1,120 +1,84 @@
+import React from 'react';
 import Link from 'next/link';
-import { BsMedium } from 'react-icons/bs';
-import {
-  FaDiscord,
-  FaInstagram,
-  FaTelegram,
-  FaTwitter,
-  FaYoutube,
-} from 'react-icons/fa';
-
-import type { ComponentType } from 'react';
-
-import {
-  FOOTER_BOTTOM,
-  FOOTER_COLUMNS,
-  SOCIAL,
-  type Link as Destination,
-} from '@/config/registry';
+import { FaEnvelope, FaGithub, FaXTwitter } from 'react-icons/fa6';
+import { LABS, LEGAL, SECTIONS, SOCIAL } from '@/config/registry';
+import Away from '@/components/Away';
 
 /**
- * The footer, in the shape hanzo.ai's is: an auto-fitting column grid over a
- * legal bar, every link resolved from the registry.
+ * The foot.
  *
- * ONE tree, not two. This used to be a `max-md:hidden` desktop grid beside a
- * `hidden max-md:block` phone block, each with its own hand-written link list —
- * so the phone footer offered six destinations the desktop one did not, and
- * neither agreed with the header. `auto-fit` collapses to a single column on a
- * phone without a second copy existing to drift.
+ * Same list as the bar, read from the same file, so the two can never disagree
+ * about what the site contains. The four columns of hand-kept links that used
+ * to be here were a second registry with its own idea of where things lived.
+ *
+ * The three marks below are logos, not line icons, which is why they come from
+ * the brand set rather than from lucide — one library per job. `MARK` is keyed
+ * by the label in the registry, so a social account is added there and drawn
+ * here, and a name with no mark simply does not appear.
  */
-
-const ICON: Record<string, ComponentType<{ size?: number }>> = {
-  x: FaTwitter,
-  telegram: FaTelegram,
-  instagram: FaInstagram,
-  discord: FaDiscord,
-  medium: BsMedium,
-  youtube: FaYoutube,
+const MARK: Record<string, React.ComponentType<{ size?: number }>> = {
+  GitHub: FaGithub,
+  X: FaXTwitter,
+  Email: FaEnvelope,
 };
 
-function Dest({ item }: { item: Destination }) {
-  const props = item.external
-    ? { target: '_blank', rel: 'noopener noreferrer' as const }
-    : {};
-  return (
-    <Link href={item.href} {...props} className='more'>
-      {item.label}
-      {item.external && <span aria-hidden>↗</span>}
-    </Link>
-  );
-}
+const quiet: React.CSSProperties = { fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' };
 
-function Footer() {
+export default function Footer() {
   return (
-    <footer style={{ borderTop: '1px solid var(--border)', background: 'var(--background)' }}>
-      <div
-        className='mx-auto'
-        style={{ maxWidth: 1280, padding: '64px var(--page-gutter) 32px' }}
-      >
-        <div
-          className='grid gap-x-6 gap-y-10'
-          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))' }}
-        >
-          <div className='flex flex-col gap-4' style={{ gridColumn: '1 / -1', maxWidth: '32rem' }}>
-            <p className='text-[15px] font-semibold tracking-tight'>Zoo Labs Foundation</p>
-            <p className='text-sm' style={{ color: 'var(--muted-foreground)' }}>
-              A 501(c)(3) non-profit publishing open conservation research and open-weight
-              ecological AI. Everything we make is public.
+    <footer style={{ borderTop: '1px solid var(--border)', background: '#ffffff' }}>
+      <div className='container' style={{ paddingBlock: 'var(--space-12)' }}>
+        <div className='flex flex-wrap items-center justify-between gap-6'>
+          <div>
+            <Link href='/' aria-label='Zoo Labs Foundation'>
+              <span style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.06em', lineHeight: 1 }}>ZOO</span>
+            </Link>
+            <p style={{ marginTop: 10, fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
+              &copy; 2026 Zoo Labs Foundation, Inc.{' '}
+              {LEGAL.map((to) => (
+                <Link key={to.label} href={to.href} style={{ color: 'inherit', marginLeft: 10 }}>
+                  {to.label}
+                </Link>
+              ))}
             </p>
-            <div className='flex items-center gap-4' style={{ color: 'var(--muted-foreground)' }}>
-              {SOCIAL.map((s) => {
-                const Icon = ICON[s.id];
-                return (
-                  <a
-                    key={s.id}
-                    href={s.href}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label={s.label}
-                    className='more'
-                  >
-                    <Icon size={18} />
-                  </a>
-                );
-              })}
-            </div>
           </div>
 
-          {FOOTER_COLUMNS.map((col) => (
-            <nav key={col.id} aria-label={col.title}>
-              <p className='mb-3.5 text-[13px] font-semibold'>{col.title}</p>
-              <ul className='m-0 flex list-none flex-col gap-2.5 p-0'>
-                {col.items.map((item) => (
-                  <li key={item.id} className='m-0 list-none p-0'>
-                    <Dest item={item} />
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ))}
-        </div>
-
-        <div
-          className='mt-10 flex flex-col gap-3 pt-6 text-[13px] sm:flex-row sm:items-center sm:justify-between'
-          style={{ borderTop: '1px solid var(--border)', color: 'var(--muted-foreground)' }}
-        >
-          <p>
-            {FOOTER_BOTTOM.copyright} {FOOTER_BOTTOM.notice}
-          </p>
-          <div className='flex flex-wrap gap-5'>
-            {FOOTER_BOTTOM.links.map((item) => (
-              <Dest key={item.id} item={item} />
+          <nav className='flex flex-wrap items-center gap-6'>
+            {SECTIONS.map((s) => (
+              <Link key={s.label} href={s.href} style={quiet}>
+                {s.label}
+              </Link>
             ))}
+            <a
+              href={LABS.href}
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{ ...quiet, display: 'inline-flex', alignItems: 'center', gap: 4, letterSpacing: '0.04em' }}
+            >
+              {LABS.label}
+              <Away />
+            </a>
+          </nav>
+
+          <div className='flex items-center gap-4'>
+            {SOCIAL.map((to) => {
+              const Glyph = MARK[to.label];
+              if (!Glyph) return null;
+              return (
+                <a
+                  key={to.label}
+                  href={to.href}
+                  aria-label={to.label}
+                  style={{ color: 'var(--text-tertiary)', display: 'inline-flex' }}
+                  {...(to.away ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                  <Glyph size={17} />
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
     </footer>
   );
 }
-
-export default Footer;

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 
 import Layout from '@/components/layout/Layout';
-import Section, { Band } from '@/components/Section';
 import Seo from '@/components/Seo';
 import Navbar from '@/components/Navbar';
 import Newsletter from '@/components/Newsletter';
@@ -14,13 +13,24 @@ import Globe from '@/components/WrapGlobe';
 import { experiences } from '@/data/experiencesData';
 import { FilterOptions, Experience } from '@/types/experiences';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { cn } from '@/lib/clsxm';
 
 enum ViewMode {
   GRID = 'grid',
   LIST = 'list'
 }
+
+/**
+ * Sidebar beside content, and it needs no breakpoint.
+ *
+ * The panel used to ask for `md:w-64`, which the stylesheet does not publish, so
+ * it had no width at all and `shrink-0` then refused to let it give any back —
+ * the results column took whatever was left, and three card columns inside it
+ * came out narrow enough to wrap every heading. These two bases wrap themselves:
+ * while both fit on one line the panel settles at its 16rem and the results take
+ * the rest; when they cannot, the row wraps and each takes the full width.
+ */
+const aside: React.CSSProperties = { flex: '1 1 16rem' };
+const results: React.CSSProperties = { flex: '999 1 30rem' };
 
 export default function ExperiencesPage() {
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.GRID);
@@ -84,97 +94,71 @@ export default function ExperiencesPage() {
       <Seo templateTitle="Wildlife Volunteer Experiences" />
       <Navbar />
       
-      <main>
-        <section
-          style={{
-            borderBottom: '1px solid var(--border)',
-            paddingBlock: 'clamp(2.5rem, 5vw, 4rem)',
-          }}
-        >
-          <Band>
-            <div className='grid items-center gap-8 md:grid-cols-12'>
-              <div className='md:col-span-7'>
-                <p className='eyebrow mb-4'>Field work</p>
-                <h1 className='display mb-4' style={{ maxWidth: '16ch' }}>
-                  Wildlife volunteer experiences
-                </h1>
-                <p className='lede'>
-                  Find your wildlife volunteer opportunity from {featuredExperiences.length}{' '}
-                  programmes worldwide.
-                </p>
-              </div>
-              {/* The globe measures itself against this column, so it can never
-                * be wider than the column is. */}
-              <div className='md:col-span-5'>
-                <Globe />
-              </div>
+      <main className="bg-background text-foreground">
+        <div className="container mx-auto px-4 py-12">
+          <div className='mb-8 flex flex-col md:flex-row items-center gap-6'>
+            <div className='flex-1 text-left flex flex-col justify-center'>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+                Wildlife Volunteer<br />
+                Experiences
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                Find your perfect wildlife volunteer opportunity from {featuredExperiences.length} programs worldwide
+              </p>
             </div>
-          </Band>
-        </section>
+            <div className='w-64 shrink-0 flex justify-end'>
+              <Globe />
+            </div>
+          </div>
 
-        <Section>
-          <div className="flex flex-col md:flex-row gap-8">
+          <div className="flex flex-wrap gap-8 mt-8">
             {/* Filter sidebar */}
-            <FilterPanel 
-              filters={filters} 
-              onFilterChange={handleFilterChange} 
-              className="md:w-64 shrink-0"
-            />
-            
+            <div style={aside}>
+              <FilterPanel filters={filters} onFilterChange={handleFilterChange} />
+            </div>
+
             {/* Results area */}
-            <div className="flex-1">
-              <div className="mb-6 flex items-center justify-between">
-                <p style={{ color: 'var(--muted-foreground)' }}>
-                  Found{' '}
-                  <span className='font-medium' style={{ color: 'var(--foreground)' }}>
-                    {filteredExperiences.length}
-                  </span>{' '}
-                  experiences
+            <div style={results}>
+              <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
+                <p className="text-muted-foreground">
+                  Found <span className="font-medium text-foreground">{filteredExperiences.length}</span> experiences
                 </p>
-                
+
                 <div className="flex items-center gap-2">
                   <Button
-                    variant={viewMode === ViewMode.GRID ? "default" : "outline"}
+                    variant={viewMode === ViewMode.GRID ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setViewMode(ViewMode.GRID)}
-                    className="gap-2"
+                    aria-pressed={viewMode === ViewMode.GRID}
+                    gap='$2'
                   >
                     <LayoutGrid className="h-4 w-4" />
-                    <span className="sr-only md:not-sr-only">Grid</span>
+                    Grid
                   </Button>
-                  
+
                   <Button
-                    variant={viewMode === ViewMode.LIST ? "default" : "outline"}
+                    variant={viewMode === ViewMode.LIST ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setViewMode(ViewMode.LIST)}
-                    className="gap-2"
+                    aria-pressed={viewMode === ViewMode.LIST}
+                    gap='$2'
                   >
                     <List className="h-4 w-4" />
-                    <span className="sr-only md:not-sr-only">List</span>
+                    List
                   </Button>
                 </div>
               </div>
-              
-              <div className="mb-6 border-b" style={{ borderColor: 'var(--border)' }} />
-              
+
+              <div className="border-b mb-6"></div>
+
               {filteredExperiences.length === 0 ? (
                 <div className="text-center py-12">
-                  <h3 className="mb-2 text-lg font-medium">No experiences match your filters</h3>
-                  <p className="mb-6" style={{ color: 'var(--muted-foreground)' }}>
-                    Try adjusting your filters to find more options
-                  </p>
-                  <Button 
-                    onClick={() => setFilters({})}
-                  >
-                    Clear All Filters
-                  </Button>
+                  <h3 className="text-lg font-medium mb-2">No experiences match your filters</h3>
+                  <p className="text-muted-foreground mb-6">Try adjusting your filters to find more options</p>
+                  <Button onClick={() => setFilters({})}>Clear All Filters</Button>
                 </div>
               ) : (
-                <div className={cn(
-                  viewMode === ViewMode.GRID 
-                    ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" 
-                    : "space-y-6"
-                )}>
+                <div className={viewMode === ViewMode.GRID ? 'grid-cards' : 'space-y-6'}>
                   {filteredExperiences.map((experience) => (
                     <ExperienceCard key={experience.id} experience={experience} />
                   ))}
@@ -182,7 +166,7 @@ export default function ExperiencesPage() {
               )}
             </div>
           </div>
-        </Section>
+        </div>
       </main>
       
       <Newsletter />

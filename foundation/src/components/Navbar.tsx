@@ -1,161 +1,213 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-
-import { CTA, LABS, NAV } from '@/config/registry';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ChevronDown, Menu, X } from 'lucide-react';
+import { LABS, SECTIONS, type Dest, type Section } from '@/config/registry';
+import Away from '@/components/Away';
 
 /**
- * The header, in the shape hanzo.ai's is: a sticky bar with the mark on the
- * left, sentence-case ghost links in the middle, and exactly ONE filled
- * control — so it is never ambiguous where the primary action is.
+ * The bar.
  *
- * Desktop and mobile render the same `NAV` array. They used to be two
- * hand-written copies that had drifted apart in both wording and destinations,
- * which is the whole reason the phone menu read as a different site.
+ * It reads `registry.ts` for what the site contains and `--night` for what
+ * colour it is, so it holds no destinations and no palette of its own. A
+ * section draws a chevron when — and only when — it has a menu, which is why
+ * nothing anywhere carries a flag saying whether to draw one.
+ *
+ * The bar wears `.night`, so the pill on the right is drawn white-on-nothing by
+ * the same `.action` rule that draws a filled berry button on the paper. There
+ * is no colour override in this file.
  */
-function Navbar() {
+
+/** The section whose pages we are on. Nothing else claims `/`, so home is the Foundation's. */
+function currentOf(path: string): Section {
+  const owns = (s: Section) => {
+    const root = s.href.split('#')[0];
+    return root.startsWith('/') && root !== '/' && path.startsWith(root);
+  };
+  return SECTIONS.find(owns) ?? SECTIONS[SECTIONS.length - 1];
+}
+
+function Wordmark({ size }: { size: number }) {
+  return <span style={{ fontSize: size, fontWeight: 700, letterSpacing: '0.06em', lineHeight: 1 }}>ZOO</span>;
+}
+
+const entry: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: 6,
+  padding: '8px 10px',
+  borderRadius: 'var(--radius-md)',
+  color: 'var(--carbon)',
+};
+
+/** One destination in a menu. Where it goes decides which element carries it. */
+function Item({ to, onGo }: { to: Dest; onGo?: () => void }) {
+  const body = (
+    <span>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 'var(--text-sm)', fontWeight: 500 }}>
+        {to.label}
+        {to.away && <Away />}
+      </span>
+      {to.note && (
+        <span style={{ display: 'block', fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{to.note}</span>
+      )}
+    </span>
+  );
+
+  return to.away ? (
+    <a href={to.href} target='_blank' rel='noopener noreferrer' style={entry} onClick={onGo}>
+      {body}
+    </a>
+  ) : (
+    <Link href={to.href} style={entry} onClick={onGo}>
+      {body}
+    </Link>
+  );
+}
+
+/**
+ * The bar takes the ground of the page it sits on.
+ *
+ * The landing opens on a night band and the bar is the top of it, so there the
+ * two are one field. Every other page opens on paper, and a night bar there is
+ * a dark slab laid across a light page — the seam this file exists to avoid.
+ * Paper is the default because most pages are paper; only the landing asks.
+ */
+export default function Navbar({ ground = 'paper' }: { ground?: 'night' | 'paper' }) {
   const [open, setOpen] = useState(false);
+  const [lifted, setLifted] = useState(false);
+  const current = currentOf(useRouter().pathname);
+  const night = ground === 'night';
 
-  // A resize past the breakpoint leaves the sheet mounted but its trigger
-  // hidden, so the page is left scroll-locked with no way to unlock it.
+  // The bar has nothing to cover until something scrolls under it, so until then
+  // it is not drawn. `passive` because this listener must never be the reason a
+  // scroll stutters, and the state is a boolean rather than the offset so React
+  // re-renders twice a page rather than once a frame.
   useEffect(() => {
-    if (!open) return;
-    const wide = window.matchMedia('(min-width: 768px)');
-    const close = () => setOpen(false);
-    wide.addEventListener('change', close);
-    return () => wide.removeEventListener('change', close);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [open]);
+    const read = () => setLifted(window.scrollY > 8);
+    read();
+    window.addEventListener('scroll', read, { passive: true });
+    return () => window.removeEventListener('scroll', read);
+  }, []);
 
   return (
-    <header
-      className='sticky top-0 z-50'
+    <nav
+      // An open menu covers the page whether the page has scrolled or not, so
+      // the glass comes with it.
+      className={`${night ? 'night' : ''} bar ${lifted || open ? 'lifted' : ''} select-none`}
       style={{
-        background: 'var(--surface-header)',
-        backdropFilter: 'blur(20px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-        borderBottom: '1px solid var(--border)',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        // The published ladder, not a number picked to win. 999 outranked every
+        // rung there is, so the chat panel — a popover, and above the header by
+        // construction — had nowhere left to sit.
+        zIndex: 'var(--z-header)' as unknown as number,
       }}
     >
       <div
-        className='mx-auto flex items-center gap-3'
-        style={{ height: 'var(--header)', paddingInline: 'var(--page-gutter)', maxWidth: 1280 }}
+        className='flex items-center justify-between'
+        style={{ height: 'var(--nav-h)', padding: '0 clamp(16px, 3vw, 32px)' }}
       >
-        <Link href='/' className='flex shrink-0 items-center gap-2.5'>
-          <Image
-            alt=''
-            aria-hidden
-            src='/zooLogoLight.svg'
-            width={28}
-            height={28}
-            className='rounded-full'
-          />
-          <span className='text-[15px] font-semibold tracking-tight'>
-            Zoo <span style={{ color: 'var(--muted-foreground)' }}>Foundation</span>
-          </span>
+        <Link href='/' aria-label='Zoo Labs Foundation'>
+          <Wordmark size={22} />
         </Link>
 
-        <nav aria-label='Main' className='ml-4 hidden items-center gap-1 md:flex'>
-          {NAV.map((item) => (
-            <Link key={item.id} href={item.href} className='more px-3 py-1.5'>
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <div className='hidden lg:flex items-center gap-1'>
+          {SECTIONS.map((s) => {
+            const here = s === current;
+            return (
+              <div key={s.label} className='section relative' style={{ paddingBottom: 10, marginBottom: -10 }}>
+                <Link
+                  href={s.href}
+                  aria-current={here ? 'page' : undefined}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    padding: '4px 10px',
+                    fontSize: 'var(--text-sm)',
+                    fontWeight: 500,
+                    // The current page is said in ink and in aria-current, never with
+                    // a rule under the word: a line under a link reads as an underline
+                    // whatever draws it, and this shell draws none.
+                    //
+                    // The ink is the ground's own foreground, not a colour: `.night`
+                    // redefines --carbon to white, so one declaration is full-strength
+                    // on either ground and a hardcoded white would vanish on paper.
+                    color: here ? 'var(--carbon)' : 'var(--text-secondary)',
+                  }}
+                >
+                  {s.label}
+                  {s.items && <ChevronDown size={13} strokeWidth={2} aria-hidden />}
+                </Link>
 
-        <div className='ml-auto flex items-center gap-2'>
+                {s.items && (
+                  <div
+                    className='menu glass absolute'
+                    style={{ left: '50%', transform: 'translateX(-50%)', marginTop: 10, padding: 6, width: 320 }}
+                  >
+                    {s.items.map((to) => (
+                      <Item key={to.label} to={to} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <div className='flex items-center gap-2'>
           <a
             href={LABS.href}
             target='_blank'
             rel='noopener noreferrer'
-            className='more hidden sm:inline-flex'
+            className='action'
+            style={{ minHeight: 36, paddingInline: 'var(--space-4)', letterSpacing: '0.04em' }}
           >
-            {LABS.label} <span aria-hidden>↗</span>
+            {LABS.label}
+            <Away />
           </a>
-          <Link
-            href={CTA.href}
-            className='action hidden sm:inline-flex'
-            data-fill=''
-            style={{ minHeight: 34, paddingInline: 16, fontSize: 13 }}
-          >
-            {CTA.label}
-          </Link>
 
           <button
-            type='button'
+            className='inline-flex lg:hidden'
             onClick={() => setOpen(!open)}
-            aria-expanded={open}
-            aria-controls='menu'
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className='-mr-2 inline-flex items-center justify-center rounded-lg p-2 md:hidden'
-            style={{ color: 'var(--foreground)' }}
+            aria-expanded={open}
+            style={{ padding: 6 }}
           >
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              aria-hidden
-            >
-              {open ? <path d='M6 18 18 6M6 6l12 12' /> : <path d='M4 7h16M4 12h16M4 17h16' />}
-            </svg>
+            {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
       {open && (
         <div
-          id='menu'
-          className='md:hidden'
-          style={{ borderTop: '1px solid var(--border)', background: 'var(--background)' }}
+          className='lg:hidden'
+          style={{
+            maxHeight: 'calc(100vh - var(--nav-h))',
+            overflowY: 'auto',
+            padding: '0 clamp(16px, 3vw, 32px) var(--space-6)',
+            borderTop: '1px solid color-mix(in oklab, var(--carbon) 11%, transparent)',
+          }}
         >
-          <nav
-            aria-label='Main'
-            className='flex flex-col gap-1 px-5 pb-6 pt-4'
-            style={{ paddingInline: 'var(--page-gutter)' }}
-          >
-            {NAV.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className='rounded-lg py-2.5 text-[15px] font-medium'
-              >
-                {item.label}
+          {SECTIONS.map((s) => (
+            <div key={s.label} style={{ paddingTop: 'var(--space-5)' }}>
+              <Link href={s.href} onClick={() => setOpen(false)} style={{ fontSize: 'var(--text-base)', fontWeight: 600 }}>
+                {s.label}
               </Link>
-            ))}
-            <a
-              href={LABS.href}
-              target='_blank'
-              rel='noopener noreferrer'
-              onClick={() => setOpen(false)}
-              className='rounded-lg py-2.5 text-[15px] font-medium'
-              style={{ color: 'var(--muted-foreground)' }}
-            >
-              {LABS.label} <span aria-hidden>↗</span>
-            </a>
-            <Link
-              href={CTA.href}
-              onClick={() => setOpen(false)}
-              className='action mt-3'
-              data-fill=''
-            >
-              {CTA.label}
-            </Link>
-          </nav>
+              {s.items && (
+                <div style={{ paddingTop: 4 }}>
+                  {s.items.map((to) => (
+                    <Item key={to.label} to={to} onGo={() => setOpen(false)} />
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       )}
-    </header>
+    </nav>
   );
 }
-
-export default Navbar;

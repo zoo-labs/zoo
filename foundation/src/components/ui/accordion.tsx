@@ -1,56 +1,78 @@
-import * as React from "react"
-import * as AccordionPrimitive from "@radix-ui/react-accordion"
-import { ChevronDown } from "lucide-react"
+import * as React from 'react';
+import { Accordion as GuiAccordion, styled, Text, YStack } from '@hanzo/gui';
+import { ChevronDown } from 'lucide-react';
 
-import { cn } from "@/lib/clsxm"
+/**
+ * gui's Accordion, under the four names FilterPanel already calls it by.
+ *
+ * Two differences from the shadcn original, both of them gui's shape rather than
+ * a choice made here: a trigger has to sit inside an `Accordion.Header`, and the
+ * open/close travel is `Accordion.HeightAnimator` rather than a pair of keyframe
+ * classes that this build — which has never run Tailwind — never defined.
+ *
+ * The trigger is a View, so its label is a Text; the chevron turns on
+ * `[data-state='open']`, one rule, in globals.css.
+ */
+const Accordion = GuiAccordion;
 
-const Accordion = AccordionPrimitive.Root
+const AccordionItem = styled(GuiAccordion.Item, {
+  name: 'AccordionItem',
+  borderBottomWidth: 1,
+  borderBottomColor: 'var(--border)',
+});
 
-const AccordionItem = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item
-    ref={ref}
-    className={cn("border-b border-gray-800", className)}
-    {...props}
-  />
-))
-AccordionItem.displayName = "AccordionItem"
+const TriggerBox = styled(GuiAccordion.Trigger, {
+  name: 'AccordionTrigger',
+  unstyled: true,
+  flexDirection: 'row',
+  items: 'center',
+  justify: 'space-between',
+  width: '100%',
+  gap: '$3',
+  py: '$4',
+  bg: 'transparent',
+  cursor: 'pointer',
+  hoverStyle: { opacity: 0.7 },
+  focusVisibleStyle: { outlineWidth: 2, outlineStyle: 'solid', outlineColor: 'var(--ring)' },
+});
+
+const TriggerLabel = styled(Text, {
+  name: 'AccordionTriggerLabel',
+  fontSize: 16,
+  fontWeight: '500',
+  color: 'var(--text-primary)',
+});
 
 const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
-      ref={ref}
-      className={cn(
-        "flex flex-1 items-center justify-between py-4 font-medium transition-all [&[data-state=open]>svg]:rotate-180",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-))
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
+  React.ElementRef<typeof TriggerBox>,
+  React.ComponentPropsWithoutRef<typeof TriggerBox>
+>(({ children, ...props }, ref) => (
+  <GuiAccordion.Header width='100%'>
+    <TriggerBox ref={ref} {...props}>
+      <TriggerLabel>{children}</TriggerLabel>
+      <ChevronDown className='h-4 w-4 shrink-0' data-chevron />
+    </TriggerBox>
+  </GuiAccordion.Header>
+));
+AccordionTrigger.displayName = 'AccordionTrigger';
+
+const ContentBox = styled(YStack, {
+  name: 'AccordionContent',
+  pb: '$4',
+});
 
 const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-    {...props}
-  >
-    <div className={cn("pb-4 pt-0", className)}>{children}</div>
-  </AccordionPrimitive.Content>
-))
+  React.ElementRef<typeof ContentBox>,
+  React.ComponentPropsWithoutRef<typeof ContentBox>
+>(({ children, ...props }, ref) => (
+  <GuiAccordion.HeightAnimator>
+    <GuiAccordion.Content unstyled p={0}>
+      <ContentBox ref={ref} {...props}>
+        {children}
+      </ContentBox>
+    </GuiAccordion.Content>
+  </GuiAccordion.HeightAnimator>
+));
+AccordionContent.displayName = 'AccordionContent';
 
-AccordionContent.displayName = AccordionPrimitive.Content.displayName
-
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };

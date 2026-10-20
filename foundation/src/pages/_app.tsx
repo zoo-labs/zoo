@@ -1,75 +1,56 @@
-import { AnalyticsProvider, usePageview } from '@hanzo/event/react';
-import { Zen } from '@hanzo/font/sans';
-import { ZenMono } from '@hanzo/font/mono';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
+import { GuiProvider } from '@hanzo/gui';
+import { TelemetryProvider } from '@hanzogui/telemetry';
+import Ask from '@/components/Ask';
+import Look from '@/components/Look';
+import { Corpus } from '@/config/corpus';
+import config from '@/lib/gui';
 
 import '@/styles/globals.css';
-// !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
-import '@/styles/colors.css';
+import '@/styles/gui.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 /**
- * !STARTERCONF info
- * ? `Layout` component is called in every page using `np` snippets. If you have consistent layout across all page, you can add it here too
- */
-
-/** Do Not Track and Global Privacy Control are opt-out signals the SDK does not
- * read, so each surface answers for itself.
+ * `disableInjectCSS`, because `gui.css` above IS the sheet — generated from the
+ * same config by `scripts/gui-css.mjs`. Left to inject, the runtime writes the
+ * whole accumulated sheet on every flush and the page ships several copies; on
+ * a static export it writes nothing at all before first paint.
  *
- * Test `window`, never `navigator`: Node defines a global navigator, so a
- * navigator check passes during the static export's prerender and then reaches
- * for a window that isn't there. */
-const telemetryEnabled = (): boolean => {
-  if (typeof window === 'undefined') return true;
-  const n = navigator as unknown as {
-    doNotTrack?: string;
-    msDoNotTrack?: string;
-    globalPrivacyControl?: boolean;
-  };
-  const dnt =
-    n.doNotTrack ??
-    (window as unknown as { doNotTrack?: string }).doNotTrack ??
-    n.msDoNotTrack;
-  if (dnt === '1' || dnt === 'yes') return false;
-  return !n.globalPrivacyControl;
-};
-
-/** Counts route changes only — the provider's autoPageview covers the first
- * load, so a page is counted exactly once. */
-function Pageview() {
-  usePageview(useRouter().asPath);
-  return null;
-}
-
-/**
- * No ingest key here, and that is the point.
+ * The site has one appearance, so the theme is stated here and there is nothing
+ * to resolve at run time. It used to mount next-themes with `defaultTheme="dark"`
+ * against a stylesheet that declares `color-scheme: light` and carries no `.dark`
+ * rules, so the class landed on <html> and no rule anywhere answered it.
  *
- * A domain belongs to exactly one brand, so `@hanzo/event` resolves the key from
- * the host this page is served from: zoo.ngo attributes to Zoo without this file
- * saying so. Stating a key per site puts one copy per surface of a value with a
- * single source in the tree, and that is how a brand's traffic ends up in
- * another brand's project.
- */
-/**
- * Zen is bound here and only here.
+ * `Corpus` sits above everything so that the page and Blue quote the same
+ * counts, and so a page loaded from cache refreshes them once rather than once
+ * per component that shows a number.
  *
- * `@hanzo/font` is the package that owns the family: it ships the woff2 with
- * the licence beside it and wraps `next/font/local`, so the faces are
- * self-hosted, the `@font-face` is generated, and the preload carries the
- * content hash. The two variables land on the tree as `--font-zen-sans` and
- * `--font-zen-mono`, which is what `font-sans` and `font-mono` resolve to in
- * tailwind.config.ts — so no component names a typeface.
+ * `TelemetryProvider` takes no key. The key is a property of the DOMAIN — this
+ * is zoo.ngo, zoo.ngo belongs to Zoo, and Zoo has exactly one publishable key —
+ * so @hanzo/event derives it from the hostname and there is nothing here to
+ * configure, nothing to leave unset, and nothing to paste into the wrong site.
+ * A build-time key would be the alternative, and it is the reason this site
+ * reported nothing until now: a static export is built once and the variable
+ * was never set.
+ *
+ * `path` comes from the router, because pageviews on a static export are route
+ * changes rather than page loads and the History API alone cannot see a
+ * shallow one.
  */
 function MyApp({ Component, pageProps }: AppProps) {
+  const { asPath } = useRouter();
   return (
-    <AnalyticsProvider config={{ product: 'site', enabled: telemetryEnabled() }}>
-      <Pageview />
-      <div className={`${Zen.variable} ${ZenMono.variable} font-sans`}>
-        <Component {...pageProps} />
-      </div>
-    </AnalyticsProvider>
+    <GuiProvider config={config} defaultTheme="light" disableInjectCSS>
+      <TelemetryProvider path={asPath}>
+        <Corpus>
+          <Component {...pageProps} />
+          <Ask />
+          <Look />
+        </Corpus>
+      </TelemetryProvider>
+    </GuiProvider>
   );
 }
 

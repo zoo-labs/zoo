@@ -34,8 +34,8 @@ function CardList() {
         },
       ];
   return (
-    <div className="bg-black">
-      <div className='grid cardlist md:grid-cols-3 gap-12 lg:gap-12 md:gap-8  xl:px-40 lg:px-32 md:px-8 max-md:px-4'>
+    <div className="bg-background">
+      <div className='grid md:grid-cols-3 gap-12 px-4 md:px-16 lg:px-32 xl:px-32'>
       {cardlist.map((data, index) => (
         <div key={index} className=' flex flex-col items-center justify-between'>
             {/* <Image
@@ -46,7 +46,7 @@ function CardList() {
                 alt=''
             /> */}
             <Link href={data.url} legacyBehavior>
-            <video autoPlay loop muted playsInline className="w-full aspect-[473/833] border rounded-xl p-1" >
+            <video autoPlay loop muted playsInline className="w-full border rounded-xl p-1" style={{ aspectRatio: '473 / 833' }} >
             <source src={data.card}  type="video/webm"/>
                 <source src={data.card_mp4}  type="video/mp4"/>
                 

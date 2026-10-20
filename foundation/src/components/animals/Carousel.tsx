@@ -1,37 +1,56 @@
-import Section from '@/components/Section';
+import Link from 'next/link';
+import Slider from 'react-slick';
+import dynamic from "next/dynamic";
+const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
+  ssr: false,
+});
+import animals from "@/components/animals/animals.json";
 
 /**
- * The 3D band.
+ * The models, one at a time.
  *
- * This was a slider of seven <ModelViewer>s pointed at `/models/**.glb`. There
- * is no `public/models` directory — not here and not on the host — so the
- * slider was seven empty boxes rotating under a heading that promised 3D. The
- * band now says what exists and links to where the models actually run,
- * instead of holding an empty frame open for them.
+ * The slider was sized by `w-1/2 max-md:w-full aspect-square` and the model
+ * inside it by `aspect-square` again — none of which the stylesheet answers, so
+ * nothing held a shape and a viewer that failed to paint left a hole. It sits
+ * on a `.plate` now, which keeps its ratio and its ground whether or not WebGL
+ * arrives, inside a measure that needs no breakpoint to halve itself.
  */
-function Carousel() {
+function Carosuel() {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    draggable: false,
+    autoplay: true,
+    arrows: false
+  };
+
   return (
-    <Section>
-      <div className='max-w-2xl'>
-        <p className='eyebrow'>Digital twins</p>
-        <h2 className='title mt-3'>Emotional intelligence with AI</h2>
-        <p className='lede mt-4'>
-          Our species models are being built to speak, play and teach — an interactive way
-          for students and wildlife lovers to meet an endangered animal up close.
-        </p>
-        <div className='mt-8'>
-          <a
-            href='https://app.zoolabs.io/'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='action'
-          >
-            Open the 3D app <span aria-hidden>↗</span>
-          </a>
+    <section className='container' style={{ paddingBlock: 'var(--section-y-lg)' }}>
+        <p className='text-lg text-secondary md:text-center text-left'>3D Metaverse Animals</p>
+        <h1 className='text-foreground md:text-center text-left md:text-3xl xl:text-6xl max-md:text-2xl mt-5 mb-8'>Emotional Intelligence with AI</h1>
+        <p className='text-secondary text-sm md:text-xl md:text-center text-left mx-auto pb-12' style={{ maxWidth: '58ch' }}>The future upgrades will have powers, allow them to speak with you, play with you and much more for you to decide!</p>
+        <div className='mx-auto mb-12' style={{ width: '100%', maxWidth: '32rem' }}>
+          <Slider {...settings}>
+            {animals.map((data, index) => (
+              <div key={index}>
+                <div className='plate' style={{ aspectRatio: '1 / 1', width: '100%' }}>
+                  <ModelViewer
+                    usdz={data.avatars[2].usdz}
+                    glb={data.avatars[2].glb}
+                  />
+                </div>
+              </div>
+            ))}
+          </Slider>
         </div>
-      </div>
-    </Section>
+        <div className='flex justify-center'>
+          <Link href='https://app.zoolabs.io/' className='action' data-fill>Digital</Link>
+        </div>
+    </section>
   );
 }
 
-export default Carousel;
+export default Carosuel;

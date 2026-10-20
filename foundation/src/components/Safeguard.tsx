@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { CirclePlay } from 'lucide-react';
+
 function Safeguard() {
     const contents = [
         {
@@ -19,33 +21,35 @@ function Safeguard() {
         }
       ];
   return (
-    <div className="bg-black py-32">
-        <div className='flex  max-md:flex-col xl:px-56 lg:px-40 md:px-20 max-md:px-4'>
-          <div className='w-1/2 max-md:w-full flex flex-col md:pr-32'>
-            <h1 className='text-white md:text-4xl xl:text-6xl max-md:text-5xl pb-12'>We safeguard wildlife and restore habitats.</h1>
-            <Link
-              href='https://youtu.be/6yYuYtMWgOU'
-              className='flex items-center cursor-pointer text-white md:text-sm lg:text-md xl:text-xl max-md:pb-10'
-              >
-                <>
-                  <span className='pr-[15px]'>Short video link</span>
-                  <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.40173 12.0243L11.6111 9.44867L7.40173 7.10596V12.0243Z" fill="#F5F9FC"/>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 6.2998L12.2 9.4998L7 12.6998V6.2998ZM7.60051 11.6259L11.0567 9.4998L7.60051 7.37346V11.6259Z" fill="#F5F9FC"/>
-                    <circle cx="9" cy="9.5" r="8.5" stroke="white"/>
-                  </svg>
-                </>
-            </Link>
-          </div>
-          <div className='w-1/2 max-md:w-full grid md:grid-cols-2 grid-cols-1 gap-8 max-md:gap-4 max-md:px-8'>
-            {contents.map((data, index) => (
-              <div key={index} className='flex flex-col'>
-                  <h1 className='text-white md:text-xl xl:text-3xl max-md:text-2xl max-md:my-5 pb-4 max-md:pb-2'>{data.title}</h1>
-                  <p className='text-white text-md max-md:text-lg xl:text-xl'>{data.content}</p>
-              </div>
-            ))}
-          </div>
+    <div className="bg-background py-24">
+      <div className='container mx-auto px-4 flex flex-col md:flex-row gap-8'>
+        <div className='flex flex-col' style={{ flex: '1 1 20rem' }}>
+          {/* A section head, so it is an h2. Every one of these was an `h1` —
+              four of them in this component alone, on pages that already had
+              one — while the size came from the utility classes either way, so
+              the element was carrying rank it did not have and no type. */}
+          <h2 className='text-foreground md:text-4xl xl:text-6xl max-md:text-5xl pb-12'>We safeguard wildlife and restore habitats.</h2>
+          {/* The play mark was a hand-drawn circle stroked `white` and filled
+              `#F5F9FC` — two near-whites on a near-white page. currentColor is
+              the ink beside it, whatever the ground turns out to be. */}
+          <Link
+            href='https://youtu.be/6yYuYtMWgOU'
+            className='inline-flex items-center gap-2 cursor-pointer text-foreground'
+            style={{ alignSelf: 'flex-start' }}
+          >
+            <CirclePlay size={20} aria-hidden />
+            Short video link
+          </Link>
         </div>
+        <div className='grid md:grid-cols-2 grid-cols-1 gap-8' style={{ flex: '1 1 20rem' }}>
+          {contents.map((data, index) => (
+            <div key={index} className='flex flex-col'>
+                <h3 className='text-foreground md:text-xl xl:text-3xl max-md:text-2xl max-md:my-5 pb-4 max-md:pb-2'>{data.title}</h3>
+                <p className='text-foreground text-lg'>{data.content}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

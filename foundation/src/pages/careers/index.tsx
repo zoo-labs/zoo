@@ -117,11 +117,11 @@ export default function Careers() {
       {/* Hero Section */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl">
+          <div className="max-w-3xl">
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
               Careers at Zoo Foundation
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700">
+            <p className="text-xl md:text-2xl text-zinc-700">
               Join a mission-driven team working to revolutionize wildlife conservation 
               through technology, science, and community action.
             </p>
@@ -130,21 +130,21 @@ export default function Careers() {
       </section>
 
       {/* Why Work Here */}
-      <section className="bg-gray-50 py-20">
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Why Zoo Foundation?</h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            <p className="text-xl text-zinc-700 max-w-3xl mx-auto">
               Be part of a team that's making measurable impact on wildlife conservation every day
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8">
             {benefits.map((benefit, index) => (
-              <div key={index} className="bg-white rounded-2xl p-8 hover:shadow-lg transition-all">
+              <div key={index} className="card p-8 transition-all">
                 <div className="text-4xl mb-4">{benefit.icon}</div>
                 <h3 className="text-xl font-bold mb-2">{benefit.title}</h3>
-                <p className="text-gray-600">{benefit.description}</p>
+                <p className="text-zinc-600">{benefit.description}</p>
               </div>
             ))}
           </div>
@@ -156,7 +156,7 @@ export default function Careers() {
         <div className="container mx-auto px-4">
           <div className="mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Open Positions</h2>
-            <p className="text-xl text-gray-700 mb-8">
+            <p className="text-xl text-zinc-700 mb-8">
               {positions.length} opportunities to make a difference
             </p>
 
@@ -166,11 +166,8 @@ export default function Careers() {
                 <button
                   key={dept}
                   onClick={() => setSelectedDepartment(dept)}
-                  className={`px-6 py-2 rounded-full font-medium transition-all ${
-                    selectedDepartment === dept
-                      ? 'bg-black text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
+                  aria-pressed={selectedDepartment === dept}
+                  className={selectedDepartment === dept ? 'btn btn-primary transition-all' : 'btn transition-all'}
                 >
                   {dept}
                 </button>
@@ -181,30 +178,24 @@ export default function Careers() {
           {/* Job Listings */}
           <div className="space-y-4">
             {filteredPositions.map((position, index) => (
-              <div key={index} className="border border-gray-200 rounded-xl p-6 hover:border-gray-400 transition-all group">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+              <div key={index} className="card p-6 transition-all">
+                <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4">
                   <div>
-                    <h3 className="text-2xl font-bold mb-2 group-hover:text-green-600 transition-colors">
+                    <h3 className="text-2xl font-bold mb-2 transition-colors">
                       {position.title}
                     </h3>
-                    <div className="flex flex-wrap gap-3 text-sm">
-                      <span className="bg-gray-100 text-black px-3 py-1 rounded-full">
-                        {position.department}
-                      </span>
-                      <span className="bg-gray-200 text-black px-3 py-1 rounded-full">
-                        {position.location}
-                      </span>
-                      <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
-                        {position.type}
-                      </span>
+                    <div className="flex flex-wrap gap-3">
+                      <span className="pill">{position.department}</span>
+                      <span className="pill">{position.location}</span>
+                      <span className="pill">{position.type}</span>
                     </div>
                   </div>
-                  <button className="mt-4 md:mt-0 bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-all">
+                  <button className="btn btn-primary transition-all shrink-0">
                     Apply Now
                   </button>
                 </div>
-                <p className="text-gray-600 mb-4">{position.description}</p>
-                <div className="text-sm text-gray-500">
+                <p className="text-zinc-600 mb-4">{position.description}</p>
+                <div className="text-sm text-zinc-500">
                   <span className="font-medium">Key Requirements: </span>
                   {position.requirements.join(' • ')}
                 </div>
@@ -215,43 +206,43 @@ export default function Careers() {
       </section>
 
       {/* Culture Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6">
                 Our Culture
               </h2>
-              <p className="text-xl text-gray-700 mb-8">
+              <p className="text-xl text-zinc-700 mb-8">
                 We're a diverse, global team united by our passion for wildlife conservation. 
                 From field researchers in the Amazon to engineers in San Francisco, we work 
                 together to protect Earth's biodiversity.
               </p>
               <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-black mt-1 mr-4"></div>
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 rounded-full shrink-0 mt-1" style={{ background: 'var(--berry)' }}></div>
                   <div>
                     <h4 className="font-semibold mb-1">Global & Remote-First</h4>
-                    <p className="text-gray-600">Team members in 23 countries working flexibly</p>
+                    <p className="text-zinc-600">Team members in 23 countries working flexibly</p>
                   </div>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-gray-800 mt-1 mr-4"></div>
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 rounded-full shrink-0 mt-1" style={{ background: 'var(--blue)' }}></div>
                   <div>
                     <h4 className="font-semibold mb-1">Mission-Driven</h4>
-                    <p className="text-gray-600">Every role directly impacts conservation</p>
+                    <p className="text-zinc-600">Every role directly impacts conservation</p>
                   </div>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-black border border-gray-600 mt-1 mr-4"></div>
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 rounded-full shrink-0 mt-1" style={{ background: 'var(--green)' }}></div>
                   <div>
                     <h4 className="font-semibold mb-1">Innovation Focused</h4>
-                    <p className="text-gray-600">Pioneering new approaches to conservation</p>
+                    <p className="text-zinc-600">Pioneering new approaches to conservation</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-100 rounded-2xl h-96 border border-gray-300"></div>
+            <div className="plate" style={{ aspectRatio: '4 / 3' }}></div>
           </div>
         </div>
       </section>
@@ -259,26 +250,20 @@ export default function Careers() {
       {/* Internship Program */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
-          <div className="bg-black border-2 border-white rounded-2xl p-12 text-white">
+          <div className="night rounded-2xl p-8">
             <div className="max-w-3xl">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 Conservation Leadership Program
               </h2>
-              <p className="text-xl mb-8 text-white/90">
+              <p className="text-xl mb-8 text-secondary">
                 Our 12-month fellowship program for early-career conservationists provides 
                 hands-on experience in field research, technology development, and nonprofit management.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link
-                  href="/programs/fellowship"
-                  className="inline-block bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-all"
-                >
+                <Link href="/programs/fellowship" className="btn btn-primary transition-all">
                   Learn More
                 </Link>
-                <Link
-                  href="#"
-                  className="inline-block bg-transparent border-2 border-white px-6 py-3 rounded-lg font-medium hover:bg-white/10 transition-all"
-                >
+                <Link href="#" className="btn transition-all">
                   Apply for 2026 Cohort
                 </Link>
               </div>
@@ -288,41 +273,41 @@ export default function Careers() {
       </section>
 
       {/* Application Process */}
-      <section className="bg-gray-50 py-20">
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Application Process</h2>
-            <p className="text-xl text-gray-700">Simple, transparent, and respectful of your time</p>
+            <p className="text-xl text-zinc-700">Simple, transparent, and respectful of your time</p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-black text-white rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold">
+              <div className="disc mb-4 text-xl font-bold" style={{ ['--hue']: 'var(--berry)' } as React.CSSProperties}>
                 1
               </div>
               <h3 className="font-bold mb-2">Apply Online</h3>
-              <p className="text-gray-600 text-sm">Submit your application and resume</p>
+              <p className="text-zinc-600 text-sm">Submit your application and resume</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-black text-white rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold">
+              <div className="disc mb-4 text-xl font-bold" style={{ ['--hue']: 'var(--berry)' } as React.CSSProperties}>
                 2
               </div>
               <h3 className="font-bold mb-2">Initial Interview</h3>
-              <p className="text-gray-600 text-sm">30-min video call with hiring manager</p>
+              <p className="text-zinc-600 text-sm">30-min video call with hiring manager</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-black text-white rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold">
+              <div className="disc mb-4 text-xl font-bold" style={{ ['--hue']: 'var(--berry)' } as React.CSSProperties}>
                 3
               </div>
               <h3 className="font-bold mb-2">Team Interview</h3>
-              <p className="text-gray-600 text-sm">Meet your potential teammates</p>
+              <p className="text-zinc-600 text-sm">Meet your potential teammates</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-black text-white rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold">
+              <div className="disc mb-4 text-xl font-bold" style={{ ['--hue']: 'var(--berry)' } as React.CSSProperties}>
                 4
               </div>
               <h3 className="font-bold mb-2">Decision</h3>
-              <p className="text-gray-600 text-sm">Receive response within 5 days</p>
+              <p className="text-zinc-600 text-sm">Receive response within 5 days</p>
             </div>
           </div>
         </div>
@@ -333,7 +318,7 @@ export default function Careers() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h3 className="text-2xl font-bold mb-4">Equal Opportunity Employer</h3>
-            <p className="text-gray-600">
+            <p className="text-zinc-600">
               Zoo Foundation is committed to building a diverse and inclusive team. We welcome 
               applications from all qualified candidates regardless of race, gender, age, sexual 
               orientation, disability, religion, or nationality. We especially encourage applications 

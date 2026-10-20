@@ -1,123 +1,85 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import { useCorpus } from '@/config/corpus';
 
-import { STATS, U } from '@/config/registry';
-
-/**
- * The hero, in hanzo.industries' anatomy: eyebrow, then the claim, then one
- * sentence of what it means, then the actions, then the numbers that back it.
- *
- * The featured-species card carries the animal's name as REAL TEXT under the
- * picture rather than relying on a label baked into the artwork. A baked label
- * only survives if the frame it was drawn for is the frame it gets, and the
- * moment the card is asked to fill a different box the name is what gets cut.
- * The picture is given a fixed square box and `object-contain`, so it is
- * letterboxed rather than cropped at every width.
- */
 function Intro({
   breadcrumbs,
   title,
   comment,
 }: {
-  breadcrumbs: string | String;
+  breadcrumbs: string;
   title: string;
   comment?: string;
 }) {
+  const corpus = useCorpus();
   return (
-    <section
-      style={{
-        borderBottom: '1px solid var(--border)',
-        paddingBlock: 'clamp(3rem, 8vw, 6rem)',
-      }}
-    >
-      <div className='mx-auto' style={{ maxWidth: 1280, paddingInline: 'var(--page-gutter)' }}>
-        <div className='grid items-center gap-12 lg:grid-cols-12'>
-          <div className='flex flex-col items-start lg:col-span-7'>
-            <p className='eyebrow mb-5'>{breadcrumbs}</p>
+    <section style={{ position: 'relative', overflow: 'hidden', padding: '2rem 1.5rem 4rem 1.5rem' }}>
+      <div className="glow-backdrop" />
 
-            <h1 className='display mb-6'>
-              {title} Earth&rsquo;s wildlife
-            </h1>
-
-            <p className='lede mb-8' style={{ maxWidth: '38rem' }}>
-              {comment ||
-                'Protecting endangered species through open-access research, bioacoustics, community field sanctuaries and wildlife science anyone can read.'}
-            </p>
-
-            <div className='flex flex-wrap items-center gap-3'>
-              <Link href={U.animals} className='action' data-fill=''>
-                Explore the species
-              </Link>
-              <Link href={U.research} className='action'>
-                Read the research
-              </Link>
-              <a
-                href={U.labs}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='more ml-1'
-              >
-                Zoo Labs <span aria-hidden>↗</span>
-              </a>
-            </div>
-
-            <dl
-              className='mt-12 grid w-full grid-cols-2 gap-6 pt-10 sm:grid-cols-4'
-              style={{ borderTop: '1px solid var(--border)' }}
-            >
-              {STATS.map((stat) => (
-                <div key={stat.label}>
-                  <dt className='sr-only'>{stat.label}</dt>
-                  <dd className='m-0'>
-                    <span className='block text-2xl font-semibold tracking-tight'>
-                      {stat.value}
-                    </span>
-                    <span
-                      className='mt-1 block text-[13px]'
-                      style={{ color: 'var(--muted-foreground)' }}
-                    >
-                      {stat.label}
-                    </span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
+      <div className="container" style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative', zIndex: 10 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.75rem' }}>
+          <div className="pill" style={{ fontSize: '0.75rem' }}>
+            <span>🐬</span>
+            <span>{breadcrumbs}</span>
           </div>
-
-          <div className='lg:col-span-5'>
-            <figure className='card m-0 mx-auto max-w-md overflow-hidden p-4 lg:max-w-none'>
-              {/* The render's own ground, so picture and plate are one surface
-               * and the square is never cropped at any width. */}
-              <div
-                className='relative w-full overflow-hidden'
-                style={{
-                  aspectRatio: '1 / 1',
-                  borderRadius: 'var(--radius-lg)',
-                  background: 'var(--plate)',
-                }}
-              >
-                <Image
-                  src='/images/giraffe.png'
-                  alt='A Nubian giraffe, one of the endangered species Zoo Labs Foundation works on'
-                  fill
-                  sizes='(min-width: 1024px) 30vw, 90vw'
-                  className='object-contain'
-                  priority
-                />
-              </div>
-              <figcaption className='mt-4 flex items-center justify-between gap-4'>
-                <div>
-                  <p className='text-[13px]' style={{ color: 'var(--muted-foreground)' }}>
-                    Featured species
-                  </p>
-                  <p className='text-base font-semibold'>Nubian giraffe</p>
-                </div>
-                <Link href={U.nubianGiraffe} className='more shrink-0'>
-                  View in 3D <span aria-hidden>→</span>
-                </Link>
-              </figcaption>
-            </figure>
+          <div className="pill" style={{ fontSize: '0.75rem' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#34d399', display: 'inline-block' }} />
+            <span>501(c)(3) Non-Profit · EIN 88-3538992</span>
           </div>
+        </div>
+
+        <h1 className="display-chrome" style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.03em' }}>
+          {title}
+        </h1>
+
+        {comment && (
+          <p className="text-secondary" style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', lineHeight: 1.6, maxWidth: '800px' }}>
+            {comment}
+          </p>
+        )}
+
+        <p className="text-secondary" style={{ fontSize: '0.95rem', lineHeight: 1.6, maxWidth: '800px', opacity: 0.8 }}>
+          Zoo Labs Foundation is a 501(c)(3) research organization dedicated to advancing sovereign frontier AI, open reasoning models, decentralized compute & mining protocols, and the Zoo Gym alignment framework.
+        </p>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', paddingTop: '0.5rem' }}>
+          <a
+            href="https://zoolabs.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="action"
+            data-fill
+            style={{ minHeight: '46px', padding: '0 1.75rem', fontSize: '0.875rem' }}
+          >
+            <span>🐬 Launch Studio ↗</span>
+          </a>
+
+          <a
+            href="https://papers.zoo.ngo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="action"
+            style={{ minHeight: '46px', padding: '0 1.5rem', fontSize: '0.875rem' }}
+          >
+            <span>📄 {corpus.papers} Papers ↗</span>
+          </a>
+
+          <a
+            href="https://zips.zoo.ngo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="action"
+            style={{ minHeight: '46px', padding: '0 1.5rem', fontSize: '0.875rem' }}
+          >
+            <span>⚡ ZIPs Standards ↗</span>
+          </a>
+
+          <Link
+            href="/donation"
+            className="action"
+            style={{ minHeight: '46px', padding: '0 1.5rem', fontSize: '0.875rem' }}
+          >
+            <span>💚 Support Sanctuaries &rarr;</span>
+          </Link>
         </div>
       </div>
     </section>

@@ -16,11 +16,11 @@ export default function Docs() {
       />
       <Navbar />
 
-      <div className="bg-black text-white">
+      <main className="text-foreground">
         {/* Hero Section */}
         <div className="container mx-auto px-4 py-20">
           <h1 className="text-5xl md:text-7xl font-bold mb-8">Documentation</h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl">
+          <p className="text-xl md:text-2xl text-zinc-300 max-w-3xl">
             Comprehensive technical documentation for integrating with Zoo Foundation's
             conservation technology stack, APIs, and decentralized governance tools.
           </p>
@@ -28,10 +28,13 @@ export default function Docs() {
 
         {/* Main Content */}
         <div className="container mx-auto px-4 py-16">
-          <div className="grid md:grid-cols-4 gap-8">
+          {/* Sidebar beside content where there is room for both, stacked where
+              there is not. The tracks are stated as flex bases so no breakpoint
+              has to be invented for the one place this page needs two columns. */}
+          <div className="flex flex-wrap gap-8 items-start">
             {/* Sidebar Navigation */}
-            <div className="md:col-span-1">
-              <nav className="sticky top-4">
+            <div style={{ flex: '1 1 14rem', minWidth: 0 }}>
+              <nav className="sticky" style={{ top: 'calc(var(--nav-h) + var(--space-4))' }}>
                 <h3 className="text-lg font-bold mb-4">Documentation</h3>
                 <ul className="space-y-2">
                   {[
@@ -47,11 +50,13 @@ export default function Docs() {
                     <li key={section.id}>
                       <button
                         onClick={() => setSelectedSection(section.id)}
-                        className={`block w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                        aria-current={selectedSection === section.id || undefined}
+                        className="w-full text-left px-4 py-2 rounded-md transition-colors"
+                        style={
                           selectedSection === section.id
-                            ? 'bg-green-600 text-white'
-                            : 'text-gray-400 hover:text-white hover:bg-gray-800'
-                        }`}
+                            ? { background: 'var(--green)', color: '#ffffff' }
+                            : { color: 'var(--text-secondary)' }
+                        }
                       >
                         {section.label}
                       </button>
@@ -62,18 +67,18 @@ export default function Docs() {
             </div>
 
             {/* Content Area */}
-            <div className="md:col-span-3">
+            <div style={{ flex: '999 1 22rem', minWidth: 0 }}>
               {selectedSection === 'getting-started' && (
                 <div>
                   <h2 className="text-3xl font-bold mb-6">Getting Started</h2>
                   <div className="space-y-8">
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Introduction</h3>
-                      <p className="text-gray-300 mb-4">
+                      <p className="text-zinc-300 mb-4">
                         Zoo Foundation provides a comprehensive API ecosystem for conservation organizations,
                         researchers, and developers building wildlife protection solutions.
                       </p>
-                      <p className="text-gray-300">
+                      <p className="text-zinc-300">
                         Our APIs enable access to wildlife monitoring data, AI-powered species identification,
                         conservation funding mechanisms, and decentralized governance tools.
                       </p>
@@ -82,26 +87,26 @@ export default function Docs() {
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Authentication</h3>
                       <div className="bg-gray-900 rounded-lg p-6 mb-4">
-                        <p className="text-gray-400 mb-4">Include your API key in the Authorization header:</p>
-                        <pre className="bg-black p-4 rounded overflow-x-auto">
+                        <p className="text-zinc-400 mb-4">Include your API key in the Authorization header:</p>
+                        <pre className="card p-4 overflow-x-auto text-sm font-mono">
                           <code>{`Authorization: Bearer YOUR_API_KEY`}</code>
                         </pre>
                       </div>
-                      <p className="text-gray-300">
-                        Request an API key at <a href="https://api.zoo.network/keys" className="text-green-500 hover:text-green-400">api.zoo.network/keys</a>
+                      <p className="text-zinc-300">
+                        Request an API key at <a href="https://api.zoo.network/keys" className="text-emerald-500">api.zoo.network/keys</a>
                       </p>
                     </div>
 
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Base URL</h3>
                       <div className="bg-gray-900 rounded-lg p-6">
-                        <code className="text-green-400">https://api.zoo.network/v1</code>
+                        <code className="text-emerald-400">https://api.zoo.network/v1</code>
                       </div>
                     </div>
 
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Rate Limits</h3>
-                      <ul className="space-y-2 text-gray-300">
+                      <ul className="space-y-2 text-zinc-300">
                         <li>• Free tier: 1,000 requests/day</li>
                         <li>• Research tier: 10,000 requests/day</li>
                         <li>• Conservation Partner: Unlimited</li>
@@ -115,18 +120,18 @@ export default function Docs() {
                 <div>
                   <h2 className="text-3xl font-bold mb-6">API Reference</h2>
                   <div className="space-y-8">
-                    <div className="border border-gray-700 rounded-lg p-6">
+                    <div className="border rounded-lg p-6">
                       <h3 className="text-xl font-bold mb-4">Species Identification</h3>
-                      <div className="bg-gray-900 rounded p-4 mb-4">
-                        <code className="text-green-400">POST /api/v1/species/identify</code>
+                      <div className="bg-gray-900 rounded-md p-4 mb-4">
+                        <code className="text-emerald-400">POST /api/v1/species/identify</code>
                       </div>
-                      <p className="text-gray-400 mb-4">
+                      <p className="text-zinc-400 mb-4">
                         Upload an image for AI-powered species identification
                       </p>
                       <div className="space-y-4">
                         <div>
                           <p className="font-medium mb-2">Request Body:</p>
-                          <pre className="bg-black p-4 rounded overflow-x-auto text-sm">
+                          <pre className="card p-4 overflow-x-auto text-sm font-mono">
 {`{
   "image": "base64_encoded_image",
   "location": {
@@ -139,7 +144,7 @@ export default function Docs() {
                         </div>
                         <div>
                           <p className="font-medium mb-2">Response:</p>
-                          <pre className="bg-black p-4 rounded overflow-x-auto text-sm">
+                          <pre className="card p-4 overflow-x-auto text-sm font-mono">
 {`{
   "species": {
     "common_name": "Bengal Tiger",
@@ -154,22 +159,22 @@ export default function Docs() {
                       </div>
                     </div>
 
-                    <div className="border border-gray-700 rounded-lg p-6">
+                    <div className="border rounded-lg p-6">
                       <h3 className="text-xl font-bold mb-4">Habitat Analysis</h3>
-                      <div className="bg-gray-900 rounded p-4 mb-4">
-                        <code className="text-green-400">POST /api/v1/habitat/analyze</code>
+                      <div className="bg-gray-900 rounded-md p-4 mb-4">
+                        <code className="text-emerald-400">POST /api/v1/habitat/analyze</code>
                       </div>
-                      <p className="text-gray-400 mb-4">
+                      <p className="text-zinc-400 mb-4">
                         Analyze satellite imagery for habitat health assessment
                       </p>
                     </div>
 
-                    <div className="border border-gray-700 rounded-lg p-6">
+                    <div className="border rounded-lg p-6">
                       <h3 className="text-xl font-bold mb-4">Threat Monitoring</h3>
-                      <div className="bg-gray-900 rounded p-4 mb-4">
-                        <code className="text-green-400">GET /api/v1/threats/monitor</code>
+                      <div className="bg-gray-900 rounded-md p-4 mb-4">
+                        <code className="text-emerald-400">GET /api/v1/threats/monitor</code>
                       </div>
-                      <p className="text-gray-400 mb-4">
+                      <p className="text-zinc-400 mb-4">
                         Real-time monitoring of conservation threats in specified regions
                       </p>
                     </div>
@@ -183,7 +188,7 @@ export default function Docs() {
                   <div className="space-y-8">
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Overview</h3>
-                      <p className="text-gray-300 mb-4">
+                      <p className="text-zinc-300 mb-4">
                         ZenLM is our proprietary language model specifically trained on conservation data,
                         wildlife behavior patterns, and environmental factors.
                       </p>
@@ -191,27 +196,27 @@ export default function Docs() {
 
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Capabilities</h3>
-                      <ul className="space-y-3 text-gray-300">
+                      <ul className="space-y-3 text-zinc-300">
                         <li className="flex items-start">
-                          <span className="text-green-500 mr-3">•</span>
+                          <span className="text-emerald-500">•</span>
                           <div>
-                            <strong>Species Classification:</strong> 98% accuracy across 2,300+ species
+                            <strong>Species Classification:</strong> 91.2–95% on the paper&rsquo;s own benchmarks
                           </div>
                         </li>
                         <li className="flex items-start">
-                          <span className="text-green-500 mr-3">•</span>
+                          <span className="text-emerald-500">•</span>
                           <div>
                             <strong>Behavior Prediction:</strong> Predict migration patterns and habitat use
                           </div>
                         </li>
                         <li className="flex items-start">
-                          <span className="text-green-500 mr-3">•</span>
+                          <span className="text-emerald-500">•</span>
                           <div>
                             <strong>Threat Detection:</strong> Identify poaching and habitat destruction risks
                           </div>
                         </li>
                         <li className="flex items-start">
-                          <span className="text-green-500 mr-3">•</span>
+                          <span className="text-emerald-500">•</span>
                           <div>
                             <strong>Population Analysis:</strong> Estimate population sizes and trends
                           </div>
@@ -222,11 +227,11 @@ export default function Docs() {
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Model Access</h3>
                       <div className="bg-gray-900 rounded-lg p-6">
-                        <p className="text-gray-400 mb-4">ZenLM endpoints:</p>
+                        <p className="text-zinc-400 mb-4">ZenLM endpoints:</p>
                         <ul className="space-y-2 font-mono text-sm">
-                          <li><code className="text-green-400">POST /api/v1/zenlm/analyze</code></li>
-                          <li><code className="text-green-400">POST /api/v1/zenlm/predict</code></li>
-                          <li><code className="text-green-400">GET /api/v1/zenlm/insights</code></li>
+                          <li><code className="text-emerald-400">POST /api/v1/zenlm/analyze</code></li>
+                          <li><code className="text-emerald-400">POST /api/v1/zenlm/predict</code></li>
+                          <li><code className="text-emerald-400">GET /api/v1/zenlm/insights</code></li>
                         </ul>
                       </div>
                     </div>
@@ -240,18 +245,18 @@ export default function Docs() {
                   <div className="space-y-8">
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Governance APIs</h3>
-                      <p className="text-gray-300 mb-6">
+                      <p className="text-zinc-300 mb-6">
                         Integrate with Zoo Foundation's decentralized governance system for
                         transparent conservation funding decisions.
                       </p>
                     </div>
 
-                    <div className="border border-gray-700 rounded-lg p-6">
+                    <div className="border rounded-lg p-6">
                       <h4 className="text-xl font-bold mb-4">Create Proposal</h4>
-                      <div className="bg-gray-900 rounded p-4 mb-4">
-                        <code className="text-green-400">POST /api/v1/dao/proposals</code>
+                      <div className="bg-gray-900 rounded-md p-4 mb-4">
+                        <code className="text-emerald-400">POST /api/v1/dao/proposals</code>
                       </div>
-                      <pre className="bg-black p-4 rounded overflow-x-auto text-sm">
+                      <pre className="card p-4 overflow-x-auto text-sm font-mono">
 {`{
   "dao": "OceanDAO",
   "title": "Fund Coral Reef Restoration",
@@ -263,10 +268,10 @@ export default function Docs() {
                       </pre>
                     </div>
 
-                    <div className="border border-gray-700 rounded-lg p-6">
+                    <div className="border rounded-lg p-6">
                       <h4 className="text-xl font-bold mb-4">Vote on Proposal</h4>
-                      <div className="bg-gray-900 rounded p-4 mb-4">
-                        <code className="text-green-400">POST /api/v1/dao/proposals/{'id'}/vote</code>
+                      <div className="bg-gray-900 rounded-md p-4 mb-4">
+                        <code className="text-emerald-400">POST /api/v1/dao/proposals/{'id'}/vote</code>
                       </div>
                     </div>
                   </div>
@@ -282,32 +287,36 @@ export default function Docs() {
                       <div className="space-y-4">
                         <div className="bg-gray-900 rounded-lg p-6">
                           <h4 className="font-bold mb-2">ZOO Token</h4>
-                          <code className="text-green-400 text-sm">0x1234...abcd</code>
-                          <p className="text-gray-400 text-sm mt-2">Ethereum Mainnet</p>
+                          <code className="text-emerald-400 text-sm">0x1234...abcd</code>
+                          <p className="text-zinc-400 text-sm mt-2">Ethereum Mainnet</p>
                         </div>
                         <div className="bg-gray-900 rounded-lg p-6">
                           <h4 className="font-bold mb-2">Treasury Contract</h4>
-                          <code className="text-green-400 text-sm">0x5678...efgh</code>
-                          <p className="text-gray-400 text-sm mt-2">Ethereum Mainnet</p>
+                          <code className="text-emerald-400 text-sm">0x5678...efgh</code>
+                          <p className="text-zinc-400 text-sm mt-2">Ethereum Mainnet</p>
                         </div>
                         <div className="bg-gray-900 rounded-lg p-6">
                           <h4 className="font-bold mb-2">Governance Contract</h4>
-                          <code className="text-green-400 text-sm">0x9abc...ijkl</code>
-                          <p className="text-gray-400 text-sm mt-2">Ethereum Mainnet</p>
+                          <code className="text-emerald-400 text-sm">0x9abc...ijkl</code>
+                          <p className="text-zinc-400 text-sm mt-2">Ethereum Mainnet</p>
                         </div>
                       </div>
                     </div>
 
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Contract ABIs</h3>
-                      <p className="text-gray-300 mb-4">
+                      <p className="text-zinc-300 mb-4">
                         Download contract ABIs for integration:
                       </p>
                       <div className="flex flex-wrap gap-4">
-                        <a href="#" className="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700">
+                        <a
+                          href="#"
+                          className="btn btn-primary"
+                          style={{ ['--fill']: 'var(--green)' } as React.CSSProperties}
+                        >
                           Download ABIs
                         </a>
-                        <a href="https://github.com/zoo-labs/contracts" className="bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600">
+                        <a href="https://github.com/zooai/contracts" className="btn">
                           View on GitHub
                         </a>
                       </div>
@@ -321,12 +330,12 @@ export default function Docs() {
                   <h2 className="text-3xl font-bold mb-6">SDKs & Libraries</h2>
                   <div className="space-y-8">
                     <div className="grid md:grid-cols-2 gap-6">
-                      <div className="border border-gray-700 rounded-lg p-6">
+                      <div className="border rounded-lg p-6">
                         <h3 className="text-xl font-bold mb-4">JavaScript/TypeScript</h3>
-                        <div className="bg-gray-900 rounded p-4 mb-4">
-                          <code className="text-green-400">npm install @zoo-foundation/sdk</code>
+                        <div className="bg-gray-900 rounded-md p-4 mb-4">
+                          <code className="text-emerald-400">npm install @zoo-foundation/sdk</code>
                         </div>
-                        <pre className="bg-black p-4 rounded text-sm">
+                        <pre className="card p-4 overflow-x-auto text-sm font-mono">
 {`import { ZooClient } from '@zoo-foundation/sdk';
 
 const client = new ZooClient({
@@ -337,12 +346,12 @@ const species = await client.identify(image);`}
                         </pre>
                       </div>
 
-                      <div className="border border-gray-700 rounded-lg p-6">
+                      <div className="border rounded-lg p-6">
                         <h3 className="text-xl font-bold mb-4">Python</h3>
-                        <div className="bg-gray-900 rounded p-4 mb-4">
-                          <code className="text-green-400">pip install zoo-foundation</code>
+                        <div className="bg-gray-900 rounded-md p-4 mb-4">
+                          <code className="text-emerald-400">pip install zoo-foundation</code>
                         </div>
-                        <pre className="bg-black p-4 rounded text-sm">
+                        <pre className="card p-4 overflow-x-auto text-sm font-mono">
 {`from zoo_foundation import ZooClient
 
 client = ZooClient(api_key='YOUR_API_KEY')
@@ -352,19 +361,19 @@ print(species.common_name)`}
                         </pre>
                       </div>
 
-                      <div className="border border-gray-700 rounded-lg p-6">
+                      <div className="border rounded-lg p-6">
                         <h3 className="text-xl font-bold mb-4">Go</h3>
-                        <div className="bg-gray-900 rounded p-4 mb-4">
-                          <code className="text-green-400">go get github.com/zoo-foundation/go-sdk</code>
+                        <div className="bg-gray-900 rounded-md p-4 mb-4">
+                          <code className="text-emerald-400">go get github.com/zoo-foundation/go-sdk</code>
                         </div>
                       </div>
 
-                      <div className="border border-gray-700 rounded-lg p-6">
+                      <div className="border rounded-lg p-6">
                         <h3 className="text-xl font-bold mb-4">REST API</h3>
-                        <p className="text-gray-400">
+                        <p className="text-zinc-400">
                           Direct HTTP requests supported for any language
                         </p>
-                        <a href="#api-reference" className="text-green-500 hover:text-green-400 mt-4 inline-block">
+                        <a href="#api-reference" className="text-emerald-500 mt-4 inline-flex">
                           View API Reference →
                         </a>
                       </div>
@@ -379,7 +388,7 @@ print(species.common_name)`}
                   <div className="space-y-8">
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Wildlife Observation Format</h3>
-                      <pre className="bg-black p-4 rounded overflow-x-auto text-sm">
+                      <pre className="card p-4 overflow-x-auto text-sm font-mono">
 {`{
   "observation_id": "obs_123456",
   "timestamp": "2025-09-27T10:00:00Z",
@@ -423,7 +432,7 @@ print(species.common_name)`}
 
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Conservation Project Format</h3>
-                      <pre className="bg-black p-4 rounded overflow-x-auto text-sm">
+                      <pre className="card p-4 overflow-x-auto text-sm font-mono">
 {`{
   "project_id": "proj_789",
   "name": "Tiger Habitat Restoration",
@@ -449,7 +458,7 @@ print(species.common_name)`}
                   <div className="space-y-8">
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Available Events</h3>
-                      <ul className="space-y-3 text-gray-300">
+                      <ul className="space-y-3 text-zinc-300">
                         <li>
                           <strong>species.identified</strong> - New species identification completed
                         </li>
@@ -471,8 +480,8 @@ print(species.common_name)`}
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Webhook Configuration</h3>
                       <div className="bg-gray-900 rounded-lg p-6">
-                        <p className="text-gray-400 mb-4">Register a webhook endpoint:</p>
-                        <pre className="bg-black p-4 rounded overflow-x-auto text-sm">
+                        <p className="text-zinc-400 mb-4">Register a webhook endpoint:</p>
+                        <pre className="card p-4 overflow-x-auto text-sm font-mono">
 {`POST /api/v1/webhooks
 {
   "url": "https://your-app.com/webhook",
@@ -485,7 +494,7 @@ print(species.common_name)`}
 
                     <div>
                       <h3 className="text-2xl font-bold mb-4">Event Payload</h3>
-                      <pre className="bg-black p-4 rounded overflow-x-auto text-sm">
+                      <pre className="card p-4 overflow-x-auto text-sm font-mono">
 {`{
   "event": "species.identified",
   "timestamp": "2025-09-27T10:00:00Z",
@@ -509,26 +518,26 @@ print(species.common_name)`}
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-8">Quick Links</h2>
             <div className="grid md:grid-cols-4 gap-6">
-              <a href="https://github.com/zoo-labs" className="border border-gray-700 rounded-lg p-6 hover:bg-gray-800 transition-colors">
+              <a href="https://github.com/zooai" className="border rounded-lg p-6 transition-colors">
                 <h3 className="font-bold mb-2">GitHub</h3>
-                <p className="text-gray-400 text-sm">View our open source repositories</p>
+                <p className="text-zinc-400 text-sm">View our open source repositories</p>
               </a>
-              <a href="https://api.zoo.network/status" className="border border-gray-700 rounded-lg p-6 hover:bg-gray-800 transition-colors">
+              <a href="https://api.zoo.network/status" className="border rounded-lg p-6 transition-colors">
                 <h3 className="font-bold mb-2">API Status</h3>
-                <p className="text-gray-400 text-sm">Check service availability</p>
+                <p className="text-zinc-400 text-sm">Check service availability</p>
               </a>
-              <a href="https://api.zoo.network/keys" className="border border-gray-700 rounded-lg p-6 hover:bg-gray-800 transition-colors">
+              <a href="https://api.zoo.network/keys" className="border rounded-lg p-6 transition-colors">
                 <h3 className="font-bold mb-2">Get API Key</h3>
-                <p className="text-gray-400 text-sm">Request access to our APIs</p>
+                <p className="text-zinc-400 text-sm">Request access to our APIs</p>
               </a>
-              <a href="/support" className="border border-gray-700 rounded-lg p-6 hover:bg-gray-800 transition-colors">
+              <a href="/support" className="border rounded-lg p-6 transition-colors">
                 <h3 className="font-bold mb-2">Support</h3>
-                <p className="text-gray-400 text-sm">Get help from our team</p>
+                <p className="text-zinc-400 text-sm">Get help from our team</p>
               </a>
             </div>
           </div>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </Layout>

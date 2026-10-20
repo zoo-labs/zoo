@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import StartCollecting from '@/components/Collecting';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
-import Header from '@/pages/getinvolved/Header';
+import Header from '@/components/getinvolved/Header';
 import InvolvedContent from '@/components/InvolvedContent';
 import Comments from '@/components/Comment';
 import Donation from '@/components/Donation';
@@ -22,7 +22,7 @@ export default function HomePage() {
         <Comments />
         <InvolvedContent index={1} id="ground_activity" image='/images/involved2.png' title='On-Ground Activities' content1="The Zoo Labs Foundation plays a unequivocal role in animal preservation by conducting essential on-the-ground activities that foster research, conservation efforts, and the well-being of threatened species."  type='1' direction='2' />
         <InvolvedContent index={2} id="rescuing_animal" image='/images/involved3.png' title='Rescuing Animals' content1="One of the many ways to help save endangered species is by rescuing animals orphaned by poachers and working towards their successful reintegration into the wild."  type='1' direction='1' />
-        <div className='bg-black pt-52'><Donation /></div>
+        <div className='bg-background py-24'><Donation /></div>
         <InvolvedContent index={3} id="collecting_data" image='/images/involved4.png' title='Collecting Data' content1="At Zoo Labs Foundation, we're dedicated to understanding the lives of endangered animals by studying their behavior and population dynamics."  type='1' direction='2' />
         <InvolvedContent index={4} id="legal_avenues" image='/images/involved5.png' title='Legal Avenues' content1="By actively pursuing these legal avenues, Zoo Labs Foundation can help create a more robust legal framework for the protection of endangered species and their habitats.
 "  type='1' direction='1' />

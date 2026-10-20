@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from "next/dynamic";
-import CustomTooltip from '../CustomTooltip';
 const ModelViewer = dynamic(() => import("@/components/ModelViewer"), {
   ssr: false,
 });
@@ -15,8 +14,9 @@ const ReadMore = ({ className, children } : {className:string; children: any;}) 
     return (
       <p className={className}>
         {isReadMore ? text.slice(0, 1000) : text}
-        <span onClick={toggleReadMore} className="read-or-hide text-lg" dangerouslySetInnerHTML={{ __html: isReadMore ? " ... <u>Read More</u>" : " <u>Show Less</u>" }} />
-          
+        {/* Was a `span` with an onClick: no keyboard, no role, and `read-or-hide`
+            is a name the stylesheet does not answer. */}
+        <button type="button" onClick={toggleReadMore} className="text-lg cursor-pointer text-foreground" dangerouslySetInnerHTML={{ __html: isReadMore ? " ... <u>Read More</u>" : " <u>Show Less</u>" }} />
       </p>
     );
   };
@@ -466,225 +466,196 @@ const productsData = [
       link: "",
     },
   ];
+/**
+ * One species: the model, its numbers, and what the NFT is for.
+ *
+ * Every surface here was a literal — `bg-[#333]` panels, `text-[#7D7D7D]`
+ * labels, `bg-[#000000]` behind the model — and Tailwind has never been in this
+ * build, so none of them resolved: eight transparent tiles with carbon text on
+ * a near-white page, and two icons drawn in `fill="white"` that were invisible
+ * on it. The tiles are `.card` now and the labels read the ink ladder, which is
+ * the same pair every other card on this site is made of. The columns are a
+ * grid whose `minmax()` decides when there is room for two, so no breakpoint is
+ * named for a layout that only ever had one question to answer.
+ */
 function CoreHeader({index}: {
   index: number;
 }) {
     const [activeTab, setActiveTab] = useState("description");
     const animal = productsData[index];
-  return (
-    <div className="bg-black md:px-16 lg:px-16 xl:px-24 2xl:px-32 max-md:pt-20 pt-32 max-md:px-8">
-      <div
-        // className="gap-4 px-6  md:flex md:flex-col md:items-center lg:flex-row lg:max-w-7xl lg:mx-auto lg:justify-center"
-        className="w-full lg:flex lg:flex-row xl:gap-16 2xl:gap-32 lg:gap-8 md:space-y-16 lg:space-y-0"
-      >
-        <div className="w-full relative flex items-center justify-center lg:basis-2/5 border border-white rounded-xl p-1">
-            <div className="right-0 bg-[#333] p-4 md:border rounded-xl border-white absolute top-0  max-md:top-2 max-md:right-2 z-10">
-                <p className='text-md text-white'>{animal?.status}</p>
-              {/* {animal?.status && (
-                <CustomTooltip title={animal?.status}>
-                  <div
-                    className={`flex items-center w-12 h-12 z-30 sticky ${
-                      animal?.status[0] == "E"
-                        ? "bg-[#333333] intials-backdrop-e"
-                        : "bg-[#FF592C] intials-backdrop "
-                    } rounded-full  justify-center`}
-                  >
-                    <p className="text-3xl font-bold">{animal.status[0]}</p>
-                  </div>
-                </CustomTooltip>
-              )} */}
-            </div>
-          <div className="rounded lg:mb-0 h-full w-full bg-[#000000] overflow-hidden relative">
-            
-            <div className="w-full overflow-hidden rounded bg mx-auto">
-              <ModelViewer
-                className='w-full aspect-square'
-                usdz={animal.usdz}
-                zoom="50deg"
-                glb={animal.glb}
-              ></ModelViewer>
-            </div>
-            <div className="absolute bottom-0 flex text-white p-2 lg:p-4 w-full gap-4">
-              <button className="h-20 bg-[#333] rounded-xl w-full mr-2">Browse</button>
-              <button className="h-20 border rounded-xl w-full flex items-center justify-center mr-4">
-                <span className="mr-2">Sweep</span>
-                <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.97028 17.6623H11.03C11.3744 17.6623 11.6542 17.3892 11.6542 17.0526C11.6542 16.716 11.3744 16.4429 11.03 16.4429H7.16953L7.00012 1.53851C7.00012 1.17737 6.8698 0.5 6.50012 0.5C6.13017 0.5 6.00012 1.17722 6.00012 1.53851L5.83064 16.4426H1.97049C1.62609 16.4426 1.34595 16.7156 1.34595 17.0522C1.34595 17.3888 1.62588 17.6623 1.97028 17.6623Z" fill="white"/>
-<path d="M11.1189 18.207H1.88103L0.341309 23.5001H12.6589L11.1189 18.207Z" fill="white"/>
-</svg>
 
-              </button>
-              <button>
-                <Image
-                  src="/images/calculator.png"
-                  width={120}
-                  height={120}
-                  alt=""
-                />
-              </button>
-            </div>
+    /* Eight near-identical tiles, written out eight times, differing only in a
+       label and a value. */
+    const facts: [string, string][] = [
+      ["Maturity", animal.Maturity],
+      ["Generations", animal.Generations],
+      ["Status", animal.status],
+      ["Rewards", animal.Rewards],
+      ["Original Egg Price (OEP)", animal.Price],
+      ["Price to Mint", animal.Price_Mint],
+      ["Scientific Name", animal.scientificName],
+      ["Boosts Allowed", animal.Boosts],
+    ];
+
+    /* The egg and the three ages, as one list. */
+    const ages = ["BABY", "TEEN", "ADULT"];
+
+  return (
+    <div className="container" style={{ paddingBlock: 'var(--section-y-lg)' }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))',
+          gap: 'var(--space-12)',
+          alignItems: 'start',
+        }}
+      >
+        <div className="relative">
+          <span
+            className="badge badge-warm absolute z-10"
+            style={{ top: 'var(--space-3)', right: 'var(--space-3)', background: 'var(--surface-3)' }}
+          >
+            {animal?.status}
+          </span>
+
+          {/* The plate holds the square whether or not WebGL arrives. The panel
+              it replaces was `bg-[#000000]` with nothing sizing it. */}
+          <div className="plate" style={{ aspectRatio: '1 / 1', width: '100%' }}>
+            <ModelViewer
+              usdz={animal.usdz}
+              zoom="50deg"
+              glb={animal.glb}
+            ></ModelViewer>
+          </div>
+
+          {/* Was an `absolute bottom-0` bar of `h-20` buttons laid over the
+              model. `.action` is the site's control, and below the plate it
+              covers nothing. */}
+          <div className="mt-4 flex items-center gap-3">
+            <button className="action" style={{ flex: '1 1 0' }}>Browse</button>
+            <button className="action" style={{ flex: '1 1 0' }}>
+              <span>Sweep</span>
+              <svg width="13" height="24" viewBox="0 0 13 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <path d="M1.97028 17.6623H11.03C11.3744 17.6623 11.6542 17.3892 11.6542 17.0526C11.6542 16.716 11.3744 16.4429 11.03 16.4429H7.16953L7.00012 1.53851C7.00012 1.17737 6.8698 0.5 6.50012 0.5C6.13017 0.5 6.00012 1.17722 6.00012 1.53851L5.83064 16.4426H1.97049C1.62609 16.4426 1.34595 16.7156 1.34595 17.0522C1.34595 17.3888 1.62588 17.6623 1.97028 17.6623Z" fill="currentColor"/>
+                <path d="M11.1189 18.207H1.88103L0.341309 23.5001H12.6589L11.1189 18.207Z" fill="currentColor"/>
+              </svg>
+            </button>
+            <button className="action" aria-label="Rewards calculator">
+              <Image
+                src="/images/calculator.png"
+                width={20}
+                height={20}
+                alt=""
+              />
+            </button>
           </div>
         </div>
 
-        <div className="flex flex-col items-start gap-2 px-4 py-8 rounded bg-black lg:basis-3/5  md:border border-white rounded-xl"
-          key={animal.id}
-        >
-          <h2 className="mb-8 text-3xl max-md:text-4xl 2xl:text-7xl text-white font-bold text-left">
+        <div key={animal.id}>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             {animal.name}
           </h2>
 
-          <div className="w-full">
-            {/* <div
-              className="text-lg"
-              dangerouslySetInnerHTML={{ __html: animal?.description }}
-            /> */}
-            <p className="pb-4 text-[24px] text-white  border-white cursor-pointer mt-4">
-              Properties
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-2.5 md:gap-4 mb-2.5 md:mb-4">
-              <div className="bg-[#333] p-3.5 rounded-xl">
-                <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">Maturity</p>
-                <p className="text-lg font-bold text-white">
-                  {animal.Maturity}
-                </p>
-              </div>
-              <div className="bg-[#333] p-3.5 rounded-xl">
-                <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">Generations</p>
-                <p className="text-lg font-bold text-white">{animal.Generations}</p>
-              </div>
-              <div className="bg-[#333] p-3.5 rounded-xl">
-                <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">Status</p>
-                <p className="text-lg font-bold text-white">
-                  {animal.status}
-                </p>
-              </div>
-              <div className="bg-[#333] p-3.5 rounded-xl">
-                <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">Rewards</p>
-                <p className="text-lg font-bold text-white">{animal.Rewards}</p>
-              </div>
-              <div className="bg-[#333] p-3.5 rounded-xl">
-                <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">
-                  Original Egg Price{" "}
-                  <span className="text-white font-bold">(OEP)</span>
-                </p>
-                <p className="text-lg font-bold text-white">
-                  {animal.Price}
-                </p>
-              </div>
-              <div className="bg-[#333] p-3.5 rounded-xl">
-                <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">
-                  Price to Mint
-                </p>
-                <p className="text-lg font-bold text-white">
-                  {animal.Price_Mint}
-                </p>
-              </div>
-              <div className="bg-[#333] p-3.5 rounded-xl">
-                <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">
-                  Scientific Name
-                </p>
-                <p className="text-lg font-bold text-white">
-                  {animal.scientificName}
-                </p>
-              </div>
-              <div className="bg-[#333] p-3.5 rounded-xl">
-                <p className="text-2xl max-md:text-lg font-bold text-[#7D7D7D]">
-                  Boosts Allowed
-                </p>
-                <p className="text-lg font-bold text-white">
-                  {animal.Boosts}
-                </p>
-              </div>
-            </div>
-            <div className="mt-8 max-md:hidden">
-              <p className="text-[#7D7D7D] text-xl">Click to</p>
-            </div>
+          <p className="mt-6 mb-4 text-xl text-foreground">
+            Properties
+          </p>
 
-            <div className="flex max-md:hidden flex-col text-white  items-center md:flex-row justify-evenly mt-8">
-                <div
-                    className="p-px mb-4 items-center flex flex-col gap-4 overflow-hidden animals-backdrop"
-                  >
-                    <Image
-                        className='aspect-square'
-                        src="/images/egg.png"
-                        width={120}
-                        height={120}
-                        alt=""
-                    />
-                    <p className='text-md'>EGG</p>
-                  </div>
-              {animal.images.map((img, index) => {
-                return (
-                  <div
-                    className="p-px mb-4 items-center flex flex-col gap-4 overflow-hidden animals-backdrop"
-                    key={index}
-                  >
-                    <div className="overflow-hidden bg-black w-[120px] h-[120px]">
-                      <ModelViewer usdz={img.usdz} glb={img.glb}></ModelViewer>
-                    </div>
-                    <p className='text-md'>{index == 0 ? "BABY" : index == 1 ? "TEEN" : "ADULT"}</p>
-                  </div>
-                );
-              })}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {facts.map(([label, value]) => (
+              <div className="card p-4" key={label}>
+                <p className="text-sm font-medium text-muted">{label}</p>
+                <p className="mt-1 text-base font-semibold text-foreground">{value}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-8 text-xl text-muted">Click to</p>
+
+          {/* Four small tiles. `max-md:hidden` hid this from a phone in the
+              author's intent and from nobody in fact; it wraps instead, which
+              is what the switcher on the species header already does. */}
+          <div
+            className="mt-4"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(7rem, 1fr))',
+              gap: 'var(--space-4)',
+            }}
+          >
+            <div>
+              <div className="plate" style={{ aspectRatio: '1 / 1', width: '100%' }}>
+                <Image
+                    src="/images/egg.png"
+                    width={120}
+                    height={120}
+                    alt=""
+                />
+              </div>
+              <p className="mt-2 text-base text-center text-foreground">EGG</p>
             </div>
+            {animal.images.map((img, index) => (
+              <div key={index}>
+                <div className="plate" style={{ aspectRatio: '1 / 1', width: '100%' }}>
+                  <ModelViewer usdz={img.usdz} glb={img.glb}></ModelViewer>
+                </div>
+                <p className="mt-2 text-base text-center text-foreground">{ages[index]}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-      <div className="mt-16">
-        <div className="flex  md:text-[20px] max-md:text-lg leading-[24px] gap-8">
+
+      <div className="mt-12">
+        <div className="flex gap-8 text-lg md:text-xl">
           <button
             onClick={() => setActiveTab("description")}
-            className="font-[800] border-b-[2px] border-white text-white"
+            className="font-bold border-b text-foreground"
           >
             Description
           </button>
-          <button
-            // onClick={() => setActiveTab("description")}
-            className="text-white"
-          >
-            Metadata <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8.1292 0.200322V1.41029H2.63203C2.25257 1.41029 1.94491 1.68116 1.94491 2.01527V10.4852C1.94491 10.8193 2.25257 11.0902 2.63203 11.0902H12.2519C12.6315 11.0902 12.9391 10.8193 12.9391 10.4852V5.64516H14.3134V10.4852C14.3134 11.4875 13.3904 12.3002 12.2519 12.3002H2.63202C1.49354 12.3002 0.570557 11.4876 0.570557 10.4852V2.01527C0.570557 1.01289 1.49345 0.200242 2.63202 0.200242L8.1292 0.200322ZM13.6264 0.200322L13.6396 0.200447C13.6557 0.200697 13.6717 0.201448 13.6877 0.202699L13.6264 0.200322C13.6611 0.200322 13.6953 0.202573 13.7287 0.207014C13.7404 0.208578 13.7524 0.210454 13.7642 0.21258C13.7794 0.215207 13.7943 0.218397 13.809 0.221962C13.8197 0.224589 13.8303 0.227403 13.8408 0.230405C13.8543 0.234283 13.868 0.238599 13.8813 0.243352C13.8935 0.247605 13.9054 0.25217 13.9172 0.256986C13.9314 0.262865 13.9454 0.269182 13.9591 0.275875C13.9674 0.279877 13.9759 0.284193 13.9842 0.288634C14.0017 0.29814 14.0188 0.308335 14.0353 0.319092C14.0622 0.336605 14.0879 0.356117 14.1122 0.377507L14.0502 0.329036C14.0935 0.358995 14.1327 0.393455 14.1667 0.431607C14.1707 0.435922 14.1747 0.44055 14.1786 0.445179C14.1908 0.459814 14.2024 0.474825 14.2131 0.490335C14.2182 0.49759 14.2231 0.50497 14.2278 0.512475C14.2353 0.524421 14.2425 0.536742 14.2491 0.549314C14.2546 0.559634 14.2597 0.570079 14.2645 0.580648C14.2699 0.592594 14.2749 0.604602 14.2795 0.616735C14.2827 0.625741 14.2859 0.63506 14.2888 0.64438C14.293 0.657452 14.2966 0.670523 14.2996 0.683844C14.302 0.694352 14.3041 0.704921 14.3059 0.715492C14.308 0.727563 14.3097 0.740072 14.3109 0.752643C14.312 0.764026 14.3127 0.774908 14.3131 0.785791C14.3133 0.791858 14.3135 0.798612 14.3135 0.805305V3.83029H12.9392V2.26576L7.92798 6.67796C7.68028 6.89605 7.2905 6.91287 7.021 6.72831L6.95622 6.67796C6.68792 6.44173 6.68792 6.05865 6.95622 5.82235L11.9662 1.41016H10.1907V0.200195L13.6264 0.200322Z" fill="white"/>
-</svg>
-
+          <button className="text-secondary">
+            Metadata <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <path d="M8.1292 0.200322V1.41029H2.63203C2.25257 1.41029 1.94491 1.68116 1.94491 2.01527V10.4852C1.94491 10.8193 2.25257 11.0902 2.63203 11.0902H12.2519C12.6315 11.0902 12.9391 10.8193 12.9391 10.4852V5.64516H14.3134V10.4852C14.3134 11.4875 13.3904 12.3002 12.2519 12.3002H2.63202C1.49354 12.3002 0.570557 11.4876 0.570557 10.4852V2.01527C0.570557 1.01289 1.49345 0.200242 2.63202 0.200242L8.1292 0.200322ZM13.6264 0.200322L13.6396 0.200447C13.6557 0.200697 13.6717 0.201448 13.6877 0.202699L13.6264 0.200322C13.6611 0.200322 13.6953 0.202573 13.7287 0.207014C13.7404 0.208578 13.7524 0.210454 13.7642 0.21258C13.7794 0.215207 13.7943 0.218397 13.809 0.221962C13.8197 0.224589 13.8303 0.227403 13.8408 0.230405C13.8543 0.234283 13.868 0.238599 13.8813 0.243352C13.8935 0.247605 13.9054 0.25217 13.9172 0.256986C13.9314 0.262865 13.9454 0.269182 13.9591 0.275875C13.9674 0.279877 13.9759 0.284193 13.9842 0.288634C14.0017 0.29814 14.0188 0.308335 14.0353 0.319092C14.0622 0.336605 14.0879 0.356117 14.1122 0.377507L14.0502 0.329036C14.0935 0.358995 14.1327 0.393455 14.1667 0.431607C14.1707 0.435922 14.1747 0.44055 14.1786 0.445179C14.1908 0.459814 14.2024 0.474825 14.2131 0.490335C14.2182 0.49759 14.2231 0.50497 14.2278 0.512475C14.2353 0.524421 14.2425 0.536742 14.2491 0.549314C14.2546 0.559634 14.2597 0.570079 14.2645 0.580648C14.2699 0.592594 14.2749 0.604602 14.2795 0.616735C14.2827 0.625741 14.2859 0.63506 14.2888 0.64438C14.293 0.657452 14.2966 0.670523 14.2996 0.683844C14.302 0.694352 14.3041 0.704921 14.3059 0.715492C14.308 0.727563 14.3097 0.740072 14.3109 0.752643C14.312 0.764026 14.3127 0.774908 14.3131 0.785791C14.3133 0.791858 14.3135 0.798612 14.3135 0.805305V3.83029H12.9392V2.26576L7.92798 6.67796C7.68028 6.89605 7.2905 6.91287 7.021 6.72831L6.95622 6.67796C6.68792 6.44173 6.68792 6.05865 6.95622 5.82235L11.9662 1.41016H10.1907V0.200195L13.6264 0.200322Z" fill="currentColor"/>
+            </svg>
           </button>
-          <button
-            // onClick={() => setActiveTab("description")}
-            className="text-white"
-          >
-            Rewards <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8.1292 0.200322V1.41029H2.63203C2.25257 1.41029 1.94491 1.68116 1.94491 2.01527V10.4852C1.94491 10.8193 2.25257 11.0902 2.63203 11.0902H12.2519C12.6315 11.0902 12.9391 10.8193 12.9391 10.4852V5.64516H14.3134V10.4852C14.3134 11.4875 13.3904 12.3002 12.2519 12.3002H2.63202C1.49354 12.3002 0.570557 11.4876 0.570557 10.4852V2.01527C0.570557 1.01289 1.49345 0.200242 2.63202 0.200242L8.1292 0.200322ZM13.6264 0.200322L13.6396 0.200447C13.6557 0.200697 13.6717 0.201448 13.6877 0.202699L13.6264 0.200322C13.6611 0.200322 13.6953 0.202573 13.7287 0.207014C13.7404 0.208578 13.7524 0.210454 13.7642 0.21258C13.7794 0.215207 13.7943 0.218397 13.809 0.221962C13.8197 0.224589 13.8303 0.227403 13.8408 0.230405C13.8543 0.234283 13.868 0.238599 13.8813 0.243352C13.8935 0.247605 13.9054 0.25217 13.9172 0.256986C13.9314 0.262865 13.9454 0.269182 13.9591 0.275875C13.9674 0.279877 13.9759 0.284193 13.9842 0.288634C14.0017 0.29814 14.0188 0.308335 14.0353 0.319092C14.0622 0.336605 14.0879 0.356117 14.1122 0.377507L14.0502 0.329036C14.0935 0.358995 14.1327 0.393455 14.1667 0.431607C14.1707 0.435922 14.1747 0.44055 14.1786 0.445179C14.1908 0.459814 14.2024 0.474825 14.2131 0.490335C14.2182 0.49759 14.2231 0.50497 14.2278 0.512475C14.2353 0.524421 14.2425 0.536742 14.2491 0.549314C14.2546 0.559634 14.2597 0.570079 14.2645 0.580648C14.2699 0.592594 14.2749 0.604602 14.2795 0.616735C14.2827 0.625741 14.2859 0.63506 14.2888 0.64438C14.293 0.657452 14.2966 0.670523 14.2996 0.683844C14.302 0.694352 14.3041 0.704921 14.3059 0.715492C14.308 0.727563 14.3097 0.740072 14.3109 0.752643C14.312 0.764026 14.3127 0.774908 14.3131 0.785791C14.3133 0.791858 14.3135 0.798612 14.3135 0.805305V3.83029H12.9392V2.26576L7.92798 6.67796C7.68028 6.89605 7.2905 6.91287 7.021 6.72831L6.95622 6.67796C6.68792 6.44173 6.68792 6.05865 6.95622 5.82235L11.9662 1.41016H10.1907V0.200195L13.6264 0.200322Z" fill="white"/>
-</svg>
-
+          <button className="text-secondary">
+            Rewards <svg width="15" height="13" viewBox="0 0 15 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <path d="M8.1292 0.200322V1.41029H2.63203C2.25257 1.41029 1.94491 1.68116 1.94491 2.01527V10.4852C1.94491 10.8193 2.25257 11.0902 2.63203 11.0902H12.2519C12.6315 11.0902 12.9391 10.8193 12.9391 10.4852V5.64516H14.3134V10.4852C14.3134 11.4875 13.3904 12.3002 12.2519 12.3002H2.63202C1.49354 12.3002 0.570557 11.4876 0.570557 10.4852V2.01527C0.570557 1.01289 1.49345 0.200242 2.63202 0.200242L8.1292 0.200322ZM13.6264 0.200322L13.6396 0.200447C13.6557 0.200697 13.6717 0.201448 13.6877 0.202699L13.6264 0.200322C13.6611 0.200322 13.6953 0.202573 13.7287 0.207014C13.7404 0.208578 13.7524 0.210454 13.7642 0.21258C13.7794 0.215207 13.7943 0.218397 13.809 0.221962C13.8197 0.224589 13.8303 0.227403 13.8408 0.230405C13.8543 0.234283 13.868 0.238599 13.8813 0.243352C13.8935 0.247605 13.9054 0.25217 13.9172 0.256986C13.9314 0.262865 13.9454 0.269182 13.9591 0.275875C13.9674 0.279877 13.9759 0.284193 13.9842 0.288634C14.0017 0.29814 14.0188 0.308335 14.0353 0.319092C14.0622 0.336605 14.0879 0.356117 14.1122 0.377507L14.0502 0.329036C14.0935 0.358995 14.1327 0.393455 14.1667 0.431607C14.1707 0.435922 14.1747 0.44055 14.1786 0.445179C14.1908 0.459814 14.2024 0.474825 14.2131 0.490335C14.2182 0.49759 14.2231 0.50497 14.2278 0.512475C14.2353 0.524421 14.2425 0.536742 14.2491 0.549314C14.2546 0.559634 14.2597 0.570079 14.2645 0.580648C14.2699 0.592594 14.2749 0.604602 14.2795 0.616735C14.2827 0.625741 14.2859 0.63506 14.2888 0.64438C14.293 0.657452 14.2966 0.670523 14.2996 0.683844C14.302 0.694352 14.3041 0.704921 14.3059 0.715492C14.308 0.727563 14.3097 0.740072 14.3109 0.752643C14.312 0.764026 14.3127 0.774908 14.3131 0.785791C14.3133 0.791858 14.3135 0.798612 14.3135 0.805305V3.83029H12.9392V2.26576L7.92798 6.67796C7.68028 6.89605 7.2905 6.91287 7.021 6.72831L6.95622 6.67796C6.68792 6.44173 6.68792 6.05865 6.95622 5.82235L11.9662 1.41016H10.1907V0.200195L13.6264 0.200322Z" fill="currentColor"/>
+            </svg>
           </button>
         </div>
         <ReadMore
-          className="text-md mt-12 text-white"
-          
+          className="mt-12 text-base text-foreground"
         >{animal?.description}</ReadMore>
       </div>
-      <div className="pt-32 text-white w-full">
-        <h1 className="text-3xl md:text-[44px] leading-[3rem] lg:leading-4 font-bold text-center">
+
+      <div className="text-foreground" style={{ paddingTop: 'var(--section-y-lg)' }}>
+        <h1 className="text-3xl md:text-4xl font-bold text-center">
           What can you do with your NFT?
         </h1>
-        <p className="text-sm sm:text-base mt-4 mb-24 sm:mt-12 sm:mb-16 text-center">
+        <p className="text-base mt-4 mb-12 text-center text-secondary">
           The Zoo NFTs have value and unique{" "}
-          <a className="italic">utility!</a>
+          <em style={{ textDecoration: 'underline' }}>utility!</em>
         </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid-cards">
           {utilities.map((data, index) => (
             <div
-              className="border bg-black px-2 py-4 rounded-xl font-[600] xl:text-[36px] lg:text-[28px] text-[32px] flex items-center justify-between"
+              className="card p-4 flex items-center justify-between gap-4 text-2xl font-semibold"
               key={index}
             >
               <p>{data?.title}</p>
-              <Link href={data?.link} passHref={true} legacyBehavior>
-                <Image
-                  src="/icons/forward-arrow.svg"
-                  width={32}
-                  height={32}
-                  alt=""
-                />
-              </Link>
+              {/* forward-arrow.svg is stroked in white, so on a white card it was
+                  a 32px hole. The disc is what this site puts a white mark on. */}
+              <span className="disc" style={{ ['--hue' as string]: 'var(--carbon)' }}>
+                <Link href={data?.link} passHref={true} legacyBehavior>
+                  <Image
+                    src="/icons/forward-arrow.svg"
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
+                </Link>
+              </span>
             </div>
           ))}
         </div>

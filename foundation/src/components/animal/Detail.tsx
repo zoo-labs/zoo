@@ -1,61 +1,77 @@
-import Image from 'next/image';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
 /**
- * The featured species.
+ * One species, held up.
  *
- * One tree, not two. This was a `max-md:hidden` desktop block beside a
- * `max-md:block` phone block, each stating the same copy and each mounting a
- * <ModelViewer> against `/models/Wolf/WOLF-ADULT.glb`, which does not exist —
- * so both showed an empty square. The still render does exist.
+ * This was two copies of itself — a desktop block marked `max-md:hidden` and a
+ * phone block marked `hidden max-md:block`. Neither variant exists in the
+ * stylesheet, so the browser read `hidden` on the phone copy at every width and
+ * nothing at all on the desktop copy: one block was permanently invisible and
+ * the other was permanently on, phone included. One block, one grid, and it
+ * folds by itself.
+ *
+ * It is a photograph, not a model. The model had no width the stylesheet
+ * recognized, so it collapsed to a viewer's intrinsic default and sat as a
+ * small animal against the left edge of the page — and a WebGL canvas is a
+ * strange thing to make an editorial block wait on. The twins are on the
+ * species pages, where turning one around is the point.
  */
-function Detail() {
-  return (
-    <section style={{ paddingBlock: 'clamp(4rem, 8vw, 6rem)' }}>
-      <div className='mx-auto' style={{ maxWidth: 1280, paddingInline: 'var(--page-gutter)' }}>
-        <div className='card grid items-center gap-8 p-6 md:grid-cols-2 md:gap-12 md:p-10'>
-          <div
-            className='relative w-full overflow-hidden'
-            style={{
-              aspectRatio: '1 / 1',
-              borderRadius: 'var(--radius-lg)',
-              background: 'var(--plate)',
-            }}
-          >
-            <Image
-              src='/images/red_wolf.png'
-              alt='A red wolf, of which fewer than 25 remain in the wild'
-              fill
-              sizes='(min-width: 768px) 45vw, 90vw'
-              className='object-contain'
-            />
-          </div>
+export default function Detail() {
+  const [there, setThere] = useState(true);
 
-          <div className='flex flex-col items-start'>
-            <p className='pill' style={{ color: 'var(--foreground)' }}>
-              Critically endangered
-            </p>
-            <h2 className='title mt-4'>The red wolf</h2>
-            <p className='lede mt-4'>
-              Fewer than 25 red wolves remain in the wild. We deploy GPS collaring,
-              bioacoustic sensors and genetic tracking to support their recovery.
-            </p>
-            <div className='mt-8 flex flex-wrap items-center gap-3'>
-              <Link href='/animals/red_wolf' className='action' data-fill=''>
-                About the red wolf
-              </Link>
-              <Link href='/donation' className='action'>
-                Support the sanctuary
-              </Link>
-              <Link href='/getinvolved' className='more ml-1'>
-                Volunteer <span aria-hidden>→</span>
-              </Link>
-            </div>
+  return (
+    <section className='container' style={{ paddingBlock: 'var(--section-y-lg)' }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: 'var(--space-12)',
+          alignItems: 'center',
+        }}
+      >
+        <div className='plate' style={{ aspectRatio: '1 / 1', width: '100%' }}>
+          {there && (
+            <img
+              src='/images/red_wolf.png'
+              alt='A red wolf, photographed at night'
+              width={800}
+              height={800}
+              decoding='async'
+              onError={() => setThere(false)}
+            />
+          )}
+        </div>
+
+        <div>
+          <span className='pill eyebrow'>Endangered species we support</span>
+          <h2 className='mt-5 text-3xl md:text-4xl font-bold'>The red wolf</h2>
+          {/* The only claim here is the range, which is the one the globe on
+              this page already marks. A population figure would be a number
+              this site cannot point at. */}
+          <p className='mt-4 text-secondary' style={{ maxWidth: '44ch' }}>
+            The last wild red wolves live on the Albemarle Peninsula in North Carolina. Be an
+            indispensable part of the work to keep them there.
+          </p>
+
+          <div className='mt-8 flex flex-wrap gap-3'>
+            <Link
+              href='/animals/red_wolf'
+              className='action'
+              data-fill
+              style={{ ['--fill']: 'var(--blue)' } as React.CSSProperties}
+            >
+              Read about the red wolf
+            </Link>
+            <Link href='/getinvolved#volunteer' className='action'>
+              Volunteer
+            </Link>
+            <Link href='/donation' className='action'>
+              Donate
+            </Link>
           </div>
         </div>
       </div>
     </section>
   );
 }
-
-export default Detail;

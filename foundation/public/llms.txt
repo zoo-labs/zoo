@@ -1,0 +1,35 @@
+# Zoo Labs Foundation
+
+> Open AI research network for decentralized AI (DeAI) and decentralized science (DeSci).
+
+## About
+Zoo Labs Foundation (zoo.ngo) is an open AI research network advancing decentralized AI (DeAI) and decentralized science (DeSci). The foundation coordinates community-driven research, funds grants, publishes open-source AI tools, and governs its ecosystem through ZIPs (Zoo Improvement Proposals). Zoo operates at the intersection of frontier AI research and decentralized governance.
+
+## Key Features
+- Open AI research network with community governance
+- ZIPs (Zoo Improvement Proposals) at zips.zoo.ngo
+- Decentralized AI (DeAI) experiments and infrastructure
+- Decentralized Science (DeSci) research initiatives
+- Research grants and funding programs
+- Open-source AI model releases
+- Community-driven governance and voting
+- Research paper publication and peer review
+- Collaboration with academic and industry partners
+- Bleeding-edge AI/science experimentation
+
+## Ecosystem
+- [Zoo Labs Foundation](https://zoo.ngo) - Main foundation site
+- [ZIPs](https://zips.zoo.ngo) - Improvement proposals and governance
+- [Zoo Lab](https://zoo.lab) - Research laboratory
+- [Zoo Vote](https://zoo.vote) - Governance voting
+
+## Links
+- [Website](https://zoo.ngo)
+- [ZIPs](https://zips.zoo.ngo)
+- [GitHub](https://github.com/zoo-labs)
+- [Research](https://zoo.ngo/research)
+
+## Contact
+- General: hello@zoo.ngo
+- Research: research@zoo.ngo
+- Grants: grants@zoo.ngo

@@ -6,18 +6,14 @@ const WrapGlobe = dynamic(
     // Fallback component if Globe fails to load
     return {
       default: () => (
-        <div className="py-8 text-center">
-          <div className="text-gray-500 text-sm">Interactive globe loading...</div>
-        </div>
+        <div className="py-16 text-center text-muted">Interactive globe loading...</div>
       )
     };
   }),
   {
     ssr: false,
     loading: () => (
-      <div className="py-8 text-center">
-        <div className="text-gray-500 text-sm animate-pulse">Loading interactive globe...</div>
-      </div>
+      <div className="py-16 text-center text-muted">Loading interactive globe...</div>
     )
   }
 );

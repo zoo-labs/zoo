@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 // Image isn't used in this component
 // import Image from "next/image";
 import "@google/model-viewer/dist/model-viewer";
+import { cn } from "@/lib/clsxm";
 // Head isn't used in this component
 // import Head from "next/head";
 const ModelViewer = ({
@@ -54,7 +55,7 @@ const ModelViewer = ({
   return (
     <>
       <div
-        className={`w-full h-full ${className}`}
+        className={cn("w-full h-full", className)}
         dangerouslySetInnerHTML={{ __html: ModelVie }}
         onClick={onClick}
       ></div>

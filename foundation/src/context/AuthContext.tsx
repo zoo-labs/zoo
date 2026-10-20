@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = () => {
-    // Redirect to Casdoor login page
+    // Redirect to IAM login (handled server-side via /api/auth/signin)
     window.location.href = '/api/auth/signin';
   };
 

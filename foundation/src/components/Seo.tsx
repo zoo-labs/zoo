@@ -1,28 +1,21 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-/**
- * Where this page is actually being served from.
- *
- * In a browser the live location is the truth — a preview build, a branch host
- * or localhost then describes itself rather than claiming to be production. Only
- * the static render, which has no location to read, falls back to the one
- * declared origin (site-origin.js, projected by next.config.js).
- */
-function origin(): string {
-  if (typeof window !== 'undefined') return window.location.origin;
-  return (process.env.NEXT_PUBLIC_SITE_ORIGIN || '').replace(/\/$/, '');
-}
-
+// !STARTERCONF Change these default meta
 const defaultMeta = {
   title: 'Zoo Foundation',
   siteName: 'Zoo Foundation',
   description:
     "Zoo Labs Foundation's mission is to protect our planet's precious wildlife biodiversity through research, education, and collaboration with aligned charities.",
+  /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
+  url: 'https://zoo.ngo',
   type: 'website',
   robots: 'follow, index',
-  /** The card every share renders. 1200x630, served from whatever origin serves the page. */
-  image: '/images/og-image.png',
+  /**
+   * No need to be filled, will be populated with openGraph function
+   * If you wish to use a normal image, just specify the path below
+   */
+  image: 'https://zoo.ngo/images/og-image.png',
 };
 
 type SeoProps = {
@@ -40,30 +33,36 @@ export default function Seo(props: SeoProps) {
     ? `${props.templateTitle} | ${meta.siteName}`
     : meta.title;
 
-  // asPath always begins with '/', so the origin must not end with one.
-  const here = `${origin()}${router.asPath}`;
-  const card = meta.image.startsWith('http')
-    ? meta.image
-    : `${origin()}${meta.image}`;
+  // Use siteName if there is templateTitle
+  // but show full title if there is none
+  // !STARTERCONF Follow config for opengraph, by deploying one on https://github.com/theodorusclarence/og
+  // ? Uncomment code below if you want to use default open graph
+  // meta['image'] = openGraph({
+  //   description: meta.description,
+  //   siteName: props.templateTitle ? meta.siteName : meta.title,
+  //   templateTitle: props.templateTitle,
+  // });
 
   return (
     <Head>
       <title>{meta.title}</title>
       <meta name='robots' content={meta.robots} />
       <meta content={meta.description} name='description' />
-      <meta property='og:url' content={here} />
-      <link rel='canonical' href={here} />
+      <meta property='og:url' content={`${meta.url}${router.asPath}`} />
+      <link rel='canonical' href={`${meta.url}${router.asPath}`} />
       {/* Open Graph */}
       <meta property='og:type' content={meta.type} />
       <meta property='og:site_name' content={meta.siteName} />
       <meta property='og:description' content={meta.description} />
       <meta property='og:title' content={meta.title} />
-      <meta name='image' property='og:image' content={card} />
+      {/* <meta name='image' property='og:image' content={meta.image} /> */}
       {/* Twitter */}
       <meta name='twitter:card' content='summary_large_image' />
+      {/* // !STARTERCONF Remove or change to your handle */}
+      {/* <meta name='twitter:site' content='@th_clarence' /> */}
       <meta name='twitter:title' content={meta.title} />
       <meta name='twitter:description' content={meta.description} />
-      <meta name='twitter:image' content={card} />
+      {/* <meta name='twitter:image' content={meta.image} /> */}
       {meta.date && (
         <>
           <meta property='article:published_time' content={meta.date} />
@@ -72,10 +71,11 @@ export default function Seo(props: SeoProps) {
             property='og:publish_date'
             content={meta.date}
           />
+          {/* // !STARTERCONF Remove or change to your name */}
           <meta
             name='author'
             property='article:author'
-            content={meta.siteName}
+            content='Zoo Labs Foundation'
           />
         </>
       )}
@@ -91,6 +91,8 @@ export default function Seo(props: SeoProps) {
   );
 }
 
+// !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
+// ! then replace the whole /public/favicon folder and favicon.ico
 const favicons: Array<React.ComponentPropsWithoutRef<'link'>> = [
   { rel: 'shortcut icon', href: '/favicon/logo.png' },
 ];

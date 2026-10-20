@@ -1,167 +1,107 @@
-# zoo.ngo — Zoo Labs Foundation site
+# zoo.ngo — AI Assistant Context
 
-Next.js **pages router**, **Tailwind v3**, static export. Deployed by
-`.github/workflows/deploy-ngo.yml` (at the MONOREPO root, one level up): it
-builds `./foundation` and syncs `foundation/out/` to `s3://hanzo-sites/zoo/ngo/`,
-which the Hanzo ingress `staticFiles` middleware serves. Not GitHub Pages — the
-root `CNAME` and the `_github-pages-challenge` file are leftovers.
+Zoo Labs Foundation Next.js website (community login, ZIPs voting, comments).
 
-## Stack, actually
+## Auth — Hanzo IAM
 
-- `next ^15.1` (`output: 'export'`, `trailingSlash: true`, `images.unoptimized`)
-- `tailwindcss ^3.4` with the classic `tailwindcss` PostCSS plugin
-- `@hanzo/font` — the Zen type family
-- `@hanzo/event` — analytics; the ingest key is resolved from the HOST, never
-  stated here, so zoo.ngo attributes to Zoo without this repo naming a key
+Engine: `ghcr.io/hanzoai/iam` (white-label). Consumer config in `src/config/iam.ts`.
 
-An earlier version of this file described a Tailwind **v4** migration
-(`@tailwindcss/postcss`, `@import "tailwindcss"`, `@utility`). That migration was
-reverted; none of it is true. Check `postcss.config.js` before believing a claim
-about the CSS pipeline.
+App slug follows the canonical convention `<org>-<app>` — for zoo.ngo that is
+**`zoo-ngo`** in the **`zoo`** org. The OAuth authorize endpoint is the
+canonical `/v1/iam/oauth/authorize` (never `/login/oauth/authorize`).
 
-## Design system — Hanzo's, inverted to light
+Env vars (NEXT_PUBLIC_ prefix is needed for client-side reads in Next.js;
+the `CASDOOR_` brand has been retired engine-side):
 
-zoo.ngo renders on the same token set as hanzo.ai, taking `@hanzo/design`'s
-already-derived `.light` values. `src/styles/globals.css` declares them at
-`:root`; `tailwind.config.ts` maps its semantic colors to `var(--token)` (NOT
-`hsl(var(--token))` — the tokens are full color values, and borders are alpha so
-one value composites on both the page and a lifted card).
+| Var | Default |
+|---|---|
+| `NEXT_PUBLIC_IAM_URL` | `https://iam.hanzo.ai` |
+| `NEXT_PUBLIC_IAM_CLIENT_ID` | _(per-env, set in deployment)_ |
+| `NEXT_PUBLIC_IAM_APP_NAME` | `zoo-ngo` |
+| `NEXT_PUBLIC_IAM_ORG` | `zoo` |
+| `NEXT_PUBLIC_IAM_REDIRECT_PATH` | `/api/auth/callback` |
 
-Three light values are deliberately **pushed, not mirrored**, because black on
-white reads fainter than white on black at equal alpha: `--border-focus`
-.22→.32, `--border-selected` .30→.42, chrome ink .45→.56.
+Reference: `~/work/hanzo/iam/docs/CONVENTION.md`.
 
-**Role classes** carry the shared shapes, the way hanzo.ai's do — `.display`,
-`.title`, `.lede`, `.eyebrow`, `.action` (+ `[data-fill]`), `.pill`, `.more`,
-`.card`. They are declared **unlayered**, so they beat Tailwind's `@layer
-utilities`; do not try to override a role's font-size with a utility, it will
-lose. Layout still comes from Tailwind.
+## Published counts — `src/config/corpus.tsx`
 
-Zoo's one departure from Hanzo's strict monochrome: `--brand` is emerald, spent
-only on the primary action and the live/active state. A wildlife foundation that
-spends no colour at all reads as Hanzo rather than as itself.
+Papers, proposals and models are counted from the things themselves, twice:
+`scripts/counts.mjs` counts once per build and writes `src/config/counts.json`,
+which every page is compiled with; and the page counts again after it mounts, so
+a page served from cache still shows today's numbers.
 
-### House rules
+The counting happens in a build script, not in a page's `getStaticProps`,
+because this build runs nine worker processes and then exports every page a
+second time — a module-level memo holds for none of it, and a per-page fetch
+spent the whole 60-an-hour GitHub allowance on one build. From the script the
+whole build asks three times, once per source, which is measurable: run it under
+`NODE_OPTIONS="--import <a file that wraps globalThis.fetch>"` and count.
 
-- **No ALL CAPS, no underlines.** `a { color: inherit; text-decoration: none }`
-  globally; underline appears only inside running prose, on hover. There is no
-  `uppercase` and no `text-decoration: underline` in the export — keep it that
-  way.
-- **One typeface.** Zen, from `@hanzo/font`. The token names the ROLE
-  (`font-sans` → `var(--font-zen-sans)`); nothing spells a family.
-- **No emoji in chrome.** Header, footer and buttons carry none.
+The rules still live in `corpus.tsx` (the browser runs the same ones); the
+script only decides when, and imports them through esbuild so there is no second
+copy. It is the first link of `dev`, `build` and `typecheck`, like
+`scripts/gui-css.mjs`, and `counts.json` is gitignored for the same reason
+`gui.css` is.
 
-## Type
+| Count | Source | Rule |
+|---|---|---|
+| `papers` | `api.github.com/repos/zoo-apps/papers/git/trees/main?recursive=1` | directories holding `<name>/<name>.tex` — the repo's own convention, so no list of directories to ignore |
+| `proposals` | `api.github.com/repos/zoo-apps/ZIPs/git/trees/main:ZIPs` | files matching `zip-<number>-*.md` |
+| `models` | `huggingface.co/api/models?author=zenlm` | one per model repository |
+| `proofs` | none public | typed by hand in `scripts/counts.mjs`; must agree with proofs.zoo.ngo |
 
-Zen is bound **once**, in `src/pages/_app.tsx`:
+Rules that hold the whole thing up:
 
-```tsx
-import { Zen } from '@hanzo/font/sans'
-import { ZenMono } from '@hanzo/font/mono'
-// …
-<div className={`${Zen.variable} ${ZenMono.variable} font-sans`}>
-```
+- A page reads `useCorpus()` and never learns where a number comes from. There
+  is no per-page plumbing to forget: every page is compiled with the counts.
+- A source that will not answer keeps the count the build wrote. A count is
+  never zero, a dash or a spinner — `keep()` refuses anything that is not a
+  positive integer, and a truncated GitHub tree counts as no answer rather than
+  as a short count.
+- `CORPUS` is what the build counted. The menu labels in `registry.ts` — a plain
+  array, read once at module load — are the one surface that shows it rather
+  than the count as refreshed after mount.
+- The floor lives in `scripts/counts.mjs` and is only reached on a first run
+  that cannot reach the network. Every later run starts from the file it wrote.
+- Unauthenticated GitHub allows 60 requests/hour/IP and a page load spends two,
+  so a shared address will be refused and quietly keep the compiled numbers —
+  which is also true of a CI builder behind a shared address. The cure for both
+  is one same-origin route that reads all three sources with a server-held token
+  and caches at the edge; `SOURCE` in `corpus.tsx` is then one fetch.
+- A list on a page is a SELECTION, never a count.
 
-`next.config.js` must keep `transpilePackages: ['@hanzo/font']` — the package
-ships ESM that imports `next/font/local`, and without webpack processing it the
-page-data pass resolves the bare directory in plain Node and dies on
-`ERR_UNSUPPORTED_DIR_IMPORT`.
+## Blue is one Blue, and it lives at zoolabs.io
 
-next/font emits the `@font-face` **and** the preload, with the content hash.
-Never hand-write a font preload here: this file used to preload
-`/fonts/inter-var-latin.woff2`, which had not existed for months — a 404 on
-every page load. Never hand-copy a woff2 into `public/` either; that loses the
-OFL notice the licence requires to ship beside the binaries.
+The hero used to be a still of the beluga beside the words, and the corner
+carried a second Blue: 380 lines with its own system prompt, its own transport
+and its own turns, answering the same questions the room at zoolabs.io answers
+and free to drift from it on every one of them. Two Blues is two Blues to be
+wrong.
 
-## Navigation — one source
+Now there is one. `src/components/Deep.tsx` shows zoolabs.io inside this page —
+Blue swimming on the foundation's own footage, answering for itself, changing
+clip with how it feels about what was just said, one of twenty-four feelings —
+and none of that is reimplemented here. `src/components/Ask.tsx` is a door onto
+the same room, so anything Blue learns to do it does in both places on the day
+it learns it. `src/components/Blue.tsx` stays what it always was, the still, and
+it is the room's poster: it paints at once, the frame fades over it, and if the
+frame never arrives what is left is the beluga rather than a white rectangle.
 
-`src/config/registry.ts` is the only place a destination is spelled: `U` (the
-URL table), `NAV`, `LABS`, `CTA`, `FOOTER_COLUMNS`, `FOOTER_BOTTOM`, `SOCIAL`,
-`STATS`. It mirrors the shape of `@hanzogui/shell`'s `hanzo-registry.ts`.
+`?embed=1` is the whole of what the room does differently in here: it drops the
+header this page already draws and the appearance panel, which is not ours to
+offer to someone reading their own page, and puts `Open Blue ↗` in their place —
+the full room, at the top of the window, carrying the question already asked
+(`?q=`, read by `lib/arrival.ts` over there). Nobody needs an account on either
+side of that link.
 
-`Navbar` and `Footer` both project off it, and each renders ONE tree for desktop
-and phone. Before this, the nav existed in five hand-written copies (desktop
-menu, mobile menu, desktop footer, mobile footer, a dead starter `Header.tsx`)
-which disagreed on both wording and destinations.
+The hero is `.hero` + `.hero-two`: the height left under the bar, less the
+distance the stats climb back into it, in `svh` so a phone's toolbars cannot
+push the ask off the bottom. The room is the larger half and it is tall — a
+beluga in a letterbox is a stock photo, a beluga in a window you can talk into
+is the foundation's whole argument. The frame is fetched when it is about to be
+seen rather than when the page parses, because it is several megabytes of video,
+and the corner disc hides while the room is on screen: a door to the room you
+are already standing in is not a door.
 
-`Navbar`/`Footer` are still imported per page rather than mounted in
-`Layout.tsx` (which is a pass-through). That is the next thing to collapse.
-
-## Traps that have already cost a day
-
-- **A dynamic route with no `getStaticPaths` exports as the LITERAL path.**
-  `/animals/[animal]` wrote `out/animals/[animal]/` and every species link 404'd
-  while the build stayed green. `getStaticPaths` now derives the routes from
-  `animals.json`, the same file the page renders from.
-- **`public/videos/` and `public/models/` do not exist** — not on disk, not in
-  git. Every animal card video (`animals.json` `card_front`/`card_back`, ~28
-  files) and every `.glb`/`.usdz` (~51) is a 404 on the live host, and the
-  deploy syncs with `--delete` so it stays that way. The still images under
-  `public/images/` do exist; the cards fall back to nothing.
-- **The live site can be built from source that was never committed.** In Sept
-  2026 zoo.ngo was serving a build with `--ink` tokens, a next-themes dark
-  script and an `inter-var-latin` preload — none of which exist in this repo, on
-  any branch. Read the remote and diff the live HTML before assuming the tree
-  you have is the tree that ships.
-
-## Known-stale, not yet fixed
-
-Ten routes have been converted to the light system — `/healing-farm`, `/about`,
-`/ai`, `/experiences`, `/donation`, `/animals`, `/animals/[animal]` (all seven
-species), `/volunteer`, plus `/research`'s palette. Each is verified with
-Playwright at 1440 and 390: body stays `rgb(247,247,247)`, no full-height dark
-wrapper, `scrollWidth === innerWidth`, no `text-transform: uppercase`, no
-underlined anchor, nothing under 4.5:1.
-
-Still wrapped in `bg-black text-white`, unconverted: `/blog`, `/coin`, `/docs`,
-`/impact`, `/markets`, `/news`, `/partners`, `/programs`, `/transparency`,
-`/careers`, `/faq`, `/getinvolved`, `/signin`, `/signup`, `/forgot_password`,
-`/terms`, `/terms-refund`, `/campaign`, `/donation/crypto`, `/donation/farm`,
-`/experiences/[id]`. A blind find-and-replace is still NOT safe: `text-white` on
-`bg-emerald-600`, or on a scrim over a photograph, must STAY white.
-
-## Layout — two primitives, so a page cannot invent its own
-
-- **`components/Section.tsx`** — `Section` (vertical rhythm + optional `tone`
-  tint and `edge` hairline) wrapping `Band` (the shared measure: 1280 and
-  `--page-gutter`, the same numbers the header and footer use). Pages used to
-  spell `container mx-auto px-4`, whose padding is 16px and whose max width is
-  1400, which is why /about and /ai started their text ~100px left of the
-  wordmark. Every converted route now has its H1 at the same x as the logo
-  (138 at a 1440 viewport) — that is the check worth re-running after any
-  layout edit.
-- **`components/Photo.tsx`** — a framed `<img>` that leaves an empty plate when
-  the file 404s. The `ref` callback is load-bearing: an image in the
-  server-rendered HTML finishes failing BEFORE React attaches listeners, so an
-  `onError` handler alone never fires and the broken-image glyph stays.
-  `plate` gives the frame the `--plate` ground for species renders.
-
-## Media that is still absent
-
-No `public/videos/` and no `public/models/` directory exists, so every card
-video (~28) and every `.glb`/`.usdz` (~51) is a 404. Components no longer hold
-a frame open for them: the species hero shows the still from `animals.json`
-`image` (all seven exist), the species grid drops a tile with no render, the
-3D band links to app.zoolabs.io instead of mounting empty viewers, and the
-donation hero uses `/images/donation_header.png`. Also missing:
-`/images/newsletter.png`, `/images/involved6.png`, the seven
-`/images/*_card.png`, `/images/volunteer-experiences/create wildlife
-experience.jpg`, and `healing-farm/{lionsmane.png,photo-3-elba-farm.jpeg}`.
-
-## Verifying a conversion — the check must be able to fail
-
-An unstyled page has no dark background, no uppercase, no underline and no
-contrast failure: it passes every check while being completely broken. Running
-`next build` against a live `next dev` wipes `.next` and produces exactly that,
-and the audit reported all-green across sixteen routes before the guard caught
-it. Any audit run here must first assert the system is actually applied —
-`body` is `rgb(247,247,247)` AND a `.display` probe computes to 64px/700.
-
-## Commands
-
-```
-pnpm dev            # next dev
-pnpm build          # next build (static export) + next-sitemap
-pnpm typecheck      # tsc --noEmit  (two test files fail: no @types/jest)
-pnpm test           # jest
-```
+The donation band still uses the still, `<Blue ratio='4 / 3' />`. It is a
+picture there, and one live room per page is the right number.

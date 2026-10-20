@@ -126,7 +126,7 @@ export default function FAQ() {
         },
         {
           q: 'How can I verify your impact claims?',
-          a: 'All our impact data is independently verified by third-party conservation scientists. We publish peer-reviewed research in scientific journals, provide GPS coordinates for protected areas, and use blockchain to create immutable records of conservation activities.'
+          a: 'All our impact data is independently verified by third-party conservation scientists. We publish research research in scientific journals, provide GPS coordinates for protected areas, and use blockchain to create immutable records of conservation activities.'
         },
         {
           q: 'What happens if a conservation project fails?',
@@ -152,11 +152,11 @@ export default function FAQ() {
       {/* Hero Section */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl">
+          <div className="max-w-3xl">
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
               Frequently Asked Questions
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700">
+            <p className="text-xl md:text-2xl text-zinc-700">
               Everything you need to know about Zoo Foundation's mission to protect 
               endangered species through technology and community action.
             </p>
@@ -165,9 +165,9 @@ export default function FAQ() {
       </section>
 
       {/* FAQ Content */}
-      <section className="bg-gray-50 py-20">
+      <section className="py-20" style={{ background: 'var(--paper)' }}>
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             {faqs.map((category, categoryIndex) => (
               <div key={categoryIndex} className="mb-12">
                 <h2 className="text-2xl md:text-3xl font-bold mb-6">{category.category}</h2>
@@ -175,22 +175,27 @@ export default function FAQ() {
                   {category.questions.map((item, questionIndex) => {
                     const isOpen = openIndex === categoryIndex * 100 + questionIndex;
                     return (
-                      <div 
+                      <div
                         key={questionIndex}
-                        className="bg-white rounded-xl border border-gray-200 overflow-hidden"
+                        className="card overflow-hidden"
                       >
                         <button
                           onClick={() => toggleQuestion(categoryIndex, questionIndex)}
-                          className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                          aria-expanded={isOpen}
+                          className="w-full px-6 py-4 text-left flex justify-between items-center gap-4 transition-colors"
                         >
-                          <span className="font-semibold text-lg pr-4">{item.q}</span>
-                          <span className={`text-2xl transition-transform ${isOpen ? 'rotate-45' : ''}`}>
+                          <span className="font-semibold text-lg">{item.q}</span>
+                          <span
+                            className="text-2xl shrink-0 transition-all"
+                            style={{ display: 'inline-block', transform: isOpen ? 'rotate(45deg)' : undefined }}
+                            aria-hidden
+                          >
                             +
                           </span>
                         </button>
                         {isOpen && (
                           <div className="px-6 pb-6">
-                            <p className="text-gray-600 leading-relaxed">{item.a}</p>
+                            <p className="text-zinc-600 text-base" style={{ lineHeight: 'var(--leading-relaxed)' }}>{item.a}</p>
                           </div>
                         )}
                       </div>
@@ -206,24 +211,18 @@ export default function FAQ() {
       {/* Contact Section */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
-          <div className="bg-black border border-white rounded-2xl p-12 text-white text-center">
+          <div className="night rounded-2xl p-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Still Have Questions?
             </h2>
-            <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+            <p className="text-xl mb-8 text-secondary max-w-2xl mx-auto">
               Our team is here to help. Reach out and we'll respond within 24 hours.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="mailto:info@zoo.ngo"
-                className="inline-block bg-white text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-all"
-              >
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+              <a href="mailto:info@zoo.ngo" className="btn btn-primary transition-all">
                 Email Us
               </a>
-              <a
-                href="/contact"
-                className="inline-block bg-transparent border-2 border-white px-8 py-3 rounded-lg font-medium hover:bg-white/10 transition-all"
-              >
+              <a href="/contact" className="btn transition-all">
                 Contact Form
               </a>
             </div>

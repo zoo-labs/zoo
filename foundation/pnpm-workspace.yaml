@@ -1,13 +1,151 @@
-# sharp is next/image's encoder and has to run its install script. The value
-# has to be the boolean — `pnpm approve-builds` left the prompt's own placeholder
-# text here, which is not true, so pnpm went on refusing the build and every
-# install since has died on ERR_PNPM_IGNORED_BUILDS.
+packages:
+  - "."
+# This repo is its own pnpm root. Two things depend on that being stated.
+#
+# `scripts/gui-css.mjs` bundles src/lib/gui.ts with esbuild before every build,
+# and esbuild unpacks its binary in a postinstall — which pnpm blocks unless a
+# root allows it. Unallowed, the install still succeeds and the build then fails
+# at the first line of `pnpm run build`.
+#
+# And pnpm looks UPWARD for the nearest pnpm-workspace.yaml. Without one here it
+# can settle on an ancestor that knows nothing about this project, where
+# `pnpm install` reports "Already up to date" and installs none of the app's
+# dependencies.
+#
+# sharp is next/image's optimiser. This site exports statically with
+# `images.unoptimized`, so it is never called and its binary is not wanted.
 allowBuilds:
-  # esbuild ships a platform binary its install script unpacks; without the
-  # build it is an empty shim. `scripts/gui-css.mjs` runs it to bundle the gui
-  # config before Node imports it.
   esbuild: true
-  sharp: true
-
+  sharp: false
 minimumReleaseAgeExclude:
-  - '@hanzo/event@0.3.34'
+  - '@hanzo/appearance@0.2.3 || 0.2.4 || 0.2.5'
+  - '@hanzo/event@0.3.41'
+  - '@hanzo/observe@0.1.11'
+  - '@hanzogui/telemetry@8.3.2 || 8.3.3'
+  - '@hanzo/gui@8.3.2'
+  - '@hanzo/ui@8.27.8'
+  - '@hanzogui/accordion@8.3.2'
+  - '@hanzogui/adapt@8.3.2'
+  - '@hanzogui/alert-dialog@8.3.2'
+  - '@hanzogui/animate-presence@8.3.2'
+  - '@hanzogui/animate@8.3.2'
+  - '@hanzogui/animation-helpers@8.3.2'
+  - '@hanzogui/animations-css@8.3.2'
+  - '@hanzogui/animations-motion@8.3.2'
+  - '@hanzogui/animations-react-native@8.3.2'
+  - '@hanzogui/animations-reanimated@8.3.2'
+  - '@hanzogui/avatar@8.3.2'
+  - '@hanzogui/button@8.3.2'
+  - '@hanzogui/card@8.3.2'
+  - '@hanzogui/checkbox-headless@8.3.2'
+  - '@hanzogui/checkbox@8.3.2'
+  - '@hanzogui/collapsible@8.3.2'
+  - '@hanzogui/collection@8.3.2'
+  - '@hanzogui/colors@8.3.2'
+  - '@hanzogui/component-helpers@8.3.2'
+  - '@hanzogui/compose-refs@8.3.2'
+  - '@hanzogui/config-default@8.3.2'
+  - '@hanzogui/config@8.3.2'
+  - '@hanzogui/constants@8.3.2'
+  - '@hanzogui/context-menu@8.3.2'
+  - '@hanzogui/core@8.3.2'
+  - '@hanzogui/create-context@8.3.2'
+  - '@hanzogui/create-menu@8.3.2'
+  - '@hanzogui/create-theme@8.3.2'
+  - '@hanzogui/cubic-bezier-animator@8.3.2'
+  - '@hanzogui/dialog@8.3.2'
+  - '@hanzogui/dismissable@8.3.2'
+  - '@hanzogui/element@8.3.2'
+  - '@hanzogui/elements@8.3.2'
+  - '@hanzogui/fake-react-native@8.3.2'
+  - '@hanzogui/floating@8.3.2'
+  - '@hanzogui/focus-guard@8.3.2'
+  - '@hanzogui/focus-scope@8.3.2'
+  - '@hanzogui/focusable@8.3.2'
+  - '@hanzogui/font-size@8.3.2'
+  - '@hanzogui/font-zen@8.3.2'
+  - '@hanzogui/form@8.3.2'
+  - '@hanzogui/get-button-sized@8.3.2'
+  - '@hanzogui/get-font-sized@8.3.2'
+  - '@hanzogui/get-token@8.3.2'
+  - '@hanzogui/group@8.3.2'
+  - '@hanzogui/helpers@8.3.2'
+  - '@hanzogui/image@8.3.2'
+  - '@hanzogui/input@8.3.2'
+  - '@hanzogui/is-equal-shallow@8.3.2'
+  - '@hanzogui/label@8.3.2'
+  - '@hanzogui/linear-gradient@8.3.2'
+  - '@hanzogui/list-item@8.3.2'
+  - '@hanzogui/menu@8.3.2'
+  - '@hanzogui/native@8.3.2'
+  - '@hanzogui/normalize-css-color@8.3.2'
+  - '@hanzogui/polyfill-dev@8.3.2'
+  - '@hanzogui/popover@8.3.2'
+  - '@hanzogui/popper@8.3.2'
+  - '@hanzogui/portal@8.3.2'
+  - '@hanzogui/progress@8.3.2'
+  - '@hanzogui/radio-group@8.3.2'
+  - '@hanzogui/radio-headless@8.3.2'
+  - '@hanzogui/react-native-media-driver@8.3.2'
+  - '@hanzogui/react-native-use-pressable@8.3.2'
+  - '@hanzogui/remove-scroll@8.3.2'
+  - '@hanzogui/roving-focus@8.3.2'
+  - '@hanzogui/scroll-view@8.3.2'
+  - '@hanzogui/select@8.3.2'
+  - '@hanzogui/separator@8.3.2'
+  - '@hanzogui/shapes@8.3.2'
+  - '@hanzogui/sheet@8.3.2'
+  - '@hanzogui/shorthands@8.3.2'
+  - '@hanzogui/simple-hash@8.3.2'
+  - '@hanzogui/sizable-context@8.3.2'
+  - '@hanzogui/slider@8.3.2'
+  - '@hanzogui/spacer@8.3.2'
+  - '@hanzogui/spinner@8.3.2'
+  - '@hanzogui/stacks@8.3.2'
+  - '@hanzogui/start-transition@8.3.2'
+  - '@hanzogui/switch-headless@8.3.2'
+  - '@hanzogui/switch@8.3.2'
+  - '@hanzogui/tabs@8.3.2'
+  - '@hanzogui/text@8.3.2'
+  - '@hanzogui/theme-builder@8.3.2'
+  - '@hanzogui/theme@8.3.2'
+  - '@hanzogui/themes@8.3.2'
+  - '@hanzogui/timer@8.3.2'
+  - '@hanzogui/toast@8.3.2'
+  - '@hanzogui/toggle-group@8.3.2'
+  - '@hanzogui/tooltip@8.3.2'
+  - '@hanzogui/types@8.3.2'
+  - '@hanzogui/use-async@8.3.2'
+  - '@hanzogui/use-callback-ref@8.3.2'
+  - '@hanzogui/use-constant@8.3.2'
+  - '@hanzogui/use-controllable-state@8.3.2'
+  - '@hanzogui/use-debounce@8.3.2'
+  - '@hanzogui/use-did-finish-ssr@8.3.2'
+  - '@hanzogui/use-direction@8.3.2'
+  - '@hanzogui/use-element-layout@8.3.2'
+  - '@hanzogui/use-escape-keydown@8.3.2'
+  - '@hanzogui/use-event@8.3.2'
+  - '@hanzogui/use-force-update@8.3.2'
+  - '@hanzogui/use-keyboard-visible@8.3.2'
+  - '@hanzogui/use-presence@8.3.2'
+  - '@hanzogui/use-previous@8.3.2'
+  - '@hanzogui/use-window-dimensions@8.3.2'
+  - '@hanzogui/visually-hidden@8.3.2'
+  - '@hanzogui/web@8.3.2'
+  - '@hanzogui/z-index-stack@8.3.2'
+
+# One copy of the analytics client, not two. `@hanzo/gui` and `@hanzo/ui` pin
+# `@hanzogui/telemetry` to an exact version, and each pin drags its own
+# `@hanzo/event`, so a bundle can carry two org key tables and which one a beacon
+# uses depends on which module the import graph reached first. The key belongs to
+# the domain; there is one right answer per domain, so there is one copy here.
+#
+# That copy has to be a version whose table names projects that exist. 0.3.39 and
+# 0.3.40 name three that do not: all three keys answer `403 ingest_key_unknown`
+# against /v1/event, so this site reported nothing at all while looking healthy.
+# 0.3.41 carries the same values as universe's SPA_INGEST_KEYRING, checked one by
+# one against the endpoint.
+overrides:
+  '@hanzo/event': '0.3.41'
+  '@hanzo/observe': '0.1.11'
+  '@hanzogui/telemetry': '8.3.3'

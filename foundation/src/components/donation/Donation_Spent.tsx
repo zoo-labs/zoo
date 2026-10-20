@@ -1,79 +1,125 @@
-import Section from '@/components/Section';
+import React from 'react';
+import Link from 'next/link';
+import { Cpu, FlaskConical, PawPrint, ShieldCheck } from 'lucide-react';
+import Away from '@/components/Away';
+import { useCorpus, type Counts } from '@/config/corpus';
 
 /**
- * Where a donation goes.
+ * Where the money goes.
  *
- * This was a square-cornered `#3C9465` band that turned solid black below the
- * md breakpoint — two different designs for one section, neither of them the
- * site's. The split is now one bar built from the single accent at three
- * strengths, so the same picture is shown at every width.
+ * These three used to be drawn on `--surface-card`, a token @hanzo/design
+ * publishes at `:root` for its DARK theme — rgb(38 38 38 / .5). This site never
+ * mounts the light class, so the recipe resolved dark on a light page and the
+ * cards came out as grey slabs carrying the ink colour: 2.54:1 on the body copy,
+ * 2.95:1 on the heading. One card also read `--surface-card-emphasis` because a
+ * click "selected" it, which is why three identical cards were three different
+ * greys.
+ *
+ * They are `.card` now — the same rule the home page's three cards use — and the
+ * selection is gone with them. It set a colour and nothing else: a div with an
+ * onClick, no role, no key handler, and no consequence.
  */
-const SPLIT = [
+
+/** A custom property, typed. --hue is what a card is coloured with. */
+const hue = (value: string) => ({ ['--hue']: value }) as React.CSSProperties;
+
+const areas = (corpus: Counts) => [
   {
-    share: 70,
-    title: 'Programmes and services',
-    body: '70% of your donation supports practical conservation work — habitat preservation, species protection and community engagement.',
-    fill: 'var(--brand)',
+    icon: PawPrint,
+    hue: 'var(--green)',
+    tag: 'Field operations',
+    title: 'Sanctuary and rescue',
+    body: 'Veterinary care, anti-poaching patrol equipment, sanctuary habitat construction, and rescue missions for wildlife worldwide.',
   },
   {
-    share: 20,
-    title: 'Marketing',
-    body: '20% raises further awareness and financial support, broadening our reach and our impact in the conservation landscape.',
-    fill: 'color-mix(in srgb, var(--brand) 55%, white)',
+    icon: Cpu,
+    hue: 'var(--blue)',
+    tag: 'Open infrastructure',
+    title: 'Compute and Zoo Gym',
+    body: 'The distributed GPU training framework, Zoo Gym (TF-GRPO), and open mining protocols that put AI alignment work within reach of public science.',
   },
   {
-    share: 10,
-    title: 'Administrative costs',
-    body: '10% backs the operational backbone of the organisation — legal work and the collaborations that wildlife protection depends on.',
-    fill: 'color-mix(in srgb, var(--brand) 25%, white)',
+    icon: FlaskConical,
+    hue: 'var(--pink)',
+    tag: 'Open science',
+    title: 'Research and publication',
+    body: `${corpus.papers} papers, ${corpus.proposals} improvement proposals and every model weight, published open access and free to read.`,
   },
 ];
 
-function Donation_Spent() {
+export default function Donation_Spent() {
+  const corpus = useCorpus();
+  const AREAS = areas(corpus);
   return (
-    <Section>
-      <div className='max-w-2xl'>
-        <p className='eyebrow'>Transparency</p>
-        <h2 className='title mt-3'>How is your donation spent?</h2>
+    <section className='container' style={{ paddingTop: 'var(--section-y-lg)' }}>
+      <div style={{ maxWidth: '58ch' }}>
+        <span className='pill eyebrow'>Direct charitable giving</span>
+        <h2 className='mt-5 text-3xl md:text-4xl font-bold'>Where your support goes</h2>
+        <p className='mt-4 text-secondary'>
+          Every contribution goes to wildlife care, habitat protection and open-access research.
+          Nothing here is a projection — it is what the money is spent on.
+        </p>
+      </div>
+
+      <div className='mt-12 grid-cards'>
+        {AREAS.map(({ icon: Icon, ...a }) => (
+          <article
+            key={a.title}
+            className='card p-8 flex flex-col'
+            style={{ ...hue(a.hue), background: '#ffffff' }}
+          >
+            <div className='flex items-center justify-between gap-4'>
+              <span className='disc'>
+                <Icon size={20} strokeWidth={1.75} aria-hidden />
+              </span>
+              <span className='tint'>{a.tag}</span>
+            </div>
+            <h3 className='mt-5 text-xl font-semibold'>{a.title}</h3>
+            <p className='mt-3 text-secondary flex-1'>{a.body}</p>
+          </article>
+        ))}
       </div>
 
       <div
-        className='mt-10 flex h-11 overflow-hidden'
-        style={{ borderRadius: 'var(--radius-full)', border: '1px solid var(--border)' }}
-        role='img'
-        aria-label='70% programmes and services, 20% marketing, 10% administrative costs'
+        className='card p-8 mt-12'
+        style={{
+          ...hue('var(--blue)'),
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: 'var(--space-8)',
+          alignItems: 'center',
+          background: 'color-mix(in oklab, var(--blue) 7%, #ffffff)',
+          borderColor: 'color-mix(in oklab, var(--blue) 18%, transparent)',
+        }}
       >
-        {SPLIT.map((part) => (
-          <div
-            key={part.title}
-            className='flex items-center justify-center text-xs font-medium'
-            style={{
-              width: `${part.share}%`,
-              background: part.fill,
-              color: part.share === 70 ? 'var(--brand-foreground)' : 'var(--foreground)',
-            }}
-          >
-            {part.share}%
-          </div>
-        ))}
-      </div>
+        <div>
+          <span className='disc' data-outline>
+            <ShieldCheck size={20} strokeWidth={1.75} aria-hidden />
+          </span>
+          <h3 className='mt-5 text-xl font-semibold'>Tax-deductible 501(c)(3) giving</h3>
+          <p className='mt-3 text-secondary' style={{ maxWidth: '52ch' }}>
+            Zoo Labs Foundation is a recognized 501(c)(3) public charity, EIN 88-3538992. Donations
+            are tax-deductible to the fullest extent the law permits.
+          </p>
+        </div>
 
-      <div className='mt-10 grid gap-6 md:grid-cols-3'>
-        {SPLIT.map((part) => (
-          <div key={part.title} className='card p-6'>
-            <p className='text-2xl font-semibold tracking-tight'>{part.share}%</p>
-            <h3 className='mt-1 text-lg font-semibold'>{part.title}</h3>
-            <p
-              className='mt-2 text-sm leading-relaxed'
-              style={{ color: 'var(--muted-foreground)' }}
-            >
-              {part.body}
-            </p>
-          </div>
-        ))}
+        <div className='flex flex-wrap gap-3' style={{ justifySelf: 'start' }}>
+          <a
+            href='https://www.paypal.biz/zoongo'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='action'
+            data-fill
+            style={{ ['--fill']: 'var(--blue)' } as React.CSSProperties}
+          >
+            Give today
+            <Away />
+          </a>
+          <Link href='/donation/crypto' className='action'>
+            Give in crypto
+          </Link>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
-
-export default Donation_Spent;

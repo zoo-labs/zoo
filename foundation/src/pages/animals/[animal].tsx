@@ -14,16 +14,35 @@ import CoreHeader from '@/components/animals/CoreHeader';
 import Carousel from '@/components/animals/Carousel';
 import { Elements } from '@stripe/react-stripe-js';
 import animals from "@/components/animals/animals.json";
-import { loadStripe } from '@stripe/stripe-js';
+import { stripe } from '@/lib/stripe';
 
 import NotFoundPage from "../404";
+
+/**
+ * The site is a static export, so a dynamic route has to name its paths at build
+ * time. Without this Next emitted one `/animals/[animal]` shell and nothing
+ * else, and every species link on /animals — six of them, in the header of every
+ * species page too — 404'd on the host.
+ *
+ * `animals.json` is already the list this page reads its content from, so it is
+ * the list of routes as well; there is no second place to keep in step.
+ */
+export function getStaticPaths() {
+  return {
+    paths: animals.map((a) => ({ params: { animal: a.route } })),
+    fallback: false,
+  };
+}
+
+export function getStaticProps() {
+  return { props: {} };
+}
 
 export default function AnimalPage() {
   const router = useRouter();
   const [animalRoute, setAnimalRoute] = useState(router.query.animal);
   const [animal, setAnimal] = useState(animals.find((animal) => animal.route === router.query.animal));
   const [animal_index, setAnimalIndex] = useState(animals.findIndex(p => p.route == router.query.animal));
-  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || '');
   React.useEffect(() => {
     if (router.isReady) {
       setAnimalRoute(router.query.animal);
@@ -37,17 +56,12 @@ export default function AnimalPage() {
         { animal == undefined ? <NotFoundPage /> : <>
         <Seo />
         <Navbar />
-        <Elements stripe={stripePromise}>
+        <Elements stripe={stripe}>
         {/* <CoreHeader index={animal_index}/>
         <FutureUpgrades /> */}
-        <Header
-          title={animal.name}
-          content={animal.description.head}
-          image={animal.image}
-          route={animal.route}
-        />
+        <Header title={animal.name} content={animal.description.head} front={animal.card_front} back={animal.card_back} front_m={animal.card_front_mp4} back_m={animal.card_back_mp4} route={animal.route}/>
         </Elements>
-        <Avatars list={animal.avatars} linkFlag={false}/>
+        <Avatars list={animal.avatars} />
         <Content title={animal.description.subtitle} content={animal.description.desc} />
         <Carousel />
         <Aiding />
@@ -56,25 +70,4 @@ export default function AnimalPage() {
         </> }
     </Layout>
   );
-}
-
-/**
- * The species pages have to be named at build time.
- *
- * This is a static export, and a dynamic route with no `getStaticPaths` is
- * exported as the LITERAL path — the build wrote `out/animals/[animal]/`, so
- * every species link on the site answered 404 while the build stayed green.
- * The routes are the ones in animals.json, which is the same file the page
- * reads to render, so a species cannot be published without a page or listed
- * without being published.
- */
-export function getStaticPaths() {
-  return {
-    paths: animals.map((a) => ({ params: { animal: a.route } })),
-    fallback: false,
-  };
-}
-
-export function getStaticProps() {
-  return { props: {} };
 }
