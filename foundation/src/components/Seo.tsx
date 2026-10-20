@@ -22,7 +22,7 @@ const defaultMeta = {
   type: 'website',
   robots: 'follow, index',
   /** The card every share renders. 1200x630, served from whatever origin serves the page. */
-  image: '/images/large-og.png',
+  image: '/images/og.png',
 };
 
 type SeoProps = {
